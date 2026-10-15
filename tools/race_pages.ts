@@ -173,7 +173,7 @@ const L: Record<Lang, { dir: string; pageWord: string; home: string; support: st
 
 const T = {
   sv: {
-    langName: "Svenska", langNav: "Språk", skip: "Hoppa till innehållet", crumbs: "Brödsmulor", home: "Mila", races: "Lopp", brandLine: "Spring som du mår.",
+    langName: "Svenska", langNav: "Språk", skip: "Hoppa till innehållet", crumbs: "Brödsmulor", home: "Mila", races: "Lopp", brandLine: "Rätt pass. Rätt dag.",
     titleTail: "bana, höjdprofil och tempoplan", indexTitle: "Lopp – banor, höjdprofiler och tempoplaner", indexH1: "Lopp att springa",
     indexLead: "Banor ur Milas loppregister med höjdprofil, klättringar, vätskekontroller och maxtider. Välj ditt lopp och få en personlig prognos, tempoplan och energiplan i Mila.",
     pageN: (n: number) => `sida ${n}`, count: (n: number) => `${n} lopp`,
@@ -212,7 +212,7 @@ const T = {
     metaTail: "Se bana och höjdprofil och få din tempoplan i Mila.", metaAid: (n: number) => `${n} vätskekontroller`, metaClimb: (a: string) => `${a} höjdmeter`, metaHigh: (h: string) => `högsta punkt ${h} m`,
   },
   en: {
-    langName: "English", langNav: "Language", skip: "Skip to content", crumbs: "Breadcrumbs", home: "Mila", races: "Races", brandLine: "Run the way you feel.",
+    langName: "English", langNav: "Language", skip: "Skip to content", crumbs: "Breadcrumbs", home: "Mila", races: "Races", brandLine: "The right run, on the right day.",
     titleTail: "course, elevation profile and pace plan", indexTitle: "Races – courses, elevation profiles and pace plans", indexH1: "Races to run",
     indexLead: "Courses from Mila's race register with elevation profile, climbs, aid stations and cut-off times. Pick your race and get a personal forecast, pace plan and fueling plan in Mila.",
     pageN: (n: number) => `page ${n}`, count: (n: number) => `${n} ${n === 1 ? "race" : "races"}`,
@@ -251,7 +251,7 @@ const T = {
     metaTail: "See the course and elevation profile and get your pace plan in Mila.", metaAid: (n: number) => `${n} aid stations`, metaClimb: (a: string) => `${a} m of climbing`, metaHigh: (h: string) => `highest point ${h} m`,
   },
   de: {
-    langName: "Deutsch", langNav: "Sprache", skip: "Zum Inhalt springen", crumbs: "Brotkrümelnavigation", home: "Mila", races: "Läufe", brandLine: "Lauf, wie du dich fühlst.",
+    langName: "Deutsch", langNav: "Sprache", skip: "Zum Inhalt springen", crumbs: "Brotkrümelnavigation", home: "Mila", races: "Läufe", brandLine: "Der richtige Lauf am richtigen Tag.",
     titleTail: "Strecke, Höhenprofil und Pace-Plan", indexTitle: "Läufe – Strecken, Höhenprofile und Pace-Pläne", indexH1: "Läufe zum Mitlaufen",
     indexLead: "Strecken aus Milas Laufregister mit Höhenprofil, Anstiegen, Verpflegungsstellen und Zeitlimits. Wähle deinen Lauf und hol dir in Mila deine persönliche Prognose, deinen Pace-Plan und deinen Verpflegungsplan.",
     pageN: (n: number) => `Seite ${n}`, count: (n: number) => `${n} ${n === 1 ? "Lauf" : "Läufe"}`,

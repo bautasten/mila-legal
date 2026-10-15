@@ -778,13 +778,15 @@ export async function generate(o: { out: string; races: Race[]; ids?: Set<string
   const prev = await readText(`${out}/lopp/slugs.json`);
   const state: State = prev ? JSON.parse(prev) : { version: 1, races: {}, pages: {}, og: {} };
   state.races ??= {}; state.pages ??= {}; state.og ??= {};
-  const feedIds = o.ids ?? new Set(o.races.map((r) => r.id));
+  const feedIds = o.ids ?? new Set(o.races.map((r) => r.id)), usable = new Set(o.races.map((r) => r.id));
   const report: Report = { races: o.races.length, active: 0, removed: [], added: [], written: 0, pngs: 0 };
 
-  // 1. who left: published races the feed no longer names; many at once is a broken feed, not the register, and nothing is written
+  // 1. who left: published races the feed no longer names, and races it still names but whose row cleanRace refuses (their page goes
+  //    noindex as a removed race's does, instead of staying up stale with facts the feed no longer stands behind). Many at once is a
+  //    broken feed, not the register (or a feed whose rows no longer read), and nothing is written
   const published = Object.entries(state.races).filter(([, s]) => !s.removed);
-  const gone = published.filter(([id]) => !feedIds.has(id));
-  if (!o.allowMassRemoval && published.length && (feedIds.size === 0 || (gone.length >= MASS_REMOVAL_MIN && gone.length > published.length * MASS_REMOVAL_SHARE))) {
+  const gone = published.filter(([id]) => !usable.has(id));
+  if (!o.allowMassRemoval && published.length && (feedIds.size === 0 || usable.size === 0 || (gone.length >= MASS_REMOVAL_MIN && gone.length > published.length * MASS_REMOVAL_SHARE))) {
     throw new Error(`race pages: the feed drops ${gone.length} of ${published.length} published races; nothing written (--allow-mass-removal accepts it)`);
   }
   // 2. slugs: a race keeps its own; a new race with a course gets the feed's suggestion, made unique among every slug ever used

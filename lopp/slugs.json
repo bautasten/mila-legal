@@ -63,59 +63,66 @@
    "first": "2026-10-15",
    "removed": null,
    "og": "4f08e0145ca8d6e2f8f58424"
+  },
+  "953ddc63-e65e-4133-8864-c960b7b36aa4": {
+   "slug": "western-states-100-mile-endurance-run-161k",
+   "name": "Western States 100-Mile Endurance Run",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "c206818831cc5fa33b39ce14"
   }
  },
  "pages": {
   "/index-de.html": {
-   "hash": "b566d30a90964134f74e202b",
+   "hash": "75acfa74621cf28e3247c6ea",
    "lastmod": "2026-10-15"
   },
   "/index.html": {
-   "hash": "09f4a0cea629429625b53e2f",
+   "hash": "8d4c9958022594a0b2e7b79d",
    "lastmod": "2026-10-15"
   },
   "/privacy-de.html": {
-   "hash": "fdcf910d8bf66fcc18d97a39",
+   "hash": "8249bd781f546ecc198169e9",
    "lastmod": "2026-10-15"
   },
   "/privacy-en.html": {
-   "hash": "1e972c041820ac96eaeb8104",
+   "hash": "ae73d87ff518f31c6a0a66a3",
    "lastmod": "2026-10-15"
   },
   "/privacy.html": {
-   "hash": "1c9b0159bd8536125aad0451",
+   "hash": "74939a52918ea4daad7e0a74",
    "lastmod": "2026-10-15"
   },
   "/support-de.html": {
-   "hash": "dc324428c67c12b6a48bd8d6",
+   "hash": "484bc77dc886668c1609a408",
    "lastmod": "2026-10-15"
   },
   "/support-sv.html": {
-   "hash": "a3c21f46998a6fec660af72e",
+   "hash": "9c1caea69277666d7ca2a3b1",
    "lastmod": "2026-10-15"
   },
   "/support.html": {
-   "hash": "c5e5aa34dfebbfec277f9d04",
+   "hash": "2546b925f82599c109b2d6fc",
    "lastmod": "2026-10-15"
   },
   "/sv.html": {
-   "hash": "80836c2d3d8c4e39946162cb",
+   "hash": "08043a2a3d437857f692bc3c",
    "lastmod": "2026-10-15"
   },
   "/terms-de.html": {
-   "hash": "a1a58d372489acb53adbe5c1",
+   "hash": "8fa3f0edd77c682870c91e1a",
    "lastmod": "2026-10-15"
   },
   "/terms-en.html": {
-   "hash": "7cbb8c88f81368ef471d3474",
+   "hash": "f5b0c817c734c8719fd8d5f5",
    "lastmod": "2026-10-15"
   },
   "/terms.html": {
-   "hash": "7a183ef7bfe6e35b4b88b3d2",
+   "hash": "8270c8b57ea9a3d515e60d72",
    "lastmod": "2026-10-15"
   },
   "de/laeufe/": {
-   "hash": "c94cd660321e780a1a0a5e55",
+   "hash": "adb291902e7b7f02b4782f12",
    "lastmod": "2026-10-15"
   },
   "de/laeufe/fjallmaraton-100k/": {
@@ -147,15 +154,19 @@
    "lastmod": "2026-10-15"
   },
   "de/laeufe/tcs-london-marathon-42-2-km/": {
-   "hash": "247585669f491b12efbe6143",
+   "hash": "6539a395e2ce858155ef0892",
    "lastmod": "2026-10-15"
   },
   "de/laeufe/umaker-trail-15-6-km/": {
    "hash": "bb5c9c9c864ea5d3ae69ba00",
    "lastmod": "2026-10-15"
   },
+  "de/laeufe/western-states-100-mile-endurance-run-161k/": {
+   "hash": "9fea2c0e9b5f647b0eb68832",
+   "lastmod": "2026-10-15"
+  },
   "en/races/": {
-   "hash": "e93852b177f373eed958b3a8",
+   "hash": "3026c83d7cef5fda72473c7e",
    "lastmod": "2026-10-15"
   },
   "en/races/fjallmaraton-100k/": {
@@ -187,15 +198,19 @@
    "lastmod": "2026-10-15"
   },
   "en/races/tcs-london-marathon-42-2-km/": {
-   "hash": "c9b30921142e52b2b255edaa",
+   "hash": "c1e0c2845e5017f2f5f07ac1",
    "lastmod": "2026-10-15"
   },
   "en/races/umaker-trail-15-6-km/": {
    "hash": "8b9e7b8890bd382a71ee32be",
    "lastmod": "2026-10-15"
   },
+  "en/races/western-states-100-mile-endurance-run-161k/": {
+   "hash": "8aa9798432ad996ac29b6121",
+   "lastmod": "2026-10-15"
+  },
   "lopp/": {
-   "hash": "11a1e794a2fdef4f5a34824e",
+   "hash": "0cbcc7718146ab6449ae80de",
    "lastmod": "2026-10-15"
   },
   "lopp/fjallmaraton-100k/": {
@@ -227,11 +242,15 @@
    "lastmod": "2026-10-15"
   },
   "lopp/tcs-london-marathon-42-2-km/": {
-   "hash": "f5b20344ddfea0b01fc4fb66",
+   "hash": "0e877b9b991f257c8c6ce4c8",
    "lastmod": "2026-10-15"
   },
   "lopp/umaker-trail-15-6-km/": {
    "hash": "5513ae91bbf3ead8f64176b3",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/western-states-100-mile-endurance-run-161k/": {
+   "hash": "83b0bf76fa6b89ad7f5b8631",
    "lastmod": "2026-10-15"
   }
  },

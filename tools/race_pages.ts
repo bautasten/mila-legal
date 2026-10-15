@@ -51,7 +51,9 @@ export type Race = {
   id: string; slug: string; name: string; place: string | null; country: string | null; country_code: string | null; organizer: string | null;
   url: string | null; next_date: string | null; prelim: boolean; past_dates: string[]; km: number; ascent: number; descent: number | null; trail: boolean;
   min_ele: number | null; max_ele: number | null; climbs: Climb[]; aid_stations: { km: number; what: string[] }[] | null; info: Info | null;
-  results: Result[]; comment: string | null; course_source: "official_gpx" | "upload" | null; ele_source: "dem" | null;
+  results: Result[]; comment: string | null; course_source: "official_gpx" | "upload" | null; ele_source: "dem" | "runners" | null;
+  /** How many Mila runners' measurements the heights rest on (ele_source "runners"). */
+  ele_runners: number | null;
   start: [number, number] | null; course: { pts: Point[] } | null;
 };
 export type State = {
@@ -115,7 +117,8 @@ export function cleanRace(x: any): Race | null {
     results: arr(x.results).filter((e) => e && Number.isInteger(e.year) && isNum(e.finishers) && e.overall && ["p10", "p25", "p50", "p75", "p90"].every((k) => isNum(e.overall[k]))).slice(0, 5)
       .map((e) => ({ year: e.year, finishers: e.finishers, overall: { p10: e.overall.p10, p25: e.overall.p25, p50: e.overall.p50, p75: e.overall.p75, p90: e.overall.p90 }, source: safeUrl(e.source, true) })),
     comment: typeof x.comment === "string" && x.comment.trim() ? x.comment.trim().slice(0, 6000) : null,
-    course_source: x.course_source === "official_gpx" || x.course_source === "upload" ? x.course_source : null, ele_source: x.ele_source === "dem" ? "dem" : null,
+    course_source: x.course_source === "official_gpx" || x.course_source === "upload" ? x.course_source : null, ele_source: x.ele_source === "dem" || x.ele_source === "runners" ? x.ele_source : null,
+    ele_runners: x.ele_source === "runners" ? (isNum(x.ele_runners) && x.ele_runners >= 1 ? Math.min(999, Math.round(x.ele_runners)) : 1) : null,
     start: Array.isArray(x.start) && x.start.length === 2 && x.start.every(isNum) ? [x.start[0], x.start[1]] : pts.length ? [pts[0][0], pts[0][1]] : null,
     course: pts.length >= 2 ? { pts } : null,
   };
@@ -185,7 +188,9 @@ const T = {
     hilly: ["flack", "lätt kuperad", "kuperad", "mycket kuperad", "bergig"], perKm: (x: string) => `${x} m per km`,
     profileH: "Höjdprofil", profileTitle: (n: string) => `Höjdprofil för ${n}`,
     profileDesc: (km: string, lo: string, hi: string, n: number) => `Höjden längs banans ${km}${n ? `, med ${n} ${n === 1 ? "vätskekontroll" : "vätskekontroller"} utmärkta` : ""}: från ${lo} till ${hi} m ö.h.`,
-    dem: "Höjderna kommer från en höjdmodell, inte från banfilen.", routeH: "Banan", routeTitle: (n: string) => `Banans sträckning för ${n}`,
+    dem: "Höjderna kommer från en höjdmodell, inte från banfilen.",
+    runners: (n: number) => n === 1 ? "Höjderna är uppmätta av en löpare som sprungit loppet med Mila, inte hämtade ur en höjdmodell." : `Höjderna är uppmätta av ${n} löpare som sprungit loppet med Mila, inte hämtade ur en höjdmodell.`,
+    routeH: "Banan", routeTitle: (n: string) => `Banans sträckning för ${n}`,
     routeDesc: (loop: boolean) => loop ? "Banans form sedd uppifrån, norr uppåt. Start och mål på samma plats." : "Banans form sedd uppifrån, norr uppåt, från start till mål.",
     legend: (loop: boolean, aid: boolean) => `${loop ? "Grön punkt: start och mål." : "Grön punkt: start. Vit punkt: mål."}${aid ? " Små gröna punkter: vätskekontroller." : ""}`,
     official: "Bana från arrangören", organiserPage: "arrangörens sida", upload: "Banan bygger på en banfil uppladdad i Mila och kan avvika från årets officiella bana.",
@@ -224,7 +229,9 @@ const T = {
     hilly: ["flat", "gently rolling", "hilly", "very hilly", "mountainous"], perKm: (x: string) => `${x} m per km`,
     profileH: "Elevation profile", profileTitle: (n: string) => `Elevation profile of ${n}`,
     profileDesc: (km: string, lo: string, hi: string, n: number) => `Elevation along the ${km} course${n ? `, with ${n} aid ${n === 1 ? "station" : "stations"} marked` : ""}: from ${lo} to ${hi} m above sea level.`,
-    dem: "Elevations come from an elevation model, not from the course file.", routeH: "The course", routeTitle: (n: string) => `Course map of ${n}`,
+    dem: "Elevations come from an elevation model, not from the course file.",
+    runners: (n: number) => n === 1 ? "Elevations were measured by a runner who ran the race with Mila, not taken from an elevation model." : `Elevations were measured by ${n} runners who ran the race with Mila, not taken from an elevation model.`,
+    routeH: "The course", routeTitle: (n: string) => `Course map of ${n}`,
     routeDesc: (loop: boolean) => loop ? "The course seen from above, north up. Start and finish in the same place." : "The course seen from above, north up, from start to finish.",
     legend: (loop: boolean, aid: boolean) => `${loop ? "Green dot: start and finish." : "Green dot: start. White dot: finish."}${aid ? " Small green dots: aid stations." : ""}`,
     official: "Course from the organizer", organiserPage: "organizer's website", upload: "The course is based on a course file uploaded in Mila and may differ from this year's official course.",
@@ -263,7 +270,9 @@ const T = {
     hilly: ["flach", "leicht wellig", "hügelig", "sehr hügelig", "bergig"], perKm: (x: string) => `${x} m pro km`,
     profileH: "Höhenprofil", profileTitle: (n: string) => `Höhenprofil von ${n}`,
     profileDesc: (km: string, lo: string, hi: string, n: number) => `Die Höhe entlang der ${km} langen Strecke${n ? `, mit ${n} ${n === 1 ? "markierter Verpflegungsstelle" : "markierten Verpflegungsstellen"}` : ""}: von ${lo} bis ${hi} m ü. M.`,
-    dem: "Die Höhen stammen aus einem Höhenmodell, nicht aus der Streckendatei.", routeH: "Die Strecke", routeTitle: (n: string) => `Streckenverlauf von ${n}`,
+    dem: "Die Höhen stammen aus einem Höhenmodell, nicht aus der Streckendatei.",
+    runners: (n: number) => n === 1 ? "Die Höhen wurden von einer Person gemessen, die den Lauf mit Mila gelaufen ist, nicht aus einem Höhenmodell übernommen." : `Die Höhen wurden von ${n} Läuferinnen und Läufern gemessen, die den Lauf mit Mila gelaufen sind, nicht aus einem Höhenmodell übernommen.`,
+    routeH: "Die Strecke", routeTitle: (n: string) => `Streckenverlauf von ${n}`,
     routeDesc: (loop: boolean) => loop ? "Die Strecke von oben, Norden oben. Start und Ziel am selben Ort." : "Die Strecke von oben, Norden oben, vom Start bis ins Ziel.",
     legend: (loop: boolean, aid: boolean) => `${loop ? "Grüner Punkt: Start und Ziel." : "Grüner Punkt: Start. Weißer Punkt: Ziel."}${aid ? " Kleine grüne Punkte: Verpflegungsstellen." : ""}`,
     official: "Strecke vom Veranstalter", organiserPage: "Website des Veranstalters", upload: "Die Strecke beruht auf einer in Mila hochgeladenen Streckendatei und kann von der diesjährigen offiziellen Strecke abweichen.",
@@ -679,7 +688,7 @@ export function racePage(r: Race, lang: Lang, ctx: Ctx): string {
   const about = (lang === "sv" && r.comment ? r.comment.split(/\n{2,}/).map((p) => `<p>${esc(p)}</p>`).join("") + `<p class="note">${esc(t.coachNote)}</p>` : aboutText(r, lang).map((p) => `<p>${esc(p)}</p>`).join(""));
   if (c) {
     const [eMin, eMax] = eleRange(c.pts);
-    sections.push(`<section aria-labelledby="h-profile"><h2 id="h-profile">${esc(t.profileH)}</h2><figure><div class="chart">${profileSvg(r, lang)}</div><figcaption>${esc(t.profileDesc(kmText(r.km, lang), num(r.min_ele ?? eMin, lang), num(r.max_ele ?? eMax, lang), (r.aid_stations ?? []).length))}${r.ele_source === "dem" ? ` ${esc(t.dem)}` : ""}</figcaption></figure></section>`);
+    sections.push(`<section aria-labelledby="h-profile"><h2 id="h-profile">${esc(t.profileH)}</h2><figure><div class="chart">${profileSvg(r, lang)}</div><figcaption>${esc(t.profileDesc(kmText(r.km, lang), num(r.min_ele ?? eMin, lang), num(r.max_ele ?? eMax, lang), (r.aid_stations ?? []).length))}${r.ele_source === "dem" ? ` ${esc(t.dem)}` : r.ele_source === "runners" ? ` ${esc(t.runners(r.ele_runners ?? 1))}` : ""}</figcaption></figure></section>`);
     const credit = r.course_source === "official_gpx" ? `${esc(t.official)}${r.url ? ` (<a href="${esc(r.url)}" rel="noopener">${esc(t.organiserPage)}</a>)` : ""}.` : esc(t.upload);
     sections.push(`<section aria-labelledby="h-route"><div class="two"><div><h2 id="h-route">${esc(t.routeH)}</h2><figure><div class="chart">${routeSvg(r, lang)}</div><figcaption>${esc(t.legend(isLoop(c.pts), !!r.aid_stations?.length))} ${credit}</figcaption></figure></div>
 <div class="prose"><h2>${esc(t.aboutH)}</h2>${about}</div></div></section>`);

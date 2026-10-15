@@ -1,11 +1,12 @@
 // The support form: posts to Mila's support function, which e-mails the message; one language per page (sv, en, de).
 const T = {
-  sv: { sending: "Skickar…", sent: "Tack! Meddelandet är skickat.", busy: "Du har skickat flera meddelanden nyss. Försök igen om en stund.", bad: "Kunde inte skicka. Kontrollera meddelandet (minst 10 tecken) och försök igen.", fail: "Kunde inte skicka. Försök igen." },
-  en: { sending: "Sending…", sent: "Thank you! Your message has been sent.", busy: "You've sent several messages just now. Please try again later.", bad: "Couldn't send. Check your message (at least 10 characters) and try again.", fail: "Couldn't send. Please try again." },
-  de: { sending: "Wird gesendet…", sent: "Danke! Deine Nachricht wurde gesendet.", busy: "Du hast gerade mehrere Nachrichten gesendet. Bitte versuch es später noch einmal.", bad: "Senden fehlgeschlagen. Prüfe deine Nachricht (mindestens 10 Zeichen) und versuch es noch einmal.", fail: "Senden fehlgeschlagen. Bitte versuch es noch einmal." },
+  sv: { sending: "Skickar…", sent: "Tack! Meddelandet är skickat.", busy: "Du har skickat flera meddelanden nyss. Försök igen om en stund.", full: "Formuläret tar emot väldigt många meddelanden just nu. Försök igen senare, eller mejla support@milacoach.app.", bad: "Kunde inte skicka. Kontrollera meddelandet (minst 10 tecken) och försök igen.", fail: "Kunde inte skicka. Försök igen." },
+  en: { sending: "Sending…", sent: "Thank you! Your message has been sent.", busy: "You've sent several messages just now. Please try again later.", full: "The form is receiving a great many messages right now. Please try again later, or e-mail support@milacoach.app.", bad: "Couldn't send. Check your message (at least 10 characters) and try again.", fail: "Couldn't send. Please try again." },
+  de: { sending: "Wird gesendet…", sent: "Danke! Deine Nachricht wurde gesendet.", busy: "Du hast gerade mehrere Nachrichten gesendet. Bitte versuch es später noch einmal.", full: "Das Formular erhält gerade sehr viele Nachrichten. Bitte versuch es später noch einmal oder schreib an support@milacoach.app.", bad: "Senden fehlgeschlagen. Prüfe deine Nachricht (mindestens 10 Zeichen) und versuch es noch einmal.", fail: "Senden fehlgeschlagen. Bitte versuch es noch einmal." },
 };
 // "Rapportera" on a shared page, a race page or in the app opens the form with ?topic=report&ref=<what it is about>: the topic is chosen
-// and the page goes with the message (a hidden field), so the report says what it concerns.
+// and the page goes with the message (a hidden field), so the report says what it concerns. A race page's "Arrangör eller
+// rättighetsinnehavare?" opens it with ?topic=rights the same way. Only a topic the page's own list holds is chosen (the whitelist).
 const q = new URLSearchParams(location.search);
 for (const f of document.querySelectorAll("form.support")) {
   const sel = f.querySelector("select[name=topic]"), ref = f.querySelector("input[name=ref]");
@@ -21,7 +22,9 @@ for (const f of document.querySelectorAll("form.support")) f.addEventListener("s
   try {
     const r = await fetch("https://vfjofaniwtudzvadxpsd.supabase.co/functions/v1/support?forceFunctionRegion=eu-west-1", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(d) });
     if (r.ok) { f.reset(); m.textContent = t.sent; }
-    else m.textContent = r.status === 429 ? t.busy : t.bad;
+    // 429: the sender's own limit ("limit"), or a day so full that only new senders get through ("busy")
+    else if (r.status === 429) m.textContent = (await r.json().catch(() => ({}))).error === "busy" ? t.full : t.busy;
+    else m.textContent = t.bad;
   } catch { m.textContent = t.fail; }
   b.disabled = false;
 });

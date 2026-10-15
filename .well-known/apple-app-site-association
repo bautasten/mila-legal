@@ -1,0 +1,15 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["44DDH358HA.se.patrikberggren.mila"],
+        "components": [
+          { "/": "/kompis", "comment": "Löparkompis: an invite, the code in the fragment" },
+          { "/": "/kompis.html", "comment": "Löparkompis, the page's own name" },
+          { "/": "/grupp", "comment": "Löpargrupp: an invite, the code in the fragment" },
+          { "/": "/grupp.html", "comment": "Löpargrupp, the page's own name" }
+        ]
+      }
+    ]
+  }
+}

@@ -9,14 +9,22 @@
 //   the hero's scene drawn in the browser by /scene.js (scene.ts built by scene_js.sh) when the site has it, one default image per
 //   language (<index>/og.png), sitemap.xml (the site's own pages too) and robots.txt
 //
-// Slugs are lower-case ASCII from the name and distance (the feed's suggestion) and never change once published: lopp/slugs.json in
-// the output keeps every race's slug (and the lastmod of every page), so a renamed race keeps its address and a new race never takes
-// the slug of one that left. A race needs a course for its first page, unless it is an official race whose organiser publishes no course
+// Slugs are lower-case ASCII from the race's name without its sponsors (displayName: a watch, shoe or title sponsor in front, "presented
+// by …" at the end) and distance, and do not change once published: lopp/slugs.json in the output keeps every race's slug (and the
+// lastmod of every page), so a renamed race keeps its address. The one exception (review round 24, item 3): a slug published with a
+// sponsor in front ("adidas-stockholm-marathon") moves once to the name without it, and the old address stays as a page that sends the
+// reader on (movedPage, noindex). Titles, headings and share images say the name without its sponsors; the official name stays in the
+// page's text ("Officiellt namn: …"). Every page says Mila is not affiliated with the organiser or the race's sponsors (the race page,
+// the index and the footer), and offers organisers and rights holders the way to ask for a change or a removal (the support form's
+// topic "rights"). A race needs a course for its first page, unless it is an official race whose organiser publishes no course
 // file (the feed's has_course false: asked for with features=nocourse): its page has the facts, the organiser's aid stations and start,
-// and "Banan publiceras inte som fil av arrangören" instead of the profile and the route; its share image the scene and the text alone.
-// A race without a date gets its page without the event markup.
-// A race that leaves the register keeps its page as "Loppet finns inte längre i registret" with noindex, out of the sitemap and the
-// indexes; one that comes back gets its page back. A run that would drop many races at once (a broken feed) stops without writing.
+// and "Banan publiceras inte som fil av arrangören" with the organiser's link instead of the profile and the route; its share image the
+// scene and the text alone. A course the organiser offered says where ("Bana publicerad av arrangören på <domän>"); heights from the
+// elevation model carry its attribution. A race without a date gets its page without the event markup.
+// A race that leaves the register leaves the site: its pages (every language, its share image, its old addresses) are deleted, so the
+// host answers "not found" with no name (GitHub Pages cannot send 410 Gone; a proxy in front could), and its name and slug leave the
+// slug map, which keeps only a hash of each slug (retired) so a later race never takes the address. A run that would drop many races at
+// once (a broken feed) stops without writing.
 // Files are only written when their content changes (the countdown is coarse and refined in the browser), so the hourly job seldom commits.
 //
 // The course description: Swedish pages show the coach's own description (races.comment, Mila's text); English and German pages show
@@ -28,6 +36,7 @@
 // --allow-mass-removal (accept a run that drops more than a third of the published races).
 
 import { raceSceneSpec, sceneLayers } from "./scene.ts";
+import { securityMeta } from "./site_csp.ts";
 
 export const SITE = "https://milacoach.app";
 export const FEED_URL = "https://vfjofaniwtudzvadxpsd.supabase.co/functions/v1/race-feed";
@@ -35,8 +44,23 @@ export const FEED_URL = "https://vfjofaniwtudzvadxpsd.supabase.co/functions/v1/r
  *  in race_pages.json next to this script (backend/race_pages.json, published as tools/race_pages.json in the Pages repo by
  *  backend/publish_legal.sh), which wins over this constant; the next run regenerates every page with it. */
 export const APP_STORE_URL = "https://apps.apple.com/search?term=Mila%20Coach";
-const RESVG_WASM = "https://cdn.jsdelivr.net/npm/@resvg/resvg-wasm@2.6.2/index_bg.wasm";
-const FONT_URLS = ["https://cdn.jsdelivr.net/npm/dejavu-fonts-ttf@2.37.3/ttf/DejaVuSans.ttf", "https://cdn.jsdelivr.net/npm/dejavu-fonts-ttf@2.37.3/ttf/DejaVuSans-Bold.ttf"];
+/** The renderer's downloads, each with the SHA-256 of the file at that pinned address (review round 24): a file that is not exactly that
+ *  one is never run or used, whatever the CDN serves. The wasm's hash is the npm package's own index_bg.wasm, the fonts' those jsDelivr
+ *  lists for the package version. */
+export const RESVG_WASM = { url: "https://cdn.jsdelivr.net/npm/@resvg/resvg-wasm@2.6.2/index_bg.wasm", sha256: "22bf6e9f9a100d972da0411a69c5ba504367fc1fa87b3b64e3f35e53926d2d70" };
+export const FONT_FILES = [
+  { url: "https://cdn.jsdelivr.net/npm/dejavu-fonts-ttf@2.37.3/ttf/DejaVuSans.ttf", sha256: "7da195a74c55bef988d0d48f9508bd5d849425c1770dba5d7bfc6ce9ed848954" },
+  { url: "https://cdn.jsdelivr.net/npm/dejavu-fonts-ttf@2.37.3/ttf/DejaVuSans-Bold.ttf", sha256: "e6476c1b80502924294eed40894c5b18e06c181444ca953e5334262df9c27724" },
+];
+/** A pinned download, only when its SHA-256 is the one expected; otherwise it throws (the renderer is then left out). */
+export async function fetchPinned(f: { url: string; sha256: string }, fetchFn: typeof fetch = fetch): Promise<Uint8Array> {
+  const r = await fetchFn(f.url);
+  if (!r.ok) { await r.body?.cancel().catch(() => {}); throw new Error(`${f.url.split("/").pop()} ${r.status}`); }
+  const b = new Uint8Array(await r.arrayBuffer());
+  const h = [...new Uint8Array(await crypto.subtle.digest("SHA-256", b))].map((x) => x.toString(16).padStart(2, "0")).join("");
+  if (h !== f.sha256) throw new Error(`${f.url.split("/").pop()}: SHA-256 does not match`);
+  return b;
+}
 /** Races per index page, nearby races per page, and when a run counts as dropping too many races (a share of the published ones, and at least). */
 export const INDEX_PAGE_SIZE = 200, NEARBY_MAX = 6, MASS_REMOVAL_SHARE = 1 / 3, MASS_REMOVAL_MIN = 5;
 const RESERVED_SLUGS = new Set(["sida", "page", "seite", "og", "index", "en", "de", "lopp", "races", "laeufe"]);
@@ -55,6 +79,8 @@ export type Race = {
   url: string | null; next_date: string | null; prelim: boolean; past_dates: string[]; km: number; ascent: number; descent: number | null; trail: boolean;
   min_ele: number | null; max_ele: number | null; climbs: Climb[]; aid_stations: { km: number; what: string[] }[] | null; info: Info | null;
   results: Result[]; comment: string | null; course_source: "official_gpx" | "upload" | null; ele_source: "dem" | "runners" | null;
+  /** The organiser's file: the site it was offered on and that page ("Bana publicerad av arrangören på <domän>"). */
+  course_host: string | null; course_page: string | null;
   /** How many Mila runners' measurements the heights rest on (ele_source "runners"). */
   ele_runners: number | null;
   /** False: an official race whose organiser publishes no course file (no course; ascent is the organiser's stated climb, 0 unknown). */
@@ -63,12 +89,16 @@ export type Race = {
 };
 export type State = {
   version: 1;
-  races: Record<string, { slug: string; name: string; first: string; removed: string | null; og?: string }>;
+  /** The races on the site: their slug, name, first day, share image's hash, and the slugs they had before (each a page that sends the
+   *  reader on). A race that left is not here (`removed` is only read from an older map, and purged). */
+  races: Record<string, { slug: string; name: string; first: string; removed?: string | null; og?: string; old?: string[] }>;
   pages: Record<string, { hash: string; lastmod: string }>;
   og: Record<string, string>;
+  /** A hash of every slug a race that left had (slugHash): never given to another race, never a name in the map. */
+  retired?: string[];
 };
 export type PngRenderer = (svg: string) => Uint8Array | Promise<Uint8Array>;
-export type Report = { races: number; active: number; removed: string[]; added: string[]; written: number; pngs: number };
+export type Report = { races: number; active: number; removed: string[]; added: string[]; moved: string[]; written: number; pngs: number };
 
 // ------------------------------------------------------------------------------------------------------------- the feed, checked
 
@@ -123,6 +153,8 @@ export function cleanRace(x: any): Race | null {
       .map((e) => ({ year: e.year, finishers: e.finishers, overall: { p10: e.overall.p10, p25: e.overall.p25, p50: e.overall.p50, p75: e.overall.p75, p90: e.overall.p90 }, source: safeUrl(e.source, true) })),
     comment: typeof x.comment === "string" && x.comment.trim() ? x.comment.trim().slice(0, 6000) : null,
     course_source: x.course_source === "official_gpx" || x.course_source === "upload" ? x.course_source : null, ele_source: x.ele_source === "dem" || x.ele_source === "runners" ? x.ele_source : null,
+    course_host: x.course_source === "official_gpx" && typeof x.course_host === "string" && /^[a-z0-9-]+(\.[a-z0-9-]+)+$/.test(x.course_host) && x.course_host.length <= 120 ? x.course_host : null,
+    course_page: x.course_source === "official_gpx" ? safeUrl(x.course_page, true) : null,
     ele_runners: x.ele_source === "runners" ? (isNum(x.ele_runners) && x.ele_runners >= 1 ? Math.min(999, Math.round(x.ele_runners)) : 1) : null,
     has_course: x.has_course !== false,
     start: Array.isArray(x.start) && x.start.length === 2 && x.start.every(isNum) ? [x.start[0], x.start[1]] : pts.length ? [pts[0][0], pts[0][1]] : null,
@@ -216,9 +248,14 @@ const T = {
     result: (y: number, n: string, p50: string, p25: string, p75: string, p10: string, p90: string) =>
       `${y} gick ${n} löpare i mål. Mediantiden var ${p50}; den mittersta hälften av fältet kom i mål mellan ${p25} och ${p75}, och 80 % mellan ${p10} och ${p90}.`,
     resultsNote: "Sammanfattat ur de officiella resultatlistorna: bara antal och tider, inga namn eller enskilda resultat.", resultSource: "resultatlistan",
-    ctaH: (n: string) => `Få din personliga prognos, tempoplan och energiplan för ${n} i Mila`,
-    ctaText: "Coachen planerar veckorna fram till start efter din form, och ger dig en tidsprognos, en tempoplan för varje del av banan och en plan för vätska och energi på just den här banan.",
-    store: "Ladda ned på App Store", nearbyH: "Fler lopp i närheten", organizer: "Arrangör",
+    ctaH: "Förbered dig med Mila",
+    ctaText: "Mila är en löpcoach i appen. Lägger du till ett lopp i din plan planerar coachen veckorna fram till start efter din form, och ger dig en tidsprognos och en plan för tempo, vätska och energi på banan.",
+    notAffiliated: "Mila är inte kopplad till, sponsrad av eller godkänd av arrangören eller loppets sponsorer. Namn och varumärken tillhör sina ägare.",
+    notAffiliatedAll: "Mila är inte kopplad till, sponsrad av eller godkänd av loppens arrangörer eller sponsorer. Namn och varumärken tillhör sina ägare.",
+    rights: "Arrangör eller rättighetsinnehavare? Begär ändring eller borttagning", officialName: "Officiellt namn",
+    published: "Bana publicerad av arrangören på", elevAttribution: "Höjddata: Terrain Tiles (AWS Open Data) med data från bland annat SRTM, ArcticDEM, EU-DEM, GMTED2010, ETOPO1, NED och 3DEP.",
+    movedTitle: "Sidan har flyttat | Mila", moved: "Sidan har flyttat.", movedLink: "Till sidan",
+    store: "Hämta i App Store", nearbyH: "Fler lopp i närheten", organizer: "Arrangör",
     disclaimer: "Uppgifterna kommer ur banfilen och arrangörens information. Kontrollera datum, starttider och regler hos arrangören.",
     disclaimerNoCourse: "Uppgifterna kommer från arrangörens information. Kontrollera datum, starttider och regler hos arrangören.",
     noCourse: "Banan publiceras inte som fil av arrangören, så här finns ingen karta eller höjdprofil. Banans sträckning finns hos arrangören.",
@@ -226,7 +263,7 @@ const T = {
     prelim: "preliminärt datum", noDate: "Datum för nästa upplaga är inte klart än.", last: (d: string) => `Senast: ${d}.`,
     passed: (d: string) => `Loppet gick ${d}. Datum för nästa upplaga är inte klart än.`,
     cd: { today: "i dag", tomorrow: "i morgon", days: "om # dagar", weeks: "om # veckor", months: "om # månader", past: "har gått" },
-    removedTitle: (n: string) => `${n} – finns inte längre i registret | Mila`, removed: "Loppet finns inte längre i Milas loppregister.", allRaces: "Se alla lopp",
+    allRaces: "Se alla lopp",
     noDateGroup: "Datum ej klart", filterDistance: "Distans", filterCountry: "Land", all: "Alla distanser", allCountries: "Alla länder",
     buckets: ["Upp till 10 km", "11–21 km", "22–42 km", "Ultra, över 42 km"], noMatch: "Inga lopp matchar filtret.", pages: "Sidor", prev: "Föregående", next: "Nästa",
     ogAlt: (n: string) => `Höjdprofil och bana för ${n}`, ogDefault: "Lopp – bana, höjdprofil och tempoplan", support: "Support", privacy: "Integritetspolicy", terms: "Villkor", contact: "Om Mila och kontakt", report: "Rapportera",
@@ -260,8 +297,13 @@ const T = {
     result: (y: number, n: string, p50: string, p25: string, p75: string, p10: string, p90: string) =>
       `In ${y}, ${n} runners finished. The median finish time was ${p50}; the middle half of the field finished between ${p25} and ${p75}, and 80 % between ${p10} and ${p90}.`,
     resultsNote: "Summarised from the official results: counts and times only, no names or individual results.", resultSource: "results",
-    ctaH: (n: string) => `Get your personal forecast, pace plan and fueling plan for ${n} in Mila`,
-    ctaText: "The coach plans your weeks up to race day around your form, and gives you a finish-time forecast, a pace plan for every part of the course and a fueling plan for this very course.",
+    ctaH: "Prepare with Mila",
+    ctaText: "Mila is a running coach app. Add a race to your plan and the coach plans your weeks up to race day around your form, and gives you a finish-time forecast and a plan for pacing, drinks and fuel on the course.",
+    notAffiliated: "Mila is not affiliated with, sponsored by or endorsed by the organizer or the race's sponsors. Names and trademarks belong to their owners.",
+    notAffiliatedAll: "Mila is not affiliated with, sponsored by or endorsed by the races' organizers or sponsors. Names and trademarks belong to their owners.",
+    rights: "Organizer or rights holder? Ask for a change or a removal", officialName: "Official name",
+    published: "Course published by the organizer on", elevAttribution: "Elevation data: Terrain Tiles (AWS Open Data), with data from SRTM, ArcticDEM, EU-DEM, GMTED2010, ETOPO1, NED and 3DEP, among others.",
+    movedTitle: "This page has moved | Mila", moved: "This page has moved.", movedLink: "Go to the page",
     store: "Download on the App Store", nearbyH: "More races nearby", organizer: "Organizer",
     disclaimer: "Details come from the course file and the organizer's information. Check the date, start times and rules with the organizer.",
     disclaimerNoCourse: "Details come from the organizer's information. Check the date, start times and rules with the organizer.",
@@ -270,7 +312,7 @@ const T = {
     prelim: "preliminary date", noDate: "The date of the next edition is not set yet.", last: (d: string) => `Last held: ${d}.`,
     passed: (d: string) => `The race took place on ${d}. The date of the next edition is not set yet.`,
     cd: { today: "today", tomorrow: "tomorrow", days: "in # days", weeks: "in # weeks", months: "in # months", past: "has taken place" },
-    removedTitle: (n: string) => `${n} – no longer in the register | Mila`, removed: "This race is no longer in Mila's race register.", allRaces: "See all races",
+    allRaces: "See all races",
     noDateGroup: "Date not set", filterDistance: "Distance", filterCountry: "Country", all: "All distances", allCountries: "All countries",
     buckets: ["Up to 10 km", "11–21 km", "22–42 km", "Ultra, over 42 km"], noMatch: "No races match the filter.", pages: "Pages", prev: "Previous", next: "Next",
     ogAlt: (n: string) => `Elevation profile and course of ${n}`, ogDefault: "Races – course, elevation profile and pace plan", support: "Support", privacy: "Privacy policy", terms: "Terms of use", contact: "About Mila and contact", report: "Report",
@@ -304,9 +346,14 @@ const T = {
     result: (y: number, n: string, p50: string, p25: string, p75: string, p10: string, p90: string) =>
       `${y} kamen ${n} Läuferinnen und Läufer ins Ziel. Die Medianzeit lag bei ${p50}; die mittlere Hälfte des Feldes kam zwischen ${p25} und ${p75} ins Ziel, 80 % zwischen ${p10} und ${p90}.`,
     resultsNote: "Zusammengefasst aus den offiziellen Ergebnislisten: nur Anzahlen und Zeiten, keine Namen oder Einzelergebnisse.", resultSource: "Ergebnisliste",
-    ctaH: (n: string) => `Hol dir deine persönliche Prognose, deinen Pace-Plan und deinen Verpflegungsplan für ${n} in Mila`,
-    ctaText: "Der Coach plant deine Wochen bis zum Start nach deiner Form und gibt dir eine Zielzeitprognose, einen Pace-Plan für jeden Abschnitt und einen Verpflegungsplan für genau diese Strecke.",
-    store: "Im App Store laden", nearbyH: "Weitere Läufe in der Nähe", organizer: "Veranstalter",
+    ctaH: "Mit Mila vorbereiten",
+    ctaText: "Mila ist eine Lauf-Coach-App. Nimmst du einen Lauf in deinen Plan auf, plant der Coach deine Wochen bis zum Start nach deiner Form und gibt dir eine Zielzeitprognose und einen Plan für Tempo, Getränke und Verpflegung auf der Strecke.",
+    notAffiliated: "Mila ist nicht mit dem Veranstalter oder den Sponsoren des Laufs verbunden und wird von ihnen weder gesponsert noch empfohlen. Namen und Marken gehören ihren Inhabern.",
+    notAffiliatedAll: "Mila ist nicht mit den Veranstaltern oder Sponsoren der Läufe verbunden und wird von ihnen weder gesponsert noch empfohlen. Namen und Marken gehören ihren Inhabern.",
+    rights: "Veranstalter oder Rechteinhaber? Änderung oder Entfernung beantragen", officialName: "Offizieller Name",
+    published: "Strecke vom Veranstalter veröffentlicht auf", elevAttribution: "Höhendaten: Terrain Tiles (AWS Open Data) mit Daten unter anderem aus SRTM, ArcticDEM, EU-DEM, GMTED2010, ETOPO1, NED und 3DEP.",
+    movedTitle: "Diese Seite ist umgezogen | Mila", moved: "Diese Seite ist umgezogen.", movedLink: "Zur Seite",
+    store: "Laden im App Store", nearbyH: "Weitere Läufe in der Nähe", organizer: "Veranstalter",
     disclaimer: "Die Angaben stammen aus der Streckendatei und den Informationen des Veranstalters. Prüfe Datum, Startzeiten und Regeln beim Veranstalter.",
     disclaimerNoCourse: "Die Angaben stammen aus den Informationen des Veranstalters. Prüfe Datum, Startzeiten und Regeln beim Veranstalter.",
     noCourse: "Der Veranstalter veröffentlicht die Strecke nicht als Datei, daher gibt es hier keine Karte und kein Höhenprofil. Den Streckenverlauf findest du beim Veranstalter.",
@@ -314,7 +361,7 @@ const T = {
     prelim: "vorläufiges Datum", noDate: "Das Datum der nächsten Ausgabe steht noch nicht fest.", last: (d: string) => `Zuletzt: ${d}.`,
     passed: (d: string) => `Der Lauf fand am ${d} statt. Das Datum der nächsten Ausgabe steht noch nicht fest.`,
     cd: { today: "heute", tomorrow: "morgen", days: "in # Tagen", weeks: "in # Wochen", months: "in # Monaten", past: "hat stattgefunden" },
-    removedTitle: (n: string) => `${n} – nicht mehr im Register | Mila`, removed: "Dieser Lauf ist nicht mehr in Milas Laufregister.", allRaces: "Alle Läufe ansehen",
+    allRaces: "Alle Läufe ansehen",
     noDateGroup: "Datum offen", filterDistance: "Distanz", filterCountry: "Land", all: "Alle Distanzen", allCountries: "Alle Länder",
     buckets: ["Bis 10 km", "11–21 km", "22–42 km", "Ultra, über 42 km"], noMatch: "Keine Läufe passen zum Filter.", pages: "Seiten", prev: "Zurück", next: "Weiter",
     ogAlt: (n: string) => `Höhenprofil und Strecke von ${n}`, ogDefault: "Läufe – Strecke, Höhenprofil und Pace-Plan", support: "Support", privacy: "Datenschutzerklärung", terms: "Nutzungsbedingungen", contact: "Über Mila und Kontakt", report: "Melden",
@@ -349,8 +396,54 @@ export function nameHasKm(name: string, km: number): boolean {
   const d1 = String(Math.round(km * 10) / 10);
   return [String(Math.round(km)), d1, d1.replace(".", ",")].some((v) => new RegExp(`(^|[^0-9.,])${v.replace(".", "\\.")}(?![0-9])`).test(name));
 }
-/** The race's name as headlines show it: with the distance unless the name has it. */
-export const raceTitle = (r: Pick<Race, "name" | "km">, lang: Lang) => (nameHasKm(r.name, r.km) ? r.name : `${r.name} ${kmShort(r.km, lang)}`);
+/** The race's name as headlines show it: without its sponsors (displayName), with the distance unless the name has it. */
+export const raceTitle = (r: Pick<Race, "name" | "km">, lang: Lang) => { const n = displayName(r.name); return nameHasKm(n, r.km) ? n : `${n} ${kmShort(r.km, lang)}`; };
+
+// ---- sponsors: a race's title, address and share image without them (review round 24, item 3: Mila never co-brands a race or a sponsor)
+
+/** Watch, shoe and sportswear brands, and the big races' title sponsors, as they stand in front of a race's name (lower case). */
+export const SPONSORS = ["garmin", "polar", "suunto", "coros", "apple", "fitbit", "wahoo", "amazfit", "huawei", "samsung", "tomtom",
+  "adidas", "nike", "asics", "hoka one one", "hoka", "brooks", "saucony", "new balance", "puma", "salomon", "mizuno", "altra", "inov-8", "la sportiva",
+  "merrell", "under armour", "reebok", "skechers", "on running", "icebug", "dynafit", "the north face", "compressport", "2xu",
+  "bmw", "tcs", "bank of america", "schneider electric", "generali", "haspa", "volkswagen"];
+/** Words after "Polar" that make it part of the race's own name ("Polar Night Halfmarathon", "Polar Circle Marathon"), not the brand. */
+const POLAR_NAME = /^(night|nights|circle|bear|ice|star|express|fox|light)\b/i;
+/** Words that say nothing about which race it is: what is left without the sponsor must hold another word. */
+const GENERIC_NAME = new Set(["marathon", "maraton", "marathonet", "maratonet", "halvmarathon", "halvmaraton", "halfmarathon", "half", "halv", "trail", "trails",
+  "run", "running", "race", "racing", "lopp", "loppet", "ultra", "city", "the", "by", "and", "och", "of", "km", "mil", "lauf", "halbmarathon"]);
+const meaningful = (rest: string) => rest.toLowerCase().split(/[^\p{L}\p{N}]+/u).some((w) => [...w].length >= 3 && !GENERIC_NAME.has(w) && !/^\d+$/.test(w));
+/** The race's name without its sponsors: a sponsor in front ("adidas Stockholm Marathon" → "Stockholm Marathon", "HOKA UTMB Mont-Blanc"
+ *  → "UTMB Mont-Blanc"; up to three, as "BMW Berlin" behind another), and "presented by …" at the end. Only as whole words, and only
+ *  when a name of its own is left ("adidas Marathon" stays). The official name stays in the page's text. */
+export function displayName(name: string): string {
+  let n = name.replace(/\s*[-–,]?\s*\b(?:presented|powered|sponsored)\s+by\s+.+$/i, "").trim() || name;
+  for (let i = 0; i < 3; i++) {
+    const low = n.toLowerCase();
+    const hit = SPONSORS.filter((sp) => low.startsWith(sp) && /^[\s\-–:]/.test(n.slice(sp.length))).sort((a, b) => b.length - a.length)[0];
+    if (!hit) break;
+    const rest = n.slice(hit.length).replace(/^[\s\-–:]+/, "");
+    if ((hit === "polar" && POLAR_NAME.test(rest)) || !meaningful(rest)) break;
+    n = rest;
+  }
+  return n;
+}
+/** Lower-case ASCII for an address, as the feed makes its suggestion (race_feed.ts slugify). */
+export function slugify(x: string): string {
+  return x.normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace(/[øØ]/g, "o").replace(/[æÆ]/g, "ae").replace(/ß/g, "ss").replace(/[đĐ]/g, "d")
+    .replace(/[łŁ]/g, "l").replace(/[þÞ]/g, "th").replace(/[œŒ]/g, "oe").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+}
+/** A race's address from its name without sponsors and its distance (unless the name says it), as the feed's raceSlug. */
+export function pageSlug(r: Pick<Race, "name" | "km">): string {
+  const base = slugify(displayName(r.name)).slice(0, 70).replace(/-+$/, "") || "lopp", k = Math.round(r.km);
+  if (!(k > 0) || new RegExp(`(^|-)${k}(k|km)?(-|$)`).test(base) || /(^|-)\d+(-\d+)?-?(k|km|mi|mil)(-|$)/.test(base)) return base;
+  return `${base}-${k}k`;
+}
+/** A published address that starts with a sponsor ("adidas-stockholm-marathon"), which the race's name without sponsors does not: it
+ *  moves once (movedPage at the old address). */
+export function sponsorSlug(slug: string, r: Pick<Race, "name">): boolean {
+  const own = slugify(displayName(r.name));
+  return SPONSORS.some((sp) => { const p = slugify(sp) + "-"; return slug.startsWith(p) && !own.startsWith(p); });
+}
 const dayDate = (day: string) => new Date(`${day}T12:00:00Z`);
 export const dateLong = (day: string, lang: Lang) => dayDate(day).toLocaleDateString(LOCALE[lang], { weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
 export const dateShort = (day: string, lang: Lang) => dayDate(day).toLocaleDateString(LOCALE[lang], { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
@@ -542,14 +635,15 @@ export function ogDefaultSvg(lang: Lang): string {
     + `<path d="${wave}L1136 600L64 600Z" fill="#6E8FFF" fill-opacity="0.25"/><path d="${wave}" fill="none" stroke="#6E8FFF" stroke-width="4"/><text x="1136" y="620" font-size="19" fill="#7F8A9C" text-anchor="end">milacoach.app</text></svg>`;
 }
 
-/** resvg (WebAssembly, no native code) with DejaVu Sans, both fetched from pinned CDN addresses; null when they cannot be had (the
- *  pages then use the images already there, or the default ones). */
+/** resvg (WebAssembly, no native code) with DejaVu Sans, all fetched from pinned CDN addresses and checked against their SHA-256
+ *  (fetchPinned); null when they cannot be had or do not match (the pages then use the images already there, or the default ones). */
 export async function resvgRenderer(fetchFn: typeof fetch = fetch): Promise<PngRenderer | null> {
   try {
+    // every file first, checked, before anything is loaded or run
+    const [wasm, ...fonts] = await Promise.all([fetchPinned(RESVG_WASM, fetchFn), ...FONT_FILES.map((f) => fetchPinned(f, fetchFn))]);
     const spec = ["npm:@resvg", "resvg-wasm@2.6.2"].join("/");   // built at run time, so tests and type checks never load it
     const m: any = await import(spec);
-    await m.initWasm(fetchFn(RESVG_WASM));
-    const fonts = await Promise.all(FONT_URLS.map(async (u) => { const r = await fetchFn(u); if (!r.ok) throw new Error(`font ${r.status}`); return new Uint8Array(await r.arrayBuffer()); }));
+    await m.initWasm(wasm);
     return (svg: string) => new m.Resvg(svg, { font: { fontBuffers: fonts, defaultFontFamily: "DejaVu Sans", loadSystemFonts: false } }).render().asPng();
   } catch (e) {
     console.warn(`race pages: no PNG renderer (${String(e).slice(0, 120)}); existing or default images are used`);
@@ -675,15 +769,21 @@ function frame(f: Frame): string {
 <meta name="twitter:card" content="${f.og.large ? "summary_large_image" : "summary"}"><meta name="twitter:title" content="${esc(f.title)}"><meta name="twitter:description" content="${esc(f.description)}"><meta name="twitter:image" content="${esc(f.og.image)}"><meta name="twitter:image:alt" content="${esc(f.og.alt)}">` : "";
   const switcher = f.alternates ? LANGS.filter((l) => l !== f.lang).map((l) => `<a href="${esc(rel(f.path, f.alternates![l]))}" hreflang="${l}" lang="${l}">${T[l].langName}</a>`).join("") : "";
   const crumbs = `<nav class="crumbs" aria-label="${esc(t.crumbs)}"><ol>${f.crumbs.map((x, i) => i === f.crumbs.length - 1 ? `<li aria-current="page">${esc(x.name)}</li>` : `<li><a href="${esc(rel(f.path, x.path ?? ""))}">${esc(x.name)}</a></li>`).join("")}</ol></nav>`;
-  return `<!doctype html><html lang="${f.lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  // the page's own policy: scripts from the site, and this page's inline ones by their hash (site_csp.ts)
+  const security = securityMeta([f.script, f.module].filter((x): x is string => !!x));
+  return `<!doctype html><html lang="${f.lang}"><head><meta charset="utf-8">${security}<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(f.title)}</title><meta name="description" content="${esc(f.description)}">${f.noindex ? '<meta name="robots" content="noindex,follow">' : `<meta name="robots" content="max-image-preview:large"><link rel="canonical" href="${esc(abs(f.path))}">`}${alt}
 ${og}<meta name="theme-color" content="#0D1119"><link rel="icon" href="${root}logo.png"><style>${f.css}</style>${(f.ld ?? []).map(jsonLd).join("")}</head><body>
 <a class="skip" href="#main">${esc(t.skip)}</a><div class="wrap"><header><a class="brand" href="${root}${c.home}"><img src="${root}logo.png" alt="" width="40" height="40">MILA</a>${switcher ? `<nav class="lang" aria-label="${esc(t.langNav)}">${switcher}</nav>` : ""}</header>
 ${crumbs}
 <main id="main">${f.body}</main>
-<footer><a href="${root}${c.support}">${esc(t.support)}</a><a href="${root}${c.privacy}">${esc(t.privacy)}</a><a href="${root}${c.terms}">${esc(t.terms)}</a><a href="${root}${c.support}#provider">${esc(t.contact)}</a><a href="${root}${c.support}?topic=report&amp;ref=${encodeURIComponent(abs(f.path))}#kontakt" rel="nofollow">${esc(t.report)}</a><br><br>© ${f.today.slice(0, 4)} Mila</footer></div>${f.script ? `<script>${f.script}</script>` : ""}${f.module ? `<script type="module">${f.module}</script>` : ""}</body></html>
+<footer><a href="${root}${c.support}">${esc(t.support)}</a><a href="${root}${c.privacy}">${esc(t.privacy)}</a><a href="${root}${c.terms}">${esc(t.terms)}</a><a href="${root}${c.support}#provider">${esc(t.contact)}</a><a href="${root}${c.support}?topic=report&amp;ref=${encodeURIComponent(abs(f.path))}#kontakt" rel="nofollow">${esc(t.report)}</a><br><br>${esc(t.notAffiliatedAll)}<br><br>© ${f.today.slice(0, 4)} Mila</footer></div>${f.script ? `<script>${f.script}</script>` : ""}${f.module ? `<script type="module">${f.module}</script>` : ""}</body></html>
 `;
 }
+/** Apple's App Store badge linking to the app: Apple's own localized artwork (the site's badges/, from Apple's marketing tools), never a
+ *  button of our own that reads like it; its alt text is the badge's words (t.store). 50 px high, as on the product page. */
+const storeBadge = (path: string, lang: Lang, url: string) =>
+  `<a class="store" href="${esc(url)}"><img src="${esc(rel(path, `badges/app-store-${lang}.svg`))}" alt="${esc(T[lang].store)}" width="150" height="50"></a>`;
 const crumbsLd = (items: { name: string; path: string }[]) => ({ "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: items.map((x, i) => ({ "@type": "ListItem", position: i + 1, name: x.name, item: abs(x.path) })) });
 /** The browser refines the countdown to exact days (the page itself says it in coarse steps). */
 const cdScript = (lang: Lang) => `(()=>{const w=${JSON.stringify(T[lang].cd)};for(const e of document.querySelectorAll(".cd[data-day]")){const n=Math.round((Date.parse(e.dataset.day+"T12:00:00")-Date.now())/864e5),m=Math.round(n/30.44);e.textContent=n<0?w.past:n===0?w.today:n===1?w.tomorrow:n<14?w.days.replace("#",n):n<60?w.weeks.replace("#",Math.floor(n/7)):w.months.replace("#",m)}})();`;
@@ -710,7 +810,7 @@ export function racePage(r: Race, lang: Lang, ctx: Ctx): string {
   if (r.next_date && r.next_date >= today) when = `<time datetime="${r.next_date}">${esc(cap(dateLong(r.next_date, lang)))}</time>${r.prelim ? `<span class="badge">${esc(t.prelim)}</span>` : ""}${where ? ` · ${esc(where)}` : ""} · <span class="cd" data-day="${r.next_date}">${esc(countdown(r.next_date, today, lang))}</span>`;
   else if (r.next_date) when = `${esc(t.passed(dateLong(r.next_date, lang)))}${where ? ` · ${esc(where)}` : ""}`;
   else when = `${esc(t.noDate)}${r.past_dates.length ? ` ${esc(t.last(dateShort(r.past_dates[r.past_dates.length - 1], lang)))}` : ""}${where ? ` · ${esc(where)}` : ""}`;
-  const orgLink = r.url ? `<a href="${esc(r.url)}" rel="noopener">${esc(r.organizer ? t.organiserPage : cap(t.organiserPage))}</a>` : "";
+  const orgLink = r.url ? `<a href="${esc(r.url)}" rel="noopener nofollow">${esc(r.organizer ? t.organiserPage : cap(t.organiserPage))}</a>` : "";
   const org = r.organizer ? `<p class="meta">${esc(t.organizer)}: ${esc(r.organizer)}${orgLink ? ` · ${orgLink}` : ""}</p>` : orgLink ? `<p class="meta">${orgLink}</p>` : "";
   const start = mainStart(r);
   // a race without a course: the climb only as the organiser states it, and no character a profile would give
@@ -723,16 +823,22 @@ export function racePage(r: Race, lang: Lang, ctx: Ctx): string {
   // the scene's spec for the browser (scene.ts): the profile to three decimals is plenty for a horizon
   const spec = raceSceneSpec(r, { startIso: startDate(r), today });
   const scene = ctx.sceneJs ? ` data-scene="${esc(JSON.stringify({ ...spec, profile: spec.profile.map((v) => Math.round(v * 1000) / 1000), relief: Math.round(spec.relief) }))}"` : "";
-  const hero = `<div class="race-hero"${scene}><div class="eyebrow">${esc([t.races, country].filter(Boolean).join(" · "))}</div><h1>${esc(title)}</h1><p class="meta">${when}</p>${org}
+  // the name in the headings is without its sponsors; the official name stays here when it differs
+  const official = displayName(r.name) !== r.name ? `<p class="meta">${esc(t.officialName)}: ${esc(r.name)}</p>` : "";
+  const hero = `<div class="race-hero"${scene}><div class="eyebrow">${esc([t.races, country].filter(Boolean).join(" · "))}</div><h1>${esc(title)}</h1><p class="meta">${when}</p>${official}${org}
 <dl class="facts">${facts.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl></div>`;
-  const button = `<div class="ctas"><a class="cta" href="${esc(ctx.appStore)}">${esc(t.store)}</a></div><p class="brandline">${esc(t.brandLine)}</p>`;
-  const cta = `<div class="ctabox"><h2>${esc(t.ctaH(r.name))}</h2><p class="sub">${esc(t.ctaText)}</p>${button}</div>`;
+  const button = `<div class="ctas">${storeBadge(path, lang, ctx.appStore)}</div><p class="brandline">${esc(t.brandLine)}</p>`;
+  const cta = `<div class="ctabox"><h2>${esc(t.ctaH)}</h2><p class="sub">${esc(t.ctaText)}</p>${button}</div>`;
   const sections: string[] = [];
   const about = (lang === "sv" && r.comment ? r.comment.split(/\n{2,}/).map((p) => `<p>${esc(p)}</p>`).join("") + `<p class="note">${esc(t.coachNote)}</p>` : aboutText(r, lang).map((p) => `<p>${esc(p)}</p>`).join(""));
   if (c) {
     const [eMin, eMax] = eleRange(c.pts);
-    sections.push(`<section aria-labelledby="h-profile"><h2 id="h-profile">${esc(t.profileH)}</h2><figure><div class="chart">${profileSvg(r, lang)}</div><figcaption>${esc(t.profileDesc(kmText(r.km, lang), num(r.min_ele ?? eMin, lang), num(r.max_ele ?? eMax, lang), (r.aid_stations ?? []).length))}${r.ele_source === "dem" ? ` ${esc(t.dem)}` : r.ele_source === "runners" ? ` ${esc(t.runners(r.ele_runners ?? 1))}` : ""}</figcaption></figure></section>`);
-    const credit = r.course_source === "official_gpx" ? `${esc(t.official)}${r.url ? ` (<a href="${esc(r.url)}" rel="noopener">${esc(t.organiserPage)}</a>)` : ""}.` : esc(t.upload);
+    sections.push(`<section aria-labelledby="h-profile"><h2 id="h-profile">${esc(t.profileH)}</h2><figure><div class="chart">${profileSvg(r, lang)}</div><figcaption>${esc(t.profileDesc(kmText(r.km, lang), num(r.min_ele ?? eMin, lang), num(r.max_ele ?? eMax, lang), (r.aid_stations ?? []).length))}${r.ele_source === "dem" ? ` ${esc(t.dem)} ${esc(t.elevAttribution)}` : r.ele_source === "runners" ? ` ${esc(t.runners(r.ele_runners ?? 1))}` : ""}</figcaption></figure></section>`);
+    // where the organiser offered the course (decision 3), else the organiser's page as before
+    const credit = r.course_source === "official_gpx"
+      ? r.course_host ? `${esc(t.published)} <a href="${esc(r.course_page ?? r.url ?? `https://${r.course_host}`)}" rel="noopener nofollow">${esc(r.course_host)}</a>.`
+        : `${esc(t.official)}${r.url ? ` (<a href="${esc(r.url)}" rel="noopener nofollow">${esc(t.organiserPage)}</a>)` : ""}.`
+      : esc(t.upload);
     sections.push(`<section aria-labelledby="h-route"><div class="two"><div><h2 id="h-route">${esc(t.routeH)}</h2><figure><div class="chart">${routeSvg(r, lang)}</div><figcaption>${esc(t.legend(isLoop(c.pts), !!r.aid_stations?.length))} ${credit}</figcaption></figure></div>
 <div class="prose"><h2>${esc(t.aboutH)}</h2>${about}</div></div></section>`);
   } else if (bare) {
@@ -753,7 +859,7 @@ export function racePage(r: Race, lang: Lang, ctx: Ctx): string {
   if (info?.cutoffs?.length) prac.push(`<h3>${esc(t.cutoffsH)}</h3>${table(t.cutoffCaption, t.cutoffCols, info.cutoffs.map((x) => [esc(t.at(num(x.km, lang, 1))), esc(x.clock ? t.clock(x.clock) : t.elapsed(Math.floor(x.elapsed_min! / 60), x.elapsed_min! % 60))]), [])}`);
   if (info?.kit?.length) prac.push(`<h3>${esc(t.kitH)}</h3><ul>${info.kit.map((k) => `<li>${esc(k)}</li>`).join("")}</ul>`);
   if (prac.length) {
-    const src = info?.source ? `<p class="note">${esc(t.source)}: <a href="${esc(info.source)}" rel="noopener">${esc(hostOf(info.source))}</a>${info.checked ? `, ${esc(t.checked(dateShort(info.checked, lang)))}` : ""}</p>` : "";
+    const src = info?.source ? `<p class="note">${esc(t.source)}: <a href="${esc(info.source)}" rel="noopener nofollow">${esc(hostOf(info.source))}</a>${info.checked ? `, ${esc(t.checked(dateShort(info.checked, lang)))}` : ""}</p>` : "";
     sections.push(`<section aria-labelledby="h-practical"><h2 id="h-practical">${esc(t.practicalH)}</h2>${prac.join("")}${src}</section>`);
   }
   if (r.results.length) {
@@ -762,7 +868,8 @@ export function racePage(r: Race, lang: Lang, ctx: Ctx): string {
   }
   const near = nearby(r, ctx.active, today);
   if (near.length) sections.push(`<section aria-labelledby="h-nearby"><h2 id="h-nearby">${esc(t.nearbyH)}</h2><ul class="list">${near.map((x) => `<li><a href="${esc(rel(path, racePath(lang, ctx.slugs.get(x.id)!)))}">${esc(raceTitle(x, lang))}</a><span>${esc([x.next_date ? dateShort(x.next_date, lang) : t.noDateGroup, whereText(x, lang)].filter(Boolean).join(" · "))}</span></li>`).join("")}</ul></section>`);
-  sections.push(`<section><p class="sub">${esc(t.ctaH(r.name))}</p>${button}<p class="note">${esc(bare ? t.disclaimerNoCourse : t.disclaimer)}</p></section>`);
+  const rights = `${L[lang].support}?topic=rights&ref=${encodeURIComponent(abs(path))}#kontakt`;
+  sections.push(`<section><p class="sub">${esc(t.ctaH)}</p>${button}<p class="note">${esc(bare ? t.disclaimerNoCourse : t.disclaimer)}</p><p class="note">${esc(t.notAffiliated)} <a href="${esc(rel(path, rights))}" rel="nofollow">${esc(t.rights)}</a></p></section>`);
 
   const og = ctx.ogImage(r, lang), description = metaDescription(r, lang);
   const ld: object[] = [crumbsLd([{ name: t.home, path: L[lang].home }, { name: t.races, path: indexPath(lang) }, { name: title, path }])];
@@ -785,12 +892,14 @@ export function racePage(r: Race, lang: Lang, ctx: Ctx): string {
     crumbs: [{ name: t.home, path: L[lang].home }, { name: t.races, path: indexPath(lang) }, { name: title }] });
 }
 
-/** The page of a race no longer in the register: kept at its address so old links land somewhere, with noindex and no event. */
-export function removedPage(name: string, slug: string, lang: Lang, ctx: Pick<Ctx, "css" | "today">): string {
-  const t = T[lang], path = racePath(lang, slug);
-  return frame({ lang, path, title: t.removedTitle(name), description: t.removed, css: ctx.css, today: ctx.today, noindex: true,
-    body: `<div class="race-hero"><div class="eyebrow">${esc(t.races)}</div><h1>${esc(name)}</h1><p class="lead">${esc(t.removed)}</p><div class="ctas"><a class="cta alt" href="${esc(rel(path, indexPath(lang)))}">${esc(t.allRaces)}</a></div></div>`,
-    crumbs: [{ name: t.home, path: L[lang].home }, { name: t.races, path: indexPath(lang) }, { name }] });
+/** A race's old address (a slug that had a sponsor in front): a page with noindex that sends the reader on to the race's page (a refresh
+ *  at once, the canonical link, and a plain link), with no name of its own. */
+export function movedPage(fromSlug: string, toSlug: string, lang: Lang, ctx: Pick<Ctx, "css" | "today">): string {
+  const t = T[lang], path = racePath(lang, fromSlug), to = racePath(lang, toSlug), href = rel(path, to);
+  const html = frame({ lang, path, title: t.movedTitle, description: t.moved, css: ctx.css, today: ctx.today, noindex: true,
+    body: `<div class="race-hero"><div class="eyebrow">${esc(t.races)}</div><p class="lead">${esc(t.moved)}</p><div class="ctas"><a class="cta" href="${esc(href)}">${esc(t.movedLink)}</a><a class="cta alt" href="${esc(rel(path, indexPath(lang)))}">${esc(t.allRaces)}</a></div></div>`,
+    crumbs: [{ name: t.home, path: L[lang].home }, { name: t.races, path: indexPath(lang) }, { name: t.moved }] });
+  return html.replace('<meta charset="utf-8">', `<meta charset="utf-8"><meta http-equiv="refresh" content="0; url=${esc(href)}"><link rel="canonical" href="${esc(abs(to))}">`);
 }
 
 /** The races in index order: coming races by date, then those without a coming date; by name within a day. */
@@ -820,7 +929,7 @@ export function indexPage(lang: Lang, page: number, pages: number, races: Race[]
   const countries = [...new Map(ctx.active.map((r) => [r.country_code ?? r.country ?? "", countryName(r, lang) ?? ""])).entries()].filter(([k]) => k).sort((a, b) => a[1].localeCompare(b[1], LOCALE[lang]));
   const filter = `<form class="filter" hidden aria-label="Filter"><label>${esc(t.filterDistance)}<select name="d"><option value="">${esc(t.all)}</option>${["a", "b", "c", "d"].map((b, i) => `<option value="${b}">${esc(t.buckets[i])}</option>`).join("")}</select></label><label>${esc(t.filterCountry)}<select name="c"><option value="">${esc(t.allCountries)}</option>${countries.map(([k, n]) => `<option value="${esc(k)}">${esc(n)}</option>`).join("")}</select></label></form><p id="nomatch" class="note" hidden>${esc(t.noMatch)}</p>`;
   const pager = pages > 1 ? `<nav class="pager" aria-label="${esc(t.pages)}">${page > 1 ? `<a href="${esc(rel(path, indexPath(lang, page - 1)))}" rel="prev">${esc(t.prev)}</a>` : ""}${Array.from({ length: pages }, (_, i) => i + 1).map((p) => p === page ? `<span aria-current="page">${p}</span>` : `<a href="${esc(rel(path, indexPath(lang, p)))}">${p}</a>`).join("")}${page < pages ? `<a href="${esc(rel(path, indexPath(lang, page + 1)))}" rel="next">${esc(t.next)}</a>` : ""}</nav>` : "";
-  const hero = `<div class="race-hero"><div class="eyebrow">${esc(t.races)}</div><h1>${esc(t.indexH1)}${page > 1 ? ` – ${esc(t.pageN(page))}` : ""}</h1><p class="lead">${esc(t.indexLead)}</p><p class="meta">${esc(t.count(total))}</p><div class="ctas"><a class="cta" href="${esc(ctx.appStore)}">${esc(t.store)}</a></div><p class="brandline">${esc(t.brandLine)}</p></div>`;
+  const hero = `<div class="race-hero"><div class="eyebrow">${esc(t.races)}</div><h1>${esc(t.indexH1)}${page > 1 ? ` – ${esc(t.pageN(page))}` : ""}</h1><p class="lead">${esc(t.indexLead)}</p><p class="meta">${esc(t.count(total))}</p><div class="ctas">${storeBadge(path, lang, ctx.appStore)}</div><p class="brandline">${esc(t.brandLine)}</p><p class="note">${esc(t.notAffiliatedAll)}</p></div>`;
   return frame({ lang, path, title: `${t.indexTitle}${page > 1 ? ` – ${t.pageN(page)}` : ""} | Mila`, description: t.indexLead, css: ctx.css, today, alternates,
     og: { ...ctx.ogImage(null, lang), alt: t.ogDefault }, ld: [crumbsLd([{ name: t.home, path: L[lang].home }, { name: t.races, path: indexPath(lang) }])],
     body: `${hero}${filter}\n${list}\n${pager}`, script: filterScript, crumbs: [{ name: t.home, path: L[lang].home }, { name: t.races }] });
@@ -843,6 +952,8 @@ export const ROBOTS = `User-agent: *\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\n
 
 // ------------------------------------------------------------------------------------------------------------- the run
 
+/** A retired slug as the map keeps it: a hash, never the name the slug spells. */
+export async function slugHash(slug: string): Promise<string> { return (await sha(`retired-slug:${slug}`)).slice(0, 16); }
 async function sha(text: string): Promise<string> {
   return [...new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text)))].slice(0, 12).map((x) => x.toString(16).padStart(2, "0")).join("");
 }
@@ -857,35 +968,51 @@ export async function generate(o: { out: string; races: Race[]; ids?: Set<string
   const out = o.out.replace(/\/+$/, ""), today = o.today, log = o.log ?? (() => {});
   const prev = await readText(`${out}/lopp/slugs.json`);
   const state: State = prev ? JSON.parse(prev) : { version: 1, races: {}, pages: {}, og: {} };
-  state.races ??= {}; state.pages ??= {}; state.og ??= {};
+  state.races ??= {}; state.pages ??= {}; state.og ??= {}; state.retired ??= [];
   const feedIds = o.ids ?? new Set(o.races.map((r) => r.id)), usable = new Set(o.races.map((r) => r.id));
-  const report: Report = { races: o.races.length, active: 0, removed: [], added: [], written: 0, pngs: 0 };
+  const report: Report = { races: o.races.length, active: 0, removed: [], added: [], moved: [], written: 0, pngs: 0 };
 
-  // 1. who left: published races the feed no longer names, and races it still names but whose row cleanRace refuses (their page goes
-  //    noindex as a removed race's does, instead of staying up stale with facts the feed no longer stands behind). Many at once is a
-  //    broken feed, not the register (or a feed whose rows no longer read), and nothing is written
+  // 1. who left: published races the feed no longer names, and races it still names but whose row cleanRace refuses (their pages leave
+  //    rather than stay up stale with facts the feed no longer stands behind). Many at once is a broken feed, not the register (or a feed
+  //    whose rows no longer read), and nothing is written
   const published = Object.entries(state.races).filter(([, s]) => !s.removed);
   const gone = published.filter(([id]) => !usable.has(id));
   if (!o.allowMassRemoval && published.length && (feedIds.size === 0 || usable.size === 0 || (gone.length >= MASS_REMOVAL_MIN && gone.length > published.length * MASS_REMOVAL_SHARE))) {
     throw new Error(`race pages: the feed drops ${gone.length} of ${published.length} published races; nothing written (--allow-mass-removal accepts it)`);
   }
-  // 2. slugs: a race keeps its own; a new race with a course (or an official one whose organiser publishes none) gets the feed's
-  //    suggestion, made unique among every slug ever used
-  const used = new Set(Object.values(state.races).map((s) => s.slug));
-  const fresh = o.races.filter((r) => !state.races[r.id] && (r.course || courseless(r))).sort((a, b) => (a.slug || "").localeCompare(b.slug || "") || a.id.localeCompare(b.id));
-  for (const r of fresh) {
-    const base = r.slug && !RESERVED_SLUGS.has(r.slug) ? r.slug : `lopp-${r.id.slice(0, 8)}`;
-    let s = base;
-    for (let i = 2; used.has(s); i++) s = `${base}-${i}`;
-    used.add(s);
-    state.races[r.id] = { slug: s, name: r.name, first: today, removed: null };
-    report.added.push(s);
+  // their pages, old addresses and share images are deleted below, and their names and slugs leave the map (a hash of each slug stays,
+  // retired, so no later race takes the address); a race an older map kept as removed (with its name) goes the same way
+  const leaving: string[] = [];
+  for (const [id, s] of Object.entries(state.races)) {
+    if (usable.has(id) && !gone.some(([g]) => g === id)) continue;
+    if (!s.removed) report.removed.push(s.slug);
+    for (const slug of [s.slug, ...(s.old ?? [])]) { leaving.push(slug); state.retired.push(await slugHash(slug)); }
+    delete state.races[id];
   }
-  for (const [id] of gone) { state.races[id].removed = today; report.removed.push(state.races[id].slug); }
+  const retired = new Set(state.retired);
+  // 2. slugs: a race keeps its own; a new race with a course (or an official one whose organiser publishes none) gets the feed's
+  //    suggestion, or one from its name without sponsors (pageSlug) when the suggestion starts with a sponsor, made unique among every slug
+  //    in use and never a retired one. A published slug with a sponsor in front moves once to the name without it; the old one is kept as
+  //    a page that sends the reader on (movedPage)
+  const used = new Set(Object.values(state.races).flatMap((s) => [s.slug, ...(s.old ?? [])]));
+  const free = async (base: string) => { let x = base; for (let i = 2; used.has(x) || retired.has(await slugHash(x)); i++) x = `${base}-${i}`; used.add(x); return x; };
+  const baseOf = (r: Race) => { const own = r.slug && sponsorSlug(r.slug, r) ? pageSlug(r) : r.slug; return own && !RESERVED_SLUGS.has(own) ? own : `lopp-${r.id.slice(0, 8)}`; };
+  const fresh = o.races.filter((r) => !state.races[r.id] && (r.course || courseless(r))).sort((a, b) => baseOf(a).localeCompare(baseOf(b)) || a.id.localeCompare(b.id));
+  for (const r of fresh) {
+    const slug = await free(baseOf(r));
+    state.races[r.id] = { slug, name: r.name, first: today };
+    report.added.push(slug);
+  }
   const byId = new Map(o.races.map((r) => [r.id, r])), active: Race[] = [];
   for (const [id, s] of Object.entries(state.races)) {
     const r = byId.get(id);
-    if (r) { s.removed = null; s.name = r.name; active.push(r); }
+    if (!r) continue;
+    delete s.removed; s.name = r.name; active.push(r);
+    if (sponsorSlug(s.slug, r)) {
+      const own = pageSlug(r), base = own && !RESERVED_SLUGS.has(own) ? own : `lopp-${r.id.slice(0, 8)}`;
+      s.old = [...new Set([...(s.old ?? []), s.slug])]; s.slug = await free(base); delete s.og;
+      report.moved.push(s.slug);
+    }
   }
   report.active = active.length;
   const slugs = new Map(Object.entries(state.races).map(([id, s]) => [id, s.slug]));
@@ -944,8 +1071,19 @@ export async function generate(o: { out: string; races: Race[]; ids?: Set<string
       raceEntries.push({ loc: abs(path), lastmod: await track(path, html), alternates: alt });
     }
   }
-  for (const s of Object.values(state.races).filter((s) => s.removed)) {
-    for (const lang of LANGS) await put(`${racePath(lang, s.slug)}index.html`, removedPage(s.name, s.slug, lang, ctx));
+  // a race's old addresses send the reader on (their share image goes); the pages of races that left are deleted, every language and
+  // their share images, so the host answers "not found" with no name
+  for (const s of Object.values(state.races)) {
+    for (const old of s.old ?? []) {
+      for (const lang of LANGS) await put(`${racePath(lang, old)}index.html`, movedPage(old, s.slug, lang, ctx));
+      if (await exists(ogPath(old))) { await Deno.remove(`${out}/${ogPath(old)}`); written++; }
+    }
+  }
+  for (const slug of leaving) {
+    for (const lang of LANGS) {
+      const dir = `${out}/${racePath(lang, slug)}`.replace(/\/$/, "");
+      try { await Deno.remove(dir, { recursive: true }); written++; } catch (e) { if (!(e instanceof Deno.errors.NotFound)) throw e; }
+    }
   }
   // 5. the indexes, page by page in the same order in every language, and no page left over from a longer list
   const ordered = indexOrder(active, today), count = Math.max(1, Math.ceil(ordered.length / INDEX_PAGE_SIZE)), indexEntries: SitemapEntry[] = [];
@@ -980,6 +1118,7 @@ export async function generate(o: { out: string; races: Race[]; ids?: Set<string
   state.pages = Object.fromEntries(Object.entries(pages).sort(([a], [b]) => a.localeCompare(b)));
   state.races = Object.fromEntries(Object.entries(state.races).sort(([, a], [, b]) => a.slug.localeCompare(b.slug)));
   state.og = Object.fromEntries(Object.entries(state.og).sort(([a], [b]) => a.localeCompare(b)));
+  state.retired = [...new Set(state.retired)].sort();
   await put("lopp/slugs.json", JSON.stringify(state, null, 1) + "\n");
   report.written = written;
   return report;
@@ -999,7 +1138,7 @@ if (import.meta.main) {
     const feed = await readFeed(opt("--feed") ?? FEED_URL);
     const png = args.includes("--no-png") ? null : await resvgRenderer();
     const r = await generate({ out, races: feed.races, ids: feed.ids, today, png, appStore: await configuredAppStore(), allowMassRemoval: args.includes("--allow-mass-removal"), log: console.warn });
-    console.log(`race pages: ${r.active} races (${r.races} in the feed), ${r.added.length} new, ${r.removed.length} removed, ${r.pngs} images, ${r.written} files written`);
+    console.log(`race pages: ${r.active} races (${r.races} in the feed), ${r.added.length} new, ${r.moved.length} moved, ${r.removed.length} removed, ${r.pngs} images, ${r.written} files written`);
   } catch (e) {
     console.error(String(e));
     Deno.exit(1);

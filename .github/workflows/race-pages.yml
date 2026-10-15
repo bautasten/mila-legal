@@ -9,6 +9,7 @@ on:
     - cron: "17 * * * *"
   workflow_dispatch:
 
+# contents: write to push the pages; pages: write only for the last step's build request (POST /pages/builds)
 permissions:
   contents: write
   pages: write
@@ -23,11 +24,13 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
+      # actions pinned to a commit (the tag named beside it), Deno to one exact release (review round 24): nothing changes under the
+      # workflow without a commit here
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
 
-      - uses: denoland/setup-deno@v2
+      - uses: denoland/setup-deno@22d081ff2d3a40755e97629de92e3bcbfa7cf2ed # v2.0.5
         with:
-          deno-version: v2.x
+          deno-version: 2.9.7
 
       - name: Generate the race pages
         run: >

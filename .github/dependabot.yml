@@ -1,0 +1,9 @@
+# Dependabot for the Pages repo (published as .github/dependabot.yml by backend/publish_legal.sh): the race pages' workflow pins its
+# actions to commits (race_pages_workflow.yml), so Dependabot proposes a pull request when one of them has a new release; nothing changes
+# until it is merged here and published again.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly

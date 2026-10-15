@@ -35,6 +35,8 @@ footer{padding:34px 0 50px;color:var(--muted);font-size:14px;border-top:1px soli
 .sub.after{margin:28px 0 0}
 .lang{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
 
-/* the App Store button with the support link beside it */
-.ctas{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:26px}.ctas .cta{margin-top:0}
+/* Apple's App Store badge with the support link beside it: the badge 50 px high (Apple: at least 40 px on screen), as Apple draws it, with a
+   quarter of its height clear around it (the gap) */
+.ctas{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:26px}.ctas .cta{margin-top:0}
+.store{display:inline-block;line-height:0}.store img{display:block;height:50px;width:auto}
 .cta.alt{background:transparent;color:var(--ink);border:1px solid var(--line)}

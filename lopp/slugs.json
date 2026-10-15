@@ -1,0 +1,243 @@
+{
+ "version": 1,
+ "races": {
+  "9d023948-cfda-4c04-830d-c46905876cee": {
+   "slug": "fjallmaraton-100k",
+   "name": "Fjällmaraton 100K",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "9d95ea5932e01c7e5557e47e"
+  },
+  "1fd0982a-9d4d-4399-aa66-99cebde78950": {
+   "slug": "fjallmaraton-salen-42-km",
+   "name": "Fjällmaraton Sälen 42 km",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "058599a78ef0320008266495"
+  },
+  "f2eeb52e-8391-4db2-9607-348f44399131": {
+   "slug": "harno-trail-21-km",
+   "name": "Härnö Trail 21 km",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "f827f14b929d88ac9b1ecc82"
+  },
+  "afa4e21e-ee0d-4a60-9506-7dfa7759de55": {
+   "slug": "harno-trail-kort-7-km",
+   "name": "Härnö Trail Kort 7 km",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "99606c42c983f7cea5478a6f"
+  },
+  "92156520-47ed-4d78-aa03-fbee7d20ed86": {
+   "slug": "harno-trail-mellan-14-km",
+   "name": "Härnö Trail Mellan 14 km",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "7f21a5b8fdeeba7f4d255678"
+  },
+  "c8f5f07f-9cfa-4ec7-aca1-f8dab4b380bf": {
+   "slug": "kia-fjallmaraton-45k",
+   "name": "Kia Fjällmaraton 45K",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "1d78c09c6d3d5e8ae007b8f2"
+  },
+  "cbfdbac3-30a9-4dc1-9120-789bacbbcf41": {
+   "slug": "tcs-lidingoloppet-30-km",
+   "name": "TCS Lidingöloppet 30 km",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "97191ccb77e34c8293d32746"
+  },
+  "cd8c99ef-16c2-48c5-a7c4-1bf6f90c1058": {
+   "slug": "tcs-london-marathon-42-2-km",
+   "name": "TCS London Marathon 42,2 km",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "c9c1e40816095f62cffac7cd"
+  },
+  "03f446d4-18b8-4485-ab4a-ce84fbcfed66": {
+   "slug": "umaker-trail-15-6-km",
+   "name": "Umåker Trail 15,6 km",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "4f08e0145ca8d6e2f8f58424"
+  }
+ },
+ "pages": {
+  "/index-de.html": {
+   "hash": "b566d30a90964134f74e202b",
+   "lastmod": "2026-10-15"
+  },
+  "/index.html": {
+   "hash": "09f4a0cea629429625b53e2f",
+   "lastmod": "2026-10-15"
+  },
+  "/privacy-de.html": {
+   "hash": "fdcf910d8bf66fcc18d97a39",
+   "lastmod": "2026-10-15"
+  },
+  "/privacy-en.html": {
+   "hash": "1e972c041820ac96eaeb8104",
+   "lastmod": "2026-10-15"
+  },
+  "/privacy.html": {
+   "hash": "1c9b0159bd8536125aad0451",
+   "lastmod": "2026-10-15"
+  },
+  "/support-de.html": {
+   "hash": "dc324428c67c12b6a48bd8d6",
+   "lastmod": "2026-10-15"
+  },
+  "/support-sv.html": {
+   "hash": "a3c21f46998a6fec660af72e",
+   "lastmod": "2026-10-15"
+  },
+  "/support.html": {
+   "hash": "c5e5aa34dfebbfec277f9d04",
+   "lastmod": "2026-10-15"
+  },
+  "/sv.html": {
+   "hash": "80836c2d3d8c4e39946162cb",
+   "lastmod": "2026-10-15"
+  },
+  "/terms-de.html": {
+   "hash": "a1a58d372489acb53adbe5c1",
+   "lastmod": "2026-10-15"
+  },
+  "/terms-en.html": {
+   "hash": "7cbb8c88f81368ef471d3474",
+   "lastmod": "2026-10-15"
+  },
+  "/terms.html": {
+   "hash": "7a183ef7bfe6e35b4b88b3d2",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/": {
+   "hash": "c94cd660321e780a1a0a5e55",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/fjallmaraton-100k/": {
+   "hash": "2d3d51a383922cc57d52f938",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/fjallmaraton-salen-42-km/": {
+   "hash": "12a2326e6ceff417a2307ddc",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/harno-trail-21-km/": {
+   "hash": "672e44bc99d25fc5840a60f7",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/harno-trail-kort-7-km/": {
+   "hash": "5533189a079a6262a82398e8",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/harno-trail-mellan-14-km/": {
+   "hash": "38d2f0973ec018d9abd6eb58",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/kia-fjallmaraton-45k/": {
+   "hash": "d165d67230765b177b44658c",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/tcs-lidingoloppet-30-km/": {
+   "hash": "33deb858f505357031bd5475",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/tcs-london-marathon-42-2-km/": {
+   "hash": "247585669f491b12efbe6143",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/umaker-trail-15-6-km/": {
+   "hash": "bb5c9c9c864ea5d3ae69ba00",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/": {
+   "hash": "e93852b177f373eed958b3a8",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/fjallmaraton-100k/": {
+   "hash": "c1ff4911adc94e2c8e50bcea",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/fjallmaraton-salen-42-km/": {
+   "hash": "8332be4aefcd9530e95391df",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/harno-trail-21-km/": {
+   "hash": "f1f293b5247a72931dfe8b2e",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/harno-trail-kort-7-km/": {
+   "hash": "b6a1386f6f69955de8c1294f",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/harno-trail-mellan-14-km/": {
+   "hash": "c5511bf13a5948c277e63d14",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/kia-fjallmaraton-45k/": {
+   "hash": "b41f9c72d45e792af2b9bcb4",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/tcs-lidingoloppet-30-km/": {
+   "hash": "50e9703b8030538dfa665851",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/tcs-london-marathon-42-2-km/": {
+   "hash": "c9b30921142e52b2b255edaa",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/umaker-trail-15-6-km/": {
+   "hash": "8b9e7b8890bd382a71ee32be",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/": {
+   "hash": "11a1e794a2fdef4f5a34824e",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/fjallmaraton-100k/": {
+   "hash": "e7b7ae52e5c7874126549b6a",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/fjallmaraton-salen-42-km/": {
+   "hash": "ec1a07f00d8aaefc2d74e196",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/harno-trail-21-km/": {
+   "hash": "9aeaffd1c5e0506c08374b0f",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/harno-trail-kort-7-km/": {
+   "hash": "662ca153ee6dd9cb28a6f318",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/harno-trail-mellan-14-km/": {
+   "hash": "78b193c407101aa596952411",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/kia-fjallmaraton-45k/": {
+   "hash": "046c4b01dbb8ecfaee49c011",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/tcs-lidingoloppet-30-km/": {
+   "hash": "5470c1d368f901571833e70e",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/tcs-london-marathon-42-2-km/": {
+   "hash": "f5b20344ddfea0b01fc4fb66",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/umaker-trail-15-6-km/": {
+   "hash": "5513ae91bbf3ead8f64176b3",
+   "lastmod": "2026-10-15"
+  }
+ },
+ "og": {
+  "de": "9b42278e3a4e652aaeabe5ec",
+  "en": "a6a614d85967853a257da5aa",
+  "sv": "c415d92a19d5096621109f65"
+ }
+}

@@ -5,7 +5,8 @@
 //   Swedish  https://milacoach.app/lopp/<slug>/         index /lopp/        (pages 2… /lopp/sida/2/)
 //   English  https://milacoach.app/en/races/<slug>/     index /en/races/    (/en/races/page/2/)
 //   German   https://milacoach.app/de/laeufe/<slug>/    index /de/laeufe/   (/de/laeufe/seite/2/)
-//   the share image /lopp/<slug>/og.png (1200×630: the course's profile and shape, rendered with resvg-wasm), one default image per
+//   the share image /lopp/<slug>/og.png (1200×630: the course's profile and shape over the race's scene, rendered with resvg-wasm),
+//   the hero's scene drawn in the browser by /scene.js (scene.ts built by scene_js.sh) when the site has it, one default image per
 //   language (<index>/og.png), sitemap.xml (the site's own pages too) and robots.txt
 //
 // Slugs are lower-case ASCII from the name and distance (the feed's suggestion) and never change once published: lopp/slugs.json in
@@ -22,6 +23,8 @@
 //   cd backend && deno run --allow-net --allow-read=. --allow-write=marketing-site race_pages.ts [--feed <url or file.json>] [--no-png]
 // Options: --out <dir> (default marketing-site next to this script), --feed (default the live feed), --today YYYY-MM-DD, --no-png,
 // --allow-mass-removal (accept a run that drops more than a third of the published races).
+
+import { raceSceneSpec, sceneLayers } from "./scene.ts";
 
 export const SITE = "https://milacoach.app";
 export const FEED_URL = "https://vfjofaniwtudzvadxpsd.supabase.co/functions/v1/race-feed";
@@ -486,10 +489,19 @@ export function ogSvg(r: Race): string {
     const d = pts.map((p, i) => `${i ? "L" : "M"}${f1(ox + (xs[i] - x0) * s)} ${f1(oy + (ys[i] - y0) * s)}`).join("");
     art += `<path d="${d}" fill="none" stroke="#E8ECF3" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/><circle cx="${f1(ox + (xs[0] - x0) * s)}" cy="${f1(oy + (ys[0] - y0) * s)}" r="9" fill="#3CCB7F"/>`;
   }
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630"><rect width="1200" height="630" fill="#0D1119"/>`
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">${ogScene(r)}`
     + `<text x="64" y="92" font-size="30" font-weight="700" letter-spacing="5" fill="#6E8FFF">MILA</text>${text}`
     + `<text x="64" y="${f1(y + 6)}" font-size="32" fill="#AEB7C6">${esc(sub)}</text>${art}`
     + `<text x="1136" y="620" font-size="19" fill="#7F8A9C" text-anchor="end">milacoach.app</text></svg>`;
+}
+/** The race's scene behind its share image (scene.ts: the same picture as the page's hero), under a scrim heaviest behind the text on
+ *  the left and along the bottom (the profile, the address); no grain, which only makes the PNG heavier at this size. */
+export function ogScene(r: Race): string {
+  const s = sceneLayers(raceSceneSpec(r, { startIso: startDate(r) }), { width: 1200, height: 630, idPrefix: "og", grain: false });
+  return `<defs>${s.defs}<linearGradient id="ogScrim" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0D1119" stop-opacity="0.88"/><stop offset="0.55" stop-color="#0D1119" stop-opacity="0.66"/><stop offset="1" stop-color="#0D1119" stop-opacity="0.45"/></linearGradient>`
+    + `<linearGradient id="ogFoot" x1="0" y1="0" x2="0" y2="1"><stop offset="0.55" stop-color="#0D1119" stop-opacity="0"/><stop offset="1" stop-color="#0D1119" stop-opacity="0.7"/></linearGradient></defs>`
+    + `<rect width="1200" height="630" fill="#0D1119"/><g transform="scale(${Math.round((1200 / s.unitsWide) * 1e6) / 1e6})">${s.body}</g>`
+    + `<rect width="1200" height="630" fill="url(#ogScrim)"/><rect width="1200" height="630" fill="url(#ogFoot)"/>`;
 }
 /** The default share image of a language's race pages (the indexes, and races without their own image). */
 export function ogDefaultSvg(lang: Lang): string {
@@ -583,7 +595,9 @@ export function nearby(r: Race, all: Race[], today: string): Race[] {
 
 const RACE_CSS = `[hidden]{display:none!important}.skip{position:absolute;left:-9999px;top:0}.skip:focus{left:12px;top:12px;z-index:9;background:var(--surface);color:var(--ink);padding:8px 12px;border-radius:8px}
 .crumbs ol{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px;font-size:14px;color:var(--muted)}.crumbs li+li:before{content:"›";margin-right:6px}.crumbs a{color:var(--ink2);text-decoration:none}
-.race-hero{padding:22px 0 40px}.race-hero h1{margin-bottom:12px}.meta{font-size:18px;color:var(--ink2);margin:0 0 6px}.cd{color:var(--good);font-weight:600}
+.race-hero{padding:22px 0 40px}.race-hero h1{margin-bottom:12px}
+.race-hero.scened{position:relative;isolation:isolate;padding:28px 24px 30px;margin-top:8px;border-radius:22px;overflow:hidden}.race-hero.scened::before{content:"";position:absolute;inset:0;z-index:-2;background:var(--scene) center 60%/cover no-repeat}
+.race-hero.scened::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(13,17,25,.88),rgba(13,17,25,.82) 60%,rgba(13,17,25,.7)),linear-gradient(0deg,rgba(13,17,25,.9),rgba(13,17,25,0) 45%)}.meta{font-size:18px;color:var(--ink2);margin:0 0 6px}.cd{color:var(--good);font-weight:600}
 .badge{display:inline-block;font-size:13px;border:1px solid var(--line);border-radius:999px;padding:1px 10px;color:var(--ink2);margin-left:8px;vertical-align:2px}
 .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin:26px 0 0}.facts div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 16px}.facts dt{font-size:12.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;overflow-wrap:anywhere;hyphens:auto}.facts dd{margin:2px 0 0;font-size:18px;font-weight:700;line-height:1.35}
 figure{margin:0}.chart{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:10px}.chart svg{display:block;width:100%;height:auto}figcaption{font-size:14px;color:var(--muted);margin-top:8px}
@@ -594,14 +608,14 @@ figure{margin:0}.chart{background:var(--surface);border:1px solid var(--line);bo
 .list{list-style:none;margin:0;padding:0}.list li{padding:12px 0;border-bottom:1px solid var(--line)}.list a{font-weight:700;text-decoration:none}.list span{display:block;color:var(--ink2);font-size:15px}
 .filter{display:flex;flex-wrap:wrap;gap:14px;margin:0 0 10px}.filter label{flex:1 1 200px;margin:0;color:var(--ink2)}section.grp{padding:28px 0}.grp h3{font-size:14px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin:20px 0 2px}
 .pager{display:flex;gap:10px;flex-wrap:wrap;padding:30px 0}.pager a,.pager span{border:1px solid var(--line);border-radius:10px;padding:8px 14px;text-decoration:none}.pager [aria-current]{background:var(--surface);color:var(--ink)}
-@media (max-width:820px){.two{grid-template-columns:1fr}}`;
+@media (max-width:820px){.two{grid-template-columns:1fr}.race-hero.scened{padding:22px 18px 26px;border-radius:18px}.race-hero.scened::after{background:rgba(13,17,25,.86)}}`;
 /** Used when the output holds no site.css: the site's dark palette and frame. */
 const FALLBACK_CSS = `:root{color-scheme:dark;--bg:#0D1119;--surface:#151B26;--ink:#E8ECF3;--ink2:#AEB7C6;--muted:#7F8A9C;--line:#263041;--accent:#6E8FFF;--good:#3CCB7F;--bad:#F2706B}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,system-ui,sans-serif;line-height:1.6}a{color:var(--accent)}.wrap{max-width:1040px;margin:0 auto;padding:0 20px}header{display:flex;align-items:center;justify-content:space-between;padding:22px 0}.brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:22px;color:var(--ink);text-decoration:none}.brand img{width:40px;height:40px;border-radius:10px}.lang{display:flex;gap:8px}.lang a{color:var(--ink2);text-decoration:none;font-size:15px;border:1px solid var(--line);padding:6px 12px;border-radius:999px}h1{font-size:clamp(34px,5.4vw,60px);line-height:1.06;margin:12px 0 18px}h2{font-size:26px;margin:0 0 10px}.eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:13px;color:var(--accent);font-weight:700}.lead{font-size:19px;color:var(--ink2)}.cta{display:inline-block;background:var(--accent);color:#0D1119;padding:14px 22px;border-radius:12px;font-weight:700;text-decoration:none}.ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}.cta.alt{background:transparent;color:var(--ink);border:1px solid var(--line)}.note{font-size:14px;color:var(--muted)}section{padding:56px 0;border-top:1px solid var(--line)}.sub{color:var(--ink2)}select{width:100%;font:inherit;color:var(--ink);background:var(--surface);padding:11px;border:1px solid var(--line);border-radius:10px}footer{padding:34px 0 50px;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}footer a{color:var(--ink2);margin-right:16px}`;
 const minCss = (css: string) => css.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\s*\n\s*/g, "").replace(/\s{2,}/g, " ").trim();
 
 type Frame = {
   lang: Lang; path: string; title: string; description: string; css: string; body: string; today: string;
-  alternates?: Record<Lang, string> | null; noindex?: boolean; og?: { image: string; alt: string; large: boolean }; ld?: object[]; script?: string;
+  alternates?: Record<Lang, string> | null; noindex?: boolean; og?: { image: string; alt: string; large: boolean }; ld?: object[]; script?: string; module?: string;
   crumbs: { name: string; path?: string }[];
 };
 function frame(f: Frame): string {
@@ -617,17 +631,24 @@ ${og}<meta name="theme-color" content="#0D1119"><link rel="icon" href="${root}lo
 <a class="skip" href="#main">${esc(t.skip)}</a><div class="wrap"><header><a class="brand" href="${root}${c.home}"><img src="${root}logo.png" alt="" width="40" height="40">MILA</a>${switcher ? `<nav class="lang" aria-label="${esc(t.langNav)}">${switcher}</nav>` : ""}</header>
 ${crumbs}
 <main id="main">${f.body}</main>
-<footer><a href="${root}${c.support}">${esc(t.support)}</a><a href="${root}${c.privacy}">${esc(t.privacy)}</a><a href="${root}${c.terms}">${esc(t.terms)}</a><br><br>© ${f.today.slice(0, 4)} Mila</footer></div>${f.script ? `<script>${f.script}</script>` : ""}</body></html>
+<footer><a href="${root}${c.support}">${esc(t.support)}</a><a href="${root}${c.privacy}">${esc(t.privacy)}</a><a href="${root}${c.terms}">${esc(t.terms)}</a><br><br>© ${f.today.slice(0, 4)} Mila</footer></div>${f.script ? `<script>${f.script}</script>` : ""}${f.module ? `<script type="module">${f.module}</script>` : ""}</body></html>
 `;
 }
 const crumbsLd = (items: { name: string; path: string }[]) => ({ "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: items.map((x, i) => ({ "@type": "ListItem", position: i + 1, name: x.name, item: abs(x.path) })) });
 /** The browser refines the countdown to exact days (the page itself says it in coarse steps). */
 const cdScript = (lang: Lang) => `(()=>{const w=${JSON.stringify(T[lang].cd)};for(const e of document.querySelectorAll(".cd[data-day]")){const n=Math.round((Date.parse(e.dataset.day+"T12:00:00")-Date.now())/864e5),m=Math.round(n/30.44);e.textContent=n<0?w.past:n===0?w.today:n===1?w.tomorrow:n<14?w.days.replace("#",n):n<60?w.weeks.replace("#",Math.floor(n/7)):w.months.replace("#",m)}})();`;
+/** The hero's scene, drawn in the browser by the site's scene.js (scene.ts) from the spec in data-scene, as wide as the hero is; the
+ *  class "scened" turns on its frame and scrim (RACE_CSS). Without the script the hero stays as it is. */
+export const sceneScript = (src: string) => "import{sceneSvg}from" + JSON.stringify(src)
+  + ";const e=document.querySelector('.race-hero[data-scene]');if(e){const b=e.getBoundingClientRect(),h=Math.round(Math.min(1600,Math.max(500,1200*b.height/Math.max(1,b.width)))),"
+  + "s=sceneSvg(JSON.parse(e.dataset.scene),{width:1200,height:h,idPrefix:'h'});e.style.setProperty('--scene','url(\"data:image/svg+xml;charset=utf-8,'+encodeURIComponent(s)+'\")');e.classList.add('scened')}";
 const filterScript = `(()=>{const f=document.querySelector("form.filter");if(!f)return;f.hidden=false;const items=[...document.querySelectorAll("li[data-km]")],groups=[...document.querySelectorAll(".grp")],none=document.getElementById("nomatch");const run=()=>{const d=f.elements.d.value,c=f.elements.c.value;let n=0;for(const li of items){const ok=(!c||li.dataset.c===c)&&(!d||li.dataset.b===d);li.hidden=!ok;if(ok)n++}for(const g of groups)g.hidden=!g.querySelector("li[data-km]:not([hidden])");none.hidden=n>0};f.addEventListener("change",run);run()})();`;
 
 // ------------------------------------------------------------------------------------------------------------- the pages
 
-type Ctx = { today: string; css: string; appStore: string; active: Race[]; slugs: Map<string, string>; ogImage: (r: Race | null, lang: Lang) => { image: string; large: boolean } };
+type Ctx = { today: string; css: string; appStore: string; active: Race[]; slugs: Map<string, string>; ogImage: (r: Race | null, lang: Lang) => { image: string; large: boolean };
+  /** The site has scene.js: the hero gets its scene in the browser. */
+  sceneJs?: boolean };
 
 /** One race's page in one language. */
 export function racePage(r: Race, lang: Lang, ctx: Ctx): string {
@@ -647,7 +668,10 @@ export function racePage(r: Race, lang: Lang, ctx: Ctx): string {
   facts.push([t.terrain, r.trail ? t.trail : t.road], [t.character, cap(t.hilly[hilliness(r)])]);
   if (start && r.next_date && r.next_date >= today) facts.push([t.start, t.clock(start)]);
   if (r.aid_stations?.length) facts.push([t.aid, String(r.aid_stations.length)]);
-  const hero = `<div class="race-hero"><div class="eyebrow">${esc([t.races, country].filter(Boolean).join(" · "))}</div><h1>${esc(title)}</h1><p class="meta">${when}</p>${org}
+  // the scene's spec for the browser (scene.ts): the profile to three decimals is plenty for a horizon
+  const spec = raceSceneSpec(r, { startIso: startDate(r), today });
+  const scene = ctx.sceneJs ? ` data-scene="${esc(JSON.stringify({ ...spec, profile: spec.profile.map((v) => Math.round(v * 1000) / 1000), relief: Math.round(spec.relief) }))}"` : "";
+  const hero = `<div class="race-hero"${scene}><div class="eyebrow">${esc([t.races, country].filter(Boolean).join(" · "))}</div><h1>${esc(title)}</h1><p class="meta">${when}</p>${org}
 <dl class="facts">${facts.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl></div>`;
   const button = `<div class="ctas"><a class="cta" href="${esc(ctx.appStore)}">${esc(t.store)}</a></div><p class="brandline">${esc(t.brandLine)}</p>`;
   const cta = `<div class="ctabox"><h2>${esc(t.ctaH(r.name))}</h2><p class="sub">${esc(t.ctaText)}</p>${button}</div>`;
@@ -702,6 +726,7 @@ export function racePage(r: Race, lang: Lang, ctx: Ctx): string {
   }
   return frame({ lang, path, title: pageTitle(r, lang), description, css: ctx.css, today, alternates, og: { ...og, alt: t.ogAlt(title) }, ld,
     body: `<article>${hero}${cta}${sections.join("\n")}</article>`, script: r.next_date && r.next_date >= today ? cdScript(lang) : undefined,
+    module: ctx.sceneJs ? sceneScript(rel(path, "scene.js")) : undefined,
     crumbs: [{ name: t.home, path: L[lang].home }, { name: t.races, path: indexPath(lang) }, { name: title }] });
 }
 
@@ -845,7 +870,7 @@ export async function generate(o: { out: string; races: Race[]; ids?: Set<string
   for (const l of LANGS) defaults.set(l, await exists(ogDefaultPath(l)));
   const ogImage = (r: Race | null, lang: Lang) => r && hasOg.has(r.id) ? { image: abs(ogPath(slugs.get(r.id)!)), large: true }
     : defaults.get(lang) ? { image: abs(ogDefaultPath(lang)), large: true } : { image: `${SITE}/logo.png`, large: false };
-  const ctx: Ctx = { today, css, appStore, active, slugs, ogImage };
+  const ctx: Ctx = { today, css, appStore, active, slugs, ogImage, sceneJs: await exists("scene.js") };
 
   // 4. the race pages, and the pages of races that left; every indexed page's lastmod moves only when its content does
   const pages: State["pages"] = {};

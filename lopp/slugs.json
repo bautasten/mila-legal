@@ -74,11 +74,11 @@
  },
  "pages": {
   "/index-de.html": {
-   "hash": "75acfa74621cf28e3247c6ea",
+   "hash": "6ffc91ade57870e29053fa5d",
    "lastmod": "2026-10-15"
   },
   "/index.html": {
-   "hash": "8d4c9958022594a0b2e7b79d",
+   "hash": "953429402bc86d8048e0b240",
    "lastmod": "2026-10-15"
   },
   "/privacy-de.html": {
@@ -106,7 +106,7 @@
    "lastmod": "2026-10-15"
   },
   "/sv.html": {
-   "hash": "08043a2a3d437857f692bc3c",
+   "hash": "469a748001f278a048da2ec7",
    "lastmod": "2026-10-15"
   },
   "/terms-de.html": {
@@ -122,141 +122,141 @@
    "lastmod": "2026-10-15"
   },
   "de/laeufe/": {
-   "hash": "adb291902e7b7f02b4782f12",
+   "hash": "566b5b417fe3aafe36a5ee12",
    "lastmod": "2026-10-15"
   },
   "de/laeufe/fjallmaraton-100k/": {
-   "hash": "2d3d51a383922cc57d52f938",
+   "hash": "53efbb264f01f85b6e8fb642",
    "lastmod": "2026-10-15"
   },
   "de/laeufe/fjallmaraton-salen-42-km/": {
-   "hash": "12a2326e6ceff417a2307ddc",
+   "hash": "75d3ab6a49c237668d8a795e",
    "lastmod": "2026-10-15"
   },
   "de/laeufe/harno-trail-21-km/": {
-   "hash": "672e44bc99d25fc5840a60f7",
+   "hash": "e4364be51804319eddcd3578",
    "lastmod": "2026-10-15"
   },
   "de/laeufe/harno-trail-kort-7-km/": {
-   "hash": "5533189a079a6262a82398e8",
+   "hash": "7182a0bd7764400b37b30153",
    "lastmod": "2026-10-15"
   },
   "de/laeufe/harno-trail-mellan-14-km/": {
-   "hash": "38d2f0973ec018d9abd6eb58",
+   "hash": "90e780d86897c38065284407",
    "lastmod": "2026-10-15"
   },
   "de/laeufe/kia-fjallmaraton-45k/": {
-   "hash": "d165d67230765b177b44658c",
+   "hash": "40c16c8c97d9d0a97d487588",
    "lastmod": "2026-10-15"
   },
   "de/laeufe/tcs-lidingoloppet-30-km/": {
-   "hash": "33deb858f505357031bd5475",
+   "hash": "9103d95c8b6f1005da2c94ab",
    "lastmod": "2026-10-15"
   },
   "de/laeufe/tcs-london-marathon-42-2-km/": {
-   "hash": "6539a395e2ce858155ef0892",
+   "hash": "7e95818ba5384b457d399c1a",
    "lastmod": "2026-10-15"
   },
   "de/laeufe/umaker-trail-15-6-km/": {
-   "hash": "bb5c9c9c864ea5d3ae69ba00",
+   "hash": "1ff06593cb761e495b1e0f5c",
    "lastmod": "2026-10-15"
   },
   "de/laeufe/western-states-100-mile-endurance-run-161k/": {
-   "hash": "9fea2c0e9b5f647b0eb68832",
+   "hash": "d4d8cd9cdbcf5decb2e16641",
    "lastmod": "2026-10-15"
   },
   "en/races/": {
-   "hash": "3026c83d7cef5fda72473c7e",
+   "hash": "a8c91695270fdbe2ebba5d8d",
    "lastmod": "2026-10-15"
   },
   "en/races/fjallmaraton-100k/": {
-   "hash": "c1ff4911adc94e2c8e50bcea",
+   "hash": "b872fc74d0d8680fa5380164",
    "lastmod": "2026-10-15"
   },
   "en/races/fjallmaraton-salen-42-km/": {
-   "hash": "8332be4aefcd9530e95391df",
+   "hash": "209c3498d5e8059f6443c02b",
    "lastmod": "2026-10-15"
   },
   "en/races/harno-trail-21-km/": {
-   "hash": "f1f293b5247a72931dfe8b2e",
+   "hash": "7cbf053f1fa23d69440aaa2d",
    "lastmod": "2026-10-15"
   },
   "en/races/harno-trail-kort-7-km/": {
-   "hash": "b6a1386f6f69955de8c1294f",
+   "hash": "d830bbf8c47ed843f4e55716",
    "lastmod": "2026-10-15"
   },
   "en/races/harno-trail-mellan-14-km/": {
-   "hash": "c5511bf13a5948c277e63d14",
+   "hash": "b3f0749be9c37e63e50d7bef",
    "lastmod": "2026-10-15"
   },
   "en/races/kia-fjallmaraton-45k/": {
-   "hash": "b41f9c72d45e792af2b9bcb4",
+   "hash": "b91c0ff843fea34c1190a050",
    "lastmod": "2026-10-15"
   },
   "en/races/tcs-lidingoloppet-30-km/": {
-   "hash": "50e9703b8030538dfa665851",
+   "hash": "6d70ceb659a685fe6608ba61",
    "lastmod": "2026-10-15"
   },
   "en/races/tcs-london-marathon-42-2-km/": {
-   "hash": "c1e0c2845e5017f2f5f07ac1",
+   "hash": "7e45b3a82a9f1b5d4162f86e",
    "lastmod": "2026-10-15"
   },
   "en/races/umaker-trail-15-6-km/": {
-   "hash": "8b9e7b8890bd382a71ee32be",
+   "hash": "64a0e76def52b07091c2cd44",
    "lastmod": "2026-10-15"
   },
   "en/races/western-states-100-mile-endurance-run-161k/": {
-   "hash": "8aa9798432ad996ac29b6121",
+   "hash": "3b2a344ac42c5a5207baec9a",
    "lastmod": "2026-10-15"
   },
   "lopp/": {
-   "hash": "0cbcc7718146ab6449ae80de",
+   "hash": "89e2e936ff11b0eadcbb6350",
    "lastmod": "2026-10-15"
   },
   "lopp/fjallmaraton-100k/": {
-   "hash": "e7b7ae52e5c7874126549b6a",
+   "hash": "a3232d9119653e78e3e22439",
    "lastmod": "2026-10-15"
   },
   "lopp/fjallmaraton-salen-42-km/": {
-   "hash": "ec1a07f00d8aaefc2d74e196",
+   "hash": "7c264af073634a3d7ccf3f47",
    "lastmod": "2026-10-15"
   },
   "lopp/harno-trail-21-km/": {
-   "hash": "9aeaffd1c5e0506c08374b0f",
+   "hash": "c8e5eb9d03e4712d4da0caa7",
    "lastmod": "2026-10-15"
   },
   "lopp/harno-trail-kort-7-km/": {
-   "hash": "662ca153ee6dd9cb28a6f318",
+   "hash": "aa05795644706f8793226d07",
    "lastmod": "2026-10-15"
   },
   "lopp/harno-trail-mellan-14-km/": {
-   "hash": "78b193c407101aa596952411",
+   "hash": "dd13cdee0fbe21a40b2fda7c",
    "lastmod": "2026-10-15"
   },
   "lopp/kia-fjallmaraton-45k/": {
-   "hash": "046c4b01dbb8ecfaee49c011",
+   "hash": "a72c7547c51d3099dc147704",
    "lastmod": "2026-10-15"
   },
   "lopp/tcs-lidingoloppet-30-km/": {
-   "hash": "5470c1d368f901571833e70e",
+   "hash": "8c10ca403c7d3762c02e2e56",
    "lastmod": "2026-10-15"
   },
   "lopp/tcs-london-marathon-42-2-km/": {
-   "hash": "0e877b9b991f257c8c6ce4c8",
+   "hash": "28959ff87188c0a54e27a339",
    "lastmod": "2026-10-15"
   },
   "lopp/umaker-trail-15-6-km/": {
-   "hash": "5513ae91bbf3ead8f64176b3",
+   "hash": "93cc570a2f7a4884a9723da7",
    "lastmod": "2026-10-15"
   },
   "lopp/western-states-100-mile-endurance-run-161k/": {
-   "hash": "83b0bf76fa6b89ad7f5b8631",
+   "hash": "94f22a1b6c7facabf90b9908",
    "lastmod": "2026-10-15"
   }
  },
  "og": {
-  "de": "9b42278e3a4e652aaeabe5ec",
-  "en": "a6a614d85967853a257da5aa",
-  "sv": "c415d92a19d5096621109f65"
+  "de": "84340f83c57eada8bacaa484",
+  "en": "9a49c994baf165c9a3f1c98e",
+  "sv": "52486830945f5feffdd6014a"
  }
 }

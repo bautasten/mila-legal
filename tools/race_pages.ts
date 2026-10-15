@@ -166,10 +166,11 @@ export const courseless = (r: Pick<Race, "has_course" | "course">) => !r.has_cou
 
 /** Every race in the feed, page by page (a URL), or from a file (a JSON object with "races", or a list). Throws on anything unexpected,
  *  so a run never mistakes a broken feed for an empty register. `ids`: every id the feed named, whether its race was usable or not. */
-export async function readFeed(src: string, fetchFn: typeof fetch = fetch): Promise<{ races: Race[]; ids: Set<string> }> {
+export async function readFeed(src: string, fetchFn: typeof fetch = fetch, sleep: (ms: number) => Promise<void> = (ms) => new Promise((r) => setTimeout(r, ms))): Promise<{ races: Race[]; ids: Set<string> }> {
   const raw: unknown[] = [];
   if (/^https?:\/\//.test(src)) {
     let after: string | null = null;
+    const waits = { left: FEED_WAITS };
     for (let page = 0; ; page++) {
       if (page >= 500) throw new Error("feed: too many pages");
       const u = new URL(src);
@@ -177,7 +178,7 @@ export async function readFeed(src: string, fetchFn: typeof fetch = fetch): Prom
       u.searchParams.set("features", "nocourse");
       u.searchParams.set("limit", "100");
       if (after) u.searchParams.set("after", after);
-      const body = await getJson(u.toString(), fetchFn);
+      const body = await getJson(u.toString(), fetchFn, sleep, waits);
       if (!body || body.version !== 1 || !Array.isArray(body.races)) throw new Error("feed: unexpected answer");
       raw.push(...body.races);
       after = typeof body.next === "string" && body.next ? body.next : null;
@@ -192,19 +193,26 @@ export async function readFeed(src: string, fetchFn: typeof fetch = fetch): Prom
   const ids = new Set<string>(raw.map((r: any) => (typeof r?.id === "string" ? r.id : "")).filter(Boolean));
   return { races: raw.map(cleanRace).filter((r): r is Race => r !== null), ids };
 }
-async function getJson(url: string, fetchFn: typeof fetch): Promise<any> {
+/** How many times one walk of the feed waits out its rate limit (FEED_RATE_PER_MIN, 60 requests a minute per address): a register past
+ *  about 6 000 races needs more pages than a minute allows, and the hourly build must still read every page (500 pages, at most 50 000
+ *  races, need about eight waits). */
+export const FEED_WAITS = 20;
+/** One page: a 5xx or a dropped connection is tried again after 2, 4 and 6 s; a 429 waits as long as Retry-After says (at most 65 s)
+ *  and is asked again, at most FEED_WAITS times in a walk. */
+async function getJson(url: string, fetchFn: typeof fetch, sleep: (ms: number) => Promise<void>, waits: { left: number }): Promise<any> {
   for (let i = 0; ; i++) {
-    let status = 0;
+    let status = 0, retryAfter = NaN;
     try {
       const res = await fetchFn(url, { headers: { Accept: "application/json" }, signal: AbortSignal.timeout(30_000) });
       if (res.ok) return await res.json();
-      status = res.status;
+      status = res.status; retryAfter = Number(res.headers.get("retry-after") ?? "");
       await res.body?.cancel();
     } catch (e) {
       if (i >= 3) throw e;
     }
+    if (status === 429 && waits.left > 0) { waits.left--; i--; await sleep(Math.min(65, retryAfter > 0 ? retryAfter : 60) * 1000); continue; }
     if (status && ((status < 500 && status !== 429) || i >= 3)) throw new Error(`feed: ${status}`);
-    await new Promise((r) => setTimeout(r, 2000 * (i + 1)));
+    await sleep(2000 * (i + 1));
   }
 }
 

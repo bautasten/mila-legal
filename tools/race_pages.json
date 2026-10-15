@@ -1,0 +1,4 @@
+{
+  "_note": "Byt till appens riktiga App Store-länk vid lansering. Läses av race_pages.ts (tools/race_pages.json i Pages-repot, publicerad av publish_legal.sh); nästa körning av Loppsidor uppdaterar alla loppsidor.",
+  "appStoreUrl": "https://apps.apple.com/search?term=Mila%20Coach"
+}

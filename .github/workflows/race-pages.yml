@@ -1,0 +1,57 @@
+# Loppsidor: Mila's public race pages (lopp/, en/races/, de/laeufe/, sitemap.xml, robots.txt) generated from the public race feed by
+# tools/race_pages.ts, every hour and on demand (Actions → Loppsidor → Run workflow). Commits only when a file changed; GitHub Pages
+# then publishes the commit. No secrets: the feed is public. The App Store link comes from tools/race_pages.json.
+# Source: backend/race_pages_workflow.yml in the Mila repo, published here as .github/workflows/race-pages.yml by backend/publish_legal.sh.
+name: Loppsidor
+
+on:
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+# one run at a time; a run started meanwhile waits and then builds from the newest feed
+concurrency:
+  group: race-pages
+  cancel-in-progress: false
+
+jobs:
+  pages:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - name: Generate the race pages
+        run: >
+          deno run --no-prompt
+          --allow-net=vfjofaniwtudzvadxpsd.supabase.co,cdn.jsdelivr.net
+          --allow-read=. --allow-write=.
+          tools/race_pages.ts --out .
+
+      - name: Commit and push when something changed
+        id: push
+        run: |
+          git add -A -- lopp en de sitemap.xml robots.txt
+          if git diff --cached --quiet; then echo "Inga ändringar."; exit 0; fi
+          git -c user.name="Mila" -c user.email="mila@users.noreply.github.com" commit -qm "Loppsidor $(date -u +%F)"
+          for i in 1 2 3; do
+            if git push -q origin HEAD:main; then echo "pushed=true" >> "$GITHUB_OUTPUT"; exit 0; fi
+            git pull -q --rebase origin main
+          done
+          exit 1
+
+      # a push with the workflow's own token normally starts the Pages build; asking for one as well is harmless and makes sure
+      - name: Publish with GitHub Pages
+        if: steps.push.outputs.pushed == 'true'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X POST "repos/${{ github.repository }}/pages/builds" > /dev/null

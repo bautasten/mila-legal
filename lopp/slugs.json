@@ -1,12 +1,236 @@
 {
  "version": 1,
  "races": {
+  "ba013a97-c3cc-4b20-ba6c-65d1ae47f965": {
+   "slug": "101a-corrida-internacional-de-sao-silvestre-15k",
+   "name": "101ª Corrida Internacional de São Silvestre",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "9bc509d14e3abdb3affed494"
+  },
+  "db188214-7bd0-4d9c-81af-fbb4a189e665": {
+   "slug": "20-km-de-bruxelles",
+   "name": "20 km de Bruxelles",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "c44ae4aa4cdca187eaf4c053"
+  },
+  "e77f20e5-fb87-47a9-8583-ed4ccee5d63c": {
+   "slug": "2026-tcs-new-york-city-marathon-42k",
+   "name": "2026 TCS New York City Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "d26d0f6788ac1ec402b31686"
+  },
+  "d8f2ea89-e8df-4a1b-8600-85e302bf4f24": {
+   "slug": "26-dresden-marathon-marathon-42k",
+   "name": "26. DRESDEN-MARATHON – Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "50ec251f419adf9e3a4d23df"
+  },
   "f02b4ec1-e210-42f3-86ce-8abb30262a19": {
    "slug": "42km-du-mont-blanc-marathon-du-mont-blanc",
    "name": "42km du Mont-Blanc (Marathon du Mont-Blanc)",
    "first": "2026-10-15",
    "removed": null,
    "og": "cb293288d689bb4198111ff7"
+  },
+  "ca836aed-3b5d-4217-a4e0-a15e13222003": {
+   "slug": "aalborg-brutal-marathon-marathon-42k",
+   "name": "Aalborg Brutal Marathon – Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "ea367d2ef7010f84f875eb88"
+  },
+  "8c1e4efb-bd3e-4b7f-afe1-c434b5715a83": {
+   "slug": "adidas-innsbruck-alpine-trailrun-festival-k85-heart-of-the-alps-ultra-86k",
+   "name": "adidas Innsbruck Alpine Trailrun Festival – K85 Heart of the Alps Ultra",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "9b671f66a95e5665771aaf83"
+  },
+  "f3dd855c-9939-40dd-807d-4bbcb414df51": {
+   "slug": "adidas-manchester-marathon-42k",
+   "name": "adidas Manchester Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "4413462b4ff1ca1c6b7562e2"
+  },
+  "90adc3c9-2228-491f-ab8e-7037ec746c15": {
+   "slug": "adidas-premiarmilen-10k",
+   "name": "adidas Premiärmilen",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "dff2f97c4a5802d853d6ca13"
+  },
+  "9b259f83-f354-499d-af91-1ac8fc8dd419": {
+   "slug": "adidas-stockholm-halvmaraton-21k",
+   "name": "adidas Stockholm Halvmaraton",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "4ce2c75d136d171266d6e3de"
+  },
+  "23471db7-9ac0-4b40-9691-ff59f3bff460": {
+   "slug": "adidas-stockholm-marathon-42k",
+   "name": "adidas Stockholm Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "66c695d4f6033348783393cc"
+  },
+  "f8e1a749-c73d-4967-9bca-037b7544e057": {
+   "slug": "aj-bell-great-manchester-run-10k",
+   "name": "AJ Bell Great Manchester Run 10K",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "0280ce044f1f3f68347dde45"
+  },
+  "a811a4f5-83f4-4845-ae7d-35f849b22fc3": {
+   "slug": "aj-bell-great-north-run-21k",
+   "name": "AJ Bell Great North Run",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "0a6d3f0d99dd71227d0f52d7"
+  },
+  "285089d2-ca2a-4c93-a452-91d3db2598e8": {
+   "slug": "aj-bell-great-scottish-run-half-marathon-21k",
+   "name": "AJ Bell Great Scottish Run – Half Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "5a59d4e0fc88e6fb4254a6ac"
+  },
+  "9ec8a2af-db06-4f85-bbeb-3a7194495c91": {
+   "slug": "aj-bell-great-south-run-16k",
+   "name": "AJ Bell Great South Run",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "ebeaf620490fb4147addc48f"
+  },
+  "8bc684c0-1e9d-47c3-88df-daef8a407372": {
+   "slug": "angeles-crest-100-mile-endurance-run-163k",
+   "name": "Angeles Crest 100 Mile Endurance Run",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "6b322df706a33bcd602bd1d5"
+  },
+  "ecb1bfac-c2fb-4710-a9b6-d95929b169cd": {
+   "slug": "asics-gold-coast-marathon-43k",
+   "name": "ASICS Gold Coast Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "278d8cad34f8a3f65a7735ba"
+  },
+  "87638055-5d08-4a41-99ad-8f6c2ab6ca81": {
+   "slug": "asics-sentrumslopet-10-km",
+   "name": "ASICS Sentrumsløpet 10 km",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "33d65cbb7560f43dcf2fe06e"
+  },
+  "96566d8f-6ea9-4591-b9f2-6611842d76cf": {
+   "slug": "asml-marathon-eindhoven-43k",
+   "name": "ASML Marathon Eindhoven",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "e77220a2c40427d4c94a0ad3"
+  },
+  "24f71e0a-cda2-45a2-9170-c5801b5947f0": {
+   "slug": "athens-marathon-the-authentic-marathon-42k",
+   "name": "Athens Marathon. The Authentic – Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "c8d8b6c38ba796263a367854"
+  },
+  "3d545d2a-087f-43b3-9ece-4052f8173c44": {
+   "slug": "badwater-135-217k",
+   "name": "Badwater 135",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "2e80b18f9ef862aa214b1a8e"
+  },
+  "7289e3a7-050d-43e4-a498-d2767d36c0a0": {
+   "slug": "baloise-antwerp-10-miles-16k",
+   "name": "Baloise Antwerp 10 Miles",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "4c5e0a7f2affda87e7039472"
+  },
+  "5d76ad2e-e799-4513-84af-ab5979b4c833": {
+   "slug": "bank-of-china-beijing-marathon-beijing-marathon-42k",
+   "name": "Bank of China Beijing Marathon (Beijing Marathon)",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "848311b9a334dc58851bc98c"
+  },
+  "5c3b8a22-2caa-49ca-9db8-367686c6e816": {
+   "slug": "barfoot-thompson-auckland-marathon-42k",
+   "name": "Barfoot & Thompson Auckland Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "fab9be8361842ae35eb27bfa"
+  },
+  "11202229-177d-463f-859b-d20d54b47815": {
+   "slug": "baxters-loch-ness-marathon-42k",
+   "name": "Baxters Loch Ness Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "c0bdedfbef0c46feecda1414"
+  },
+  "c68f9951-3703-4750-830c-15713aaf8426": {
+   "slug": "behobia-san-sebastian-20k",
+   "name": "Behobia – San Sebastián",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "af9750accb7ae45e90977daa"
+  },
+  "ce156b3b-841a-4996-ad89-3f7593319b42": {
+   "slug": "belfast-city-marathon-42k",
+   "name": "Belfast City Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "7498a6fcb9c2cdb467a097fd"
+  },
+  "aa88762d-d70a-4ab7-93f6-f97066347e46": {
+   "slug": "ben-nevis-race-14k",
+   "name": "Ben Nevis Race",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "bf7abc081d4883af7d185ed1"
+  },
+  "d834fd95-f86b-4b15-bcc2-4e3d58266244": {
+   "slug": "bestseller-aarhus-city-half-21k",
+   "name": "BESTSELLER Aarhus City Half",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "2a5fdaf76e1138ce81ac65fd"
+  },
+  "facd6961-0c11-4ebd-b2f6-56ef27d275de": {
+   "slug": "bieg-rzeznika-80k",
+   "name": "Bieg Rzeźnika",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "456ed2f1ceb3aa157e012b7d"
+  },
+  "dcef078b-453c-49c5-94b1-66a2dda40721": {
+   "slug": "big-five-marathon-42-2-km",
+   "name": "Big Five Marathon – 42.2 km",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "a5d851f80a6002626b623f7f"
+  },
+  "115a8f47-ef52-42e1-9a45-d2121885be7e": {
+   "slug": "big-sur-international-marathon-42k",
+   "name": "Big Sur International Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "fd67b1251f8fa5481361b193"
+  },
+  "a011d58f-0824-404d-acbf-c4bf54a96c4d": {
+   "slug": "bighorn-trail-run-100-mile-161k",
+   "name": "Bighorn Trail Run 100 Mile",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "94312123b7b7502de9c0a17f"
   },
   "a82db94c-b137-4c67-8ffd-6ac6ee9fb42a": {
    "slug": "birkebeinerlopet-21-km",
@@ -15,6 +239,104 @@
    "removed": null,
    "og": "ef100000b415f35b849daca9"
   },
+  "1478dc47-2586-4a2e-b122-9002a696131a": {
+   "slug": "bjorn-borg-helsinki-half-marathon-21-1-km",
+   "name": "Björn Borg Helsinki Half Marathon 21,1 km",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "37e54056ae97f3da306a5d69"
+  },
+  "ce47fd8f-19d0-4797-8fc2-a0b9431ccb26": {
+   "slug": "black-canyon-ultras-100k",
+   "name": "Black Canyon Ultras 100K",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "62c6575329f69745bb62d160"
+  },
+  "13b3bc02-1115-4386-919e-72cc33b58c37": {
+   "slug": "blodomloppet-goteborg-10-km",
+   "name": "Blodomloppet Göteborg 10 km",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "b184c914e0cd5e8ec21553b7"
+  },
+  "02e2f514-b911-413e-ae85-bf53c455025d": {
+   "slug": "bmo-vancouver-marathon-42k",
+   "name": "BMO Vancouver Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "190159bc950b5d5e4ec77c81"
+  },
+  "0854d690-f890-4675-89f9-e2cf16027d64": {
+   "slug": "bmw-berlin-marathon-fran-2027-generali-berlin-marathon-42k",
+   "name": "BMW Berlin-Marathon (från 2027: GENERALI BERLIN-MARATHON)",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "bdd2faa80792f2657d9a77e4"
+  },
+  "3260d614-3848-400f-b6ca-cd3c4e9ddc6d": {
+   "slug": "bolderboulder-10k",
+   "name": "BOLDERBoulder 10K",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "1e8ac36806c9e4027b62ed83"
+  },
+  "251cc61b-8a6e-4964-9e97-57c02ba0bc92": {
+   "slug": "boston-marathon-42k",
+   "name": "Boston Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "4b352c2103adb079478ad600"
+  },
+  "0d5a011a-61a8-4372-8ae0-330bf0740008": {
+   "slug": "brighton-marathon-42k",
+   "name": "Brighton Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "b80a7d28f8ea35c781c186de"
+  },
+  "aa463a1d-d091-4c9a-9f5d-72fa7ee9dfac": {
+   "slug": "brocken-marathon-48-harz-gebirgslauf-42k",
+   "name": "Brocken-Marathon (48. Harz-Gebirgslauf)",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "661944095e202e9a1e5d8e2f"
+  },
+  "0b636941-25f2-41ca-a745-c5939ebf253b": {
+   "slug": "broken-arrow-skyrace-46k",
+   "name": "Broken Arrow Skyrace 46K",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "ef16d158f2084353c1f039bb"
+  },
+  "b7e8ef38-8bca-4bf3-b651-0c86c8fee7f1": {
+   "slug": "buffalo-stampede-100km-bright-ultra-skymarathon",
+   "name": "Buffalo Stampede 100km (Bright Ultra SkyMarathon)",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "dbc00d824ef01f5e5f6a7960"
+  },
+  "4599a4aa-0300-40f5-a972-38dd814707a4": {
+   "slug": "california-international-marathon-42k",
+   "name": "California International Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "08e7765b20f31c4efbf2a23d"
+  },
+  "ec76a5a3-b2eb-4b90-9edc-935abf196109": {
+   "slug": "canyons-endurance-runs-by-utmb-100m-159k",
+   "name": "Canyons Endurance Runs by UTMB – 100M",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "428079f095c618c1c200df7e"
+  },
+  "bdd8ebb3-b018-4d11-a7c6-4c92fc385941": {
+   "slug": "cardiff-half-marathon-20k",
+   "name": "Cardiff Half Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "a490640ad84af4e26d434290"
+  },
   "29df79b0-11c5-42ed-8e1c-b0c13ce4d20d": {
    "slug": "ccc-hoka-utmb-mont-blanc-courmayeur-champex-chamonix-108k",
    "name": "CCC® – HOKA UTMB Mont-Blanc (Courmayeur–Champex–Chamonix)",
@@ -22,12 +344,152 @@
    "removed": null,
    "og": "4f97c74f67987b81b88e2e15"
   },
+  "fb5231c1-b48d-469f-ba94-1517abf90cf1": {
+   "slug": "chevron-houston-marathon-42k",
+   "name": "Chevron Houston Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "4748219ef9e788407f24daa4"
+  },
+  "f0b9ed32-04de-4fe4-938b-957aacb918e7": {
+   "slug": "chianti-ultra-trail-by-utmb-ultra-trail-chianti-castles-utcc-120k",
+   "name": "Chianti Ultra Trail by UTMB – Ultra Trail Chianti Castles (UTCC 120K)",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "c5b7fd3731f7931ad79cce9b"
+  },
   "43356cae-a564-42f8-a812-0f8e5a5fc639": {
    "slug": "comrades-marathon-90k",
    "name": "Comrades Marathon",
    "first": "2026-10-15",
    "removed": null,
    "og": "1db36c7fcff611ca07fd10a2"
+  },
+  "dd0c8c79-2dba-495e-adf4-00c97938110d": {
+   "slug": "coop-kungsholmen-runt-10-km",
+   "name": "COOP Kungsholmen Runt 10 km",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "5fc90fa7d852a3a2c948f422"
+  },
+  "faf633c1-68f0-4982-8618-2497eda5ec9b": {
+   "slug": "copenhagen-half-marathon-cph-half-21k",
+   "name": "Copenhagen Half Marathon (CPH Half)",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "546545165f353c0d0d672f8e"
+  },
+  "84334431-3980-4708-a831-e9478c488562": {
+   "slug": "copenhagen-marathon-42k",
+   "name": "Copenhagen Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "36d68e00778a0c4855ca7ae8"
+  },
+  "34a21cd3-2013-455b-81ce-767f1a540949": {
+   "slug": "cracovia-maraton-42k",
+   "name": "Cracovia Maraton",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "b6e4f536a3d8b5f1de67b39b"
+  },
+  "8dca2dd3-e6e1-4616-8a9d-abad7fdaed02": {
+   "slug": "davos-x-trails-tidigare-swissalpine-davos-diamond-run-68-km",
+   "name": "Davos X-Trails (tidigare Swissalpine Davos) – Diamond Run 68 km",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "87266a121c25cd74c2d687da"
+  },
+  "26d446bc-22d7-40c0-9fa7-35282ecc2da7": {
+   "slug": "delta-dental-mount-washington-road-race-12k",
+   "name": "Delta Dental Mount Washington Road Race",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "7078264c236177ddd2848dc4"
+  },
+  "2f28e7c1-7d4f-4598-af50-d72094e33a16": {
+   "slug": "det-norske-fjellmaraton-maraton-42-2-km",
+   "name": "Det Norske Fjellmaraton – Maraton (42,2 km)",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "c283727b5418675fe9e5d2d0"
+  },
+  "ced3f2cb-6c54-4343-af9c-962a30058da7": {
+   "slug": "dhl-stafetten-kobenhavn-5k",
+   "name": "DHL Stafetten København",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "5fcea7b8c6eed944b6a1289a"
+  },
+  "9d6271cb-fb3f-490e-b7ae-5935f651d0e2": {
+   "slug": "dnb-oslo-maraton-maraton-43k",
+   "name": "DNB Oslo Maraton – Maraton",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "cd972a5f170bb72baadde256"
+  },
+  "731da6b1-46f1-453e-9826-3b4a68a11ac3": {
+   "slug": "dolomyths-run-skyrace-22-km",
+   "name": "DoloMyths Run SkyRace (22 km)",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "27c634e02f509cc09a7eb0b1"
+  },
+  "87d4394e-cfd1-4bad-a7fb-bcee77d4b8e8": {
+   "slug": "dubai-marathon-42k",
+   "name": "Dubai Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "9acf40c7e93c8f12574b95a2"
+  },
+  "6bc26a5d-7c4f-4b7f-a4e8-773daa7ce0d5": {
+   "slug": "ecotrail-oslo-trail-80-km",
+   "name": "EcoTrail Oslo – Trail 80 km",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "f180fb0f36b094027e2289db"
+  },
+  "31ad8bb3-bd71-4ce6-8519-9e2c15607535": {
+   "slug": "edp-maratona-de-lisboa-42k",
+   "name": "EDP Maratona de Lisboa",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "dfd5f2fe1c0292cc68726b34"
+  },
+  "34afef19-4c42-4164-b822-32f1f3980110": {
+   "slug": "edp-meia-maratona-de-lisboa-21k",
+   "name": "EDP Meia Maratona de Lisboa",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "f739c0cfd5e644e465cd9693"
+  },
+  "b61d358e-cc1d-4f4e-981d-d777d9b2aaa7": {
+   "slug": "egmond-halve-marathon-21k",
+   "name": "Egmond Halve Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "9d8e60163f74b3c1d22b05bb"
+  },
+  "fea6b5ab-2a06-4dbb-8343-293c10398bc0": {
+   "slug": "eiger-ultra-trail-by-utmb-e101-ultra-trail-101k",
+   "name": "Eiger Ultra Trail by UTMB – E101 Ultra Trail",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "70973c31198a467ab2ca321f"
+  },
+  "3bb5874f-7a63-4973-bc09-0ed39f736624": {
+   "slug": "eremitagelobet-13k",
+   "name": "Eremitageløbet",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "a8a31884f98af0e1d6329ac1"
+  },
+  "4fe34674-c3d6-492d-b1da-6df83b0c8794": {
+   "slug": "estra-firenze-marathon-42k",
+   "name": "Estra Firenze Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "bc41c25f1015980b110fc652"
   },
   "9d023948-cfda-4c04-830d-c46905876cee": {
    "slug": "fjallmaraton-100k",
@@ -42,6 +504,104 @@
    "first": "2026-10-15",
    "removed": null,
    "og": "bec8069a20679641b9b76d41"
+  },
+  "287d20cd-c161-4a3d-8f55-a771f8da1fce": {
+   "slug": "fjordkraft-bergen-city-marathon-maraton-42k",
+   "name": "Fjordkraft Bergen City Marathon – Maraton",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "d95cc6ad43395c198586d49f"
+  },
+  "30963e99-1bf1-4c98-a413-8b5e62b14766": {
+   "slug": "fuga-penyagolosa-trails-csp-106-km",
+   "name": "FUGA Penyagolosa Trails CSP (106 km)",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "2e66af796bc3beab41d3302f"
+  },
+  "f3bc67f2-eb5d-4e51-9d88-8cdc9c056360": {
+   "slug": "fuji-mountain-race-toppbanan-21k",
+   "name": "富士登山競走 山頂コース (Fuji Mountain Race – toppbanan)",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "651bef8302cfa8a5ffc2452a"
+  },
+  "c442da6b-a6b7-4246-b4b7-730cfe1d0ba3": {
+   "slug": "garmin-zevenheuvelenloop-15-km",
+   "name": "Garmin Zevenheuvelenloop (15 km)",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "18fcadeea4607ceaaa03003a"
+  },
+  "af479361-22ff-45bb-aef2-e469635faf02": {
+   "slug": "generali-berliner-halbmarathon-21k",
+   "name": "GENERALI BERLINER HALBMARATHON",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "d5c613bf9f8b313726673176"
+  },
+  "18a56ed4-30fa-4e79-969e-f5a15ee0f7ee": {
+   "slug": "generali-geneve-marathon-marathon-42k",
+   "name": "Generali Genève Marathon – Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "056dda4dff7042ca0a0e2809"
+  },
+  "a7371c44-35ec-450b-abfe-04f8c4bcfc6b": {
+   "slug": "gornergrat-zermatt-marathon-marathon-43k",
+   "name": "Gornergrat Zermatt Marathon – Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "e06f92ccb838eda1a8a8d4c7"
+  },
+  "9f69972f-de9e-4190-b011-fa791f20cfc3": {
+   "slug": "goteborgsvarvet-21k",
+   "name": "Göteborgsvarvet",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "cae9e843a1e7ff7d58df1f90"
+  },
+  "b4e964c2-b706-49c0-83d7-421619e5d55d": {
+   "slug": "grand-raid-reunion-la-diagonale-des-fous-180k",
+   "name": "Grand Raid Réunion – La Diagonale des Fous",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "fb961aeee13c8823c5168c8a"
+  },
+  "8a754336-7f54-4a32-aad0-20b167b452d6": {
+   "slug": "grand-trail-du-saint-jacques-100k",
+   "name": "Grand Trail du Saint Jacques - 100K",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "51961871d524bec1db30ffc3"
+  },
+  "728a599b-cfbe-4ddf-9172-3200768425cb": {
+   "slug": "great-wall-marathon-marathon-42-2-km",
+   "name": "Great Wall Marathon – Marathon 42.2 km",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "674a876f62d47b977d47fe38"
+  },
+  "9c0691d4-08ad-4392-901b-4f2dd4c50970": {
+   "slug": "greifenseelauf-halbmarathon-21k",
+   "name": "Greifenseelauf – Halbmarathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "01846b15bcf7c2f8ccf92bd1"
+  },
+  "485abf98-a22c-4cb0-a6c6-1b55d3173520": {
+   "slug": "hardrock-hundred-mile-endurance-run-hardrock-100-161k",
+   "name": "Hardrock Hundred Mile Endurance Run (Hardrock 100)",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "c5ff4bab7b49583e3320d8f5"
+  },
+  "473cf51d-d88d-4934-9f6a-113235f9f921": {
+   "slug": "harmonie-mutuelle-20-km-de-paris",
+   "name": "Harmonie Mutuelle 20 km de Paris",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "5075274ee63980e12a159cf5"
   },
   "f2eeb52e-8391-4db2-9607-348f44399131": {
    "slug": "harno-trail-21-km",
@@ -64,6 +624,69 @@
    "removed": null,
    "og": "5c6509cb0801e6773c8b1185"
   },
+  "28422007-ea0e-4c49-908f-c5b6cd23f3c9": {
+   "slug": "harzquerung-lauf-53-km-wernigerode-nordhausen",
+   "name": "Harzquerung – Lauf 53 km (Wernigerode–Nordhausen)",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "dd5b88eccb8fb36f16e8174e"
+  },
+  "5abfc8f8-5079-4d4c-992e-4e748284f4af": {
+   "slug": "haspa-marathon-hamburg-marathon-43k",
+   "name": "Haspa Marathon Hamburg (Marathon)",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "ba8d71bf31a825fc95c60699"
+  },
+  "3887dc06-563d-4053-b15b-f8f3f809aa8f": {
+   "slug": "hasselbyloppet-10k",
+   "name": "Hässelbyloppet",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "7ae6c8746e5be21320ce1f31"
+  },
+  "015d3713-46fd-4bc7-bed8-196c8ba85b49": {
+   "slug": "helsingborg-marathon-42k",
+   "name": "Helsingborg Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "41d76552f2ce59a082235ce2"
+  },
+  "ebfbcf5b-4282-48d0-a87d-10e6a6df2884": {
+   "slug": "highland-fling-85k",
+   "name": "Highland Fling",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "45afed7b8990e1951d40f534"
+  },
+  "06d1b06e-36f7-4bf5-b046-4f5596fa86a8": {
+   "slug": "hk100-hong-kong-100-ultra-95k",
+   "name": "HK100 (Hong Kong 100 Ultra)",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "9c1a04c5b93e9df83db8967d"
+  },
+  "b2d98f9e-d4fe-4dd2-8e32-e7c70adbd9d0": {
+   "slug": "hoka-hackney-half-21k",
+   "name": "HOKA Hackney Half",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "528fbe1e3b71cd8cdaf91e81"
+  },
+  "49946aab-d794-4427-9fa5-979412923ca0": {
+   "slug": "hoka-kodiak-ultra-marathons-by-utmb-100m-161k",
+   "name": "HOKA Kodiak Ultra Marathons by UTMB – 100M",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "c9b540f134d112c4cdf2d236"
+  },
+  "4a553dab-7871-4c52-996e-bb2b7d898d57": {
+   "slug": "hoka-ultra-trail-australia-by-utmb-uta100-101k",
+   "name": "HOKA Ultra-Trail Australia by UTMB – UTA100",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "78d84b9cd588c7860b262d27"
+  },
   "c48608eb-e23f-41f3-836e-a31e447cbe84": {
    "slug": "hoka-utmb-mont-blanc-utmb-ultra-trail-du-mont-blanc-174k",
    "name": "HOKA UTMB Mont-Blanc – UTMB (Ultra-Trail du Mont-Blanc)",
@@ -71,12 +694,75 @@
    "removed": null,
    "og": "0bb984dc3d0fa1e22abe75ad"
   },
+  "3b3a1d6d-4d42-4047-bea4-0c5baf5d4b74": {
+   "slug": "hoka-val-d-aran-by-utmb-torn-dera-val-d-aran-vda-163-km",
+   "name": "HOKA Val d'Aran by UTMB – Torn dera Val d'Aran (VDA) 163 km",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "803df0ba216058f817886b45"
+  },
+  "35b9716f-6c99-4750-ac24-f697c505c878": {
+   "slug": "holmenkollstafetten-18k",
+   "name": "Holmenkollstafetten",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "2e52ddde8a2a6cf5e3c74cd2"
+  },
+  "cb16b5bc-569d-4915-aa61-b71961744cba": {
+   "slug": "hyundai-mitja-marato-barcelona-by-brooks-21k",
+   "name": "Hyundai Mitja Marató Barcelona by Brooks",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "796f0cc6b9394d5e459fbf6f"
+  },
+  "2dce7b1e-8096-458f-b7ae-cfffc22e93fe": {
+   "slug": "irish-life-dublin-marathon-42k",
+   "name": "Irish Life Dublin Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "d7a6749efc7c654c4d934dc0"
+  },
+  "9780fc25-7806-4730-b84e-ff2557626740": {
+   "slug": "islandsbanki-reykjavik-marathon-42-2-km-marathon",
+   "name": "Íslandsbanki Reykjavík Marathon – 42,2 km (Marathon)",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "1c3254d0be86ebbeb614ccbd"
+  },
+  "e3235f59-5802-40ac-938d-e69490d615e6": {
+   "slug": "jal-honolulu-marathon-42k",
+   "name": "JAL Honolulu Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "7baa5ab55dc93b931ea2ea68"
+  },
+  "53eac134-3971-49f7-86c3-95f786a4379e": {
+   "slug": "javelina-jundred-100-mile-161k",
+   "name": "Javelina Jundred – 100 Mile",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "7ab97692a54c974dfd8504d1"
+  },
   "17d8c500-5539-4b4c-bc50-0949bd445ea0": {
    "slug": "jungfrau-marathon-42k",
    "name": "Jungfrau-Marathon",
    "first": "2026-10-15",
    "removed": null,
    "og": "5fde8f3d5dbb541c1a92c0d2"
+  },
+  "95783603-5ab7-478f-9342-9e29f3ecd7a7": {
+   "slug": "kat100-by-utmb-endurance-trail-75k",
+   "name": "KAT100 by UTMB – Endurance Trail",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "a8005a266d4ea7b34ac06830"
+  },
+  "38cbab4f-a35f-4b51-aa1a-acedf25f847f": {
+   "slug": "kepler-challenge-60k",
+   "name": "Kepler Challenge",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "3b0103f4ea3e692166ecd304"
   },
   "c8f5f07f-9cfa-4ec7-aca1-f8dab4b380bf": {
    "slug": "kia-fjallmaraton-45k",
@@ -92,6 +778,503 @@
    "removed": null,
    "og": "d5b1fdaac977cf634c99441a"
   },
+  "4d975936-c37f-46ae-ab45-544a4276d862": {
+   "slug": "l-ultra-marin-le-grand-raid-175-km-raid-du-golfe-du-morbihan",
+   "name": "L'Ultra Marin – Le Grand Raid 175 km (Raid du Golfe du Morbihan)",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "8e0018eaa96c28ed47e6f9d8"
+  },
+  "f59ff8c6-417e-4775-b99f-4444c5f0d468": {
+   "slug": "lake-sonoma-100k",
+   "name": "Lake Sonoma 100K",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "79b59750e8cdee86aa522357"
+  },
+  "b4040b8b-54ca-4d2b-b63d-5a08d13f5152": {
+   "slug": "laugavegur-ultra-marathon-52k",
+   "name": "Laugavegur Ultra Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "f4bcba0479525c8e265f51de"
+  },
+  "7da4a741-2f4e-4f5b-9272-31cee9ded150": {
+   "slug": "lausanne-marathon-marathon-42k",
+   "name": "Lausanne Marathon – Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "f38b8fe0e958d1f107728dfa"
+  },
+  "18b6aae5-7e7f-466c-978c-19c9b12bd9e6": {
+   "slug": "le-grand-trail-des-templiers-80-km-festival-des-templiers",
+   "name": "Le Grand Trail des Templiers (80 km) – Festival des Templiers",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "8cd6675fec66d91ed4e278ae"
+  },
+  "b20deb5d-caee-4634-a66c-afc5d8713a8b": {
+   "slug": "leadville-trail-100-run-161k",
+   "name": "Leadville Trail 100 Run",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "6743801a400a77257785f47d"
+  },
+  "061b3ff3-7a9f-4700-925a-880b4ca7169f": {
+   "slug": "lemkowyna-trail-150-lemkowyna-ultra-trail-149k",
+   "name": "Łemkowyna Trail 150 (Łemkowyna Ultra-Trail®)",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "f7e42bc84f018e5da2e42360"
+  },
+  "7cfd7b50-833d-4c55-831e-d4299aec7eaf": {
+   "slug": "lillebaelt-halvmarathon-21k",
+   "name": "Lillebælt Halvmarathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "67feac464022ab9f118b12d5"
+  },
+  "daad81ae-36e4-4d82-87f6-5692884e1215": {
+   "slug": "lofoten-ultra-trail-50-miles-87k",
+   "name": "Lofoten Ultra-Trail® // 50 miles",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "a939e30fe53ab493e71a6e66"
+  },
+  "d9c06307-83a0-4b02-b6ea-a80c6b321319": {
+   "slug": "mainova-frankfurt-marathon-42k",
+   "name": "Mainova Frankfurt Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "fa48e1b952a61d9979fecf36"
+  },
+  "5c087838-4f6d-45a8-92cf-fa92d1368c0c": {
+   "slug": "marathon-des-alpes-maritimes-nice-cannes-marathon-42k",
+   "name": "Marathon des Alpes-Maritimes Nice-Cannes – Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "cb50c360fc3d3f23dd676530"
+  },
+  "f043964d-8a03-4c7d-adbf-983dea95e67e": {
+   "slug": "marathon-des-chateaux-du-medoc-42k",
+   "name": "Marathon des Châteaux du Médoc",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "c951ff3978d60a53be7b8015"
+  },
+  "770c707e-b1cc-48d2-b77c-7e511e23e1b6": {
+   "slug": "marathon-des-sables-mds-legendary-250k",
+   "name": "MARATHON DES SABLES – MDS Legendary",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "48d5de6c940df7de03ac70c0"
+  },
+  "a36e48a5-3bbf-403a-8f8c-63a2a1c86b55": {
+   "slug": "marathon-eryri-42k",
+   "name": "Marathon Eryri",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "51461ecec6f86e18dfffae11"
+  },
+  "870b27ba-d0cf-43b0-8282-201f3900ca2e": {
+   "slug": "maraton-internacional-de-buenos-aires-42k",
+   "name": "Maratón Internacional de Buenos Aires (42K)",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "61cbb5350b2a3b049bcfa7f6"
+  },
+  "768f6e8d-bed8-4214-9225-c61bb8506df6": {
+   "slug": "maraton-valencia-trinidad-alfonso-zurich-42k",
+   "name": "Maratón Valencia Trinidad Alfonso Zurich",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "5a2847986ba4537e4fc3ebb7"
+  },
+  "81e9354a-e60c-4d64-a4c3-019dd202d1f3": {
+   "slug": "marine-corps-marathon-42k",
+   "name": "Marine Corps Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "68be18d4d5bd64b8f235a343"
+  },
+  "22216269-863c-4360-97e4-0b636d580b8e": {
+   "slug": "marseille-cassis-ag2r-la-mondiale-20k",
+   "name": "Marseille-Cassis – AG2R La Mondiale",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "7a2597c218a000cba665231d"
+  },
+  "f443f2c8-b4be-4d0f-9b29-1422d41a16d9": {
+   "slug": "maxi-race-tour-du-lac-en-solo-1-jour-100k",
+   "name": "MaXi-Race – tOur du Lac en solo (1 jour)",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "1f421a092320c29c22e6eb77"
+  },
+  "7c8693f9-1afb-46ea-9cf6-1af77a5cb7cb": {
+   "slug": "mcc-martigny-combe-chamonix-hoka-utmb-mont-blanc-40k",
+   "name": "MCC (Martigny-Combe – Chamonix), HOKA UTMB Mont-Blanc",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "17303f1d931463262876a410"
+  },
+  "6a77a035-fa02-48e2-95dd-8470810cc074": {
+   "slug": "medtronic-twin-cities-marathon-42k",
+   "name": "Medtronic Twin Cities Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "3297d85dfb4a3eed0c792fcf"
+  },
+  "b1154a9f-026e-4f88-92e2-c7cde57bcef0": {
+   "slug": "mein-freiburg-marathon-marathon-42k",
+   "name": "MEIN FREIBURG MARATHON – Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "79716a7f6f970e4c6fedb302"
+  },
+  "ceeb7cc3-890b-44e6-acda-104a4dd8dd43": {
+   "slug": "midnattsloppet-goteborg-10-km",
+   "name": "Midnattsloppet Göteborg 10 km",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "35c964293b138a3376f1dfc5"
+  },
+  "5fca4d7d-1a28-43b7-af46-890256ce437d": {
+   "slug": "midnattsloppet-malmo-10-km",
+   "name": "Midnattsloppet Malmö 10 km",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "3f61a7d9f64cb79c17547821"
+  },
+  "df66510a-c768-4b26-87aa-34622910b6cf": {
+   "slug": "midnattsloppet-stockholm-10-km",
+   "name": "Midnattsloppet Stockholm 10 km",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "c1f5162698a7acd02d9f03c2"
+  },
+  "ba015628-80c0-4d83-99d0-51df53159c71": {
+   "slug": "midnight-sun-marathon-42k",
+   "name": "Midnight Sun Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "622f2fe1a38b135ea932142d"
+  },
+  "f047dea6-a171-4df9-8b60-f522b2ed6d5f": {
+   "slug": "minerva-energia-ultra-trail-lago-d-orta-utlo-58-km",
+   "name": "Minerva Energia Ultra Trail Lago d'Orta – UTLO 58 km",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "f972a40ab6c5f6a4419b218b"
+  },
+  "a88c5537-9b3f-4a14-8bee-0749f1f092ae": {
+   "slug": "montane-lakeland-100-164k",
+   "name": "Montane Lakeland 100",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "82310cba84ca6a5e281fb81e"
+  },
+  "5307cd79-7db2-4af2-9356-25b4ec9079a3": {
+   "slug": "montreux-trail-festival-mxtreme-100-102-km",
+   "name": "Montreux Trail Festival – MXTREME 100 (102 km)",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "9434268eb364eeeaf2945414"
+  },
+  "d341db4d-7642-4754-8eda-6eabfb335438": {
+   "slug": "morat-fribourg-17-17-km",
+   "name": "Morat-Fribourg 17.17 km",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "bc78455a0072fe1c1587a430"
+  },
+  "a2574dc7-01fb-463c-8ef6-8dfeca1fb3e7": {
+   "slug": "mozart-100-by-utmb-mozart-ultra-84-km",
+   "name": "mozart 100 by UTMB – mozart Ultra (84 km)",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "686a771bb0b5f59feb2e32cf"
+  },
+  "be526c1e-5e11-4af0-83f6-58daa463e6d5": {
+   "slug": "nationale-nederlanden-san-silvestre-vallecana-carrera-popular-10-km",
+   "name": "Nationale-Nederlanden San Silvestre Vallecana (carrera popular 10 km)",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "0bc54fbb78355732f3e83f23"
+  },
+  "0f17eda4-d433-40b3-8b55-5902caeaffe3": {
+   "slug": "nice-cote-d-azur-by-utmb-roubion-nice-100k",
+   "name": "Nice Côte d'Azur by UTMB – Roubion - Nice - 100K",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "979f9b7eb52913630e6270f9"
+  },
+  "99b76657-8f8b-4d69-9742-1939e7de3c54": {
+   "slug": "nike-melbourne-marathon-42k",
+   "name": "Nike Melbourne Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "05db1cac37b363d81c6203b5"
+  },
+  "9ea49d50-7142-4fda-b190-90bb1337e209": {
+   "slug": "nn-cpc-loop-den-haag-nn-halve-marathon-21-1-km",
+   "name": "NN CPC Loop Den Haag – NN Halve Marathon (21,1 km)",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "002f0b90e43cf590a5b0aa76"
+  },
+  "532de514-d2bb-41b7-a603-682c5198b367": {
+   "slug": "northside-hospital-peachtree-road-race-formerly-the-ajc-peachtree-road-10k",
+   "name": "Northside Hospital Peachtree Road Race (formerly the AJC Peachtree Road Race)",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "f7faeb2669e8cdd55e6fe2cd"
+  },
+  "8a55ddd6-8b1c-45f6-aa12-881ca75495dc": {
+   "slug": "occ-utmb-mont-blanc-60k",
+   "name": "OCC – UTMB Mont Blanc",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "892b4c547087b1c6bd593f42"
+  },
+  "72eceecc-1af6-41d0-b088-2da0b595885d": {
+   "slug": "ochsner-sport-zurich-marathon-marathon-42k",
+   "name": "OCHSNER SPORT Zürich Marathon (Marathon)",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "ff401b14660c05d2d8fedbd0"
+  },
+  "2a6f33e6-a495-477b-8a6e-9f8d67fa6bf7": {
+   "slug": "olympus-marathon-44k",
+   "name": "Olympus Marathon (44K)",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "761e3b3ccc07da3c011fe4d1"
+  },
+  "bf4fe91e-44c0-4013-b7ae-1d6866335398": {
+   "slug": "osaka-marathon-2027-2027-42k",
+   "name": "Osaka Marathon 2027 (大阪マラソン2027)",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "2fd78de1c74a6842e48513bb"
+  },
+  "f8bf292a-8eb1-4773-8d70-39783a1064a9": {
+   "slug": "oysho-royal-parks-half-marathon-21k",
+   "name": "Oysho Royal Parks Half Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "7a373a93b340c4e3b8a662d2"
+  },
+  "70910c20-c249-443c-8770-6c67bece8da5": {
+   "slug": "pikes-peak-marathon-42k",
+   "name": "Pikes Peak Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "e5bb448b4847b20f93f67068"
+  },
+  "ba2dae62-0d2c-4d0d-a34d-4c1f864b7a30": {
+   "slug": "pirkan-holkka-33-km",
+   "name": "Pirkan Hölkkä 33 km",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "3b727d65d3f020a06f095669"
+  },
+  "a566eccd-3e63-4d99-aa14-ef9b18081573": {
+   "slug": "restonica-trail-by-utmb-utc100m-ultra-trail-di-corsica-110k",
+   "name": "Restonica Trail by UTMB – UTC100M Ultra-Trail di Corsica",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "f58cd3a6c5b46a64bbe27aad"
+  },
+  "e584201e-0aa4-4c93-89c4-74ab4bdeb880": {
+   "slug": "rimi-riga-marathon-42-km-marathon",
+   "name": "Rimi Riga Marathon – 42 km (Marathon)",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "7008bb25703af149355bb5ab"
+  },
+  "3ba4ac38-4001-4f32-9a82-d4a0a3834e97": {
+   "slug": "rmb-ultra-trail-cape-town-ut100-ultra-trail-100km",
+   "name": "RMB Ultra-trail Cape Town – UT100 (Ultra-Trail 100km)",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "d758512b2a67aa6a38c2affd"
+  },
+  "68ad7bdd-a9a9-4672-a08d-316de5c02992": {
+   "slug": "romaostia-half-marathon-21k",
+   "name": "RomaOstia Half Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "087379ed0105054749087164"
+  },
+  "faf4a3fd-5ae5-4a8d-968e-aceb4787096f": {
+   "slug": "royal-run-kobenhavn-frederiksberg-10-km",
+   "name": "Royal Run København/Frederiksberg – 10 km",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "6e2cc012ac513851577b185f"
+  },
+  "0d8bc8af-ea4c-46a1-b5eb-8d10b5aded0f": {
+   "slug": "run-in-lyon-by-harmonie-mutuelle-marathon-42k",
+   "name": "Run in Lyon by Harmonie Mutuelle – Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "436d44f00cdbf8733d9d30fd"
+  },
+  "bc864939-ffdb-427a-a0cb-8d7104818583": {
+   "slug": "run-rabbit-run-100-163k",
+   "name": "Run Rabbit Run 100",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "65de5ffb2b082aa78e55342a"
+  },
+  "c441b97e-cd0b-47d8-9f6f-1090b74e8471": {
+   "slug": "run-rome-the-marathon-42k",
+   "name": "Run Rome The Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "b0351561fb7510ffed2159a1"
+  },
+  "11a52f1f-4b0b-4886-b474-e0a297a265a6": {
+   "slug": "saintelyon-80-km",
+   "name": "SaintéLyon (80 km)",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "8291ba7a170c9efab30875c6"
+  },
+  "804e5096-185e-4c53-86ef-c1ad0c761657": {
+   "slug": "salomon-ecotrail-paris-trail-80-km-printemps",
+   "name": "Salomon EcoTrail Paris – Trail 80 km (Printemps)",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "2ca6eb6b0876516d35404b10"
+  },
+  "ed1e027f-496c-4ef4-9c6a-27fc8f607c12": {
+   "slug": "salomon-pitz-alpine-glacier-trail-p105-salomon-ultra-108k",
+   "name": "Salomon Pitz Alpine Glacier Trail – P105 Salomon Ultra",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "5575deed1b3123e82f97e879"
+  },
+  "18b4e790-8dec-4946-9c67-2e5dcec38bff": {
+   "slug": "salomon-ultra-pirineu-100k",
+   "name": "Salomon Ultra Pirineu 100K",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "efb2b7ff37ba1086f2d0e4dc"
+  },
+  "efbe8e3a-9519-48b7-a312-30608671bc8f": {
+   "slug": "sanlam-cape-town-marathon-42k",
+   "name": "Sanlam Cape Town Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "e83dc8742e6093a8b9d3b0c5"
+  },
+  "9e33bf4a-2d4d-4887-958f-192fba587a1e": {
+   "slug": "saucony-helsinki-city-marathon-42k",
+   "name": "Saucony Helsinki City Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "e9bacad4037d0dacd53a09d3"
+  },
+  "8768bc70-ddbd-448d-976b-46707cc7ef07": {
+   "slug": "seoul-marathon-full-course-42k",
+   "name": "Seoul Marathon (Full Course)",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "ebe293b2b6175defc535a8af"
+  },
+  "12b8430b-3d06-49a3-83a0-1b4afe7391de": {
+   "slug": "sinister-7-ultra-100-miler-161k",
+   "name": "Sinister 7 Ultra – 100-Miler",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "4ff4dabce0196bf28df3706f"
+  },
+  "3d08c53a-1353-44ae-b154-86b7385d4878": {
+   "slug": "six-foot-track-marathon-45k",
+   "name": "Six Foot Track Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "4d00ae8ee74df95f91567340"
+  },
+  "060fb6c7-e43e-4a1a-aae6-f733e416bda3": {
+   "slug": "spar-budapest-marathon-42-2-km",
+   "name": "SPAR Budapest Marathon – 42,2 km",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "bfca9a8d93672a77fd96470e"
+  },
+  "c9c2ca11-115d-4cf3-94ed-561f7c9d207c": {
+   "slug": "spartathlon-246k",
+   "name": "Spartathlon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "d1c2989a31c3aa4f71e2bb96"
+  },
+  "4bed736f-89ec-4768-826a-dc54c9126729": {
+   "slug": "speedgoat-mountain-races-by-utmb-50k",
+   "name": "Speedgoat Mountain Races by UTMB – 50K",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "0176adc67921a4757f1f3a83"
+  },
+  "558c7cfc-9637-463a-9e26-10022e303755": {
+   "slug": "squamish-50-50-mile-78k",
+   "name": "Squamish 50 – 50 mile",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "a93ebb44fe9f923da024c471"
+  },
+  "0c145ef2-893e-4cd5-8d72-986560846ccb": {
+   "slug": "standard-chartered-hong-kong-marathon-marathon-42-195-km",
+   "name": "Standard Chartered Hong Kong Marathon – Marathon (42.195 km)",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "c74d0ba90a338ea36caf1ca6"
+  },
+  "3d3cac73-1c7a-4353-8750-0d3a6bbb9cc8": {
+   "slug": "stavanger-marathon-maraton-42-2-km",
+   "name": "Stavanger Marathon – Maraton 42,2 km",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "9dc075d67e612960f7ce6378"
+  },
+  "28cb233a-00bd-4c52-8739-7ef254cab762": {
+   "slug": "swedbank-vilniaus-maratonas-maratonas-42-195-km",
+   "name": "Swedbank Vilniaus maratonas – Maratonas 42.195 km",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "03b3e6b365e9e0af35fa3368"
+  },
+  "de27c241-6e24-4798-84b5-38d7c0a42c36": {
+   "slug": "swiss-canyon-trail-111k",
+   "name": "Swiss Canyon Trail – 111K",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "063e33aba1d1fb555132e830"
+  },
+  "a40f3356-9679-4ad8-8eda-55e78e7e1662": {
+   "slug": "swisscitymarathon-lucerne-marathon-42k",
+   "name": "SwissCityMarathon – Lucerne (Marathon)",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "66d7641e04d0d5300d2c87c4"
+  },
+  "76d97929-7174-4cb7-a884-d3d31b275f17": {
+   "slug": "tamarack-homes-ottawa-international-marathon-42k",
+   "name": "Tamarack Homes Ottawa International Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "97959386400f765c6ee3245b"
+  },
+  "49c19f85-4b1d-483a-8254-3f14d1aba941": {
+   "slug": "tcs-amsterdam-marathon-42k",
+   "name": "TCS Amsterdam Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "14cb66e8a97b4db706d6d37d"
+  },
   "cbfdbac3-30a9-4dc1-9120-789bacbbcf41": {
    "slug": "tcs-lidingoloppet-30-km",
    "name": "TCS Lidingöloppet 30 km",
@@ -106,12 +1289,152 @@
    "removed": null,
    "og": "3d00523e40cfcd17c44a37bb"
   },
+  "6f5508ed-d7be-44fc-832b-af0f26273026": {
+   "slug": "tcs-sydney-marathon-42k",
+   "name": "TCS Sydney Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "a9d816c85c706dbcd1d3e5cc"
+  },
+  "ddaa5405-e9b8-4b77-aa33-3fa5d6641132": {
+   "slug": "tcs-toronto-waterfront-marathon-marathon-42k",
+   "name": "TCS Toronto Waterfront Marathon – Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "4e243aaba9ffb8eac17d8c3a"
+  },
+  "c68ff202-984a-4474-a709-70dc560215d9": {
+   "slug": "tds-sur-les-traces-des-ducs-de-savoie-hoka-utmb-mont-blanc-145k",
+   "name": "TDS – Sur les Traces des Ducs de Savoie (HOKA UTMB Mont-Blanc)",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "1987da730453e2e9db287a5a"
+  },
+  "b3fc2773-beeb-4212-b2a0-bbf57099c94e": {
+   "slug": "tenerife-bluetrail-110k",
+   "name": "Tenerife Bluetrail 110k",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "dc3425a43eca265ee50036be"
+  },
+  "464b0423-5cb8-452c-b57d-3bda9ea9f91c": {
+   "slug": "tenzing-hillary-everest-marathon-full-marathon-42km",
+   "name": "Tenzing Hillary Everest Marathon – Full Marathon 42KM",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "b6faff500893012b992fb988"
+  },
+  "7f4e8225-11e8-40f9-b2f0-1bf00c2a0baf": {
+   "slug": "the-north-face-grossglockner-ultra-trail-ggut-110-km",
+   "name": "The North Face Großglockner Ultra-Trail | GGUT 110 km",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "835f3e960590d6523ed9fba3"
+  },
+  "12ef2ed1-e5b0-4cca-9010-efc1551bf360": {
+   "slug": "the-north-face-transgrancanaria-classic-125k",
+   "name": "The North Face Transgrancanaria Classic",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "bb86f9617bd4e1c44ed6985c"
+  },
+  "68f290a2-96d6-4048-97ad-927adfe6e01f": {
+   "slug": "three-peaks-race-37k",
+   "name": "Three Peaks Race",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "e9f24b8dfaa3f4153c515b2c"
+  },
+  "43f40023-f393-4abe-b340-84dfa22d4169": {
+   "slug": "tiaa-philadelphia-marathon-42k",
+   "name": "TIAA Philadelphia Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "4135f7734baf5d3bcf217858"
+  },
+  "5fbaec56-c13d-4402-b9d6-7e095503cde0": {
+   "slug": "tjejmilen-10k",
+   "name": "Tjejmilen",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "5eec5ed7b4f058baa9573213"
+  },
+  "fc945f66-bbc9-4e18-9ea4-29596db4dc42": {
+   "slug": "tjurruset-10-km",
+   "name": "Tjurruset 10 km",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "736e79ff069e58612bbbb047"
+  },
+  "03a736e2-9ae5-4aa5-981d-abb571126f70": {
+   "slug": "tokyo-marathon-2027-42k",
+   "name": "Tokyo Marathon 2027",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "2b5d3dd4bfa6e419ab8153fd"
+  },
+  "ac786a0a-f425-4593-bcb3-02df85b5da20": {
+   "slug": "tor330-tor-des-geants-328k",
+   "name": "TOR330 - Tor des Géants",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "ff245d8b1dc9ee4a99bef637"
+  },
   "3a8c37ae-bb5e-422d-8f19-b9fa69c2f365": {
    "slug": "totalsports-two-oceans-marathon-ultra-marathon-56-km",
    "name": "Totalsports Two Oceans Marathon – Ultra Marathon 56 km",
    "first": "2026-10-15",
    "removed": null,
    "og": "5db5a7b6acb0d7d9a775cea3"
+  },
+  "f58e6455-5bad-493e-8ed7-e97a8dfcaae5": {
+   "slug": "trail-100-andorra-by-utmb-ultra-105k",
+   "name": "Trail 100 Andorra by UTMB – Ultra 105K",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "5f74289f1f64badcfa850895"
+  },
+  "8f17cd66-a54c-427f-b9b8-996f6de9011e": {
+   "slug": "trail-menorca-cami-de-cavalls-tmcdc-185-km",
+   "name": "Trail Menorca Camí de Cavalls – TMCDC 185 km",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "f74f64f4628714868ad0af22"
+  },
+  "1ef0ef2b-8508-4a8e-8e2e-f70e77ed811f": {
+   "slug": "trail-verbier-st-bernard-by-utmb-x-alpine-140-km",
+   "name": "Trail Verbier St-Bernard by UTMB – X-Alpine (140 km)",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "a111536c334f499a37ac677f"
+  },
+  "0921e5cc-03a3-4273-a862-0d8e3c02fa79": {
+   "slug": "trailovik-22-km",
+   "name": "TrailÖvik 22 km",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "a48b43dc939e648b3c4af1ad"
+  },
+  "db3e6e0e-3d72-452a-9a1f-804d9993196c": {
+   "slug": "trailvasan-30",
+   "name": "Trailvasan 30",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "bee776d9b4827735da20b47e"
+  },
+  "839e08e2-90d8-4f3d-b933-c8e4d8a32b6b": {
+   "slug": "transvulcania-ultramarathon-73k",
+   "name": "Transvulcania Ultramarathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "00ba4ccef624b77f14ce38e2"
+  },
+  "31141017-53f1-45b9-9f15-5a17222d75c7": {
+   "slug": "trek-matterhorn-ultraks-sky-49-km",
+   "name": "TREK Matterhorn Ultraks – SKY 49 km",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "6f4bff3826f2fa09dcde508e"
   },
   "3621deac-5bb1-4539-bbd9-ffd172767a1d": {
    "slug": "ultravasan-45-44k",
@@ -134,6 +1457,62 @@
    "removed": null,
    "og": "c8604ba5f366bc0c7e3d1350"
   },
+  "77a24fde-e990-4202-a666-3ace659befff": {
+   "slug": "ursvik-ultra-uu-hardingen-45-km",
+   "name": "Ursvik Ultra – UU Hårdingen 45 km",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "034ec99d2a705d82842eb7e0"
+  },
+  "7f45e017-ba34-4654-9db6-bf4577c760c0": {
+   "slug": "vaarojen-maraton-43-km",
+   "name": "Vaarojen Maraton 43 km",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "dd0cb52d96d774012c26ef03"
+  },
+  "12a4f6c4-58d7-44c9-895d-3c3c54af509e": {
+   "slug": "varruset-stockholm-5-km",
+   "name": "Vårruset Stockholm 5 km",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "19e19250a46104e44c1fed6b"
+  },
+  "cf91488e-60c8-40e1-85fa-6a30f5a281e9": {
+   "slug": "venicemarathon-42k",
+   "name": "Venicemarathon 42K",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "99c57d2b00468af4ab24d197"
+  },
+  "c4d4b324-4146-4051-bccb-b2b31fd5bc88": {
+   "slug": "vienna-city-marathon-43k",
+   "name": "Vienna City Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "48e5eb034285974e43344162"
+  },
+  "0ad70468-f704-40a5-bf33-576051a36add": {
+   "slug": "vodafone-prague-marathon-42k",
+   "name": "Vodafone Prague Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "34b02ab21780bbfbce55f5d3"
+  },
+  "d8446207-354a-4dd9-86e8-51d85af19e81": {
+   "slug": "voltaren-city2surf-14k",
+   "name": "Voltaren City2Surf",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "99bde2413b3d694a2cdadca6"
+  },
+  "d635306d-7d09-46d1-a7e9-74f530909663": {
+   "slug": "west-highland-way-race-153k",
+   "name": "West Highland Way Race",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "82bf3443f9767b5d8a208a4d"
+  },
   "953ddc63-e65e-4133-8864-c960b7b36aa4": {
    "slug": "western-states-100-mile-endurance-run-161k",
    "name": "Western States 100-Mile Endurance Run",
@@ -141,12 +1520,33 @@
    "removed": null,
    "og": "7ddcb8078b7a929a62e098fe"
   },
+  "bdb07a64-4bba-4d70-bc1e-7ffe1d7c5201": {
+   "slug": "wizz-air-milano-marathon-42k",
+   "name": "Wizz Air Milano Marathon",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "cdf81ed9c4293e9fd9f51e22"
+  },
   "4a88085b-37a2-4e63-8673-7ed49de9c679": {
    "slug": "zegama-aizkorri-mendi-maratoia-42k",
    "name": "Zegama-Aizkorri Mendi Maratoia",
    "first": "2026-10-15",
    "removed": null,
    "og": "d392db4e605f88fd9ffa3674"
+  },
+  "17804d59-81e2-459f-8f9a-82f76dc0fc88": {
+   "slug": "zurich-marato-barcelona-42k",
+   "name": "Zurich Marató Barcelona",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "3b2da358da00644b32f7b61c"
+  },
+  "532ac7cb-3738-4e7e-afc2-15640c1ec25d": {
+   "slug": "zurich-maraton-de-sevilla-42k",
+   "name": "Zurich Maratón de Sevilla",
+   "first": "2026-10-15",
+   "removed": null,
+   "og": "31eb50aea49cd87c363f0884"
   }
  },
  "pages": {
@@ -203,267 +1603,2679 @@
    "lastmod": "2026-10-15"
   },
   "de/laeufe/": {
-   "hash": "31626a9912761fb37d5fde5b",
+   "hash": "4e42795d6e04fb2bfba509b9",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/101a-corrida-internacional-de-sao-silvestre-15k/": {
+   "hash": "3bae53fffec2ce9cf72ac802",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/20-km-de-bruxelles/": {
+   "hash": "d379c10a73697c33e4398a67",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/2026-tcs-new-york-city-marathon-42k/": {
+   "hash": "784fb85e541b2ec3d4ad88a8",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/26-dresden-marathon-marathon-42k/": {
+   "hash": "2637d0dec6d9b1e0c9936a31",
    "lastmod": "2026-10-15"
   },
   "de/laeufe/42km-du-mont-blanc-marathon-du-mont-blanc/": {
-   "hash": "3557d6d8dce2f40d9c4c1abe",
+   "hash": "6b8cc52522d40a439abcf148",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/aalborg-brutal-marathon-marathon-42k/": {
+   "hash": "758aac84d416fe782c4da74c",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/adidas-innsbruck-alpine-trailrun-festival-k85-heart-of-the-alps-ultra-86k/": {
+   "hash": "9d4aba752e73cc7cac632c11",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/adidas-manchester-marathon-42k/": {
+   "hash": "57cc6fc4c1668c0c4191848c",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/adidas-premiarmilen-10k/": {
+   "hash": "819a043249e04eaab75f3bde",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/adidas-stockholm-halvmaraton-21k/": {
+   "hash": "18b26b4b6a360ae93dbe7136",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/adidas-stockholm-marathon-42k/": {
+   "hash": "04e0221213dd4857ef984109",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/aj-bell-great-manchester-run-10k/": {
+   "hash": "5bf2ad2e5d257a8f57522927",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/aj-bell-great-north-run-21k/": {
+   "hash": "cf2783858c54d2af7c4390dc",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/aj-bell-great-scottish-run-half-marathon-21k/": {
+   "hash": "4c8176882c2aa58017170948",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/aj-bell-great-south-run-16k/": {
+   "hash": "74dd0c87ad00f5502602337f",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/angeles-crest-100-mile-endurance-run-163k/": {
+   "hash": "51b1b929fb95e98ad5954b4b",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/asics-gold-coast-marathon-43k/": {
+   "hash": "721888f884e3518da807a214",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/asics-sentrumslopet-10-km/": {
+   "hash": "7c6d288f176b27b517af8841",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/asml-marathon-eindhoven-43k/": {
+   "hash": "35dd2a8d2d73e20113f05e92",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/athens-marathon-the-authentic-marathon-42k/": {
+   "hash": "c8c089944cf7c4fd635e4d41",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/badwater-135-217k/": {
+   "hash": "c92390ef6603ab46c0564bef",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/baloise-antwerp-10-miles-16k/": {
+   "hash": "46e8dc921c5d004648233d1c",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/bank-of-china-beijing-marathon-beijing-marathon-42k/": {
+   "hash": "126c1b66d7c165c5cd4512cb",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/barfoot-thompson-auckland-marathon-42k/": {
+   "hash": "cbeffe1312a8c014779cb07c",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/baxters-loch-ness-marathon-42k/": {
+   "hash": "4470214d3cbf767d94c268b2",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/behobia-san-sebastian-20k/": {
+   "hash": "484701cb1f1bb96ee40539ab",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/belfast-city-marathon-42k/": {
+   "hash": "b7c3603edd3741a8fd5a383b",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/ben-nevis-race-14k/": {
+   "hash": "73a5b6d1c346ca15c5d0333b",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/bestseller-aarhus-city-half-21k/": {
+   "hash": "06e224aac19657494a5026e3",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/bieg-rzeznika-80k/": {
+   "hash": "665aedd42177f43b7c7e4c69",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/big-five-marathon-42-2-km/": {
+   "hash": "d6c4a94f98d9394f805ea816",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/big-sur-international-marathon-42k/": {
+   "hash": "4f9ddc5b0c5dc7348aabdeab",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/bighorn-trail-run-100-mile-161k/": {
+   "hash": "a7b497d7ad60eb5bce58a426",
    "lastmod": "2026-10-15"
   },
   "de/laeufe/birkebeinerlopet-21-km/": {
-   "hash": "6419123d0048d09554d0e4a3",
+   "hash": "0b189b5933300021bd44db09",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/bjorn-borg-helsinki-half-marathon-21-1-km/": {
+   "hash": "09518bb560ca8e9c1df4086f",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/black-canyon-ultras-100k/": {
+   "hash": "c607d1b93fe85f2c26c4bd7c",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/blodomloppet-goteborg-10-km/": {
+   "hash": "9973d35f000ded1128202394",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/bmo-vancouver-marathon-42k/": {
+   "hash": "a25fc7e34c4938c580a9657f",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/bmw-berlin-marathon-fran-2027-generali-berlin-marathon-42k/": {
+   "hash": "7e0a696b5b9161d007e35440",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/bolderboulder-10k/": {
+   "hash": "eb6b4475a98c191a7fcff9b0",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/boston-marathon-42k/": {
+   "hash": "5ff8d730ece327b07c95200a",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/brighton-marathon-42k/": {
+   "hash": "a8686170ca9092320ed673f6",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/brocken-marathon-48-harz-gebirgslauf-42k/": {
+   "hash": "7bdb78647e66a8b7c32f87fb",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/broken-arrow-skyrace-46k/": {
+   "hash": "a5a91ceb4dc9219d89aabddd",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/buffalo-stampede-100km-bright-ultra-skymarathon/": {
+   "hash": "efdcfab006414f7eed374420",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/california-international-marathon-42k/": {
+   "hash": "f100cd6d3a9eb037508fc60d",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/canyons-endurance-runs-by-utmb-100m-159k/": {
+   "hash": "bd98f5334df5bce8304dcf4e",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/cardiff-half-marathon-20k/": {
+   "hash": "db16f495b8e37ef3d8e7714b",
    "lastmod": "2026-10-15"
   },
   "de/laeufe/ccc-hoka-utmb-mont-blanc-courmayeur-champex-chamonix-108k/": {
-   "hash": "562f02f8be66bf778b851b13",
+   "hash": "92185dd506dc157655ba6030",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/chevron-houston-marathon-42k/": {
+   "hash": "baeb5624de5bbec4a4a30f7f",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/chianti-ultra-trail-by-utmb-ultra-trail-chianti-castles-utcc-120k/": {
+   "hash": "635b714ba7f8a8d1d95347d1",
    "lastmod": "2026-10-15"
   },
   "de/laeufe/comrades-marathon-90k/": {
-   "hash": "561d47a7715cf235ed96572c",
+   "hash": "6530588b4d7f2f2dc4901543",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/coop-kungsholmen-runt-10-km/": {
+   "hash": "63345353c60bf929429c9722",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/copenhagen-half-marathon-cph-half-21k/": {
+   "hash": "49f477aeacc252b76df2718c",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/copenhagen-marathon-42k/": {
+   "hash": "d2d48efe858333f3550d3db4",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/cracovia-maraton-42k/": {
+   "hash": "8c31c4704fc9d790e434d685",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/davos-x-trails-tidigare-swissalpine-davos-diamond-run-68-km/": {
+   "hash": "e17f378736ea169edfd14fe1",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/delta-dental-mount-washington-road-race-12k/": {
+   "hash": "241a79c76f96bc9e592da8b6",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/det-norske-fjellmaraton-maraton-42-2-km/": {
+   "hash": "434d08e389d91a280bf48571",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/dhl-stafetten-kobenhavn-5k/": {
+   "hash": "85d21e45456e6be05abd00b0",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/dnb-oslo-maraton-maraton-43k/": {
+   "hash": "4db04929bcafee17eba392cb",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/dolomyths-run-skyrace-22-km/": {
+   "hash": "68145c31fcc267c539813da8",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/dubai-marathon-42k/": {
+   "hash": "d00ff37b6adbbad4fcaa9730",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/ecotrail-oslo-trail-80-km/": {
+   "hash": "ba921512f97933d387fed427",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/edp-maratona-de-lisboa-42k/": {
+   "hash": "7f90b57c55300066490ad612",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/edp-meia-maratona-de-lisboa-21k/": {
+   "hash": "b9922832586b8b868debf028",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/egmond-halve-marathon-21k/": {
+   "hash": "09b8ad22dee3dbb4977092e1",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/eiger-ultra-trail-by-utmb-e101-ultra-trail-101k/": {
+   "hash": "ae9e70f75649f99bbadacab0",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/eremitagelobet-13k/": {
+   "hash": "8d45d15ef53af431043a1193",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/estra-firenze-marathon-42k/": {
+   "hash": "0c39e6fc47f1ed0a75698b5c",
    "lastmod": "2026-10-15"
   },
   "de/laeufe/fjallmaraton-100k/": {
-   "hash": "4532d750f6b36973787b142a",
+   "hash": "d2a7808c01c63d336abd730b",
    "lastmod": "2026-10-15"
   },
   "de/laeufe/fjallmaraton-salen-42-km/": {
-   "hash": "8653538bbcee3fd8f7f5938b",
+   "hash": "3d3e7b8aaeadbdf1b2caf313",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/fjordkraft-bergen-city-marathon-maraton-42k/": {
+   "hash": "f76a84d3879e83628991cc6c",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/fuga-penyagolosa-trails-csp-106-km/": {
+   "hash": "2be80e9baa3eea03b2c553fa",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/fuji-mountain-race-toppbanan-21k/": {
+   "hash": "26215f2aa4cbf8a95e2755a8",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/garmin-zevenheuvelenloop-15-km/": {
+   "hash": "fda2ba45bfb54461fcae875c",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/generali-berliner-halbmarathon-21k/": {
+   "hash": "a37f872070c286d1dca0518f",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/generali-geneve-marathon-marathon-42k/": {
+   "hash": "ed9e18c5381316e33bc587d4",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/gornergrat-zermatt-marathon-marathon-43k/": {
+   "hash": "e5032079e5f376510a410c2a",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/goteborgsvarvet-21k/": {
+   "hash": "d71f3b8a1ebec7bce2b7ec39",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/grand-raid-reunion-la-diagonale-des-fous-180k/": {
+   "hash": "d3e99f6c8e720df0f52d413b",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/grand-trail-du-saint-jacques-100k/": {
+   "hash": "7c2f76a204eb807eaf1ecf3f",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/great-wall-marathon-marathon-42-2-km/": {
+   "hash": "9ca0ce4bea02d0be833c59df",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/greifenseelauf-halbmarathon-21k/": {
+   "hash": "2df2ec4566a65b31b896d51f",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/hardrock-hundred-mile-endurance-run-hardrock-100-161k/": {
+   "hash": "b7afba1c979d4cb8081d9be1",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/harmonie-mutuelle-20-km-de-paris/": {
+   "hash": "53f7a065e16f769f360700b0",
    "lastmod": "2026-10-15"
   },
   "de/laeufe/harno-trail-21-km/": {
-   "hash": "7d4878e2ee5cc80a1e79cfe2",
+   "hash": "faa9cdf15bae31631b37feed",
    "lastmod": "2026-10-15"
   },
   "de/laeufe/harno-trail-kort-7-km/": {
-   "hash": "b531aebb17ee7664d2a38b64",
+   "hash": "0166163edf79ee363d52728c",
    "lastmod": "2026-10-15"
   },
   "de/laeufe/harno-trail-mellan-14-km/": {
-   "hash": "4f8893251682ff13030e0a4f",
+   "hash": "ab0dd938f475fd3cc9bb5f7a",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/harzquerung-lauf-53-km-wernigerode-nordhausen/": {
+   "hash": "04ffbc5606856dbebab2828b",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/haspa-marathon-hamburg-marathon-43k/": {
+   "hash": "c65b3cab4f7d3162f49929c7",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/hasselbyloppet-10k/": {
+   "hash": "c4ef11338cb32a1a5fbada69",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/helsingborg-marathon-42k/": {
+   "hash": "2d72e4a77339d8e759fabbb1",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/highland-fling-85k/": {
+   "hash": "1775aa84c774f301bc05579f",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/hk100-hong-kong-100-ultra-95k/": {
+   "hash": "9fa6a7ff10eceb1769615940",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/hoka-hackney-half-21k/": {
+   "hash": "15ba457c2dbe0c90b6c0bc48",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/hoka-kodiak-ultra-marathons-by-utmb-100m-161k/": {
+   "hash": "5780d6c40302878daa5a4792",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/hoka-ultra-trail-australia-by-utmb-uta100-101k/": {
+   "hash": "1f79fba9410060e099f4bf3a",
    "lastmod": "2026-10-15"
   },
   "de/laeufe/hoka-utmb-mont-blanc-utmb-ultra-trail-du-mont-blanc-174k/": {
-   "hash": "d61f35d463941aa26cbf648c",
+   "hash": "b784c4fb566081b8f749e1cb",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/hoka-val-d-aran-by-utmb-torn-dera-val-d-aran-vda-163-km/": {
+   "hash": "b8a24b941988933c2ef1d5a3",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/holmenkollstafetten-18k/": {
+   "hash": "d9752d877d267d600b89aa2f",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/hyundai-mitja-marato-barcelona-by-brooks-21k/": {
+   "hash": "439b7b38815594d7a2309e3f",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/irish-life-dublin-marathon-42k/": {
+   "hash": "66cb3f9bd450313973a76097",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/islandsbanki-reykjavik-marathon-42-2-km-marathon/": {
+   "hash": "ff54474ab508540cc5837967",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/jal-honolulu-marathon-42k/": {
+   "hash": "d4a97ef477de201a6a72e742",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/javelina-jundred-100-mile-161k/": {
+   "hash": "d79b2fef94f56ee54a205daf",
    "lastmod": "2026-10-15"
   },
   "de/laeufe/jungfrau-marathon-42k/": {
-   "hash": "0a4cd2a1015af3b940e89031",
+   "hash": "e4fe2dd73fd00f6408f0ebd9",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/kat100-by-utmb-endurance-trail-75k/": {
+   "hash": "382a8e8c79cdde683fcdd430",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/kepler-challenge-60k/": {
+   "hash": "d1fc62819774186408a19884",
    "lastmod": "2026-10-15"
   },
   "de/laeufe/kia-fjallmaraton-45k/": {
-   "hash": "e7510a751c4cb37149d7842b",
+   "hash": "a6088f82c3f6c5d86287de6e",
    "lastmod": "2026-10-15"
   },
   "de/laeufe/kullamannen-by-utmb-ultra-100-miles-173k/": {
-   "hash": "7d2188ee6f9626c90008d175",
+   "hash": "0fc52c2eba6af1a6079bc6d8",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/l-ultra-marin-le-grand-raid-175-km-raid-du-golfe-du-morbihan/": {
+   "hash": "322a63ce6d66dc509846e071",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/lake-sonoma-100k/": {
+   "hash": "98b7dde5bf535fc585a99bc3",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/laugavegur-ultra-marathon-52k/": {
+   "hash": "80b8fa87268312dc7d4edcd2",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/lausanne-marathon-marathon-42k/": {
+   "hash": "37981e4822b27f5f6c3b4edc",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/le-grand-trail-des-templiers-80-km-festival-des-templiers/": {
+   "hash": "8ebd094bc250a686acae7923",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/leadville-trail-100-run-161k/": {
+   "hash": "8666a37000b984b25fbace4f",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/lemkowyna-trail-150-lemkowyna-ultra-trail-149k/": {
+   "hash": "f5fa4e8c73952b515a00c97f",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/lillebaelt-halvmarathon-21k/": {
+   "hash": "9448ece4ae277db19b547486",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/lofoten-ultra-trail-50-miles-87k/": {
+   "hash": "785fa031a4c76d1b39965f30",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/mainova-frankfurt-marathon-42k/": {
+   "hash": "583764a60a4b2a3e17bcf56b",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/marathon-des-alpes-maritimes-nice-cannes-marathon-42k/": {
+   "hash": "276edd0d49e014e553df7096",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/marathon-des-chateaux-du-medoc-42k/": {
+   "hash": "3d11526e64a9c4a0936f29d3",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/marathon-des-sables-mds-legendary-250k/": {
+   "hash": "b21ab042bb5c0e69442998a5",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/marathon-eryri-42k/": {
+   "hash": "95543a6d2aad5b3f60b990c9",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/maraton-internacional-de-buenos-aires-42k/": {
+   "hash": "0c4dca896902b791169b571e",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/maraton-valencia-trinidad-alfonso-zurich-42k/": {
+   "hash": "8ca49b86b4bb50b2a18184e2",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/marine-corps-marathon-42k/": {
+   "hash": "31f8e35dffa6c963a7ee3ce8",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/marseille-cassis-ag2r-la-mondiale-20k/": {
+   "hash": "a7ddf8bd5a68d656c9b24676",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/maxi-race-tour-du-lac-en-solo-1-jour-100k/": {
+   "hash": "659e6c198510f82a391d40dd",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/mcc-martigny-combe-chamonix-hoka-utmb-mont-blanc-40k/": {
+   "hash": "a686be80564b6023527bc335",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/medtronic-twin-cities-marathon-42k/": {
+   "hash": "ad14e9615aa4910ba0deaaea",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/mein-freiburg-marathon-marathon-42k/": {
+   "hash": "5e73b9e40ba208570be96ce6",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/midnattsloppet-goteborg-10-km/": {
+   "hash": "03b0bb7b1f384810e38f25d0",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/midnattsloppet-malmo-10-km/": {
+   "hash": "a9568516e15f946da1d3d498",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/midnattsloppet-stockholm-10-km/": {
+   "hash": "67b159da1bcb48608ba80bf9",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/midnight-sun-marathon-42k/": {
+   "hash": "b2959c414439d36ab113ec28",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/minerva-energia-ultra-trail-lago-d-orta-utlo-58-km/": {
+   "hash": "3dd4459b68cfe7dcb6a28a75",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/montane-lakeland-100-164k/": {
+   "hash": "9dda5107e69352812085de13",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/montreux-trail-festival-mxtreme-100-102-km/": {
+   "hash": "8e5c878559a498d542181eff",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/morat-fribourg-17-17-km/": {
+   "hash": "e3a8c733fd883709d1acf872",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/mozart-100-by-utmb-mozart-ultra-84-km/": {
+   "hash": "37bf47f9e1c2ff30c0033cf1",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/nationale-nederlanden-san-silvestre-vallecana-carrera-popular-10-km/": {
+   "hash": "9736ee72b8496e8ffa5817ab",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/nice-cote-d-azur-by-utmb-roubion-nice-100k/": {
+   "hash": "d63557b99a16413cd3be4bf9",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/nike-melbourne-marathon-42k/": {
+   "hash": "508dc98808b0c30efd38af8c",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/nn-cpc-loop-den-haag-nn-halve-marathon-21-1-km/": {
+   "hash": "a5fe9ec374830b5754eee419",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/northside-hospital-peachtree-road-race-formerly-the-ajc-peachtree-road-10k/": {
+   "hash": "b060e7f5d6f2d91d1e8ced44",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/occ-utmb-mont-blanc-60k/": {
+   "hash": "6e7d17fd1f353c3c80b36864",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/ochsner-sport-zurich-marathon-marathon-42k/": {
+   "hash": "13f95a2350c36126a2918551",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/olympus-marathon-44k/": {
+   "hash": "b73b26cf99fc4950c2c4f4f4",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/osaka-marathon-2027-2027-42k/": {
+   "hash": "3d27dd7444eeb389bf329346",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/oysho-royal-parks-half-marathon-21k/": {
+   "hash": "80979ced5e25e4c286799f8c",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/pikes-peak-marathon-42k/": {
+   "hash": "45df14433802503f5331a9c3",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/pirkan-holkka-33-km/": {
+   "hash": "b5f33adba3ee4b7bcd78606e",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/restonica-trail-by-utmb-utc100m-ultra-trail-di-corsica-110k/": {
+   "hash": "d569dd3dcff27801cff746bf",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/rimi-riga-marathon-42-km-marathon/": {
+   "hash": "84ddfa33476f97fe676777dc",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/rmb-ultra-trail-cape-town-ut100-ultra-trail-100km/": {
+   "hash": "3530ae83d818e944401fa852",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/romaostia-half-marathon-21k/": {
+   "hash": "aedfb07949dadea813d90abd",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/royal-run-kobenhavn-frederiksberg-10-km/": {
+   "hash": "1ec6418f291f4b9cf04c001d",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/run-in-lyon-by-harmonie-mutuelle-marathon-42k/": {
+   "hash": "7c53e7f66eba46efaabd523b",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/run-rabbit-run-100-163k/": {
+   "hash": "adca969a3ef7fb3dce87942f",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/run-rome-the-marathon-42k/": {
+   "hash": "e32c964163d696590ad24b2f",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/saintelyon-80-km/": {
+   "hash": "ca394fcbc76d33bcf1d36b4b",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/salomon-ecotrail-paris-trail-80-km-printemps/": {
+   "hash": "7feee254d6b4331a53069760",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/salomon-pitz-alpine-glacier-trail-p105-salomon-ultra-108k/": {
+   "hash": "0517a8b83e561bce5329370a",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/salomon-ultra-pirineu-100k/": {
+   "hash": "4b022a522e8fe30717e57af1",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/sanlam-cape-town-marathon-42k/": {
+   "hash": "a2adc03a1fe3a5527b527642",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/saucony-helsinki-city-marathon-42k/": {
+   "hash": "bd395b59770bd255dae3b4a6",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/seite/2/": {
+   "hash": "9c433425a5face583978c9ea",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/seoul-marathon-full-course-42k/": {
+   "hash": "94125a03b38afe72b96bddbc",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/sinister-7-ultra-100-miler-161k/": {
+   "hash": "5f8d0b91b7bf775db6b36400",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/six-foot-track-marathon-45k/": {
+   "hash": "2873c4a12ecf72b9e0d1c25a",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/spar-budapest-marathon-42-2-km/": {
+   "hash": "d97c6b0ddbd051d88d522a85",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/spartathlon-246k/": {
+   "hash": "b976cbd95d36408c6391bec0",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/speedgoat-mountain-races-by-utmb-50k/": {
+   "hash": "0db9e819eeb8ca8666715d28",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/squamish-50-50-mile-78k/": {
+   "hash": "a374afbe6bad08214230df34",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/standard-chartered-hong-kong-marathon-marathon-42-195-km/": {
+   "hash": "b50b779652a9967f384b299e",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/stavanger-marathon-maraton-42-2-km/": {
+   "hash": "400c25a7a1d0d1039a536b67",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/swedbank-vilniaus-maratonas-maratonas-42-195-km/": {
+   "hash": "457a9c19397f6c17f803d6f6",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/swiss-canyon-trail-111k/": {
+   "hash": "3d4338ae5bff882fb77e42cd",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/swisscitymarathon-lucerne-marathon-42k/": {
+   "hash": "d7ab08bee746ec7b7843060a",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/tamarack-homes-ottawa-international-marathon-42k/": {
+   "hash": "7884e060453e27e8442feb23",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/tcs-amsterdam-marathon-42k/": {
+   "hash": "9d0e4de18cc5efe940c8ea89",
    "lastmod": "2026-10-15"
   },
   "de/laeufe/tcs-lidingoloppet-30-km/": {
-   "hash": "8b17a863b422089609faf3cd",
+   "hash": "cc3b4efdf5c45158d76fdedd",
    "lastmod": "2026-10-15"
   },
   "de/laeufe/tcs-london-marathon-42-2-km/": {
-   "hash": "6811b3f80d31c8b2301a44e3",
+   "hash": "91c81f95f313be24e05b8df1",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/tcs-sydney-marathon-42k/": {
+   "hash": "b75e6a2dd965a2b20d771f4a",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/tcs-toronto-waterfront-marathon-marathon-42k/": {
+   "hash": "03b9cb7112c8757053d148eb",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/tds-sur-les-traces-des-ducs-de-savoie-hoka-utmb-mont-blanc-145k/": {
+   "hash": "983d42c0998bea8272375063",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/tenerife-bluetrail-110k/": {
+   "hash": "649a19a2ef65582a8dad7bf3",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/tenzing-hillary-everest-marathon-full-marathon-42km/": {
+   "hash": "06b19aaed6865a94b2042466",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/the-north-face-grossglockner-ultra-trail-ggut-110-km/": {
+   "hash": "0a97cd2ccb20d7bd149ee5d7",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/the-north-face-transgrancanaria-classic-125k/": {
+   "hash": "23efe8509deef1b01631160f",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/three-peaks-race-37k/": {
+   "hash": "ba7c0f9b9b2c78c4b0d5281d",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/tiaa-philadelphia-marathon-42k/": {
+   "hash": "f0a695ea0dc7d44b26bae3d8",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/tjejmilen-10k/": {
+   "hash": "04a97c0f7f7df51f1a519613",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/tjurruset-10-km/": {
+   "hash": "2f1b19b97ea4f7eafe64abe8",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/tokyo-marathon-2027-42k/": {
+   "hash": "3817f9d57829ce25de26fef2",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/tor330-tor-des-geants-328k/": {
+   "hash": "9fcf14a7232308f16acb1cc8",
    "lastmod": "2026-10-15"
   },
   "de/laeufe/totalsports-two-oceans-marathon-ultra-marathon-56-km/": {
-   "hash": "e5a2188c6e71f39dce71facd",
+   "hash": "27e9cf6abe3e74c121f717ab",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/trail-100-andorra-by-utmb-ultra-105k/": {
+   "hash": "d312333799f207a91972d833",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/trail-menorca-cami-de-cavalls-tmcdc-185-km/": {
+   "hash": "579652d10305ce7cb0c16d3f",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/trail-verbier-st-bernard-by-utmb-x-alpine-140-km/": {
+   "hash": "eaf18c08b8132f8165de1768",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/trailovik-22-km/": {
+   "hash": "889b26dab68d16cef124593a",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/trailvasan-30/": {
+   "hash": "5b2a4abd43947302c6fb8bcf",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/transvulcania-ultramarathon-73k/": {
+   "hash": "1c9731e4fd5963c6015c7607",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/trek-matterhorn-ultraks-sky-49-km/": {
+   "hash": "8d7137c9da2006a4f3b08c6d",
    "lastmod": "2026-10-15"
   },
   "de/laeufe/ultravasan-45-44k/": {
-   "hash": "c15118258d893a21cd1c861e",
+   "hash": "ad99f22b8a19218073a7dde5",
    "lastmod": "2026-10-15"
   },
   "de/laeufe/ultravasan-90-92k/": {
-   "hash": "e5c542629b74ffb91219cf6b",
+   "hash": "100ec979a1512e7441147751",
    "lastmod": "2026-10-15"
   },
   "de/laeufe/umaker-trail-15-6-km/": {
-   "hash": "e907ff64560af239c5356a30",
+   "hash": "6d57afa26f311078b89004dd",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/ursvik-ultra-uu-hardingen-45-km/": {
+   "hash": "1efa4c0f8c122038dd325b27",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/vaarojen-maraton-43-km/": {
+   "hash": "e4ffa08ee24550a8c4f0b6ee",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/varruset-stockholm-5-km/": {
+   "hash": "3a7e39411a8c447ff83ea8fe",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/venicemarathon-42k/": {
+   "hash": "019ed879bf36270140f10be8",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/vienna-city-marathon-43k/": {
+   "hash": "74d7b449ab7e67da052c9f61",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/vodafone-prague-marathon-42k/": {
+   "hash": "14656c009384ddad43b6fddc",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/voltaren-city2surf-14k/": {
+   "hash": "8d4a9be56f293483af15babb",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/west-highland-way-race-153k/": {
+   "hash": "aad27fdf9e7ae8374830e431",
    "lastmod": "2026-10-15"
   },
   "de/laeufe/western-states-100-mile-endurance-run-161k/": {
-   "hash": "a1ed0e459aa42901891fe14f",
+   "hash": "2e15ca08f8f1e505be5fd77c",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/wizz-air-milano-marathon-42k/": {
+   "hash": "341d302fe83c6cad966db8b9",
    "lastmod": "2026-10-15"
   },
   "de/laeufe/zegama-aizkorri-mendi-maratoia-42k/": {
-   "hash": "d98af96afaee9dfebe6ab805",
+   "hash": "300ad9e76e8ecacc7220272d",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/zurich-marato-barcelona-42k/": {
+   "hash": "0b477f9089d3094529019b5d",
+   "lastmod": "2026-10-15"
+  },
+  "de/laeufe/zurich-maraton-de-sevilla-42k/": {
+   "hash": "7f56cc5cbefdca8593b78c11",
    "lastmod": "2026-10-15"
   },
   "en/races/": {
-   "hash": "8198e2596ef60506f4859c60",
+   "hash": "4e0c73296376ce6c4a39600e",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/101a-corrida-internacional-de-sao-silvestre-15k/": {
+   "hash": "87374b32edbea803ba19a205",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/20-km-de-bruxelles/": {
+   "hash": "c865e27b0ff83c57b882aa7e",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/2026-tcs-new-york-city-marathon-42k/": {
+   "hash": "7f055b67c8c4f8f7e624a20a",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/26-dresden-marathon-marathon-42k/": {
+   "hash": "b99bd2f5d109eada4e32ecb3",
    "lastmod": "2026-10-15"
   },
   "en/races/42km-du-mont-blanc-marathon-du-mont-blanc/": {
-   "hash": "8ef483311120505d56ee1ec9",
+   "hash": "26985c5ad20722b60ecb2c6a",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/aalborg-brutal-marathon-marathon-42k/": {
+   "hash": "1cacf1e39f6b498d4b8a878b",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/adidas-innsbruck-alpine-trailrun-festival-k85-heart-of-the-alps-ultra-86k/": {
+   "hash": "5f2549ec405c5819f737ef78",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/adidas-manchester-marathon-42k/": {
+   "hash": "38e2a502212abbbc7db116c7",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/adidas-premiarmilen-10k/": {
+   "hash": "12120874875bb14cf08a988e",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/adidas-stockholm-halvmaraton-21k/": {
+   "hash": "009e3ef0b5f9a92da3216095",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/adidas-stockholm-marathon-42k/": {
+   "hash": "d84ea4d94654883c14376623",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/aj-bell-great-manchester-run-10k/": {
+   "hash": "0c649b350195aebb0d0fd735",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/aj-bell-great-north-run-21k/": {
+   "hash": "96d6527b37d593a0b2067cbb",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/aj-bell-great-scottish-run-half-marathon-21k/": {
+   "hash": "8f74b5b21d02513ac059526b",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/aj-bell-great-south-run-16k/": {
+   "hash": "fa07a2dfba97c751c7420464",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/angeles-crest-100-mile-endurance-run-163k/": {
+   "hash": "993e6ac4d0a0fc264019274d",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/asics-gold-coast-marathon-43k/": {
+   "hash": "ec65713c3de8a69ef40c6cf2",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/asics-sentrumslopet-10-km/": {
+   "hash": "03698a9792a2f80ed0401c1a",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/asml-marathon-eindhoven-43k/": {
+   "hash": "2fe3344b1f7d7243f08ea979",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/athens-marathon-the-authentic-marathon-42k/": {
+   "hash": "ed83467e02a57abbf3989a10",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/badwater-135-217k/": {
+   "hash": "483a0e4baab9cd3dec94d71e",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/baloise-antwerp-10-miles-16k/": {
+   "hash": "40ecfefcf2c30889fade5662",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/bank-of-china-beijing-marathon-beijing-marathon-42k/": {
+   "hash": "1ceaf09c6cd6382a6725e8b4",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/barfoot-thompson-auckland-marathon-42k/": {
+   "hash": "17e5ab2ab83c1f95be07970c",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/baxters-loch-ness-marathon-42k/": {
+   "hash": "d6c0b13bbb0b57763d346898",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/behobia-san-sebastian-20k/": {
+   "hash": "bdee2c0f565fbc6db390278a",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/belfast-city-marathon-42k/": {
+   "hash": "f17ccd5d2aaf03facc17a172",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/ben-nevis-race-14k/": {
+   "hash": "35c82190d872968e1bd5bb37",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/bestseller-aarhus-city-half-21k/": {
+   "hash": "ec3ccf1d50a8f419c3be60aa",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/bieg-rzeznika-80k/": {
+   "hash": "39ce3ea03aa74ee1943769a4",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/big-five-marathon-42-2-km/": {
+   "hash": "64f8fc20436b4ac04b9767bb",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/big-sur-international-marathon-42k/": {
+   "hash": "9521b47a3223e9554211b47e",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/bighorn-trail-run-100-mile-161k/": {
+   "hash": "01fe4940bd997db838838b15",
    "lastmod": "2026-10-15"
   },
   "en/races/birkebeinerlopet-21-km/": {
-   "hash": "26ccb10e2847aa28734a25fd",
+   "hash": "6eff062f75378d622d41de83",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/bjorn-borg-helsinki-half-marathon-21-1-km/": {
+   "hash": "7980854f6c6552817acc3965",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/black-canyon-ultras-100k/": {
+   "hash": "a4dcdb4c08269fc3f1f444a7",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/blodomloppet-goteborg-10-km/": {
+   "hash": "22eeae19f1fc2793221b7412",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/bmo-vancouver-marathon-42k/": {
+   "hash": "19f63a05a14d9e7b260661ba",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/bmw-berlin-marathon-fran-2027-generali-berlin-marathon-42k/": {
+   "hash": "84a1286eb2b02c1bd6cca2bd",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/bolderboulder-10k/": {
+   "hash": "5f4fad7f28b85d3462078f8f",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/boston-marathon-42k/": {
+   "hash": "77ef185dfd320fa9c8240623",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/brighton-marathon-42k/": {
+   "hash": "6726fcd37979be36fb53d9f7",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/brocken-marathon-48-harz-gebirgslauf-42k/": {
+   "hash": "3d42b7825cf8fc4f487cc2f5",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/broken-arrow-skyrace-46k/": {
+   "hash": "0421156ffaeea121c30bfee5",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/buffalo-stampede-100km-bright-ultra-skymarathon/": {
+   "hash": "7cbdf9b0eac3e8a63edfa0bb",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/california-international-marathon-42k/": {
+   "hash": "d2808840b663181103be673a",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/canyons-endurance-runs-by-utmb-100m-159k/": {
+   "hash": "992a087bb9288e729dbd33bf",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/cardiff-half-marathon-20k/": {
+   "hash": "f4c1c6d7f6ecb30581bae280",
    "lastmod": "2026-10-15"
   },
   "en/races/ccc-hoka-utmb-mont-blanc-courmayeur-champex-chamonix-108k/": {
-   "hash": "0305e18786030577cba9ddeb",
+   "hash": "dbed9128282c09c108f27e62",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/chevron-houston-marathon-42k/": {
+   "hash": "459fc7b119316c33a539641e",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/chianti-ultra-trail-by-utmb-ultra-trail-chianti-castles-utcc-120k/": {
+   "hash": "bfb82c3149b2c258bbb967c9",
    "lastmod": "2026-10-15"
   },
   "en/races/comrades-marathon-90k/": {
-   "hash": "03f84b365928b631f4aa43bb",
+   "hash": "07e057f229e874dee49ddfe0",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/coop-kungsholmen-runt-10-km/": {
+   "hash": "c2fd65f191bfa24963d4cb94",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/copenhagen-half-marathon-cph-half-21k/": {
+   "hash": "97cf7444d86543309c1e6a48",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/copenhagen-marathon-42k/": {
+   "hash": "c6eda88891823e4f45d0ecb0",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/cracovia-maraton-42k/": {
+   "hash": "60afb8f3fe46306a98af5b49",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/davos-x-trails-tidigare-swissalpine-davos-diamond-run-68-km/": {
+   "hash": "d9ae19465410fe75dd10d014",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/delta-dental-mount-washington-road-race-12k/": {
+   "hash": "3258b04387c7eeda0bcef499",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/det-norske-fjellmaraton-maraton-42-2-km/": {
+   "hash": "c207162531df47cd515bc571",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/dhl-stafetten-kobenhavn-5k/": {
+   "hash": "ee4fa8e10ce0000dd13eaa1c",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/dnb-oslo-maraton-maraton-43k/": {
+   "hash": "722e115fdd51c095a8c8e8a8",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/dolomyths-run-skyrace-22-km/": {
+   "hash": "40cac231d6899e722c7d669f",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/dubai-marathon-42k/": {
+   "hash": "502bc1703ca1a7bb1f3268df",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/ecotrail-oslo-trail-80-km/": {
+   "hash": "7532d6cf0e2a12bbd7522b23",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/edp-maratona-de-lisboa-42k/": {
+   "hash": "eb811e40aeed2b996c78dd0a",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/edp-meia-maratona-de-lisboa-21k/": {
+   "hash": "97b3cd66949d8a2fabaa91d0",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/egmond-halve-marathon-21k/": {
+   "hash": "1ea51c171bc84990f0b8216e",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/eiger-ultra-trail-by-utmb-e101-ultra-trail-101k/": {
+   "hash": "6b5d4bb7358e055113cfea2d",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/eremitagelobet-13k/": {
+   "hash": "9e67d6fc20f044747d9b43dd",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/estra-firenze-marathon-42k/": {
+   "hash": "2234f7e9d921ed791453cf9e",
    "lastmod": "2026-10-15"
   },
   "en/races/fjallmaraton-100k/": {
-   "hash": "d53472fd128d2bff13178f8b",
+   "hash": "33348ef9765b3353a35c457c",
    "lastmod": "2026-10-15"
   },
   "en/races/fjallmaraton-salen-42-km/": {
-   "hash": "a2d06995183df6eb520aeed4",
+   "hash": "a5e106f0ef99c5937071c5d5",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/fjordkraft-bergen-city-marathon-maraton-42k/": {
+   "hash": "45566feb27e3b1b901e0c77a",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/fuga-penyagolosa-trails-csp-106-km/": {
+   "hash": "d4ce0350f8adb2f85a690d34",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/fuji-mountain-race-toppbanan-21k/": {
+   "hash": "1ad1cb96fe1fd39e003658c4",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/garmin-zevenheuvelenloop-15-km/": {
+   "hash": "ffa2d691ede9dd4d7589ceba",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/generali-berliner-halbmarathon-21k/": {
+   "hash": "4482b90767acc8905cb516b9",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/generali-geneve-marathon-marathon-42k/": {
+   "hash": "35bfc5b888c6300f62888a09",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/gornergrat-zermatt-marathon-marathon-43k/": {
+   "hash": "db9c9d4b0c8b968b489a05b3",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/goteborgsvarvet-21k/": {
+   "hash": "bcc5ac6dd9da0499afd07211",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/grand-raid-reunion-la-diagonale-des-fous-180k/": {
+   "hash": "774c2ca9e53c9c863ec69bd7",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/grand-trail-du-saint-jacques-100k/": {
+   "hash": "a1fa40c76e00dd2cfe0431bf",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/great-wall-marathon-marathon-42-2-km/": {
+   "hash": "404232af5b5e63398e71efa9",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/greifenseelauf-halbmarathon-21k/": {
+   "hash": "359ce5b560cf7a07155c49fb",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/hardrock-hundred-mile-endurance-run-hardrock-100-161k/": {
+   "hash": "fe9270c7f6154ad0d9eed35d",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/harmonie-mutuelle-20-km-de-paris/": {
+   "hash": "bb238b638678ee4473c3c0b4",
    "lastmod": "2026-10-15"
   },
   "en/races/harno-trail-21-km/": {
-   "hash": "68d2ab6f1cf8afdff6200c45",
+   "hash": "974dcf32098e89679093cf6f",
    "lastmod": "2026-10-15"
   },
   "en/races/harno-trail-kort-7-km/": {
-   "hash": "4bdaf02c855cf8b04c49ff6f",
+   "hash": "c93634ecd5c9d55409ee8623",
    "lastmod": "2026-10-15"
   },
   "en/races/harno-trail-mellan-14-km/": {
-   "hash": "c583c3e05c527117b3b90a6d",
+   "hash": "ca1354b9535baaa1f7340f87",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/harzquerung-lauf-53-km-wernigerode-nordhausen/": {
+   "hash": "7bc7cb3d08183302b81e36c8",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/haspa-marathon-hamburg-marathon-43k/": {
+   "hash": "27698e1079974f533bc98346",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/hasselbyloppet-10k/": {
+   "hash": "cde094a388e374dc21e68108",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/helsingborg-marathon-42k/": {
+   "hash": "cba4aa625521a8c219e18211",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/highland-fling-85k/": {
+   "hash": "1f3a557f31a0a915b34cc605",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/hk100-hong-kong-100-ultra-95k/": {
+   "hash": "995d695764045d04062fd269",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/hoka-hackney-half-21k/": {
+   "hash": "0238d61be53d4bce5e083f77",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/hoka-kodiak-ultra-marathons-by-utmb-100m-161k/": {
+   "hash": "7418b39733ec9f8c810c5b7c",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/hoka-ultra-trail-australia-by-utmb-uta100-101k/": {
+   "hash": "32431b049df900dbd4755629",
    "lastmod": "2026-10-15"
   },
   "en/races/hoka-utmb-mont-blanc-utmb-ultra-trail-du-mont-blanc-174k/": {
-   "hash": "ef9e96df33ca4e34cd3866f6",
+   "hash": "5228184831ab4d475319e982",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/hoka-val-d-aran-by-utmb-torn-dera-val-d-aran-vda-163-km/": {
+   "hash": "d5274ed918c5c4facd0c6e23",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/holmenkollstafetten-18k/": {
+   "hash": "b579cfe4e35a63188fc9f34b",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/hyundai-mitja-marato-barcelona-by-brooks-21k/": {
+   "hash": "ea139e98fbd6858210080b52",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/irish-life-dublin-marathon-42k/": {
+   "hash": "dba1c9c2789ef1a659fd6d3f",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/islandsbanki-reykjavik-marathon-42-2-km-marathon/": {
+   "hash": "79ab265035bd0e2483c123c6",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/jal-honolulu-marathon-42k/": {
+   "hash": "63c6e43ebeec300199008881",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/javelina-jundred-100-mile-161k/": {
+   "hash": "02e90de934d7f034c863708a",
    "lastmod": "2026-10-15"
   },
   "en/races/jungfrau-marathon-42k/": {
-   "hash": "855b5166808031c1621a93ce",
+   "hash": "986d75f5201717373f64b15d",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/kat100-by-utmb-endurance-trail-75k/": {
+   "hash": "ffb68111eb6110862ecc98ff",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/kepler-challenge-60k/": {
+   "hash": "3c08583c793f07b3424c38a5",
    "lastmod": "2026-10-15"
   },
   "en/races/kia-fjallmaraton-45k/": {
-   "hash": "b04c0da7a873397a04d04240",
+   "hash": "ccf58a986083a879514cd61f",
    "lastmod": "2026-10-15"
   },
   "en/races/kullamannen-by-utmb-ultra-100-miles-173k/": {
-   "hash": "edce5667a4537a36625538ce",
+   "hash": "b8ef883743906259abf49b29",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/l-ultra-marin-le-grand-raid-175-km-raid-du-golfe-du-morbihan/": {
+   "hash": "0e820368f1a8b729157b286a",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/lake-sonoma-100k/": {
+   "hash": "5de7ee1a8b42997f445498a3",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/laugavegur-ultra-marathon-52k/": {
+   "hash": "a6c1f17f74351c31fcf732d7",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/lausanne-marathon-marathon-42k/": {
+   "hash": "4c7619ad9c17095d883bcf4d",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/le-grand-trail-des-templiers-80-km-festival-des-templiers/": {
+   "hash": "8dd112a6ed57785082b86d87",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/leadville-trail-100-run-161k/": {
+   "hash": "c4dfa697b0d7af3dfa3d7263",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/lemkowyna-trail-150-lemkowyna-ultra-trail-149k/": {
+   "hash": "d2cd0ac1f9dde283a4c7e4da",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/lillebaelt-halvmarathon-21k/": {
+   "hash": "a143bccec7f8cbe0e85f84fd",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/lofoten-ultra-trail-50-miles-87k/": {
+   "hash": "a3dff6ee31ec29513ab0559b",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/mainova-frankfurt-marathon-42k/": {
+   "hash": "422e5b7c3930b1efa2155a9e",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/marathon-des-alpes-maritimes-nice-cannes-marathon-42k/": {
+   "hash": "884914f490b4545d316e318e",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/marathon-des-chateaux-du-medoc-42k/": {
+   "hash": "4554caee6d8f7e86fc09a3d9",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/marathon-des-sables-mds-legendary-250k/": {
+   "hash": "0256da2bb471c15c4201391c",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/marathon-eryri-42k/": {
+   "hash": "40943962d53fbc1d2ae7b7ea",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/maraton-internacional-de-buenos-aires-42k/": {
+   "hash": "667846c81ef6c132ca40d80b",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/maraton-valencia-trinidad-alfonso-zurich-42k/": {
+   "hash": "4de7b8396bbb14380c966191",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/marine-corps-marathon-42k/": {
+   "hash": "3a4d7ea739d597ffa55e202d",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/marseille-cassis-ag2r-la-mondiale-20k/": {
+   "hash": "f692f1b6db007726721ede98",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/maxi-race-tour-du-lac-en-solo-1-jour-100k/": {
+   "hash": "4e8c5733bc396b73d9e93ecf",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/mcc-martigny-combe-chamonix-hoka-utmb-mont-blanc-40k/": {
+   "hash": "c785abbacfdafbef2210e660",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/medtronic-twin-cities-marathon-42k/": {
+   "hash": "4f1ec3ad6e0b4b5429beeae2",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/mein-freiburg-marathon-marathon-42k/": {
+   "hash": "17751ea03900d066b606857c",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/midnattsloppet-goteborg-10-km/": {
+   "hash": "603233187852e91f702b013e",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/midnattsloppet-malmo-10-km/": {
+   "hash": "48880a73ef2a5b697e5fb88a",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/midnattsloppet-stockholm-10-km/": {
+   "hash": "4378edf96f662050e4e0be21",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/midnight-sun-marathon-42k/": {
+   "hash": "db6a67667e2890005bdb16ae",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/minerva-energia-ultra-trail-lago-d-orta-utlo-58-km/": {
+   "hash": "8475ef69774672b8f234b1cb",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/montane-lakeland-100-164k/": {
+   "hash": "547c695f8363cac7264169a6",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/montreux-trail-festival-mxtreme-100-102-km/": {
+   "hash": "1c8fd0d7047d2176d19d54bf",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/morat-fribourg-17-17-km/": {
+   "hash": "3872ad5ad7e5f9a7630635b3",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/mozart-100-by-utmb-mozart-ultra-84-km/": {
+   "hash": "d44467509c5ee9751af416d8",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/nationale-nederlanden-san-silvestre-vallecana-carrera-popular-10-km/": {
+   "hash": "23fe2e08d393873fc2cf9b89",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/nice-cote-d-azur-by-utmb-roubion-nice-100k/": {
+   "hash": "24405cde7334f3145bc7180b",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/nike-melbourne-marathon-42k/": {
+   "hash": "73211094ca963dcdb34d9a10",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/nn-cpc-loop-den-haag-nn-halve-marathon-21-1-km/": {
+   "hash": "ed436a9ed4224ce2f967ccd4",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/northside-hospital-peachtree-road-race-formerly-the-ajc-peachtree-road-10k/": {
+   "hash": "3ebdefec9e9d3e09190ba947",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/occ-utmb-mont-blanc-60k/": {
+   "hash": "7d09ab2aaf428fd24e339c1c",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/ochsner-sport-zurich-marathon-marathon-42k/": {
+   "hash": "a4f207d0b2daced12c6ec172",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/olympus-marathon-44k/": {
+   "hash": "4c9f2f5f616bd44b721b08a1",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/osaka-marathon-2027-2027-42k/": {
+   "hash": "9f0297159a1e3d7b39fbe506",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/oysho-royal-parks-half-marathon-21k/": {
+   "hash": "09751c5a004b5b5adbd38f32",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/page/2/": {
+   "hash": "4640bb6aa407379d7eea760b",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/pikes-peak-marathon-42k/": {
+   "hash": "a19f36464fdc1f92ccd876c3",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/pirkan-holkka-33-km/": {
+   "hash": "d58b8db9ecbf66fed0753b7a",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/restonica-trail-by-utmb-utc100m-ultra-trail-di-corsica-110k/": {
+   "hash": "058f915bf3dbbe8b3ee54d3b",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/rimi-riga-marathon-42-km-marathon/": {
+   "hash": "80ff01632b6c2c108fb80c07",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/rmb-ultra-trail-cape-town-ut100-ultra-trail-100km/": {
+   "hash": "62948df612733d3766720efb",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/romaostia-half-marathon-21k/": {
+   "hash": "063560910548c42e449930ad",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/royal-run-kobenhavn-frederiksberg-10-km/": {
+   "hash": "33e7382eae8b847d35874dfd",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/run-in-lyon-by-harmonie-mutuelle-marathon-42k/": {
+   "hash": "f6099748a6a2f7ba9b07aaa3",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/run-rabbit-run-100-163k/": {
+   "hash": "4d7ef3cb7d8c7758f27b7850",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/run-rome-the-marathon-42k/": {
+   "hash": "8a1ab9c0d720ea6777c9b352",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/saintelyon-80-km/": {
+   "hash": "cc7ab96a5bc73d0b380bef49",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/salomon-ecotrail-paris-trail-80-km-printemps/": {
+   "hash": "382ba765b30686d49fd73fef",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/salomon-pitz-alpine-glacier-trail-p105-salomon-ultra-108k/": {
+   "hash": "aa7bafaf532465738f841a32",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/salomon-ultra-pirineu-100k/": {
+   "hash": "c87c0a10d93d14f373548a19",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/sanlam-cape-town-marathon-42k/": {
+   "hash": "0bcd600542955b005ce79d79",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/saucony-helsinki-city-marathon-42k/": {
+   "hash": "16ac5c9c8fbebfc98d7713d8",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/seoul-marathon-full-course-42k/": {
+   "hash": "3e3e11134529e70d4105e6fb",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/sinister-7-ultra-100-miler-161k/": {
+   "hash": "78e7e25fd0532892dced84dd",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/six-foot-track-marathon-45k/": {
+   "hash": "13de4384ea686cd7d0a538cc",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/spar-budapest-marathon-42-2-km/": {
+   "hash": "4ddf247184858e2070f91790",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/spartathlon-246k/": {
+   "hash": "cd310e04b4fd16bed0f3af2c",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/speedgoat-mountain-races-by-utmb-50k/": {
+   "hash": "85ec50928033c26b773a80ff",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/squamish-50-50-mile-78k/": {
+   "hash": "127317296700e4da75e9102d",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/standard-chartered-hong-kong-marathon-marathon-42-195-km/": {
+   "hash": "893c538ca93a81f0ef086517",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/stavanger-marathon-maraton-42-2-km/": {
+   "hash": "37559d7b152fa654f770b782",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/swedbank-vilniaus-maratonas-maratonas-42-195-km/": {
+   "hash": "344293b120a6eef23f8a5de8",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/swiss-canyon-trail-111k/": {
+   "hash": "a2572536a620ce07807aed32",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/swisscitymarathon-lucerne-marathon-42k/": {
+   "hash": "6193a80d346abac1f514d686",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/tamarack-homes-ottawa-international-marathon-42k/": {
+   "hash": "acf74cb84750069eb675ebf5",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/tcs-amsterdam-marathon-42k/": {
+   "hash": "e07c6e291c970a32d7701e8a",
    "lastmod": "2026-10-15"
   },
   "en/races/tcs-lidingoloppet-30-km/": {
-   "hash": "48bc779ef0779b724dd02d65",
+   "hash": "b5fb4b22cab11e8abc453c9d",
    "lastmod": "2026-10-15"
   },
   "en/races/tcs-london-marathon-42-2-km/": {
-   "hash": "0a80a0dac084df2432029bb9",
+   "hash": "d08c4f8793b43deeb2eb9885",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/tcs-sydney-marathon-42k/": {
+   "hash": "9813534156dda72cf346c91e",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/tcs-toronto-waterfront-marathon-marathon-42k/": {
+   "hash": "b2acaa4f5e553575b3d34e85",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/tds-sur-les-traces-des-ducs-de-savoie-hoka-utmb-mont-blanc-145k/": {
+   "hash": "25126a3da3f5779cf9a768b2",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/tenerife-bluetrail-110k/": {
+   "hash": "2bbfebae920ec50d233412ca",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/tenzing-hillary-everest-marathon-full-marathon-42km/": {
+   "hash": "6ddeabc2da4c151d091b5592",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/the-north-face-grossglockner-ultra-trail-ggut-110-km/": {
+   "hash": "917a04fb8a43ccfc526879ec",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/the-north-face-transgrancanaria-classic-125k/": {
+   "hash": "6cb8e08fe3759f4017b0e21b",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/three-peaks-race-37k/": {
+   "hash": "92c82839bc35e33f7fde2724",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/tiaa-philadelphia-marathon-42k/": {
+   "hash": "a89121591d1070a1f48e048b",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/tjejmilen-10k/": {
+   "hash": "51d878011c323b9cdf14e20c",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/tjurruset-10-km/": {
+   "hash": "2e2c0c82e73742f22ed56b2c",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/tokyo-marathon-2027-42k/": {
+   "hash": "4502851b03f50e1c296d5b32",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/tor330-tor-des-geants-328k/": {
+   "hash": "06f37365cb5a33ace46b8cce",
    "lastmod": "2026-10-15"
   },
   "en/races/totalsports-two-oceans-marathon-ultra-marathon-56-km/": {
-   "hash": "4435536eac0360f06633e32a",
+   "hash": "7d24f96dcd0842cf1f3cc204",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/trail-100-andorra-by-utmb-ultra-105k/": {
+   "hash": "e349b779b770f815eb814ba4",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/trail-menorca-cami-de-cavalls-tmcdc-185-km/": {
+   "hash": "2713185d33e6e5b9d2a94021",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/trail-verbier-st-bernard-by-utmb-x-alpine-140-km/": {
+   "hash": "6e64d95b060810e4f54ad560",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/trailovik-22-km/": {
+   "hash": "bad3c3635a8dc73f6013d117",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/trailvasan-30/": {
+   "hash": "517f0a73ed7ae210a96e9733",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/transvulcania-ultramarathon-73k/": {
+   "hash": "8c602a90521e79e629b2a8b2",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/trek-matterhorn-ultraks-sky-49-km/": {
+   "hash": "f7f6df8624a92287c38bc0f0",
    "lastmod": "2026-10-15"
   },
   "en/races/ultravasan-45-44k/": {
-   "hash": "ea139d2cf842143b0e944e8f",
+   "hash": "46e5ec2a82147f8bfb179b8e",
    "lastmod": "2026-10-15"
   },
   "en/races/ultravasan-90-92k/": {
-   "hash": "d2288971801882a063339ccd",
+   "hash": "2a86d3eeb365932979794b68",
    "lastmod": "2026-10-15"
   },
   "en/races/umaker-trail-15-6-km/": {
-   "hash": "7addab12f8e633634c1d68ac",
+   "hash": "d3aa40f4fb4b20ab55d37a38",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/ursvik-ultra-uu-hardingen-45-km/": {
+   "hash": "c6e5195cd7c1866fd5091747",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/vaarojen-maraton-43-km/": {
+   "hash": "640cee40c10813e9648033b8",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/varruset-stockholm-5-km/": {
+   "hash": "0a0e0fe05ab3c1408170aded",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/venicemarathon-42k/": {
+   "hash": "f3d6ce67e57fcaa129516580",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/vienna-city-marathon-43k/": {
+   "hash": "946169d55148964ecd05c726",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/vodafone-prague-marathon-42k/": {
+   "hash": "7d0b5db95a06d01338edd4a2",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/voltaren-city2surf-14k/": {
+   "hash": "02371724eaeec6103ae2e39f",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/west-highland-way-race-153k/": {
+   "hash": "e6af36560c53b25346e4844b",
    "lastmod": "2026-10-15"
   },
   "en/races/western-states-100-mile-endurance-run-161k/": {
-   "hash": "018b2902187e5958b170ab79",
+   "hash": "307baa70fcfa9974a1dc9ff6",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/wizz-air-milano-marathon-42k/": {
+   "hash": "cb9fb5f8d3509895339116a6",
    "lastmod": "2026-10-15"
   },
   "en/races/zegama-aizkorri-mendi-maratoia-42k/": {
-   "hash": "a734d813e5b0ee989865ff60",
+   "hash": "30489c4ddf6fb96d6705f265",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/zurich-marato-barcelona-42k/": {
+   "hash": "0e9647892320db3fdb842899",
+   "lastmod": "2026-10-15"
+  },
+  "en/races/zurich-maraton-de-sevilla-42k/": {
+   "hash": "681359d6689e9fdc5ef76282",
    "lastmod": "2026-10-15"
   },
   "lopp/": {
-   "hash": "3916e6cf8b268477f9e17cf0",
+   "hash": "345a48b96b36b8de03bb06bf",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/101a-corrida-internacional-de-sao-silvestre-15k/": {
+   "hash": "ff4236bb55a085b3ae4eb4c7",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/20-km-de-bruxelles/": {
+   "hash": "ed88ecd24afb2571157d4c3f",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/2026-tcs-new-york-city-marathon-42k/": {
+   "hash": "d0d840d7d639510a067cb2be",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/26-dresden-marathon-marathon-42k/": {
+   "hash": "1ff710fd9343a0b82b5854e8",
    "lastmod": "2026-10-15"
   },
   "lopp/42km-du-mont-blanc-marathon-du-mont-blanc/": {
-   "hash": "82da8deff9c756930b5da599",
+   "hash": "c19c09b534a511eb233dd2a1",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/aalborg-brutal-marathon-marathon-42k/": {
+   "hash": "f90fe600449f80720b616e40",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/adidas-innsbruck-alpine-trailrun-festival-k85-heart-of-the-alps-ultra-86k/": {
+   "hash": "2179e32e5f206b752ce6f4ae",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/adidas-manchester-marathon-42k/": {
+   "hash": "7d73be595d893e7c5f92f6c0",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/adidas-premiarmilen-10k/": {
+   "hash": "de5861562c0452044899a489",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/adidas-stockholm-halvmaraton-21k/": {
+   "hash": "22754cdadd55f9e8b2ceeb29",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/adidas-stockholm-marathon-42k/": {
+   "hash": "aa123f611402f3c0a2633655",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/aj-bell-great-manchester-run-10k/": {
+   "hash": "cc27b7d9b9d877134ddec338",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/aj-bell-great-north-run-21k/": {
+   "hash": "ff99f863a629ba3c1d0d9f88",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/aj-bell-great-scottish-run-half-marathon-21k/": {
+   "hash": "23cbc9274e275d2d51b14df5",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/aj-bell-great-south-run-16k/": {
+   "hash": "b7516d914374a58bc2000508",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/angeles-crest-100-mile-endurance-run-163k/": {
+   "hash": "b52e29c4314d5575cf4b9dff",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/asics-gold-coast-marathon-43k/": {
+   "hash": "992924c92e929d426d0d7511",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/asics-sentrumslopet-10-km/": {
+   "hash": "456f0e87a810a114e8b27b41",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/asml-marathon-eindhoven-43k/": {
+   "hash": "32e3d8229ea6d08f9e4dff2d",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/athens-marathon-the-authentic-marathon-42k/": {
+   "hash": "65d21ff787a9aed5b1c5415c",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/badwater-135-217k/": {
+   "hash": "71e36df3af8506c921452709",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/baloise-antwerp-10-miles-16k/": {
+   "hash": "b419c6e41cec3d505a1f5b24",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/bank-of-china-beijing-marathon-beijing-marathon-42k/": {
+   "hash": "42cf5517f884bd42f04fa78e",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/barfoot-thompson-auckland-marathon-42k/": {
+   "hash": "324a4cbcb2cc56c9878c470d",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/baxters-loch-ness-marathon-42k/": {
+   "hash": "8c65f74dbc6bf78763c90e6d",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/behobia-san-sebastian-20k/": {
+   "hash": "c53824dbc45b9e9c322e7adf",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/belfast-city-marathon-42k/": {
+   "hash": "4834d5ec7a018eae06083967",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/ben-nevis-race-14k/": {
+   "hash": "636705b4f110366b6830a23b",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/bestseller-aarhus-city-half-21k/": {
+   "hash": "61f8303be59073bd160f033c",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/bieg-rzeznika-80k/": {
+   "hash": "812ce1df83a266a29a991b7a",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/big-five-marathon-42-2-km/": {
+   "hash": "083448059f40e277b3d09835",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/big-sur-international-marathon-42k/": {
+   "hash": "7c70f64e60fc39f53762b388",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/bighorn-trail-run-100-mile-161k/": {
+   "hash": "adfc3497e290a85abd0c3f66",
    "lastmod": "2026-10-15"
   },
   "lopp/birkebeinerlopet-21-km/": {
-   "hash": "76da101ec2b6ee4338814afa",
+   "hash": "6c5e5b9b7f362b263aa4145d",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/bjorn-borg-helsinki-half-marathon-21-1-km/": {
+   "hash": "db8378229ecd61462d1815ca",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/black-canyon-ultras-100k/": {
+   "hash": "1af42684566a3b44d3bc48bc",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/blodomloppet-goteborg-10-km/": {
+   "hash": "740a76ec4f266e16ce4729b9",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/bmo-vancouver-marathon-42k/": {
+   "hash": "524c6be1a33b1658eecb179e",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/bmw-berlin-marathon-fran-2027-generali-berlin-marathon-42k/": {
+   "hash": "4d99e9fbe48c71c35ef088ae",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/bolderboulder-10k/": {
+   "hash": "28c4c100658110e7a4b3e5ab",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/boston-marathon-42k/": {
+   "hash": "533e8f49f3d5e0b5fc234951",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/brighton-marathon-42k/": {
+   "hash": "7be1f57945279723df488192",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/brocken-marathon-48-harz-gebirgslauf-42k/": {
+   "hash": "45db08a600be4caa0487c339",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/broken-arrow-skyrace-46k/": {
+   "hash": "a8f8cf87b2024ec3f17a885f",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/buffalo-stampede-100km-bright-ultra-skymarathon/": {
+   "hash": "78ab4d45c03eb21d43225b8d",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/california-international-marathon-42k/": {
+   "hash": "4edd4ae64114d209ea301a91",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/canyons-endurance-runs-by-utmb-100m-159k/": {
+   "hash": "1c9c970831c51e24eacb7173",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/cardiff-half-marathon-20k/": {
+   "hash": "90d9373d1fc5a3a03e590563",
    "lastmod": "2026-10-15"
   },
   "lopp/ccc-hoka-utmb-mont-blanc-courmayeur-champex-chamonix-108k/": {
-   "hash": "34007f9347e920bc6e725628",
+   "hash": "bfc3c2916b4578654622e994",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/chevron-houston-marathon-42k/": {
+   "hash": "43e4b4f4265f63e00d80a01f",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/chianti-ultra-trail-by-utmb-ultra-trail-chianti-castles-utcc-120k/": {
+   "hash": "10f3b142d0a01cae165cd6da",
    "lastmod": "2026-10-15"
   },
   "lopp/comrades-marathon-90k/": {
-   "hash": "a4cf63c92730e2f3690ba450",
+   "hash": "11fce00270d0aea7dd07e483",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/coop-kungsholmen-runt-10-km/": {
+   "hash": "2767726541ce1a4c9dcac281",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/copenhagen-half-marathon-cph-half-21k/": {
+   "hash": "39457fbb47b72a49133bd4bf",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/copenhagen-marathon-42k/": {
+   "hash": "95c682d597e44306737b1755",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/cracovia-maraton-42k/": {
+   "hash": "d7cd3ae2642b4128f4918d8e",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/davos-x-trails-tidigare-swissalpine-davos-diamond-run-68-km/": {
+   "hash": "a7f6a9e0bffae3fcf1fee135",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/delta-dental-mount-washington-road-race-12k/": {
+   "hash": "a0263598cbc0877cdc43f433",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/det-norske-fjellmaraton-maraton-42-2-km/": {
+   "hash": "127c17e55645b32d34212e50",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/dhl-stafetten-kobenhavn-5k/": {
+   "hash": "30c3c618d9c600448719c0c6",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/dnb-oslo-maraton-maraton-43k/": {
+   "hash": "1d8b3c718c12d6d1a152fddc",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/dolomyths-run-skyrace-22-km/": {
+   "hash": "67c715dd5e5861c910425d63",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/dubai-marathon-42k/": {
+   "hash": "b452efcd26c6e98913495093",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/ecotrail-oslo-trail-80-km/": {
+   "hash": "621e49b137730fdae62207c5",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/edp-maratona-de-lisboa-42k/": {
+   "hash": "180042f4c69cf4cb414530f9",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/edp-meia-maratona-de-lisboa-21k/": {
+   "hash": "4ced3f969ff08f2fcf91e929",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/egmond-halve-marathon-21k/": {
+   "hash": "b28c1863a11e4c08e84e991f",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/eiger-ultra-trail-by-utmb-e101-ultra-trail-101k/": {
+   "hash": "4ce6abd732d80c0ba6c1c82d",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/eremitagelobet-13k/": {
+   "hash": "458a248bfdd3e507314ee9c6",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/estra-firenze-marathon-42k/": {
+   "hash": "ea897f2eeb3439a0b959e85e",
    "lastmod": "2026-10-15"
   },
   "lopp/fjallmaraton-100k/": {
-   "hash": "50cd9018971ab68a2c83acca",
+   "hash": "dc9a044afe44fc5c1719c10b",
    "lastmod": "2026-10-15"
   },
   "lopp/fjallmaraton-salen-42-km/": {
-   "hash": "bae1f180b078c6b75d1a2847",
+   "hash": "74557d9c536f4eb6b31a5b14",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/fjordkraft-bergen-city-marathon-maraton-42k/": {
+   "hash": "5c3ff5e1eb0a894e89ccb80b",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/fuga-penyagolosa-trails-csp-106-km/": {
+   "hash": "544bb1b767e3d71eea7f211d",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/fuji-mountain-race-toppbanan-21k/": {
+   "hash": "23fcb38107cd781607a9179a",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/garmin-zevenheuvelenloop-15-km/": {
+   "hash": "abbdcd06243ec8dec50c9204",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/generali-berliner-halbmarathon-21k/": {
+   "hash": "7d1e9d82d00239e219306f13",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/generali-geneve-marathon-marathon-42k/": {
+   "hash": "ace9b4aae26eb1aea7bd5e77",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/gornergrat-zermatt-marathon-marathon-43k/": {
+   "hash": "1e5708092e8f80fd90cce977",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/goteborgsvarvet-21k/": {
+   "hash": "0404ad693a37cabfc7bd15a0",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/grand-raid-reunion-la-diagonale-des-fous-180k/": {
+   "hash": "584b5ec6bc74f04d4294f758",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/grand-trail-du-saint-jacques-100k/": {
+   "hash": "eb42884faedf4c8e90d024eb",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/great-wall-marathon-marathon-42-2-km/": {
+   "hash": "45c57d123c8b690aa8ee4fdc",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/greifenseelauf-halbmarathon-21k/": {
+   "hash": "63a0e3572ae457ccc3555b2f",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/hardrock-hundred-mile-endurance-run-hardrock-100-161k/": {
+   "hash": "f2304d23a8217961ef23f055",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/harmonie-mutuelle-20-km-de-paris/": {
+   "hash": "6cd975029d0b2d289c2e73a4",
    "lastmod": "2026-10-15"
   },
   "lopp/harno-trail-21-km/": {
-   "hash": "e325870cf354d66055ee8906",
+   "hash": "fc957cbcf84af6f5ee0767d6",
    "lastmod": "2026-10-15"
   },
   "lopp/harno-trail-kort-7-km/": {
-   "hash": "796e41df27b2085f444264d8",
+   "hash": "6915dda7104d6617aa21d0e9",
    "lastmod": "2026-10-15"
   },
   "lopp/harno-trail-mellan-14-km/": {
-   "hash": "90b35bda552f044f68affe72",
+   "hash": "58da920cb68911479223bd03",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/harzquerung-lauf-53-km-wernigerode-nordhausen/": {
+   "hash": "aabb5801932d6e88261fb586",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/haspa-marathon-hamburg-marathon-43k/": {
+   "hash": "89933ab133627af90747ef52",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/hasselbyloppet-10k/": {
+   "hash": "772bc51a76db0a58da4b6cb9",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/helsingborg-marathon-42k/": {
+   "hash": "d77ce2be5cefe4a277defa65",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/highland-fling-85k/": {
+   "hash": "7be01a9a609c6af9d13f0520",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/hk100-hong-kong-100-ultra-95k/": {
+   "hash": "a95ab415087cc452a79b1897",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/hoka-hackney-half-21k/": {
+   "hash": "b47b3eda5951aa239b2c1093",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/hoka-kodiak-ultra-marathons-by-utmb-100m-161k/": {
+   "hash": "40df11f8f4a7bb39fc261691",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/hoka-ultra-trail-australia-by-utmb-uta100-101k/": {
+   "hash": "4e86542edefd999285cc78a8",
    "lastmod": "2026-10-15"
   },
   "lopp/hoka-utmb-mont-blanc-utmb-ultra-trail-du-mont-blanc-174k/": {
-   "hash": "b4dd81a643a360d4a4d63e4d",
+   "hash": "e2ec9616c863e30023fede69",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/hoka-val-d-aran-by-utmb-torn-dera-val-d-aran-vda-163-km/": {
+   "hash": "1b4b4222c90078618af082b2",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/holmenkollstafetten-18k/": {
+   "hash": "11f1ae0610b831ef24306c57",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/hyundai-mitja-marato-barcelona-by-brooks-21k/": {
+   "hash": "98981e4c2dc4c054d821544f",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/irish-life-dublin-marathon-42k/": {
+   "hash": "716b712ef840438f77e47266",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/islandsbanki-reykjavik-marathon-42-2-km-marathon/": {
+   "hash": "003a4291ec51760f52a4ceda",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/jal-honolulu-marathon-42k/": {
+   "hash": "f5d2491bb3560c8bd6376460",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/javelina-jundred-100-mile-161k/": {
+   "hash": "c366c341e98e768b1c027d34",
    "lastmod": "2026-10-15"
   },
   "lopp/jungfrau-marathon-42k/": {
-   "hash": "5abf4f4d2b12f59a62f723ed",
+   "hash": "f0a0dcfaffa80be4edc6cd9f",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/kat100-by-utmb-endurance-trail-75k/": {
+   "hash": "92a80e207e316c977e8009ff",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/kepler-challenge-60k/": {
+   "hash": "1c309decd49325bb02a72cc1",
    "lastmod": "2026-10-15"
   },
   "lopp/kia-fjallmaraton-45k/": {
-   "hash": "4af0e2c9ec268aa8da8052d4",
+   "hash": "e2edce62682efb1ef77ca6b5",
    "lastmod": "2026-10-15"
   },
   "lopp/kullamannen-by-utmb-ultra-100-miles-173k/": {
-   "hash": "4213bd7c447ce23e3de631ee",
+   "hash": "fbec2ef15898d647715339ae",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/l-ultra-marin-le-grand-raid-175-km-raid-du-golfe-du-morbihan/": {
+   "hash": "5a70b583e4af22fbdb73f2bc",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/lake-sonoma-100k/": {
+   "hash": "aebcc09de5107b67a528e174",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/laugavegur-ultra-marathon-52k/": {
+   "hash": "018683f7231863db85cf8b58",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/lausanne-marathon-marathon-42k/": {
+   "hash": "dc5062cd55da264dca107a34",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/le-grand-trail-des-templiers-80-km-festival-des-templiers/": {
+   "hash": "4529140fd64475f90aa83a4d",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/leadville-trail-100-run-161k/": {
+   "hash": "b6c76f4f9a6e78bf4e8e6ffb",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/lemkowyna-trail-150-lemkowyna-ultra-trail-149k/": {
+   "hash": "4ec1868f94af131d6ef26d2e",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/lillebaelt-halvmarathon-21k/": {
+   "hash": "73c6e46cbc9092e509d23a90",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/lofoten-ultra-trail-50-miles-87k/": {
+   "hash": "934535d4036df1a5a635c8ce",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/mainova-frankfurt-marathon-42k/": {
+   "hash": "9729480936725a06ce8bca34",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/marathon-des-alpes-maritimes-nice-cannes-marathon-42k/": {
+   "hash": "415ede615135e12c9c348128",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/marathon-des-chateaux-du-medoc-42k/": {
+   "hash": "dec7b6e064ac79c59f89e1a7",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/marathon-des-sables-mds-legendary-250k/": {
+   "hash": "eea3e7784b5464b09c275027",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/marathon-eryri-42k/": {
+   "hash": "9eaffb93aa3c3ef5af192ec2",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/maraton-internacional-de-buenos-aires-42k/": {
+   "hash": "03449986c53543aa3076349a",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/maraton-valencia-trinidad-alfonso-zurich-42k/": {
+   "hash": "3f3f1e170818c08b3c512948",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/marine-corps-marathon-42k/": {
+   "hash": "5057742fe55e7403301e5b17",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/marseille-cassis-ag2r-la-mondiale-20k/": {
+   "hash": "8067ed30aaf2dbe393539bba",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/maxi-race-tour-du-lac-en-solo-1-jour-100k/": {
+   "hash": "9868aadf4a8ea526a5587891",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/mcc-martigny-combe-chamonix-hoka-utmb-mont-blanc-40k/": {
+   "hash": "b4ca6b2a12fd738ba586f689",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/medtronic-twin-cities-marathon-42k/": {
+   "hash": "4aef17b1bf621c0d3f9d3ac6",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/mein-freiburg-marathon-marathon-42k/": {
+   "hash": "88b92559713f509dedf8093b",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/midnattsloppet-goteborg-10-km/": {
+   "hash": "337716a3447a5a0c2d304411",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/midnattsloppet-malmo-10-km/": {
+   "hash": "fafff14c33c74c8368f69d70",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/midnattsloppet-stockholm-10-km/": {
+   "hash": "309650f85f5ec4f738a102d5",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/midnight-sun-marathon-42k/": {
+   "hash": "521d92eafc2506c03f444231",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/minerva-energia-ultra-trail-lago-d-orta-utlo-58-km/": {
+   "hash": "f3598f72d81e11288898d136",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/montane-lakeland-100-164k/": {
+   "hash": "cf3529103a6af47df73f5d0b",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/montreux-trail-festival-mxtreme-100-102-km/": {
+   "hash": "fbaa7497da1569685fcff10d",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/morat-fribourg-17-17-km/": {
+   "hash": "a66af7747a2f3082648e2e81",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/mozart-100-by-utmb-mozart-ultra-84-km/": {
+   "hash": "6b0d313edef33bfcca2ebc08",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/nationale-nederlanden-san-silvestre-vallecana-carrera-popular-10-km/": {
+   "hash": "8805e1f26f026404cdd25412",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/nice-cote-d-azur-by-utmb-roubion-nice-100k/": {
+   "hash": "2f2960a0f208fbe02f4a66be",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/nike-melbourne-marathon-42k/": {
+   "hash": "3d68d54f923be35891ecdf52",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/nn-cpc-loop-den-haag-nn-halve-marathon-21-1-km/": {
+   "hash": "18a3229f7a6e05462e017645",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/northside-hospital-peachtree-road-race-formerly-the-ajc-peachtree-road-10k/": {
+   "hash": "21d8d65fd0ae188c461b1e9b",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/occ-utmb-mont-blanc-60k/": {
+   "hash": "972a2d34a641e67b1680e428",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/ochsner-sport-zurich-marathon-marathon-42k/": {
+   "hash": "1d31864a8eaf6835f9b58672",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/olympus-marathon-44k/": {
+   "hash": "2385be9e501e2b7596cbd782",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/osaka-marathon-2027-2027-42k/": {
+   "hash": "19b0123697c304d0c1797620",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/oysho-royal-parks-half-marathon-21k/": {
+   "hash": "f3c3a44388435d78d13c3148",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/pikes-peak-marathon-42k/": {
+   "hash": "5a889f8be59986d90e39dc5d",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/pirkan-holkka-33-km/": {
+   "hash": "98fca9db95db7e9b4d5135b4",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/restonica-trail-by-utmb-utc100m-ultra-trail-di-corsica-110k/": {
+   "hash": "23d4682acb8df71d5ac6e8b7",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/rimi-riga-marathon-42-km-marathon/": {
+   "hash": "e5862ff4b331507b9bdaa2f5",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/rmb-ultra-trail-cape-town-ut100-ultra-trail-100km/": {
+   "hash": "20d74d49f2c899f368366075",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/romaostia-half-marathon-21k/": {
+   "hash": "a95a4ad8bd391367b1eb4999",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/royal-run-kobenhavn-frederiksberg-10-km/": {
+   "hash": "79e2d68cb31180aab8ab992b",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/run-in-lyon-by-harmonie-mutuelle-marathon-42k/": {
+   "hash": "63d620aaab216c35904802d8",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/run-rabbit-run-100-163k/": {
+   "hash": "891d6b5dc71cda09b3ddaabc",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/run-rome-the-marathon-42k/": {
+   "hash": "3ae5a13c2faf3eb7c1af994b",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/saintelyon-80-km/": {
+   "hash": "bef93bbef6a7738958a5c80a",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/salomon-ecotrail-paris-trail-80-km-printemps/": {
+   "hash": "0234da787a3b69052db37f89",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/salomon-pitz-alpine-glacier-trail-p105-salomon-ultra-108k/": {
+   "hash": "994d7f9207fd9756563807d1",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/salomon-ultra-pirineu-100k/": {
+   "hash": "61100dae873bc7fa3e85988c",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/sanlam-cape-town-marathon-42k/": {
+   "hash": "35066fc30262ea7e1ecebf4c",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/saucony-helsinki-city-marathon-42k/": {
+   "hash": "4ef03d552e0be50f6f7f538c",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/seoul-marathon-full-course-42k/": {
+   "hash": "edc11506c8601abd5dffae00",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/sida/2/": {
+   "hash": "316b8cd47ab6f084f0aaa713",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/sinister-7-ultra-100-miler-161k/": {
+   "hash": "4f54dc12689093aec1aa2737",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/six-foot-track-marathon-45k/": {
+   "hash": "35ad204a74ce216f3a51bd75",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/spar-budapest-marathon-42-2-km/": {
+   "hash": "1348e6b574e083a7bbd2dcbd",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/spartathlon-246k/": {
+   "hash": "5fdba57d624a775e0898c4ad",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/speedgoat-mountain-races-by-utmb-50k/": {
+   "hash": "b63888f488f7c5d0f46a9fa0",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/squamish-50-50-mile-78k/": {
+   "hash": "e5b26286bf449c92a7044f40",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/standard-chartered-hong-kong-marathon-marathon-42-195-km/": {
+   "hash": "2196175ffa116f68b466fe1d",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/stavanger-marathon-maraton-42-2-km/": {
+   "hash": "e4421ffd0c09ecc3b84293d3",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/swedbank-vilniaus-maratonas-maratonas-42-195-km/": {
+   "hash": "b7a1bb9c7bf16d645f5abee1",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/swiss-canyon-trail-111k/": {
+   "hash": "7a425fea6722c4ff716ea7d4",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/swisscitymarathon-lucerne-marathon-42k/": {
+   "hash": "b7140f39e527db25c86671a1",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/tamarack-homes-ottawa-international-marathon-42k/": {
+   "hash": "282b2a525fdc1151776b3072",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/tcs-amsterdam-marathon-42k/": {
+   "hash": "93ae67b9f4c80ea12c1e574b",
    "lastmod": "2026-10-15"
   },
   "lopp/tcs-lidingoloppet-30-km/": {
-   "hash": "ac4962f05ebbf71348ff08f6",
+   "hash": "77b93a70b9b03bd2e94f64b0",
    "lastmod": "2026-10-15"
   },
   "lopp/tcs-london-marathon-42-2-km/": {
-   "hash": "8ecfd7b4d300f48dbe2530c6",
+   "hash": "0e9703534df5b7d2b6294f34",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/tcs-sydney-marathon-42k/": {
+   "hash": "875b1b849725ca9160dd5b17",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/tcs-toronto-waterfront-marathon-marathon-42k/": {
+   "hash": "ce26494f78a483acb33c1ea5",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/tds-sur-les-traces-des-ducs-de-savoie-hoka-utmb-mont-blanc-145k/": {
+   "hash": "976cc4a3e5c772b967a0aabe",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/tenerife-bluetrail-110k/": {
+   "hash": "0e50bf6e86c963a02a656a73",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/tenzing-hillary-everest-marathon-full-marathon-42km/": {
+   "hash": "5740236d092e8b9ab3f7c2fc",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/the-north-face-grossglockner-ultra-trail-ggut-110-km/": {
+   "hash": "40103b9399cef9dbd9cb6726",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/the-north-face-transgrancanaria-classic-125k/": {
+   "hash": "343379f27749dc8dda0060c4",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/three-peaks-race-37k/": {
+   "hash": "b9c497846b88decf9ca3afba",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/tiaa-philadelphia-marathon-42k/": {
+   "hash": "0c8a921f4b92dad8ce76e5c4",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/tjejmilen-10k/": {
+   "hash": "1227b8c94a032c9165f31cf9",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/tjurruset-10-km/": {
+   "hash": "e30c669a100ef89c8cee8e8e",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/tokyo-marathon-2027-42k/": {
+   "hash": "51dfed6dae9fa57bf50a3aa7",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/tor330-tor-des-geants-328k/": {
+   "hash": "a2cac82aedf8086d4bae5a61",
    "lastmod": "2026-10-15"
   },
   "lopp/totalsports-two-oceans-marathon-ultra-marathon-56-km/": {
-   "hash": "d58f26ea404f0d93c26aaadf",
+   "hash": "6eba39ae4566acb1ffed6bb5",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/trail-100-andorra-by-utmb-ultra-105k/": {
+   "hash": "8d82e33587c1dffd66ff2d7a",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/trail-menorca-cami-de-cavalls-tmcdc-185-km/": {
+   "hash": "ca9b5f2920dd8ad9e728e96d",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/trail-verbier-st-bernard-by-utmb-x-alpine-140-km/": {
+   "hash": "7ddb80ee88e275ce8b1e5f96",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/trailovik-22-km/": {
+   "hash": "03e30f1e9cf42c2ea7d95bcb",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/trailvasan-30/": {
+   "hash": "4d4b2d0a41ed955ff569c89a",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/transvulcania-ultramarathon-73k/": {
+   "hash": "3abd6f028e43bd2a9ce949a3",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/trek-matterhorn-ultraks-sky-49-km/": {
+   "hash": "15a2d726620fca782bed2fad",
    "lastmod": "2026-10-15"
   },
   "lopp/ultravasan-45-44k/": {
-   "hash": "2c2124fcd3b71e481df4a388",
+   "hash": "fee7aad7592be89e4ef94860",
    "lastmod": "2026-10-15"
   },
   "lopp/ultravasan-90-92k/": {
-   "hash": "3d48dfa63aef944d9c75bad6",
+   "hash": "18ac7bbc94447b375b61a880",
    "lastmod": "2026-10-15"
   },
   "lopp/umaker-trail-15-6-km/": {
-   "hash": "e5e9594ac97efa9070edeb42",
+   "hash": "b4ac795079e19c294a028856",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/ursvik-ultra-uu-hardingen-45-km/": {
+   "hash": "d99607ca6196d6300ed167ce",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/vaarojen-maraton-43-km/": {
+   "hash": "e44c58dcf2584fb7f3128b15",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/varruset-stockholm-5-km/": {
+   "hash": "8ba2dfa4394300b8dfef3313",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/venicemarathon-42k/": {
+   "hash": "cc8a7ac25e6171a1fd46b9a0",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/vienna-city-marathon-43k/": {
+   "hash": "91c89a334349d1d243263b44",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/vodafone-prague-marathon-42k/": {
+   "hash": "4eb704bb78d5aae3796c67bd",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/voltaren-city2surf-14k/": {
+   "hash": "bda9e8eff22e3235b3143c38",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/west-highland-way-race-153k/": {
+   "hash": "2cce4745fc106a432d27f6e9",
    "lastmod": "2026-10-15"
   },
   "lopp/western-states-100-mile-endurance-run-161k/": {
-   "hash": "baac728a74176b7596222b84",
+   "hash": "c9ebacf4e3394df53c9ba88d",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/wizz-air-milano-marathon-42k/": {
+   "hash": "a6301de19021993fa6e1692f",
    "lastmod": "2026-10-15"
   },
   "lopp/zegama-aizkorri-mendi-maratoia-42k/": {
-   "hash": "3fda48f5260b9226e936a4ee",
+   "hash": "2cb01b6f8485d09a06c2b36f",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/zurich-marato-barcelona-42k/": {
+   "hash": "a3edc65305fd19c4ea5c3b21",
+   "lastmod": "2026-10-15"
+  },
+  "lopp/zurich-maraton-de-sevilla-42k/": {
+   "hash": "0ed3325cec051a8ba2fc615f",
    "lastmod": "2026-10-15"
   }
  },

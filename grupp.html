@@ -1,0 +1,39 @@
+<!doctype html><html lang="sv"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Mila – Löpargrupp</title><link rel="icon" href="logo.png"><link rel="stylesheet" href="site.css"></head><body>
+<!-- A running group invite from the app (functions/group groupInviteUrl): the code travels in the fragment, which the browser never sends to a
+     server. This page only offers to open Mila with it (mila://grupp?kod=…), or to get the app and type the code. No cookies, no tracking. -->
+<div class="wrap narrow"><header><a class="brand" href="index.html"><img src="logo.png" alt="">MILA</a></header>
+<main class="doc">
+<h1 id="t">Du är inbjuden till en löpargrupp i Mila</h1>
+<p id="lead">I en löpargrupp ser ni varandras veckor som prickar, hejar på varandra och jagar ett gemensamt mål för månaden. Bara ditt valda namn och antal pass, aldrig puls, sömn, vikt, rutter eller coachens texter.</p>
+<p><a id="open" class="cta" href="mila://grupp">Öppna inbjudan i Mila</a></p>
+<p id="codeline" hidden><span id="codelabel">Koden:</span> <strong id="code" style="font-family:ui-monospace,monospace;letter-spacing:.08em"></strong></p>
+<p id="get">Har du inte Mila? <a id="store" href="https://apps.apple.com/search?term=Mila%20Coach">Hämta appen</a> och ange koden under Mer → Löpargrupp. Inbjudan gäller i sju dagar.</p>
+<footer><a href="index.html">Mila</a><a id="privacy" href="privacy.html">Integritetspolicy</a></footer></main></div>
+<script>
+(function () {
+  var words = {
+    sv: { t: "Du är inbjuden till en löpargrupp i Mila", lead: "I en löpargrupp ser ni varandras veckor som prickar, hejar på varandra och jagar ett gemensamt mål för månaden. Bara ditt valda namn och antal pass, aldrig puls, sömn, vikt, rutter eller coachens texter.", open: "Öppna inbjudan i Mila", code: "Koden:", get: "Har du inte Mila? {a} och ange koden under Mer → Löpargrupp. Inbjudan gäller i sju dagar.", store: "Hämta appen", privacy: "Integritetspolicy", privacyHref: "privacy.html", bad: "Länken saknar en giltig kod. Be om en ny inbjudan." },
+    en: { t: "You're invited to a running group in Mila", lead: "In a running group you see each other's weeks as dots, cheer each other on and chase a shared goal for the month. Only your chosen name and session counts, never heart rate, sleep, weight, routes or the coach's texts.", open: "Open the invite in Mila", code: "The code:", get: "Don't have Mila? {a} and enter the code under More → Running group. The invite is valid for seven days.", store: "Get the app", privacy: "Privacy policy", privacyHref: "privacy-en.html", bad: "The link has no valid code. Ask for a new invite." },
+    de: { t: "Du bist in eine Laufgruppe in Mila eingeladen", lead: "In einer Laufgruppe seht ihr eure Wochen als Punkte, feuert euch gegenseitig an und verfolgt ein gemeinsames Monatsziel. Nur dein gewählter Name und die Zahl der Einheiten, nie Puls, Schlaf, Gewicht, Strecken oder die Texte des Coachs.", open: "Einladung in Mila öffnen", code: "Der Code:", get: "Du hast Mila noch nicht? {a} und gib den Code unter Mehr → Laufgruppe ein. Die Einladung gilt sieben Tage.", store: "Hol dir die App", privacy: "Datenschutzerklärung", privacyHref: "privacy-de.html", bad: "Der Link enthält keinen gültigen Code. Bitte um eine neue Einladung." }
+  };
+  var nav = (navigator.language || "en").toLowerCase(), lang = nav.indexOf("sv") === 0 ? "sv" : nav.indexOf("de") === 0 ? "de" : "en", w = words[lang];
+  document.documentElement.lang = lang;
+  var raw = "";
+  try { raw = decodeURIComponent(location.hash.slice(1)); } catch (e) { raw = ""; }
+  raw = raw.toUpperCase().replace(/[\s-]/g, "").replace(/O/g, "0").replace(/[IL]/g, "1");
+  var code = /^[0-9A-HJKMNP-TV-Z]{12}$/.test(raw) ? raw : null;
+  var $ = function (id) { return document.getElementById(id); };
+  $("t").textContent = w.t; $("lead").textContent = w.lead; $("open").textContent = w.open; $("codelabel").textContent = w.code;
+  $("privacy").textContent = w.privacy; $("privacy").setAttribute("href", w.privacyHref);
+  var get = $("get"), store = $("store"), parts = w.get.split("{a}");
+  store.textContent = w.store; get.textContent = parts[0]; get.appendChild(store); get.appendChild(document.createTextNode(parts[1]));
+  if (code) {
+    $("open").setAttribute("href", "mila://grupp?kod=" + code);
+    $("code").textContent = code.slice(0, 4) + "-" + code.slice(4, 8) + "-" + code.slice(8);
+    $("codeline").hidden = false;
+  } else {
+    $("open").removeAttribute("href"); $("open").hidden = true; $("lead").textContent = w.bad;
+  }
+})();
+</script>
+</body></html>

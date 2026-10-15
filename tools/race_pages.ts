@@ -11,7 +11,10 @@
 //
 // Slugs are lower-case ASCII from the name and distance (the feed's suggestion) and never change once published: lopp/slugs.json in
 // the output keeps every race's slug (and the lastmod of every page), so a renamed race keeps its address and a new race never takes
-// the slug of one that left. A race needs a course for its first page; a race without a date gets its page without the event markup.
+// the slug of one that left. A race needs a course for its first page, unless it is an official race whose organiser publishes no course
+// file (the feed's has_course false: asked for with features=nocourse): its page has the facts, the organiser's aid stations and start,
+// and "Banan publiceras inte som fil av arrangören" instead of the profile and the route; its share image the scene and the text alone.
+// A race without a date gets its page without the event markup.
 // A race that leaves the register keeps its page as "Loppet finns inte längre i registret" with noindex, out of the sitemap and the
 // indexes; one that comes back gets its page back. A run that would drop many races at once (a broken feed) stops without writing.
 // Files are only written when their content changes (the countdown is coarse and refined in the browser), so the hourly job seldom commits.
@@ -54,6 +57,8 @@ export type Race = {
   results: Result[]; comment: string | null; course_source: "official_gpx" | "upload" | null; ele_source: "dem" | "runners" | null;
   /** How many Mila runners' measurements the heights rest on (ele_source "runners"). */
   ele_runners: number | null;
+  /** False: an official race whose organiser publishes no course file (no course; ascent is the organiser's stated climb, 0 unknown). */
+  has_course: boolean;
   start: [number, number] | null; course: { pts: Point[] } | null;
 };
 export type State = {
@@ -119,10 +124,13 @@ export function cleanRace(x: any): Race | null {
     comment: typeof x.comment === "string" && x.comment.trim() ? x.comment.trim().slice(0, 6000) : null,
     course_source: x.course_source === "official_gpx" || x.course_source === "upload" ? x.course_source : null, ele_source: x.ele_source === "dem" || x.ele_source === "runners" ? x.ele_source : null,
     ele_runners: x.ele_source === "runners" ? (isNum(x.ele_runners) && x.ele_runners >= 1 ? Math.min(999, Math.round(x.ele_runners)) : 1) : null,
+    has_course: x.has_course !== false,
     start: Array.isArray(x.start) && x.start.length === 2 && x.start.every(isNum) ? [x.start[0], x.start[1]] : pts.length ? [pts[0][0], pts[0][1]] : null,
     course: pts.length >= 2 ? { pts } : null,
   };
 }
+/** A race whose organiser publishes no course file: it gets a page of its own without the profile and the route. */
+export const courseless = (r: Pick<Race, "has_course" | "course">) => !r.has_course && !r.course;
 
 /** Every race in the feed, page by page (a URL), or from a file (a JSON object with "races", or a list). Throws on anything unexpected,
  *  so a run never mistakes a broken feed for an empty register. `ids`: every id the feed named, whether its race was usable or not. */
@@ -133,6 +141,8 @@ export async function readFeed(src: string, fetchFn: typeof fetch = fetch): Prom
     for (let page = 0; ; page++) {
       if (page >= 500) throw new Error("feed: too many pages");
       const u = new URL(src);
+      // the official races without a course too (the feed leaves them out for older readers)
+      u.searchParams.set("features", "nocourse");
       u.searchParams.set("limit", "100");
       if (after) u.searchParams.set("after", after);
       const body = await getJson(u.toString(), fetchFn);
@@ -210,13 +220,16 @@ const T = {
     ctaText: "Coachen planerar veckorna fram till start efter din form, och ger dig en tidsprognos, en tempoplan för varje del av banan och en plan för vätska och energi på just den här banan.",
     store: "Ladda ned på App Store", nearbyH: "Fler lopp i närheten", organizer: "Arrangör",
     disclaimer: "Uppgifterna kommer ur banfilen och arrangörens information. Kontrollera datum, starttider och regler hos arrangören.",
+    disclaimerNoCourse: "Uppgifterna kommer från arrangörens information. Kontrollera datum, starttider och regler hos arrangören.",
+    noCourse: "Banan publiceras inte som fil av arrangören, så här finns ingen karta eller höjdprofil. Banans sträckning finns hos arrangören.",
+    aboutRaceH: "Om loppet", titleTailNoCourse: "datum, distans och tempoplan", metaTailNoCourse: "Se datum och distans och få din tempoplan i Mila.", ogAltNoCourse: (n: string) => `${n} – lopp i Milas loppregister`,
     prelim: "preliminärt datum", noDate: "Datum för nästa upplaga är inte klart än.", last: (d: string) => `Senast: ${d}.`,
     passed: (d: string) => `Loppet gick ${d}. Datum för nästa upplaga är inte klart än.`,
     cd: { today: "i dag", tomorrow: "i morgon", days: "om # dagar", weeks: "om # veckor", months: "om # månader", past: "har gått" },
     removedTitle: (n: string) => `${n} – finns inte längre i registret | Mila`, removed: "Loppet finns inte längre i Milas loppregister.", allRaces: "Se alla lopp",
     noDateGroup: "Datum ej klart", filterDistance: "Distans", filterCountry: "Land", all: "Alla distanser", allCountries: "Alla länder",
     buckets: ["Upp till 10 km", "11–21 km", "22–42 km", "Ultra, över 42 km"], noMatch: "Inga lopp matchar filtret.", pages: "Sidor", prev: "Föregående", next: "Nästa",
-    ogAlt: (n: string) => `Höjdprofil och bana för ${n}`, ogDefault: "Lopp – bana, höjdprofil och tempoplan", support: "Support", privacy: "Integritetspolicy", terms: "Villkor",
+    ogAlt: (n: string) => `Höjdprofil och bana för ${n}`, ogDefault: "Lopp – bana, höjdprofil och tempoplan", support: "Support", privacy: "Integritetspolicy", terms: "Villkor", contact: "Om Mila och kontakt", report: "Rapportera",
     metaTail: "Se bana och höjdprofil och få din tempoplan i Mila.", metaAid: (n: number) => `${n} vätskekontroller`, metaClimb: (a: string) => `${a} höjdmeter`, metaHigh: (h: string) => `högsta punkt ${h} m`,
   },
   en: {
@@ -251,13 +264,16 @@ const T = {
     ctaText: "The coach plans your weeks up to race day around your form, and gives you a finish-time forecast, a pace plan for every part of the course and a fueling plan for this very course.",
     store: "Download on the App Store", nearbyH: "More races nearby", organizer: "Organizer",
     disclaimer: "Details come from the course file and the organizer's information. Check the date, start times and rules with the organizer.",
+    disclaimerNoCourse: "Details come from the organizer's information. Check the date, start times and rules with the organizer.",
+    noCourse: "The organizer does not publish the course as a file, so there is no map or elevation profile here. The organizer has the route.",
+    aboutRaceH: "About the race", titleTailNoCourse: "date, distance and pace plan", metaTailNoCourse: "See the date and distance and get your pace plan in Mila.", ogAltNoCourse: (n: string) => `${n} – race in Mila's race register`,
     prelim: "preliminary date", noDate: "The date of the next edition is not set yet.", last: (d: string) => `Last held: ${d}.`,
     passed: (d: string) => `The race took place on ${d}. The date of the next edition is not set yet.`,
     cd: { today: "today", tomorrow: "tomorrow", days: "in # days", weeks: "in # weeks", months: "in # months", past: "has taken place" },
     removedTitle: (n: string) => `${n} – no longer in the register | Mila`, removed: "This race is no longer in Mila's race register.", allRaces: "See all races",
     noDateGroup: "Date not set", filterDistance: "Distance", filterCountry: "Country", all: "All distances", allCountries: "All countries",
     buckets: ["Up to 10 km", "11–21 km", "22–42 km", "Ultra, over 42 km"], noMatch: "No races match the filter.", pages: "Pages", prev: "Previous", next: "Next",
-    ogAlt: (n: string) => `Elevation profile and course of ${n}`, ogDefault: "Races – course, elevation profile and pace plan", support: "Support", privacy: "Privacy policy", terms: "Terms of use",
+    ogAlt: (n: string) => `Elevation profile and course of ${n}`, ogDefault: "Races – course, elevation profile and pace plan", support: "Support", privacy: "Privacy policy", terms: "Terms of use", contact: "About Mila and contact", report: "Report",
     metaTail: "See the course and elevation profile and get your pace plan in Mila.", metaAid: (n: number) => `${n} aid stations`, metaClimb: (a: string) => `${a} m of climbing`, metaHigh: (h: string) => `highest point ${h} m`,
   },
   de: {
@@ -292,13 +308,16 @@ const T = {
     ctaText: "Der Coach plant deine Wochen bis zum Start nach deiner Form und gibt dir eine Zielzeitprognose, einen Pace-Plan für jeden Abschnitt und einen Verpflegungsplan für genau diese Strecke.",
     store: "Im App Store laden", nearbyH: "Weitere Läufe in der Nähe", organizer: "Veranstalter",
     disclaimer: "Die Angaben stammen aus der Streckendatei und den Informationen des Veranstalters. Prüfe Datum, Startzeiten und Regeln beim Veranstalter.",
+    disclaimerNoCourse: "Die Angaben stammen aus den Informationen des Veranstalters. Prüfe Datum, Startzeiten und Regeln beim Veranstalter.",
+    noCourse: "Der Veranstalter veröffentlicht die Strecke nicht als Datei, daher gibt es hier keine Karte und kein Höhenprofil. Den Streckenverlauf findest du beim Veranstalter.",
+    aboutRaceH: "Über den Lauf", titleTailNoCourse: "Datum, Distanz und Pace-Plan", metaTailNoCourse: "Datum und Distanz ansehen und deinen Pace-Plan in Mila holen.", ogAltNoCourse: (n: string) => `${n} – Lauf in Milas Laufregister`,
     prelim: "vorläufiges Datum", noDate: "Das Datum der nächsten Ausgabe steht noch nicht fest.", last: (d: string) => `Zuletzt: ${d}.`,
     passed: (d: string) => `Der Lauf fand am ${d} statt. Das Datum der nächsten Ausgabe steht noch nicht fest.`,
     cd: { today: "heute", tomorrow: "morgen", days: "in # Tagen", weeks: "in # Wochen", months: "in # Monaten", past: "hat stattgefunden" },
     removedTitle: (n: string) => `${n} – nicht mehr im Register | Mila`, removed: "Dieser Lauf ist nicht mehr in Milas Laufregister.", allRaces: "Alle Läufe ansehen",
     noDateGroup: "Datum offen", filterDistance: "Distanz", filterCountry: "Land", all: "Alle Distanzen", allCountries: "Alle Länder",
     buckets: ["Bis 10 km", "11–21 km", "22–42 km", "Ultra, über 42 km"], noMatch: "Keine Läufe passen zum Filter.", pages: "Seiten", prev: "Zurück", next: "Weiter",
-    ogAlt: (n: string) => `Höhenprofil und Strecke von ${n}`, ogDefault: "Läufe – Strecke, Höhenprofil und Pace-Plan", support: "Support", privacy: "Datenschutzerklärung", terms: "Nutzungsbedingungen",
+    ogAlt: (n: string) => `Höhenprofil und Strecke von ${n}`, ogDefault: "Läufe – Strecke, Höhenprofil und Pace-Plan", support: "Support", privacy: "Datenschutzerklärung", terms: "Nutzungsbedingungen", contact: "Über Mila und Kontakt", report: "Melden",
     metaTail: "Strecke und Höhenprofil ansehen und deinen Pace-Plan in Mila holen.", metaAid: (n: number) => `${n} Verpflegungsstellen`, metaClimb: (a: string) => `${a} Höhenmeter`, metaHigh: (h: string) => `höchster Punkt ${h} m`,
   },
 };
@@ -543,6 +562,7 @@ export async function resvgRenderer(fetchFn: typeof fetch = fetch): Promise<PngR
 /** The course in a few sentences from its numbers alone, in the page's language (the English and German pages, and a Swedish page
  *  without the coach's description). */
 export function aboutText(r: Race, lang: Lang): string[] {
+  if (courseless(r)) return aboutNoCourse(r, lang);
   const t = T[lang], k = kmText(r.km, lang), where = whereText(r, lang), title = r.name, h = t.hilly[hilliness(r)];
   const perKm = num(r.ascent / r.km, lang, r.ascent / r.km < 10 ? 1 : 0), hasEle = r.max_ele !== null && r.min_ele !== null;
   const climbs = [...r.climbs].sort((a, b) => a.km - b.km), big = [...r.climbs].sort((a, b) => b.gain - a.gain)[0], lastC = climbs[climbs.length - 1];
@@ -557,6 +577,22 @@ export function aboutText(r: Race, lang: Lang): string[] {
     out.push(`${title} ist ein ${r.trail ? t.trailRace : t.roadRace}${where ? ` in ${where}${where.includes(",") ? "," : ""}` : ""} über ${k}. Die Strecke hat insgesamt ${num(r.ascent, lang)} Höhenmeter bergauf${r.descent !== null ? ` und ${num(r.descent, lang)} bergab` : ""}, ${t.perKm(perKm)}, und ist damit ${h}.${hasEle ? ` Der höchste Punkt liegt auf ${num(r.max_ele!, lang)} m ü. M., der tiefste auf ${num(r.min_ele!, lang)} m.` : ""}`);
     out.push(big ? `Der größte Anstieg beginnt bei km ${num(big.km, lang, 1)}: ${num(big.gain, lang)} Höhenmeter auf ${lenText(big.len, lang)} mit durchschnittlich ${num(big.grade, lang, 1)} % Steigung, bis auf ${num(big.top, lang)} m.${climbs.length > 1 ? ` Insgesamt hat die Strecke ${climbs.length} Anstiege ab 25 Höhenmetern; der letzte beginnt bei km ${num(lastC.km, lang, 1)}.` : ""}` : t.noClimbs);
   }
+  out.push(...aidText(r, lang));
+  return out;
+}
+/** A race without a course in a few sentences: the kind, the place and the distance, the organiser's stated climb when there is one,
+ *  the aid stations and cut-offs; never a word about a profile nobody has. */
+export function aboutNoCourse(r: Race, lang: Lang): string[] {
+  const t = T[lang], k = kmText(r.km, lang), where = whereText(r, lang), title = r.name, a = num(r.ascent, lang), out: string[] = [];
+  if (lang === "sv") out.push(`${title} är ett ${r.trail ? t.trailRace : t.roadRace}${where ? ` i ${where}` : ""} på ${k}.${r.ascent ? ` Arrangören anger ${a} höjdmeter.` : ""}`);
+  else if (lang === "en") out.push(`${title} is a ${r.trail ? t.trailRace : t.roadRace}${where ? ` in ${where}${where.includes(",") ? "," : ""}` : ""} over ${k}.${r.ascent ? ` The organizer states ${a} m of climbing.` : ""}`);
+  else out.push(`${title} ist ein ${r.trail ? t.trailRace : t.roadRace}${where ? ` in ${where}${where.includes(",") ? "," : ""}` : ""} über ${k}.${r.ascent ? ` Der Veranstalter gibt ${a} Höhenmeter an.` : ""}`);
+  out.push(...aidText(r, lang));
+  return out;
+}
+/** The organiser's aid stations and cut-offs in a sentence, and the app's line on the English and German pages. */
+function aidText(r: Race, lang: Lang): string[] {
+  const out: string[] = [];
   const aid = r.aid_stations ?? [], cuts = r.info?.cutoffs ?? [];
   const a0 = aid.length ? num(aid[0].km, lang, 1) : "", a1 = aid.length ? num(aid[aid.length - 1].km, lang, 1) : "";
   const p3 = lang === "sv"
@@ -565,6 +601,11 @@ export function aboutText(r: Race, lang: Lang): string[] {
     ? `${aid.length ? `The organizer lists ${aid.length === 1 ? `one aid station, at km ${a0}` : `${aid.length} aid stations, the first at km ${a0} and the last at km ${a1}`}.` : ""}${cuts.length ? ` There ${cuts.length === 1 ? "is one cut-off time" : `are ${cuts.length} cut-off times`} along the course.` : ""}`
     : `${aid.length ? `Der Veranstalter nennt ${aid.length === 1 ? `eine Verpflegungsstelle bei km ${a0}` : `${aid.length} Verpflegungsstellen, die erste bei km ${a0} und die letzte bei km ${a1}`}.` : ""}${cuts.length ? ` Entlang der Strecke gibt es ${cuts.length === 1 ? "ein Zeitlimit" : `${cuts.length} Zeitlimits`}.` : ""}`;
   if (p3.trim()) out.push(p3.trim());
+  if (courseless(r)) {
+    if (lang === "en") out.push("In the Mila app, the coach plans your pacing and fueling for this race.");
+    if (lang === "de") out.push("In der Mila-App plant der Coach dein Pacing und deine Verpflegung für diesen Lauf.");
+    return out;
+  }
   if (lang === "en") out.push("In the Mila app, the coach describes the course in detail in your language and plans your pacing and fueling for it.");
   if (lang === "de") out.push("In der Mila-App beschreibt der Coach die Strecke ausführlich in deiner Sprache und plant dein Pacing und deine Verpflegung dafür.");
   return out;
@@ -574,14 +615,14 @@ function metaDescription(r: Race, lang: Lang): string {
   const t = T[lang], where = r.place ?? countryName(r, lang);
   const facts = [r.ascent ? t.metaClimb(num(r.ascent, lang)) : "", r.max_ele !== null ? t.metaHigh(num(r.max_ele, lang)) : "", r.aid_stations?.length ? t.metaAid(r.aid_stations.length) : ""].filter(Boolean).join(", ");
   const head = [raceTitle(r, lang), where, r.next_date ? dateShort(r.next_date, lang) : ""].filter(Boolean).join(", ");
-  const s = `${head}${facts ? `: ${facts}` : ""}.`;
-  if (s.length + t.metaTail.length < 160) return `${s} ${t.metaTail}`;
+  const s = `${head}${facts ? `: ${facts}` : ""}.`, tail = courseless(r) ? t.metaTailNoCourse : t.metaTail;
+  if (s.length + tail.length < 160) return `${s} ${tail}`;
   return s.length <= 160 ? s : s.slice(0, 157).replace(/\s+\S*$/, "") + " …";
 }
 /** "Härnö Trail 21 km 2027 – bana, höjdprofil och tempoplan | Mila" */
 export function pageTitle(r: Race, lang: Lang): string {
   const y = r.next_date?.slice(0, 4), name = raceTitle(r, lang);
-  return `${name}${y && !name.includes(y) ? ` ${y}` : ""} – ${T[lang].titleTail} | Mila`;
+  return `${name}${y && !name.includes(y) ? ` ${y}` : ""} – ${courseless(r) ? T[lang].titleTailNoCourse : T[lang].titleTail} | Mila`;
 }
 
 function table(caption: string, cols: string[], rows: string[][], numeric: number[]): string {
@@ -640,7 +681,7 @@ ${og}<meta name="theme-color" content="#0D1119"><link rel="icon" href="${root}lo
 <a class="skip" href="#main">${esc(t.skip)}</a><div class="wrap"><header><a class="brand" href="${root}${c.home}"><img src="${root}logo.png" alt="" width="40" height="40">MILA</a>${switcher ? `<nav class="lang" aria-label="${esc(t.langNav)}">${switcher}</nav>` : ""}</header>
 ${crumbs}
 <main id="main">${f.body}</main>
-<footer><a href="${root}${c.support}">${esc(t.support)}</a><a href="${root}${c.privacy}">${esc(t.privacy)}</a><a href="${root}${c.terms}">${esc(t.terms)}</a><br><br>© ${f.today.slice(0, 4)} Mila</footer></div>${f.script ? `<script>${f.script}</script>` : ""}${f.module ? `<script type="module">${f.module}</script>` : ""}</body></html>
+<footer><a href="${root}${c.support}">${esc(t.support)}</a><a href="${root}${c.privacy}">${esc(t.privacy)}</a><a href="${root}${c.terms}">${esc(t.terms)}</a><a href="${root}${c.support}#provider">${esc(t.contact)}</a><a href="${root}${c.support}?topic=report&amp;ref=${encodeURIComponent(abs(f.path))}#kontakt" rel="nofollow">${esc(t.report)}</a><br><br>© ${f.today.slice(0, 4)} Mila</footer></div>${f.script ? `<script>${f.script}</script>` : ""}${f.module ? `<script type="module">${f.module}</script>` : ""}</body></html>
 `;
 }
 const crumbsLd = (items: { name: string; path: string }[]) => ({ "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: items.map((x, i) => ({ "@type": "ListItem", position: i + 1, name: x.name, item: abs(x.path) })) });
@@ -672,9 +713,11 @@ export function racePage(r: Race, lang: Lang, ctx: Ctx): string {
   const orgLink = r.url ? `<a href="${esc(r.url)}" rel="noopener">${esc(r.organizer ? t.organiserPage : cap(t.organiserPage))}</a>` : "";
   const org = r.organizer ? `<p class="meta">${esc(t.organizer)}: ${esc(r.organizer)}${orgLink ? ` · ${orgLink}` : ""}</p>` : orgLink ? `<p class="meta">${orgLink}</p>` : "";
   const start = mainStart(r);
-  const facts: [string, string][] = [[t.distance, kmText(r.km, lang)], [t.climbing, `↑ ${num(r.ascent, lang)} m`]];
+  // a race without a course: the climb only as the organiser states it, and no character a profile would give
+  const bare = courseless(r), climbKnown = !bare || r.ascent > 0;
+  const facts: [string, string][] = [[t.distance, kmText(r.km, lang)], ...(climbKnown ? [[t.climbing, `↑ ${num(r.ascent, lang)} m`] as [string, string]] : [])];
   if (r.max_ele !== null) facts.push([t.highest, `${num(r.max_ele, lang)} ${t.masl}`]);
-  facts.push([t.terrain, r.trail ? t.trail : t.road], [t.character, cap(t.hilly[hilliness(r)])]);
+  facts.push([t.terrain, r.trail ? t.trail : t.road], ...(climbKnown ? [[t.character, cap(t.hilly[hilliness(r)])] as [string, string]] : []));
   if (start && r.next_date && r.next_date >= today) facts.push([t.start, t.clock(start)]);
   if (r.aid_stations?.length) facts.push([t.aid, String(r.aid_stations.length)]);
   // the scene's spec for the browser (scene.ts): the profile to three decimals is plenty for a horizon
@@ -692,6 +735,9 @@ export function racePage(r: Race, lang: Lang, ctx: Ctx): string {
     const credit = r.course_source === "official_gpx" ? `${esc(t.official)}${r.url ? ` (<a href="${esc(r.url)}" rel="noopener">${esc(t.organiserPage)}</a>)` : ""}.` : esc(t.upload);
     sections.push(`<section aria-labelledby="h-route"><div class="two"><div><h2 id="h-route">${esc(t.routeH)}</h2><figure><div class="chart">${routeSvg(r, lang)}</div><figcaption>${esc(t.legend(isLoop(c.pts), !!r.aid_stations?.length))} ${credit}</figcaption></figure></div>
 <div class="prose"><h2>${esc(t.aboutH)}</h2>${about}</div></div></section>`);
+  } else if (bare) {
+    sections.push(`<section aria-labelledby="h-route"><div class="two"><div><h2 id="h-route">${esc(t.routeH)}</h2><p class="sub">${esc(t.noCourse)}</p>${orgLink ? `<p>${orgLink}</p>` : ""}</div>
+<div class="prose"><h2>${esc(t.aboutRaceH)}</h2>${about}</div></div></section>`);
   } else sections.push(`<section aria-labelledby="h-about"><div class="prose"><h2 id="h-about">${esc(t.aboutH)}</h2>${about}</div></section>`);
   if (r.climbs.length) {
     const rows = [...r.climbs].sort((a, b) => a.km - b.km).slice(0, 30).map((x) => [esc(t.at(num(x.km, lang, 1))), esc(lenText(x.len, lang)), esc(`${num(x.gain, lang)} m`), esc(`${num(x.grade, lang, 1)} %`), esc(num(x.top, lang))]);
@@ -716,7 +762,7 @@ export function racePage(r: Race, lang: Lang, ctx: Ctx): string {
   }
   const near = nearby(r, ctx.active, today);
   if (near.length) sections.push(`<section aria-labelledby="h-nearby"><h2 id="h-nearby">${esc(t.nearbyH)}</h2><ul class="list">${near.map((x) => `<li><a href="${esc(rel(path, racePath(lang, ctx.slugs.get(x.id)!)))}">${esc(raceTitle(x, lang))}</a><span>${esc([x.next_date ? dateShort(x.next_date, lang) : t.noDateGroup, whereText(x, lang)].filter(Boolean).join(" · "))}</span></li>`).join("")}</ul></section>`);
-  sections.push(`<section><p class="sub">${esc(t.ctaH(r.name))}</p>${button}<p class="note">${esc(t.disclaimer)}</p></section>`);
+  sections.push(`<section><p class="sub">${esc(t.ctaH(r.name))}</p>${button}<p class="note">${esc(bare ? t.disclaimerNoCourse : t.disclaimer)}</p></section>`);
 
   const og = ctx.ogImage(r, lang), description = metaDescription(r, lang);
   const ld: object[] = [crumbsLd([{ name: t.home, path: L[lang].home }, { name: t.races, path: indexPath(lang) }, { name: title, path }])];
@@ -733,7 +779,7 @@ export function racePage(r: Race, lang: Lang, ctx: Ctx): string {
       ...(r.organizer || r.url ? { organizer: { "@type": "Organization", ...(r.organizer ? { name: r.organizer } : {}), ...(r.url ? { url: r.url } : {}) } } : {}),
     });
   }
-  return frame({ lang, path, title: pageTitle(r, lang), description, css: ctx.css, today, alternates, og: { ...og, alt: t.ogAlt(title) }, ld,
+  return frame({ lang, path, title: pageTitle(r, lang), description, css: ctx.css, today, alternates, og: { ...og, alt: bare ? t.ogAltNoCourse(title) : t.ogAlt(title) }, ld,
     body: `<article>${hero}${cta}${sections.join("\n")}</article>`, script: r.next_date && r.next_date >= today ? cdScript(lang) : undefined,
     module: ctx.sceneJs ? sceneScript(rel(path, "scene.js")) : undefined,
     crumbs: [{ name: t.home, path: L[lang].home }, { name: t.races, path: indexPath(lang) }, { name: title }] });
@@ -766,7 +812,7 @@ export function indexPage(lang: Lang, page: number, pages: number, races: Race[]
     if (!m.has(c)) m.set(c, []);
     m.get(c)!.push(r);
   }
-  const item = (r: Race) => `<li data-km="${r.km}" data-b="${bucketOf(r.km)}" data-c="${esc(r.country_code ?? r.country ?? "")}"><a href="${esc(rel(path, racePath(lang, ctx.slugs.get(r.id)!)))}">${esc(raceTitle(r, lang))}</a><span>${esc([r.next_date && r.next_date >= today ? cap(dateLong(r.next_date, lang)) : null, r.place, kmText(r.km, lang), `↑ ${num(r.ascent, lang)} m`].filter(Boolean).join(" · "))}</span></li>`;
+  const item = (r: Race) => `<li data-km="${r.km}" data-b="${bucketOf(r.km)}" data-c="${esc(r.country_code ?? r.country ?? "")}"><a href="${esc(rel(path, racePath(lang, ctx.slugs.get(r.id)!)))}">${esc(raceTitle(r, lang))}</a><span>${esc([r.next_date && r.next_date >= today ? cap(dateLong(r.next_date, lang)) : null, r.place, kmText(r.km, lang), courseless(r) && !r.ascent ? null : `↑ ${num(r.ascent, lang)} m`].filter(Boolean).join(" · "))}</span></li>`;
   const list = [...groups].map(([g, m]) => {
     const id = `g-${g}`, countries = [...m].sort((a, b) => a[0].localeCompare(b[0], LOCALE[lang]));
     return `<section class="grp" aria-labelledby="${id}"><h2 id="${id}">${esc(g === "none" ? t.noDateGroup : monthLabel(g, lang))}</h2>${countries.map(([c, rs]) => `<div class="grp"><h3>${esc(c)}</h3><ul class="list">${rs.map(item).join("")}</ul></div>`).join("")}</section>`;
@@ -823,9 +869,10 @@ export async function generate(o: { out: string; races: Race[]; ids?: Set<string
   if (!o.allowMassRemoval && published.length && (feedIds.size === 0 || usable.size === 0 || (gone.length >= MASS_REMOVAL_MIN && gone.length > published.length * MASS_REMOVAL_SHARE))) {
     throw new Error(`race pages: the feed drops ${gone.length} of ${published.length} published races; nothing written (--allow-mass-removal accepts it)`);
   }
-  // 2. slugs: a race keeps its own; a new race with a course gets the feed's suggestion, made unique among every slug ever used
+  // 2. slugs: a race keeps its own; a new race with a course (or an official one whose organiser publishes none) gets the feed's
+  //    suggestion, made unique among every slug ever used
   const used = new Set(Object.values(state.races).map((s) => s.slug));
-  const fresh = o.races.filter((r) => !state.races[r.id] && r.course).sort((a, b) => (a.slug || "").localeCompare(b.slug || "") || a.id.localeCompare(b.id));
+  const fresh = o.races.filter((r) => !state.races[r.id] && (r.course || courseless(r))).sort((a, b) => (a.slug || "").localeCompare(b.slug || "") || a.id.localeCompare(b.id));
   for (const r of fresh) {
     const base = r.slug && !RESERVED_SLUGS.has(r.slug) ? r.slug : `lopp-${r.id.slice(0, 8)}`;
     let s = base;
@@ -867,7 +914,7 @@ export async function generate(o: { out: string; races: Race[]; ids?: Set<string
   const hasOg = new Set<string>();
   for (const r of active) {
     const s = state.races[r.id], p = ogPath(s.slug);
-    if (o.png && r.course) {
+    if (o.png && (r.course || courseless(r))) {
       const svg = ogSvg(r), h = await sha(svg);
       if (s.og !== h || !(await exists(p))) {
         try { await put(p, await o.png(svg)); s.og = h; report.pngs++; } catch (e) { log(`og ${s.slug}: ${String(e).slice(0, 100)}`); }

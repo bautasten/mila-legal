@@ -1,5 +1,5 @@
 /* Mila's website: the app's dark palette on every page (Assets.xcassets, dark appearance). */
-:root{color-scheme:dark;--bg:#0D1119;--surface:#151B26;--ink:#E8ECF3;--ink2:#AEB7C6;--muted:#7F8A9C;--line:#263041;--accent:#6E8FFF;--good:#3CCB7F;--bad:#F2706B}
+:root{color-scheme:dark;--bg:#0D1119;--surface:#151B26;--ink:#E8ECF3;--ink2:#AEB7C6;--muted:#7F8A9C;--line:#263041;--accent:#5C91FF;--good:#3CCB7F;--bad:#F2706B}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,sans-serif;line-height:1.6}
 a{color:var(--accent)}

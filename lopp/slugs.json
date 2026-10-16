@@ -1828,8 +1828,8 @@
  },
  "pages": {
   "/consumer-health-data.html": {
-   "hash": "072ccf3a82cf3eb907b69523",
-   "lastmod": "2026-10-15"
+   "hash": "baa4636cd1e9c415f71fea36",
+   "lastmod": "2026-10-16"
   },
   "/index-de.html": {
    "hash": "6866a234dd933e9098690925",
@@ -1840,16 +1840,16 @@
    "lastmod": "2026-10-15"
   },
   "/privacy-de.html": {
-   "hash": "0d0b6fd826ed4ee5e9f406bc",
-   "lastmod": "2026-10-15"
+   "hash": "f41a0070d088cc4bb7064ea0",
+   "lastmod": "2026-10-16"
   },
   "/privacy-en.html": {
-   "hash": "217342f4790b08932f89c661",
-   "lastmod": "2026-10-15"
+   "hash": "a9dfdff3f48ad9d19fb991dd",
+   "lastmod": "2026-10-16"
   },
   "/privacy.html": {
-   "hash": "680453724d10f9ec2e0b26e6",
-   "lastmod": "2026-10-15"
+   "hash": "62e85e1081b1d78d69204305",
+   "lastmod": "2026-10-16"
   },
   "/support-de.html": {
    "hash": "06d22cf1fe71582780f74a30",
@@ -1868,20 +1868,20 @@
    "lastmod": "2026-10-15"
   },
   "/terms-de.html": {
-   "hash": "9dffd53e87056cac336d0976",
-   "lastmod": "2026-10-15"
+   "hash": "6bf0a49c7d1f8ab9860882a0",
+   "lastmod": "2026-10-16"
   },
   "/terms-en.html": {
-   "hash": "086662d35200765cccabfd60",
-   "lastmod": "2026-10-15"
+   "hash": "128737d148970eeb87606ed5",
+   "lastmod": "2026-10-16"
   },
   "/terms.html": {
-   "hash": "93c966d39ccc02fff215e286",
-   "lastmod": "2026-10-15"
+   "hash": "b27eff099af35db632f4c890",
+   "lastmod": "2026-10-16"
   },
   "de/laeufe/": {
-   "hash": "535a56e7f13f52f4403402a6",
-   "lastmod": "2026-10-15"
+   "hash": "7b70b925ab4fb4ea331a707e",
+   "lastmod": "2026-10-16"
   },
   "de/laeufe/101a-corrida-internacional-de-sao-silvestre-15k/": {
    "hash": "dc6b63cc0c103954707c1e3e",
@@ -2264,8 +2264,8 @@
    "lastmod": "2026-10-15"
   },
   "de/laeufe/grand-raid-reunion-la-diagonale-des-fous-180k/": {
-   "hash": "028e7f30aa6e14bdbc2a0462",
-   "lastmod": "2026-10-15"
+   "hash": "24d87fbf2b54d3e04507689f",
+   "lastmod": "2026-10-16"
   },
   "de/laeufe/grand-trail-du-saint-jacques-100k/": {
    "hash": "e24f119ec4f6e6f86efc5243",
@@ -2744,8 +2744,8 @@
    "lastmod": "2026-10-15"
   },
   "de/laeufe/seite/2/": {
-   "hash": "d9a4fd88e2e3d0bac964bd05",
-   "lastmod": "2026-10-15"
+   "hash": "7be2c92eb504a9ee0700b522",
+   "lastmod": "2026-10-16"
   },
   "de/laeufe/sentrumslopet-10-km/": {
    "hash": "4e8de45400655d3cd71e6837",
@@ -3040,8 +3040,8 @@
    "lastmod": "2026-10-15"
   },
   "en/races/": {
-   "hash": "b64a90bb1b6ef2fedf32c005",
-   "lastmod": "2026-10-15"
+   "hash": "049007fc019d1d89a964dade",
+   "lastmod": "2026-10-16"
   },
   "en/races/101a-corrida-internacional-de-sao-silvestre-15k/": {
    "hash": "50ef08a6f4a3a11ded67f9a8",
@@ -3424,8 +3424,8 @@
    "lastmod": "2026-10-15"
   },
   "en/races/grand-raid-reunion-la-diagonale-des-fous-180k/": {
-   "hash": "83661e080e41eda83859601a",
-   "lastmod": "2026-10-15"
+   "hash": "9104176ccdcf8bb6910811f5",
+   "lastmod": "2026-10-16"
   },
   "en/races/grand-trail-du-saint-jacques-100k/": {
    "hash": "3264c04799ae9b1912c0af1d",
@@ -3836,8 +3836,8 @@
    "lastmod": "2026-10-15"
   },
   "en/races/page/2/": {
-   "hash": "eeb7c37d03285c85b3bc5eb1",
-   "lastmod": "2026-10-15"
+   "hash": "14a664369aa9d407204e9fba",
+   "lastmod": "2026-10-16"
   },
   "en/races/pikes-peak-marathon-42k/": {
    "hash": "46fa30acc4efc999b4f8f4bd",
@@ -4200,8 +4200,8 @@
    "lastmod": "2026-10-15"
   },
   "lopp/": {
-   "hash": "0a04b94c27ef5b864066b213",
-   "lastmod": "2026-10-15"
+   "hash": "bc0eadd975dc998af4162398",
+   "lastmod": "2026-10-16"
   },
   "lopp/101a-corrida-internacional-de-sao-silvestre-15k/": {
    "hash": "7469cd0349b92221befb0df8",
@@ -4584,8 +4584,8 @@
    "lastmod": "2026-10-15"
   },
   "lopp/grand-raid-reunion-la-diagonale-des-fous-180k/": {
-   "hash": "42a269fc21c72a87561d59db",
-   "lastmod": "2026-10-15"
+   "hash": "23dc4a284478b3dc2d025105",
+   "lastmod": "2026-10-16"
   },
   "lopp/grand-trail-du-saint-jacques-100k/": {
    "hash": "dd4b06d5b2cbada204a5ef34",
@@ -5072,8 +5072,8 @@
    "lastmod": "2026-10-15"
   },
   "lopp/sida/2/": {
-   "hash": "f8669605c968d50e39433390",
-   "lastmod": "2026-10-15"
+   "hash": "c3fbcde30dbb1ecb38d5de1c",
+   "lastmod": "2026-10-16"
   },
   "lopp/sinister-7-ultra-100-miler-161k/": {
    "hash": "33784c249aab748ae96d206d",

@@ -1840,15 +1840,15 @@
    "lastmod": "2026-10-15"
   },
   "/privacy-de.html": {
-   "hash": "aeed84ab7ce6ee42ff9f2294",
+   "hash": "f5f9f447c0e1d6d76b29b080",
    "lastmod": "2026-10-16"
   },
   "/privacy-en.html": {
-   "hash": "e743fab6de31dcaf941dfb84",
+   "hash": "f01e140f038a8994785375da",
    "lastmod": "2026-10-16"
   },
   "/privacy.html": {
-   "hash": "18d29ffc112fe1c5d82395d1",
+   "hash": "bfa956a47dad2cdf9994a0bb",
    "lastmod": "2026-10-16"
   },
   "/support-de.html": {
@@ -1924,8 +1924,8 @@
    "lastmod": "2026-10-15"
   },
   "de/laeufe/abingdon-marathon-43k/": {
-   "hash": "9de7863453bd1c395612d516",
-   "lastmod": "2026-10-15"
+   "hash": "e2e6e6402be72dc385cfa8ae",
+   "lastmod": "2026-10-16"
   },
   "de/laeufe/aj-bell-great-manchester-run-10k/": {
    "hash": "e9eb1142683e392d4782c291",
@@ -2324,8 +2324,8 @@
    "lastmod": "2026-10-15"
   },
   "de/laeufe/heineken-0-0-ljubljana-marathon-42-195-km/": {
-   "hash": "a9a006f1b89ddc624470791f",
-   "lastmod": "2026-10-15"
+   "hash": "3dde69a76094efe7cfe48436",
+   "lastmod": "2026-10-16"
   },
   "de/laeufe/hella-hamburg-halbmarathon-21k/": {
    "hash": "14ddb8de51805ef7dde044c9",
@@ -2452,16 +2452,16 @@
    "lastmod": "2026-10-15"
   },
   "de/laeufe/le-grand-trail-des-templiers-80-km-festival-des-templiers/": {
-   "hash": "95a0b4152513b251ea3e2adb",
-   "lastmod": "2026-10-15"
+   "hash": "ff058e14f654ed9e93f6fb3a",
+   "lastmod": "2026-10-16"
   },
   "de/laeufe/leadville-trail-100-run-161k/": {
    "hash": "3d51b65dd187c706590c6c6a",
    "lastmod": "2026-10-15"
   },
   "de/laeufe/lemkowyna-trail-150-lemkowyna-ultra-trail-149k/": {
-   "hash": "f7cd9a9b9203b841653ecbf3",
-   "lastmod": "2026-10-15"
+   "hash": "664a57e80f6a7e61561123d5",
+   "lastmod": "2026-10-16"
   },
   "de/laeufe/lidingoloppet-30-km/": {
    "hash": "581d6ab2ee07e16f3d1229a5",
@@ -3084,8 +3084,8 @@
    "lastmod": "2026-10-15"
   },
   "en/races/abingdon-marathon-43k/": {
-   "hash": "75767f87ab2c6f586ac37517",
-   "lastmod": "2026-10-15"
+   "hash": "991c850bfb96b34979f7a0a4",
+   "lastmod": "2026-10-16"
   },
   "en/races/aj-bell-great-manchester-run-10k/": {
    "hash": "e31b65b9882dc4ffbb5ef80c",
@@ -3484,8 +3484,8 @@
    "lastmod": "2026-10-15"
   },
   "en/races/heineken-0-0-ljubljana-marathon-42-195-km/": {
-   "hash": "0af0c3c09c1b69e8cd4d92b7",
-   "lastmod": "2026-10-15"
+   "hash": "d3d4460be94fef3a01fd2dab",
+   "lastmod": "2026-10-16"
   },
   "en/races/hella-hamburg-halbmarathon-21k/": {
    "hash": "ac46cbf433a5af83af807ed7",
@@ -3612,16 +3612,16 @@
    "lastmod": "2026-10-15"
   },
   "en/races/le-grand-trail-des-templiers-80-km-festival-des-templiers/": {
-   "hash": "08949edd6f7ac57e3bff28e0",
-   "lastmod": "2026-10-15"
+   "hash": "ede6c783c8a43d3ecaa37a4c",
+   "lastmod": "2026-10-16"
   },
   "en/races/leadville-trail-100-run-161k/": {
    "hash": "21b61cef9d1f789a7627b784",
    "lastmod": "2026-10-15"
   },
   "en/races/lemkowyna-trail-150-lemkowyna-ultra-trail-149k/": {
-   "hash": "11142f36434228ac302a5799",
-   "lastmod": "2026-10-15"
+   "hash": "5eb2aaeeccf8afee265857b5",
+   "lastmod": "2026-10-16"
   },
   "en/races/lidingoloppet-30-km/": {
    "hash": "3dcf17316978ee9a2567f9de",
@@ -4244,8 +4244,8 @@
    "lastmod": "2026-10-15"
   },
   "lopp/abingdon-marathon-43k/": {
-   "hash": "f3fc9db9338460e94f050909",
-   "lastmod": "2026-10-15"
+   "hash": "99f07c919b53f84577b7b9e6",
+   "lastmod": "2026-10-16"
   },
   "lopp/aj-bell-great-manchester-run-10k/": {
    "hash": "18022d73c9ce6627325199f5",
@@ -4644,8 +4644,8 @@
    "lastmod": "2026-10-15"
   },
   "lopp/heineken-0-0-ljubljana-marathon-42-195-km/": {
-   "hash": "cbfb6229c74ed1d27a5ce33f",
-   "lastmod": "2026-10-15"
+   "hash": "81237c16241aabba94b59394",
+   "lastmod": "2026-10-16"
   },
   "lopp/hella-hamburg-halbmarathon-21k/": {
    "hash": "589c6e7fa8c631772c999d2a",
@@ -4772,16 +4772,16 @@
    "lastmod": "2026-10-15"
   },
   "lopp/le-grand-trail-des-templiers-80-km-festival-des-templiers/": {
-   "hash": "892282d2d57ded029c2c5314",
-   "lastmod": "2026-10-15"
+   "hash": "6b070c0e4c98972f30cbbde0",
+   "lastmod": "2026-10-16"
   },
   "lopp/leadville-trail-100-run-161k/": {
    "hash": "cd5c0f7d69eca978e7ad3d12",
    "lastmod": "2026-10-15"
   },
   "lopp/lemkowyna-trail-150-lemkowyna-ultra-trail-149k/": {
-   "hash": "f9afda1c9f88887d989a6475",
-   "lastmod": "2026-10-15"
+   "hash": "f7585cf8c76a1e847d10d100",
+   "lastmod": "2026-10-16"
   },
   "lopp/lidingoloppet-30-km/": {
    "hash": "0b1149aeb5ae65a311a116fb",

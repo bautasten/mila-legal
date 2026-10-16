@@ -3323,6 +3323,54 @@
    "hash": "e57f291de7d4801ced50b450",
    "lastmod": "2026-10-16"
   },
+  "de/ratgeber/dein-erster-wettkampf/": {
+   "hash": "8366cdf4839f89ecb94fa36b",
+   "lastmod": "2026-10-16"
+  },
+  "de/ratgeber/essen-vor-dem-langen-lauf/": {
+   "hash": "af708495f1c9148afadd7437",
+   "lastmod": "2026-10-16"
+  },
+  "de/ratgeber/kohlenhydrate-halbmarathon-marathon/": {
+   "hash": "cb097af0fc3c8510e30161a3",
+   "lastmod": "2026-10-16"
+  },
+  "de/ratgeber/laufbekleidung-kaelte-regen/": {
+   "hash": "73ae6e249a764c4331d345f6",
+   "lastmod": "2026-10-16"
+  },
+  "de/ratgeber/laufschuhe-wechseln/": {
+   "hash": "d215b64d97ffbd692afef173",
+   "lastmod": "2026-10-16"
+  },
+  "de/ratgeber/training-nach-tagesform/": {
+   "hash": "0426398d268bbae06bf4d391",
+   "lastmod": "2026-10-16"
+  },
+  "en/guides/carbs-during-half-marathon-and-marathon/": {
+   "hash": "8e3c8289a35c0e3b72c77619",
+   "lastmod": "2026-10-16"
+  },
+  "en/guides/preparing-for-your-first-race/": {
+   "hash": "4c3ed9d9fd328874213b71f0",
+   "lastmod": "2026-10-16"
+  },
+  "en/guides/running-in-cold-and-rain-what-to-wear/": {
+   "hash": "b5c9362b538aef6a3f409a0a",
+   "lastmod": "2026-10-16"
+  },
+  "en/guides/train-by-how-you-feel/": {
+   "hash": "3565b02a65a5d7ea014b426f",
+   "lastmod": "2026-10-16"
+  },
+  "en/guides/what-to-eat-before-a-long-run/": {
+   "hash": "6656c57a1c6196469f3623c7",
+   "lastmod": "2026-10-16"
+  },
+  "en/guides/when-to-replace-running-shoes/": {
+   "hash": "4c7291292140c17fe2f74950",
+   "lastmod": "2026-10-16"
+  },
   "en/races/": {
    "hash": "0d3a62b5a28462ac626685e5",
    "lastmod": "2026-10-16"
@@ -4765,6 +4813,30 @@
   },
   "en/races/zurich-maraton-de-sevilla-42k/": {
    "hash": "03cbbabb4d2a62abe3a9eb26",
+   "lastmod": "2026-10-16"
+  },
+  "guider/byta-loparskor/": {
+   "hash": "601f8df1b867f2969ded52bd",
+   "lastmod": "2026-10-16"
+  },
+  "guider/forsta-loppet/": {
+   "hash": "c8a98db2ee7ef45d355d78c8",
+   "lastmod": "2026-10-16"
+  },
+  "guider/kladsel-kyla-regn/": {
+   "hash": "ede158e7ef02a87dbafec907",
+   "lastmod": "2026-10-16"
+  },
+  "guider/kolhydrater-under-lopp/": {
+   "hash": "ac9e0281b0820df58d41b325",
+   "lastmod": "2026-10-16"
+  },
+  "guider/mat-fore-langpass/": {
+   "hash": "6ba0f17aa00d0d9d98645105",
+   "lastmod": "2026-10-16"
+  },
+  "guider/trana-efter-dagsform/": {
+   "hash": "e5a9626b75b5a731f6cd79a6",
    "lastmod": "2026-10-16"
   },
   "lopp/": {

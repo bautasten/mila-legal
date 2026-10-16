@@ -74,12 +74,17 @@ export type Point = [number, number, number, number];
 export type Climb = { km: number; len: number; gain: number; grade: number; top: number };
 export type Info = { starts?: { label: string; time: string; main?: boolean }[]; start_place?: { name: string; lat?: number; lon?: number };
   cutoffs?: { km: number; clock?: string; elapsed_min?: number }[]; kit?: string[]; source?: string; checked?: string };
+/** The organiser's dates for the coming edition (deadline): registration closes, the last day of each price, bib pickup days and where. */
+export type Entry = { entry_closes?: string; price_steps?: { last_day: string; price?: string }[]; pickup?: { day: string; from?: string; to?: string }[];
+  pickup_where?: string; source?: string; checked?: string };
 export type Result = { year: number; finishers: number; overall: { p10: number; p25: number; p50: number; p75: number; p90: number }; source: string | null };
 /** One race from the feed (supabase/functions/_shared/race_feed.ts), checked again here. */
 export type Race = {
   id: string; slug: string; name: string; place: string | null; country: string | null; country_code: string | null; organizer: string | null;
   url: string | null; next_date: string | null; prelim: boolean; past_dates: string[]; km: number; ascent: number; descent: number | null; trail: boolean;
   min_ele: number | null; max_ele: number | null; climbs: Climb[]; aid_stations: { km: number; what: string[] }[] | null; info: Info | null;
+  /** deadline: the organiser's dates for the coming edition, null when none are known (an older feed has no field). */
+  entry: Entry | null;
   results: Result[]; comment: string | null; course_source: "official_gpx" | "upload" | null; ele_source: "dem" | "runners" | null;
   /** The organiser's file: the site it was offered on and that page ("Bana publicerad av arrangören på <domän>"). */
   course_host: string | null; course_page: string | null;
@@ -153,6 +158,7 @@ export function cleanRace(x: any): Race | null {
     aid_stations: Array.isArray(x.aid_stations) ? x.aid_stations.filter((s: any) => s && isNum(s.km)).slice(0, 40)
       .map((s: any) => ({ km: s.km, what: arr(s.what).filter((w) => typeof w === "string" && /^[a-z]{2,12}$/.test(w)) as string[] })) : null,
     info: info && Object.keys(info).length ? info : null,
+    entry: cleanEntry(x.entry),
     results: arr(x.results).filter((e) => e && Number.isInteger(e.year) && isNum(e.finishers) && e.overall && ["p10", "p25", "p50", "p75", "p90"].every((k) => isNum(e.overall[k]))).slice(0, 5)
       .map((e) => ({ year: e.year, finishers: e.finishers, overall: { p10: e.overall.p10, p25: e.overall.p25, p50: e.overall.p50, p75: e.overall.p75, p90: e.overall.p90 }, source: safeUrl(e.source, true) })),
     comment: typeof x.comment === "string" && x.comment.trim() ? x.comment.trim().slice(0, 6000) : null,
@@ -164,6 +170,23 @@ export function cleanRace(x: any): Race | null {
     start: Array.isArray(x.start) && x.start.length === 2 && x.start.every(isNum) ? [x.start[0], x.start[1]] : pts.length ? [pts[0][0], pts[0][1]] : null,
     course: pts.length >= 2 ? { pts } : null,
   };
+}
+/** The organiser's dates from the feed, checked again: real days, the prices' and the place's words bounded, the source https; null when
+ *  nothing reads. */
+export function cleanEntry(x: unknown): Entry | null {
+  if (!x || typeof x !== "object" || Array.isArray(x)) return null;
+  const e = x as any, out: Entry = {};
+  if (isDay(e.entry_closes)) out.entry_closes = e.entry_closes;
+  const steps = (Array.isArray(e.price_steps) ? e.price_steps : []).filter((s: any) => s && isDay(s.last_day)).slice(0, 8)
+    .map((s: any) => ({ last_day: s.last_day as string, ...(str(s.price, 40) ? { price: str(s.price, 40)! } : {}) }));
+  if (steps.length) out.price_steps = steps;
+  const pk = (Array.isArray(e.pickup) ? e.pickup : []).filter((p: any) => p && isDay(p.day)).slice(0, 5)
+    .map((p: any) => ({ day: p.day as string, ...(isClock(p.from) ? { from: p.from as string } : {}), ...(isClock(p.to) ? { to: p.to as string } : {}) }));
+  if (pk.length) { out.pickup = pk; const w = str(e.pickup_where, 160); if (w) out.pickup_where = w; }
+  if (!Object.keys(out).length) return null;
+  const source = safeUrl(e.source, true); if (source) out.source = source;
+  if (isDay(e.checked)) out.checked = e.checked;
+  return out;
 }
 /** A race whose organiser publishes no course file: it gets a page of its own without the profile and the route. */
 export const courseless = (r: Pick<Race, "has_course" | "course">) => !r.has_course && !r.course;
@@ -457,6 +480,29 @@ export function sponsorSlug(slug: string, r: Pick<Race, "name">): boolean {
   return SPONSORS.some((sp) => { const p = slugify(sp) + "-"; return slug.startsWith(p) && !own.startsWith(p); });
 }
 const dayDate = (day: string) => new Date(`${day}T12:00:00Z`);
+/** deadline: the words of the "Anmälan och nummerlapp" section, per language. */
+const ENTRY_WORDS: Record<Lang, { h: string; closes: (d: string) => string; price: (d: string, p?: string) => string; pickupH: string; between: (a: string, b: string) => string; from: (a: string) => string; source: string; checked: (d: string) => string }> = {
+  sv: { h: "Anmälan och nummerlapp", closes: (d) => `Anmälan stänger ${d}.`, price: (d, p) => p ? `${p} till och med ${d}.` : `Priset höjs efter ${d}.`, pickupH: "Nummerlappsutdelning",
+    between: (a, b) => `kl. ${a}–${b}`, from: (a) => `från kl. ${a}`, source: "Källa", checked: (d) => `hämtat ${d}` },
+  en: { h: "Registration and bib pickup", closes: (d) => `Registration closes ${d}.`, price: (d, p) => p ? `${p} until ${d}.` : `The price goes up after ${d}.`, pickupH: "Bib pickup",
+    between: (a, b) => `${a}–${b}`, from: (a) => `from ${a}`, source: "Source", checked: (d) => `retrieved ${d}` },
+  de: { h: "Anmeldung und Startnummer", closes: (d) => `Anmeldeschluss ist am ${d}.`, price: (d, p) => p ? `${p} bis einschließlich ${d}.` : `Der Preis steigt nach dem ${d}.`, pickupH: "Startnummernausgabe",
+    between: (a, b) => `${a}–${b} Uhr`, from: (a) => `ab ${a} Uhr`, source: "Quelle", checked: (d) => `abgerufen am ${d}` },
+};
+/** deadline: the organiser's dates for the coming edition as their own section, only the ones still ahead (registration and prices from
+ *  today, pickup days from today to the race); with the source page. Null when nothing is ahead or the race has no coming date. */
+export function entrySection(r: Pick<Race, "entry" | "next_date">, lang: Lang, today: string): string | null {
+  const e = r.entry, w = ENTRY_WORDS[lang];
+  if (!e || !r.next_date || r.next_date < today) return null;
+  const items: string[] = [];
+  if (e.entry_closes && e.entry_closes >= today) items.push(`<li>${esc(w.closes(dateShort(e.entry_closes, lang)))}</li>`);
+  for (const s of (e.price_steps ?? []).filter((x) => x.last_day >= today)) items.push(`<li>${esc(w.price(dateShort(s.last_day, lang), s.price))}</li>`);
+  const pk = (e.pickup ?? []).filter((p) => p.day >= today && p.day <= r.next_date!);
+  const pick = pk.length ? `<h3>${esc(w.pickupH)}</h3><ul>${pk.map((p) => `<li>${esc(cap(dateLong(p.day, lang)))}${p.from ? `, ${esc(p.to ? w.between(p.from, p.to) : w.from(p.from))}` : ""}</li>`).join("")}</ul>${e.pickup_where ? `<p>${esc(e.pickup_where)}</p>` : ""}` : "";
+  if (!items.length && !pick) return null;
+  const src = e.source ? `<p class="note">${esc(w.source)}: <a href="${esc(e.source)}" rel="noopener nofollow">${esc(hostOf(e.source))}</a>${e.checked ? `, ${esc(w.checked(dateShort(e.checked, lang)))}` : ""}</p>` : "";
+  return `<section aria-labelledby="h-entry"><h2 id="h-entry">${esc(w.h)}</h2>${items.length ? `<ul>${items.join("")}</ul>` : ""}${pick}${src}</section>`;
+}
 export const dateLong = (day: string, lang: Lang) => dayDate(day).toLocaleDateString(LOCALE[lang], { weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
 export const dateShort = (day: string, lang: Lang) => dayDate(day).toLocaleDateString(LOCALE[lang], { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
 const cap = (s: string) => s.charAt(0).toLocaleUpperCase() + s.slice(1);
@@ -878,6 +924,9 @@ export function racePage(r: Race, lang: Lang, ctx: Ctx): string {
   }
   if (info?.cutoffs?.length) prac.push(`<h3>${esc(t.cutoffsH)}</h3>${table(t.cutoffCaption, t.cutoffCols, info.cutoffs.map((x) => [esc(t.at(num(x.km, lang, 1))), esc(x.clock ? t.clock(x.clock) : t.elapsed(Math.floor(x.elapsed_min! / 60), x.elapsed_min! % 60))]), [])}`);
   if (info?.kit?.length) prac.push(`<h3>${esc(t.kitH)}</h3><ul>${info.kit.map((k) => `<li>${esc(k)}</li>`).join("")}</ul>`);
+  // deadline: the organiser's dates for the coming edition, while they are ahead (entrySection)
+  const entryHtml = entrySection(r, lang, today);
+  if (entryHtml) sections.push(entryHtml);
   if (prac.length) {
     const src = info?.source ? `<p class="note">${esc(t.source)}: <a href="${esc(info.source)}" rel="noopener nofollow">${esc(hostOf(info.source))}</a>${info.checked ? `, ${esc(t.checked(dateShort(info.checked, lang)))}` : ""}</p>` : "";
     sections.push(`<section aria-labelledby="h-practical"><h2 id="h-practical">${esc(t.practicalH)}</h2>${prac.join("")}${src}</section>`);
@@ -1522,8 +1571,17 @@ export async function generate(o: { out: string; races: Race[]; ids?: Set<string
   state.og = Object.fromEntries(Object.entries(state.og).sort(([a], [b]) => a.localeCompare(b)));
   state.retired = [...new Set(state.retired)].sort();
   await put("lopp/slugs.json", JSON.stringify(state, null, 1) + "\n");
+  // 8. the app's map (package dela): which races have a page and their slug, so the app shares a race's page only when it is published
+  await put("lopp/app.json", appMap(state));
   report.written = written;
   return report;
+}
+
+/** lopp/app.json, what the app reads before it offers a register race's page to share (MomentShare.swift RacePageLinks): every race on
+ *  the site with its slug, nothing else (no names, no hashes, no pages), sorted, so it changes only when a page comes or goes. */
+export function appMap(state: Pick<State, "races">): string {
+  const races = Object.fromEntries(Object.entries(state.races).filter(([, s]) => !s.removed && s.slug).sort(([a], [b]) => a.localeCompare(b)).map(([id, s]) => [id, { slug: s.slug }]));
+  return JSON.stringify({ version: 1, races }) + "\n";
 }
 
 /** race_pages.json next to this script (published as tools/race_pages.json): the App Store link and id, and the IndexNow key. */

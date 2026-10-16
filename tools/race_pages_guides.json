@@ -1,0 +1,398 @@
+[
+  {
+    "approved": true,
+    "updated": "2026-10-16",
+    "slug": { "sv": "byta-loparskor", "en": "when-to-replace-running-shoes", "de": "laufschuhe-wechseln" },
+    "sv": {
+      "title": "När ska jag byta löparskor?",
+      "description": "När har löparskorna gjort sitt? Kilometer, känsla och slitage – så vet du när det är dags för ett nytt par, och hur du får skorna att räcka längre.",
+      "blocks": [
+        { "p": "Det finns ingen siffra som gäller för alla. En lätt löpare som springer på asfalt i jämnt tempo sliter på ett annat sätt än en tyngre löpare som springer mycket i backar eller på grus. Därför är kilometer en bra startpunkt, men inte hela svaret." },
+        { "h": "Kilometer som riktmärke", "p": "Många löparskor brukar hålla ungefär 500–800 km innan dämpningen känns tydligt sämre. Lätta tävlingsskor håller ofta kortare, robusta träningsskor längre. Räkna med att skon förändras gradvis, inte en viss dag." },
+        { "h": "Känslan säger mest", "p": "Tecken på att ett par börjar ta slut:", "ul": [
+          "Skon känns plattare och hårdare än förut, särskilt på slutet av längre pass.",
+          "Benen känns mer slitna efter vanliga pass i just det paret, men inte i ett annat.",
+          "Du får skavsår eller ömhet på nya ställen trots att inget annat har ändrats."
+        ] },
+        { "h": "Titta på skon", "p": "Mellansulan kan få veck och sprickor på sidan, och slitbanan blir blank eller sned. Ett enkelt test: ställ skorna på ett bord och se om de lutar åt något håll." },
+        { "h": "Få skorna att räcka längre", "ul": [
+          "Växla mellan två par om du springer ofta. Dämpningen hinner återhämta sig mellan passen, och du märker tydligare när ett par skiljer sig från det andra.",
+          "Spring inte i löparskorna i vardagen.",
+          "Låt blöta skor torka i rumstemperatur, med tidningspapper i, aldrig på ett element."
+        ] },
+        { "h": "Byt hellre lite för tidigt än för sent", "p": "Inför ett lopp: ett nytt par behöver några pass för att kännas som ditt, så byt minst ett par veckor före start." },
+        { "h": "Så hjälper Mila", "p": "Mila håller ordning på dina skor och kilometer, och coachen säger till när det är dags att börja titta efter ett nytt par. Du kan föra in din skologg från en bild eller en CSV-fil." }
+      ]
+    },
+    "en": {
+      "title": "When should I replace my running shoes?",
+      "description": "How do you know your running shoes are done? Mileage, feel and wear – when it's time for a new pair, and how to make your shoes last longer.",
+      "blocks": [
+        { "p": "There's no single number that fits everyone. A light runner who runs at an even pace on pavement wears shoes down differently from a heavier runner who does a lot of hills or gravel. That's why kilometers are a good starting point, but not the whole answer." },
+        { "h": "Kilometers as a guide", "p": "Most running shoes last roughly 500–800 km before the cushioning feels noticeably flatter. Lightweight racing shoes often wear out sooner, sturdy trainers later. Expect the shoe to change gradually, not on one particular day." },
+        { "h": "How they feel tells you the most", "p": "Signs that a pair is wearing out:", "ul": [
+          "The shoe feels flatter and harder than before, especially late in longer runs.",
+          "Your legs feel more beat up after normal runs in that pair, but not in another.",
+          "You get blisters or soreness in new places even though nothing else has changed."
+        ] },
+        { "h": "Take a look at the shoe", "p": "The midsole can develop creases and cracks along the side, and the outsole turns smooth or wears unevenly. A simple test: put the shoes on a table and see if they tilt to one side." },
+        { "h": "Make your shoes last longer", "ul": [
+          "Rotate two pairs if you run often. The cushioning gets time to recover between runs, and you notice more clearly when one pair starts to feel different from the other.",
+          "Don't wear your running shoes for everyday use.",
+          "Let wet shoes dry at room temperature with newspaper stuffed inside, never on a radiator."
+        ] },
+        { "h": "Better a little early than too late", "p": "Before a race: a new pair needs a few runs to feel like yours, so make the switch at least a couple of weeks before race day." },
+        { "h": "How Mila helps", "p": "Mila keeps track of your shoes and kilometers, and the coach lets you know when it's time to start looking for a new pair. You can bring in your shoe log from a photo or a CSV file." }
+      ]
+    },
+    "de": {
+      "title": "Wann solltest du deine Laufschuhe wechseln?",
+      "description": "Wann haben deine Laufschuhe ausgedient? Kilometer, Gefühl und Abnutzung – so erkennst du, wann ein neues Paar fällig ist, und wie Schuhe länger halten.",
+      "blocks": [
+        { "p": "Es gibt keine Zahl, die für alle gilt. Eine leichte Läuferin, die im gleichmäßigen Tempo auf Asphalt läuft, nutzt ihre Schuhe anders ab als ein schwererer Läufer, der viel bergauf oder auf Schotter unterwegs ist. Kilometer sind deshalb ein guter Ausgangspunkt, aber nicht die ganze Antwort." },
+        { "h": "Kilometer als Richtwert", "p": "Viele Laufschuhe halten etwa 500–800 km, bevor sich die Dämpfung deutlich schlechter anfühlt. Leichte Wettkampfschuhe halten oft kürzer, robuste Trainingsschuhe länger. Rechne damit, dass sich der Schuh nach und nach verändert, nicht an einem bestimmten Tag." },
+        { "h": "Das Gefühl sagt am meisten", "p": "Anzeichen dafür, dass ein Paar am Ende ist:", "ul": [
+          "Der Schuh fühlt sich flacher und härter an als früher, vor allem gegen Ende längerer Läufe.",
+          "Deine Beine fühlen sich nach normalen Läufen in genau diesem Paar müder an, in einem anderen aber nicht.",
+          "Du bekommst Blasen oder Schmerzen an neuen Stellen, obwohl sich sonst nichts geändert hat."
+        ] },
+        { "h": "Schau dir den Schuh an", "p": "Die Zwischensohle kann seitlich Falten und Risse bekommen, und die Laufsohle wird glatt oder schief abgelaufen. Ein einfacher Test: Stell die Schuhe auf einen Tisch und schau, ob sie zu einer Seite kippen." },
+        { "h": "So halten deine Schuhe länger", "ul": [
+          "Wechsle zwischen zwei Paaren, wenn du oft läufst. Die Dämpfung kann sich zwischen den Läufen erholen, und du merkst deutlicher, wenn sich ein Paar anders anfühlt als das andere.",
+          "Trag deine Laufschuhe nicht im Alltag.",
+          "Lass nasse Schuhe bei Zimmertemperatur mit Zeitungspapier darin trocknen, niemals auf der Heizung."
+        ] },
+        { "h": "Lieber etwas zu früh als zu spät", "p": "Vor einem Wettkampf: Ein neues Paar braucht ein paar Läufe, bis es sich wie deins anfühlt. Wechsle also mindestens ein paar Wochen vor dem Start." },
+        { "h": "So hilft Mila", "p": "Mila behält deine Schuhe und Kilometer im Blick, und der Coach sagt dir, wann es Zeit wird, nach einem neuen Paar zu schauen. Dein Schuh-Logbuch kannst du aus einem Foto oder einer CSV-Datei übernehmen." }
+      ]
+    }
+  },
+  {
+    "approved": true,
+    "updated": "2026-10-16",
+    "slug": { "sv": "mat-fore-langpass", "en": "what-to-eat-before-a-long-run", "de": "essen-vor-dem-langen-lauf" },
+    "sv": {
+      "title": "Vad ska jag äta före ett långpass?",
+      "description": "Vad du äter före ett långpass avgör hur passet känns. Så lägger du upp måltiden kvällen före, frukosten och det sista mellanmålet.",
+      "blocks": [
+        { "p": "Ett långpass är ett pass där energin i kroppen faktiskt spelar roll. Du behöver inte göra det krångligt, men det lönar sig att tänka ett steg före." },
+        { "h": "Kvällen före", "p": "Ät en vanlig, rejäl middag med en bra portion kolhydrater – pasta, ris, potatis eller bröd – och något protein. Det handlar inte om att äta dubbelt, utan om att inte skära ned. Undvik att testa nya, kryddstarka eller väldigt fiberrika rätter just den kvällen." },
+        { "h": "Frukosten", "p": "Ät gärna 2–3 timmar före passet, så hinner magen jobba klart. Bra exempel:", "ul": [
+          "Gröt med banan och lite honung.",
+          "Ljust bröd eller knäckebröd med pålägg, och en frukt.",
+          "Yoghurt med müsli, om magen tål det."
+        ] },
+        { "p": "Drick ett par glas vatten till frukosten." },
+        { "h": "Om du springer tidigt", "p": "Har du inte tid för en hel frukost räcker ofta något lättsmält 30–60 minuter före: en banan, en skiva bröd med sylt eller en sportdryck." },
+        { "h": "Under passet", "p": "Är passet längre än ungefär 75–90 minuter kan det hjälpa att ta med energi, till exempel sportdryck, gel eller russin. Långpassen är det bästa tillfället att öva på det du tänker använda i ett lopp." },
+        { "h": "Efter passet", "p": "Ät en måltid med kolhydrater och protein inom någon timme, och drick." },
+        { "h": "Testa dig fram", "p": "Magar är olika. Det som fungerar för en kompis kanske inte fungerar för dig, så pröva på långpassen – aldrig för första gången på tävlingsdagen. Har du en sjukdom, en ätstörning eller särskilda behov kring mat bör du prata med vården eller en dietist." },
+        { "h": "Så hjälper Mila", "p": "I Mila kan du fota eller beskriva en måltid, och coachen uppskattar den och kopplar den till din träning. Lägger du till ett lopp får du dessutom en energiplan för banan." }
+      ]
+    },
+    "en": {
+      "title": "What should I eat before a long run?",
+      "description": "What you eat before a long run shapes how it feels. How to plan dinner the night before, breakfast and that last snack.",
+      "blocks": [
+        { "p": "A long run is one where the fuel in your body really matters. You don't need to overcomplicate it, but it pays to think one step ahead." },
+        { "h": "The night before", "p": "Have a normal, hearty dinner with a good portion of carbs – pasta, rice, potatoes or bread – plus some protein. The point isn't to eat twice as much, just not to cut back. Skip new, spicy or very high-fiber dishes that evening." },
+        { "h": "Breakfast", "p": "Ideally eat 2–3 hours before your run so your stomach has time to settle. Good options:", "ul": [
+          "Oatmeal with banana and a little honey.",
+          "White bread or crispbread with a topping, plus a piece of fruit.",
+          "Yogurt with granola, if your stomach handles it."
+        ] },
+        { "p": "Drink a couple of glasses of water with breakfast." },
+        { "h": "If you run early", "p": "No time for a full breakfast? Something easy to digest 30–60 minutes before is often enough: a banana, a slice of bread with jam or a sports drink." },
+        { "h": "During the run", "p": "If the run lasts longer than about 75–90 minutes, it can help to bring fuel, such as a sports drink, gels or raisins. Long runs are the best chance to practice with whatever you plan to use in a race." },
+        { "h": "After the run", "p": "Eat a meal with carbs and protein within an hour or so, and drink." },
+        { "h": "Find what works for you", "p": "Every stomach is different. What works for a friend may not work for you, so experiment on your long runs – never for the first time on race day. If you have an illness, an eating disorder or special dietary needs, talk to a healthcare professional or a dietitian." },
+        { "h": "How Mila helps", "p": "In Mila you can snap a photo of a meal or describe it, and the coach estimates it and connects it to your training. Add a race and you also get a fueling plan for the course." }
+      ]
+    },
+    "de": {
+      "title": "Was solltest du vor einem langen Lauf essen?",
+      "description": "Was du vor einem langen Lauf isst, entscheidet, wie er sich anfühlt. So planst du das Abendessen am Vortag, das Frühstück und den letzten Snack.",
+      "blocks": [
+        { "p": "Bei einem langen Lauf spielt die Energie in deinem Körper wirklich eine Rolle. Du musst es nicht kompliziert machen, aber es lohnt sich, einen Schritt vorauszudenken." },
+        { "h": "Am Abend vorher", "p": "Iss ein normales, sättigendes Abendessen mit einer ordentlichen Portion Kohlenhydrate – Nudeln, Reis, Kartoffeln oder Brot – und etwas Eiweiß. Es geht nicht darum, doppelt so viel zu essen, sondern darum, nicht zu sparen. Probier an diesem Abend keine neuen, scharfen oder sehr ballaststoffreichen Gerichte aus." },
+        { "h": "Das Frühstück", "p": "Iss am besten 2–3 Stunden vor dem Lauf, dann hat dein Magen Zeit, fertig zu werden. Gute Beispiele:", "ul": [
+          "Haferbrei mit Banane und etwas Honig.",
+          "Helles Brot oder Knäckebrot mit Belag und dazu ein Stück Obst.",
+          "Joghurt mit Müsli, wenn dein Magen das verträgt."
+        ] },
+        { "p": "Trink zum Frühstück ein paar Gläser Wasser." },
+        { "h": "Wenn du früh läufst", "p": "Keine Zeit für ein ganzes Frühstück? Dann reicht oft etwas leicht Verdauliches 30–60 Minuten vorher: eine Banane, eine Scheibe Brot mit Marmelade oder ein Sportgetränk." },
+        { "h": "Während des Laufs", "p": "Dauert der Lauf länger als etwa 75–90 Minuten, kann es helfen, Energie mitzunehmen, zum Beispiel ein Sportgetränk, Gels oder Rosinen. Lange Läufe sind die beste Gelegenheit, das zu üben, was du im Wettkampf verwenden willst." },
+        { "h": "Nach dem Lauf", "p": "Iss innerhalb von etwa einer Stunde eine Mahlzeit mit Kohlenhydraten und Eiweiß, und trink etwas." },
+        { "h": "Probier aus, was zu dir passt", "p": "Jeder Magen ist anders. Was bei einem Freund funktioniert, klappt bei dir vielleicht nicht. Probier es deshalb bei langen Läufen aus – nie zum ersten Mal am Wettkampftag. Wenn du eine Erkrankung, eine Essstörung oder besondere Bedürfnisse bei der Ernährung hast, sprich mit deiner Ärztin, deinem Arzt oder einer Ernährungsfachkraft." },
+        { "h": "So hilft Mila", "p": "In Mila kannst du eine Mahlzeit fotografieren oder beschreiben, und der Coach schätzt sie ein und verknüpft sie mit deinem Training. Fügst du einen Wettkampf hinzu, bekommst du außerdem einen Verpflegungsplan für die Strecke." }
+      ]
+    }
+  },
+  {
+    "approved": true,
+    "updated": "2026-10-16",
+    "slug": { "sv": "kolhydrater-under-lopp", "en": "carbs-during-half-marathon-and-marathon", "de": "kohlenhydrate-halbmarathon-marathon" },
+    "sv": {
+      "title": "Kolhydrater under halvmaraton och maraton",
+      "description": "Behöver du gel på ett halvmaraton? Hur mycket kolhydrater tar löpare under ett maraton? En praktisk guide till energi och dryck under loppet.",
+      "blocks": [
+        { "p": "Kroppen har ett begränsat förråd av kolhydrater. På ett halvmaraton räcker det för de flesta en bra bit, på ett maraton gör det sällan det hela vägen. Därför är energi under loppet en del av förberedelsen, inte en detalj." },
+        { "h": "Halvmaraton", "p": "Springer du under ungefär 1,5 timme klarar många sig på vatten och kanske lite sportdryck. Är du ute längre kan en gel eller sportdryck en bit in i loppet göra slutet lättare. Ta den hellre i god tid än när du redan känner dig tom." },
+        { "h": "Maraton", "p": "Här planerar de flesta energin i förväg. Vanliga riktmärken för löpare är omkring 30–60 gram kolhydrater i timmen, och en del som har tränat magen på det tar mer. En gel innehåller ofta runt 20–30 gram, och en mugg sportdryck några gram till drygt tio beroende på blandning." },
+        { "h": "Praktiska råd", "ul": [
+          "Börja tidigt, till exempel efter 30–45 minuter, och ta sedan lite i taget med jämna mellanrum.",
+          "Ta gelen nära en vätskekontroll och drick vatten till.",
+          "Kolla vad arrangören bjuder på och var vätskekontrollerna ligger, så vet du vad du behöver bära själv.",
+          "Öva på långpassen med exakt det du ska använda i loppet. Magen går att träna."
+        ] },
+        { "h": "Dryck", "p": "Drick efter törst och väder; i värme behöver du mer. Mer är inte alltid bättre – att dricka långt mer än du gör av med kan också vara riskabelt." },
+        { "h": "När magen protesterar", "p": "Sänk takten, ta mindre mängder oftare och byt till sportdryck om gelen inte går ned. Har du återkommande magbesvär eller en sjukdom som påverkar blodsocker, prata med vården före loppet." },
+        { "h": "Så hjälper Mila", "p": "Lägger du till ditt lopp i Mila får du en energiplan för banan. Med Apple Watch kan loppläget påminna dig om energin under loppet." }
+      ]
+    },
+    "en": {
+      "title": "Carbs during a half marathon and marathon",
+      "description": "Do you need gels for a half marathon? How many carbs do runners take in a marathon? A practical guide to fueling and drinking during your race.",
+      "blocks": [
+        { "p": "Your body can only store a limited amount of carbohydrate. In a half marathon that carries most runners a good way; in a marathon it rarely lasts the whole distance. That's why fueling during the race is part of your preparation, not a detail." },
+        { "h": "Half marathon", "p": "If you finish in under about 1.5 hours, many runners get by on water and maybe a little sports drink. If you're out there longer, a gel or some sports drink partway through can make the final stretch easier. Take it in good time rather than once you already feel empty." },
+        { "h": "Marathon", "p": "Here most runners plan their fueling ahead of time. A common guideline is around 30–60 grams of carbohydrate per hour, and some who have trained their gut for it take more. A gel often contains about 20–30 grams, and a cup of sports drink anywhere from a few grams to just over ten, depending on the mix." },
+        { "h": "Practical tips", "ul": [
+          "Start early, for example after 30–45 minutes, and then take a little at a time at regular intervals.",
+          "Take your gel near an aid station and wash it down with water.",
+          "Check what the organizer hands out and where the aid stations are, so you know what you need to carry yourself.",
+          "Practice on your long runs with exactly what you'll use in the race. Your gut can be trained."
+        ] },
+        { "h": "Drinking", "p": "Drink according to thirst and the weather; in the heat you need more. More isn't always better – drinking far more than you lose can also be risky." },
+        { "h": "When your stomach complains", "p": "Ease the pace, take smaller amounts more often and switch to sports drink if gels won't go down. If you have recurring stomach trouble or a condition that affects your blood sugar, talk to a healthcare professional before the race." },
+        { "h": "How Mila helps", "p": "Add your race in Mila and you get a fueling plan for the course. With Apple Watch, race mode can remind you to fuel during the race." }
+      ]
+    },
+    "de": {
+      "title": "Kohlenhydrate im Halbmarathon und Marathon",
+      "description": "Brauchst du Gels beim Halbmarathon? Wie viele Kohlenhydrate nehmen Läufer im Marathon zu sich? Ein praktischer Ratgeber zu Energie und Trinken im Rennen.",
+      "blocks": [
+        { "p": "Dein Körper hat nur einen begrenzten Vorrat an Kohlenhydraten. Im Halbmarathon reicht er bei den meisten ein gutes Stück weit, im Marathon selten bis ins Ziel. Deshalb ist Energie während des Rennens Teil deiner Vorbereitung und kein Detail." },
+        { "h": "Halbmarathon", "p": "Läufst du unter etwa 1,5 Stunden, kommen viele mit Wasser und vielleicht etwas Sportgetränk aus. Bist du länger unterwegs, kann ein Gel oder Sportgetränk nach einem Teil der Strecke das Ende leichter machen. Nimm es lieber rechtzeitig als erst, wenn du dich schon leer fühlst." },
+        { "h": "Marathon", "p": "Hier planen die meisten ihre Energie im Voraus. Ein gängiger Richtwert für Läufer sind etwa 30–60 Gramm Kohlenhydrate pro Stunde, und manche, die ihren Magen daran gewöhnt haben, nehmen mehr. Ein Gel enthält oft rund 20–30 Gramm, ein Becher Sportgetränk je nach Mischung ein paar bis gut zehn Gramm." },
+        { "h": "Praktische Tipps", "ul": [
+          "Fang früh an, zum Beispiel nach 30–45 Minuten, und nimm dann in regelmäßigen Abständen immer ein wenig.",
+          "Nimm das Gel kurz vor einer Verpflegungsstelle und trink Wasser dazu.",
+          "Schau nach, was der Veranstalter anbietet und wo die Verpflegungsstellen liegen, dann weißt du, was du selbst tragen musst.",
+          "Übe bei langen Läufen mit genau dem, was du im Rennen verwenden willst. Den Magen kann man trainieren."
+        ] },
+        { "h": "Trinken", "p": "Trink nach Durst und Wetter; bei Hitze brauchst du mehr. Mehr ist nicht immer besser – deutlich mehr zu trinken, als du verlierst, kann ebenfalls riskant sein." },
+        { "h": "Wenn der Magen streikt", "p": "Nimm das Tempo raus, nimm öfter kleinere Mengen und steig auf Sportgetränk um, wenn das Gel nicht runtergeht. Hast du wiederkehrende Magenprobleme oder eine Erkrankung, die deinen Blutzucker beeinflusst, sprich vor dem Rennen mit deiner Ärztin oder deinem Arzt." },
+        { "h": "So hilft Mila", "p": "Fügst du dein Rennen in Mila hinzu, bekommst du einen Verpflegungsplan für die Strecke. Mit der Apple Watch kann dich der Wettkampfmodus während des Rennens an die Verpflegung erinnern." }
+      ]
+    }
+  },
+  {
+    "approved": true,
+    "updated": "2026-10-16",
+    "slug": { "sv": "trana-efter-dagsform", "en": "train-by-how-you-feel", "de": "training-nach-tagesform" },
+    "sv": {
+      "title": "Träna efter dagsform",
+      "description": "Rätt pass på rätt dag. Så tränar du efter hur kroppen och livet faktiskt ser ut i dag – och varför det ofta ger mer än att följa schemat till punkt och pricka.",
+      "blocks": [
+        { "p": "Ett träningsschema är skrivet innan du vet hur veckan blir. Du sover dåligt, jobbar sent, är förkyld eller känner dig piggare än någonsin. Att träna efter dagsform betyder att schemat får anpassa sig efter dig – inte tvärtom." },
+        { "h": "Lyssna på flera signaler, inte en", "ul": [
+          "Hur har du sovit de senaste nätterna?",
+          "Hur känns benen när du går i trappan?",
+          "Hur stressigt är livet just nu?",
+          "Hur kändes de senaste passen?"
+        ] },
+        { "p": "En enstaka dålig natt betyder sällan något." },
+        { "h": "Byt plats hellre än att stryka", "p": "Känns det tungt en dag med ett hårt pass inplanerat, kan du ofta flytta det en dag eller två och springa lugnt i dag. Det hårda passet gör mest nytta när kroppen är redo för det." },
+        { "h": "De lugna passen ska vara lugna", "p": "Det vanligaste misstaget är att springa de lätta passen för fort. Då blir du för trött för att få ut något av de hårda." },
+        { "h": "Var ärlig om sjukdom", "p": "Feber, ont i halsen med allmänpåverkan eller en skada som gör att du ändrar steget är skäl att vila. Är du osäker, avstå hellre och fråga vården om något inte går över." },
+        { "h": "Det är helheten som räknas", "p": "Ett missat pass spelar nästan aldrig någon roll. Det som bygger formen är veckorna och månaderna av lagom träning som du orkar med." },
+        { "h": "Så hjälper Mila", "p": "Varje morgon får du coachens besked och dagens pass. Säg till coachen med egna ord när livet ändras." }
+      ]
+    },
+    "en": {
+      "title": "Train by how you feel today",
+      "description": "The right session on the right day. How to train around how your body and life actually look today – and why it often beats following the plan to the letter.",
+      "blocks": [
+        { "p": "A training plan is written before you know how your week will go. You sleep badly, work late, catch a cold or feel fresher than ever. Training by how you feel means the plan adapts to you – not the other way around." },
+        { "h": "Listen to several signals, not just one", "ul": [
+          "How have you slept the last few nights?",
+          "How do your legs feel when you take the stairs?",
+          "How stressful is life right now?",
+          "How did your last few runs feel?"
+        ] },
+        { "p": "A single bad night rarely means much." },
+        { "h": "Move it rather than skip it", "p": "If you feel heavy on a day with a hard session planned, you can often push it back a day or two and run easy today. The hard session does the most good when your body is ready for it." },
+        { "h": "Keep your easy runs easy", "p": "The most common mistake is running the easy days too fast. Then you're too tired to get anything out of the hard ones." },
+        { "h": "Be honest about illness", "p": "A fever, a sore throat that makes you feel unwell all over, or an injury that changes your stride are reasons to rest. If you're unsure, it's better to hold off, and see a healthcare professional if something doesn't go away." },
+        { "h": "It's the big picture that counts", "p": "One missed run almost never matters. What builds fitness is weeks and months of sensible training you can keep up." },
+        { "h": "How Mila helps", "p": "Every morning you get the coach's call and today's session. Tell the coach in your own words when life changes." }
+      ]
+    },
+    "de": {
+      "title": "Training nach Tagesform",
+      "description": "Die richtige Einheit am richtigen Tag. So trainierst du danach, wie Körper und Alltag heute wirklich aussehen – und warum das oft mehr bringt als sturer Plan.",
+      "blocks": [
+        { "p": "Ein Trainingsplan wird geschrieben, bevor du weißt, wie deine Woche wird. Du schläfst schlecht, arbeitest lange, bist erkältet oder fühlst dich fitter als je zuvor. Nach Tagesform zu trainieren heißt, dass sich der Plan nach dir richtet – nicht umgekehrt." },
+        { "h": "Achte auf mehrere Signale, nicht nur auf eins", "ul": [
+          "Wie hast du in den letzten Nächten geschlafen?",
+          "Wie fühlen sich deine Beine auf der Treppe an?",
+          "Wie stressig ist dein Leben gerade?",
+          "Wie haben sich deine letzten Läufe angefühlt?"
+        ] },
+        { "p": "Eine einzelne schlechte Nacht hat selten etwas zu bedeuten." },
+        { "h": "Lieber verschieben als streichen", "p": "Fühlst du dich an einem Tag mit einer harten Einheit schwer, kannst du sie oft um einen oder zwei Tage verschieben und heute locker laufen. Die harte Einheit bringt am meisten, wenn dein Körper bereit dafür ist." },
+        { "h": "Lockere Läufe bleiben locker", "p": "Der häufigste Fehler ist, die lockeren Läufe zu schnell zu laufen. Dann bist du zu müde, um aus den harten etwas herauszuholen." },
+        { "h": "Sei ehrlich bei Krankheit", "p": "Fieber, Halsschmerzen, die dich insgesamt angeschlagen machen, oder eine Verletzung, durch die sich dein Laufschritt verändert, sind Gründe für eine Pause. Wenn du unsicher bist, lass es lieber und geh zur Ärztin oder zum Arzt, wenn etwas nicht besser wird." },
+        { "h": "Das große Ganze zählt", "p": "Ein ausgelassener Lauf spielt fast nie eine Rolle. Was deine Form aufbaut, sind Wochen und Monate mit maßvollem Training, das du durchhältst." },
+        { "h": "So hilft Mila", "p": "Jeden Morgen bekommst du die Einschätzung des Coachs und deine Einheit des Tages. Sag dem Coach in deinen eigenen Worten, wenn sich in deinem Leben etwas ändert." }
+      ]
+    }
+  },
+  {
+    "approved": true,
+    "updated": "2026-10-16",
+    "slug": { "sv": "forsta-loppet", "en": "preparing-for-your-first-race", "de": "dein-erster-wettkampf" },
+    "sv": {
+      "title": "Inför ditt första lopp",
+      "description": "Ska du springa ditt första lopp? Så förbereder du dig veckorna före, kvällen före och på startlinjen – från nummerlapp till mål.",
+      "blocks": [
+        { "p": "Det första loppet är något särskilt. Med lite förberedelse blir det en dag du minns för rätt saker." },
+        { "h": "Välj ett lopp som passar dig", "p": "5 eller 10 km är en bra start. Kolla datum, starttid, banan och om det finns maxtid. Anmäl dig i god tid – populära lopp blir fulla." },
+        { "h": "Veckorna före", "ul": [
+          "Spring regelbundet och öka lugnt. Mängden ska kännas hanterbar.",
+          "Gör minst ett par pass i det tempo du tänker springa loppet i.",
+          "Bestäm skor och kläder i förväg och spring i dem. Inga nyheter på tävlingsdagen."
+        ] },
+        { "h": "Sista veckan", "p": "Minska mängden, men spring några korta pass så att benen håller sig pigga. Sov ordentligt de sista nätterna – natten före är inte lika viktig som du tror." },
+        { "h": "Kvällen före", "p": "Lägg fram allt: nummerlapp, säkerhetsnålar eller nummerlappsbälte, kläder efter väder, klocka och något att äta efter målgång. Ät en vanlig middag." },
+        { "h": "Loppdagen", "ul": [
+          "Ät frukost i god tid och var på plats tidigt. Köerna till toaletterna är längre än man tror.",
+          "Värm upp med lugn jogg och några korta stegringar.",
+          "Ställ dig i rätt startfålla. Det är lätt att springa för fort de första kilometrarna, så håll igen.",
+          "Ta vatten vid vätskekontrollerna om det är varmt eller om loppet är långt."
+        ] },
+        { "h": "Efter målgång", "p": "Gå en stund, drick och ät något. Njut – du har gjort det." },
+        { "h": "Så hjälper Mila", "p": "Hitta ditt lopp i Milas loppregister och lägg till det i din plan. Coachen planerar veckorna fram till start efter din form, och inför loppet får du en prognos, en tempoplan, en energiplan, Är jag redo? och loppmorgon. Efteråt jämför du kilometertiderna med planen och får coachens loppanalys." }
+      ]
+    },
+    "en": {
+      "title": "Getting ready for your first race",
+      "description": "Running your first race? How to prepare in the weeks before, the night before and on the start line – from race bib to finish.",
+      "blocks": [
+        { "p": "Your first race is something special. With a little preparation, it becomes a day you remember for the right reasons." },
+        { "h": "Pick a race that suits you", "p": "A 5K or 10K is a great place to start. Check the date, start time, course and whether there's a cutoff time. Sign up early – popular races fill up." },
+        { "h": "The weeks before", "ul": [
+          "Run regularly and build up gradually. The volume should feel manageable.",
+          "Do at least a couple of runs at the pace you plan to race.",
+          "Decide on shoes and clothes in advance and run in them. Nothing new on race day."
+        ] },
+        { "h": "The last week", "p": "Cut back on volume, but do a few short runs to keep your legs fresh. Sleep well the last few nights – the night before matters less than you think." },
+        { "h": "The night before", "p": "Lay everything out: race bib, safety pins or a race belt, clothes for the weather, your watch and something to eat after the finish. Have a normal dinner." },
+        { "h": "Race day", "ul": [
+          "Eat breakfast in good time and get there early. The lines for the restrooms are longer than you'd expect.",
+          "Warm up with an easy jog and a few short strides.",
+          "Line up in the right start corral. It's easy to go out too fast in the first kilometers, so hold back.",
+          "Take water at the aid stations if it's hot or the race is long."
+        ] },
+        { "h": "After the finish", "p": "Keep walking for a bit, drink and eat something. Enjoy it – you did it." },
+        { "h": "How Mila helps", "p": "Find your race in Mila's race directory and add it to your plan. The coach plans the weeks up to race day around your form, and before the race you get a forecast, a pace plan, a fueling plan, Am I ready? and Race morning. Afterwards you compare your kilometer splits with the plan and get the coach's race analysis." }
+      ]
+    },
+    "de": {
+      "title": "Vor deinem ersten Wettkampf",
+      "description": "Du läufst deinen ersten Wettkampf? So bereitest du dich in den Wochen davor, am Vorabend und an der Startlinie vor – von der Startnummer bis ins Ziel.",
+      "blocks": [
+        { "p": "Der erste Wettkampf ist etwas Besonderes. Mit ein wenig Vorbereitung wird er zu einem Tag, an den du dich aus den richtigen Gründen erinnerst." },
+        { "h": "Wähl einen Lauf, der zu dir passt", "p": "5 oder 10 km sind ein guter Einstieg. Prüf Datum, Startzeit, Strecke und ob es ein Zeitlimit gibt. Melde dich rechtzeitig an – beliebte Läufe sind schnell ausgebucht." },
+        { "h": "Die Wochen davor", "ul": [
+          "Lauf regelmäßig und steigere dich behutsam. Der Umfang sollte sich machbar anfühlen.",
+          "Lauf mindestens ein paar Einheiten in dem Tempo, das du im Wettkampf laufen willst.",
+          "Leg Schuhe und Kleidung vorher fest und lauf darin. Nichts Neues am Wettkampftag."
+        ] },
+        { "h": "Die letzte Woche", "p": "Reduzier den Umfang, aber lauf ein paar kurze Einheiten, damit die Beine frisch bleiben. Schlaf in den letzten Nächten gut – die Nacht direkt davor ist nicht so wichtig, wie du denkst." },
+        { "h": "Am Vorabend", "p": "Leg alles bereit: Startnummer, Sicherheitsnadeln oder Startnummernband, Kleidung passend zum Wetter, Uhr und etwas zu essen für nach dem Ziel. Iss ein ganz normales Abendessen." },
+        { "h": "Am Wettkampftag", "ul": [
+          "Frühstücke rechtzeitig und sei früh vor Ort. Die Schlangen vor den Toiletten sind länger, als man denkt.",
+          "Wärm dich mit lockerem Traben und ein paar kurzen Steigerungen auf.",
+          "Stell dich in den richtigen Startblock. Auf den ersten Kilometern läuft man leicht zu schnell, also halte dich zurück.",
+          "Nimm an den Verpflegungsstellen Wasser, wenn es warm ist oder der Lauf lang."
+        ] },
+        { "h": "Nach dem Ziel", "p": "Geh noch eine Weile, trink und iss etwas. Genieß es – du hast es geschafft." },
+        { "h": "So hilft Mila", "p": "Finde deinen Lauf in Milas Wettkampfverzeichnis und füge ihn deinem Plan hinzu. Der Coach plant die Wochen bis zum Start nach deiner Form, und vor dem Rennen bekommst du eine Prognose, einen Pace-Plan, einen Verpflegungsplan, Bin ich bereit? und den Wettkampfmorgen. Danach vergleichst du deine Kilometerzeiten mit dem Plan und bekommst die Rennanalyse des Coachs." }
+      ]
+    }
+  },
+  {
+    "approved": true,
+    "updated": "2026-10-16",
+    "slug": { "sv": "kladsel-kyla-regn", "en": "running-in-cold-and-rain-what-to-wear", "de": "laufbekleidung-kaelte-regen" },
+    "sv": {
+      "title": "Löpning i kyla och regn – kläder",
+      "description": "Vad ska jag ha på mig när jag springer i kyla, blåst eller regn? Lager för lager – så håller du dig varm och torr utan att bli för varm.",
+      "blocks": [
+        { "p": "Det finns sällan dåligt väder för löpning, bara kläder som inte passar vädret. Grundtanken: klä dig så att du fryser lite de första minuterna. Efter en kilometer eller två är du varm." },
+        { "h": "En tumregel", "p": "Klä dig som om det vore ungefär 10 grader varmare än termometern visar. Blåst, regn och fart gör det kallare; sol och lugnt väder varmare." },
+        { "h": "Lager för lager", "ul": [
+          "Närmast kroppen: funktionsmaterial eller ull som transporterar bort fukt. Undvik bomull – den blir blöt och kall.",
+          "Mellanlager när det är kallt: en tunn tröja med lite värme.",
+          "Ytterst: en vindjacka eller en lätt regnjacka. Det viktigaste plagget i blåst."
+        ] },
+        { "h": "Ungefärligt, för de flesta", "ul": [
+          "10 grader och uppåt: kortärmat eller tunn långärmad, shorts eller tights.",
+          "0–10 grader: långärmad tröja, tights, kanske tunna handskar.",
+          "Under noll: ett lager till, vindtät jacka, mössa eller pannband och handskar. Vid riktig kyla: skydda ansikte och händer."
+        ] },
+        { "h": "Regn", "p": "En lätt jacka med luftning räcker oftast; helt vattentätt blir varmt på insidan. En keps håller regnet borta från ögonen. Byt om direkt efter passet, för det är när du står still du blir kall." },
+        { "h": "Halka och mörker", "p": "Broddar eller dubbade skor på is. Reflexer och lampa när det är mörkt – syns du inte, finns du inte." },
+        { "h": "Glöm inte att dricka", "p": "Törsten känns mindre i kyla, men du gör av med vätska även då." },
+        { "h": "Så hjälper Mila", "p": "Varje morgon säger Mila vad du ska ha på dig för vädret, och när på dagen det är bäst att springa. Coachens pass kan också läggas i din kalender vid den tid som passar vädret bäst." }
+      ]
+    },
+    "en": {
+      "title": "Running in cold and rain: what to wear",
+      "description": "What should you wear to run in the cold, wind or rain? Layer by layer – how to stay warm and dry without overheating.",
+      "blocks": [
+        { "p": "There's rarely bad weather for running, only clothes that don't suit the weather. The basic idea: dress so you feel a little chilly for the first few minutes. After a kilometer or two, you'll be warm." },
+        { "h": "A rule of thumb", "p": "Dress as if it were about 10 °C (18 °F) warmer than the thermometer says. Wind, rain and speed make it feel colder; sun and calm weather, warmer." },
+        { "h": "Layer by layer", "ul": [
+          "Next to your skin: technical fabric or wool that wicks moisture away. Avoid cotton – it gets wet and cold.",
+          "A mid layer when it's cold: a thin top with a little warmth.",
+          "Outer layer: a wind jacket or a light rain jacket. Your most important piece in the wind."
+        ] },
+        { "h": "Roughly, for most runners", "ul": [
+          "10 °C and above: short sleeves or a thin long-sleeve top, shorts or tights.",
+          "0–10 °C: a long-sleeve top, tights, maybe thin gloves.",
+          "Below freezing: one more layer, a windproof jacket, a hat or headband, and gloves. In real cold, protect your face and hands."
+        ] },
+        { "h": "Rain", "p": "A light jacket with vents is usually enough; fully waterproof gets hot inside. A cap keeps the rain out of your eyes. Change right after your run, because standing still is when you get cold." },
+        { "h": "Ice and darkness", "p": "Traction devices or studded shoes on ice. Reflective gear and a light when it's dark – if you can't be seen, you're not safe." },
+        { "h": "Don't forget to drink", "p": "You feel less thirsty in the cold, but you still lose fluids." },
+        { "h": "How Mila helps", "p": "Every morning Mila tells you what to wear for the weather, and when in the day it's best to run. The coach's sessions can also go into your calendar at the time that suits the weather best." }
+      ]
+    },
+    "de": {
+      "title": "Laufen bei Kälte und Regen: die richtige Kleidung",
+      "description": "Was ziehst du an, wenn du bei Kälte, Wind oder Regen läufst? Schicht für Schicht – so bleibst du warm und trocken, ohne zu überhitzen.",
+      "blocks": [
+        { "p": "Es gibt selten schlechtes Laufwetter, nur Kleidung, die nicht zum Wetter passt. Der Grundgedanke: Zieh dich so an, dass dir in den ersten Minuten etwas kühl ist. Nach ein, zwei Kilometern ist dir warm." },
+        { "h": "Eine Faustregel", "p": "Zieh dich so an, als wäre es etwa 10 °C wärmer, als das Thermometer zeigt. Wind, Regen und Tempo machen es kälter, Sonne und Windstille wärmer." },
+        { "h": "Schicht für Schicht", "ul": [
+          "Direkt auf der Haut: Funktionsmaterial oder Wolle, die Feuchtigkeit nach außen leitet. Verzichte auf Baumwolle – sie wird nass und kalt.",
+          "Mittelschicht, wenn es kalt ist: ein dünnes Oberteil, das etwas wärmt.",
+          "Außen: eine Windjacke oder eine leichte Regenjacke. Das wichtigste Kleidungsstück bei Wind."
+        ] },
+        { "h": "Grob, für die meisten", "ul": [
+          "Ab 10 °C: kurzärmlig oder ein dünnes Langarmshirt, Shorts oder Tights.",
+          "0–10 °C: Langarmshirt, Tights, vielleicht dünne Handschuhe.",
+          "Unter null: eine Schicht mehr, eine winddichte Jacke, Mütze oder Stirnband und Handschuhe. Bei richtiger Kälte: Gesicht und Hände schützen."
+        ] },
+        { "h": "Regen", "p": "Eine leichte Jacke mit Belüftung reicht meistens; komplett wasserdicht wird es innen warm. Eine Kappe hält dir den Regen aus den Augen. Zieh dich direkt nach dem Lauf um, denn wenn du stillstehst, wird dir kalt." },
+        { "h": "Glätte und Dunkelheit", "p": "Spikes zum Überziehen oder Schuhe mit Spikes auf Eis. Reflektoren und eine Lampe, wenn es dunkel ist – wer nicht gesehen wird, ist nicht sicher." },
+        { "h": "Vergiss das Trinken nicht", "p": "Bei Kälte spürst du weniger Durst, verlierst aber trotzdem Flüssigkeit." },
+        { "h": "So hilft Mila", "p": "Jeden Morgen sagt dir Mila, was du bei dem Wetter anziehen solltest und wann am Tag du am besten läufst. Die Einheiten des Coachs lassen sich auch zu der Zeit in deinen Kalender legen, die am besten zum Wetter passt." }
+      ]
+    }
+  }
+]

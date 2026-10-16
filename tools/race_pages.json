@@ -1,4 +1,8 @@
 {
   "_note": "Byt till appens riktiga App Store-länk vid lansering. Läses av race_pages.ts (tools/race_pages.json i Pages-repot, publicerad av publish_legal.sh); nästa körning av Loppsidor uppdaterar alla loppsidor.",
-  "appStoreUrl": "https://apps.apple.com/search?term=Mila%20Coach"
+  "appStoreUrl": "https://apps.apple.com/search?term=Mila%20Coach",
+  "_noteAppStoreId": "Appens App Store-id (bara siffrorna i https://apps.apple.com/app/id…). Tomt tills appen finns i App Store; när det sätts får alla sidor Apples Smart App Banner (loppsidorna vid nästa körning, webbplatsens egna sidor vid nästa publish_legal.sh).",
+  "appStoreId": "",
+  "_noteIndexNow": "IndexNow-nyckeln: offentlig med avsikt (filen /<nyckel>.txt i roten visar att sajten äger den). Byt den inte i onödan.",
+  "indexNowKey": "63610914eef505b32ba8a34f4c06d8fd"
 }

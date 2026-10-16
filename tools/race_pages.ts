@@ -63,7 +63,9 @@ export async function fetchPinned(f: { url: string; sha256: string }, fetchFn: t
 }
 /** Races per index page, nearby races per page, and when a run counts as dropping too many races (a share of the published ones, and at least). */
 export const INDEX_PAGE_SIZE = 200, NEARBY_MAX = 6, MASS_REMOVAL_SHARE = 1 / 3, MASS_REMOVAL_MIN = 5;
-const RESERVED_SLUGS = new Set(["sida", "page", "seite", "og", "index", "en", "de", "lopp", "races", "laeufe"]);
+const RESERVED_SLUGS = new Set(["sida", "page", "seite", "og", "index", "en", "de", "lopp", "races", "laeufe",
+  // the hub pages' folders (seo): /lopp/stad/…, /en/races/city/…, /de/laeufe/stadt/…
+  "stad", "distans", "manad", "land", "city", "distance", "month", "country", "stadt", "distanz", "monat"]);
 
 export type Lang = "sv" | "en" | "de";
 export const LANGS: Lang[] = ["sv", "en", "de"];
@@ -98,7 +100,9 @@ export type State = {
   retired?: string[];
 };
 export type PngRenderer = (svg: string) => Uint8Array | Promise<Uint8Array>;
-export type Report = { races: number; active: number; removed: string[]; added: string[]; moved: string[]; written: number; pngs: number };
+export type Report = { races: number; active: number; removed: string[]; added: string[]; moved: string[]; written: number; pngs: number;
+  /** seo: the indexed addresses whose content changed in this run (new, edited or gone), for IndexNow; and the hub pages made. */
+  changed: string[]; hubs: number };
 
 // ------------------------------------------------------------------------------------------------------------- the feed, checked
 
@@ -722,9 +726,9 @@ function metaDescription(r: Race, lang: Lang): string {
   return s.length <= 160 ? s : s.slice(0, 157).replace(/\s+\S*$/, "") + " …";
 }
 /** "Härnö Trail 21 km 2027 – bana, höjdprofil och tempoplan | Mila" */
-export function pageTitle(r: Race, lang: Lang): string {
-  const y = r.next_date?.slice(0, 4), name = raceTitle(r, lang);
-  return `${name}${y && !name.includes(y) ? ` ${y}` : ""} – ${courseless(r) ? T[lang].titleTailNoCourse : T[lang].titleTail} | Mila`;
+export function pageTitle(r: Race, lang: Lang, withPlace = false): string {
+  const y = r.next_date?.slice(0, 4), name = raceTitle(r, lang), place = withPlace && r.place && !name.includes(r.place) ? `, ${r.place}` : "";
+  return `${name}${place}${y && !name.includes(y) ? ` ${y}` : ""} – ${courseless(r) ? T[lang].titleTailNoCourse : T[lang].titleTail} | Mila`;
 }
 
 function table(caption: string, cols: string[], rows: string[][], numeric: number[]): string {
@@ -759,6 +763,7 @@ figure{margin:0}.chart{background:var(--surface);border:1px solid var(--line);bo
 .ctabox{background:var(--surface);border:1px solid var(--accent);border-radius:20px;padding:28px;margin:0 0 44px}.ctabox h2{font-size:24px}.ctabox .ctas{margin-top:18px}.brandline{font-weight:800;font-size:20px;margin:18px 0 0;color:var(--ink)}
 .list{list-style:none;margin:0;padding:0}.list li{padding:12px 0;border-bottom:1px solid var(--line)}.list a{font-weight:700;text-decoration:none}.list span{display:block;color:var(--ink2);font-size:15px}
 .filter{display:flex;flex-wrap:wrap;gap:14px;margin:0 0 10px}.filter label{flex:1 1 200px;margin:0;color:var(--ink2)}section.grp{padding:28px 0}.grp h3{font-size:14px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin:20px 0 2px}
+.hubs{display:flex;flex-wrap:wrap;gap:8px 18px;list-style:none;margin:0 0 8px;padding:0}.faq h3{margin-top:18px}.faq p{color:var(--ink2);max-width:42em;margin:4px 0}
 .pager{display:flex;gap:10px;flex-wrap:wrap;padding:30px 0}.pager a,.pager span{border:1px solid var(--line);border-radius:10px;padding:8px 14px;text-decoration:none}.pager [aria-current]{background:var(--surface);color:var(--ink)}
 @media (max-width:820px){.two{grid-template-columns:1fr}.race-hero.scened{padding:22px 18px 26px;border-radius:18px}.race-hero.scened::after{background:rgba(13,17,25,.86)}}`;
 /** Used when the output holds no site.css: the site's dark palette and frame. */
@@ -767,19 +772,23 @@ const minCss = (css: string) => css.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\s
 
 type Frame = {
   lang: Lang; path: string; title: string; description: string; css: string; body: string; today: string;
-  alternates?: Record<Lang, string> | null; noindex?: boolean; og?: { image: string; alt: string; large: boolean }; ld?: object[]; script?: string; module?: string;
+  alternates?: Partial<Record<Lang, string>> | null; noindex?: boolean; og?: { image: string; alt: string; large: boolean }; ld?: object[]; script?: string; module?: string;
   crumbs: { name: string; path?: string }[];
+  /** The app's App Store id: Apple's Smart App Banner on the page (seo; off while it is not set). */
+  appId?: string | null;
 };
 function frame(f: Frame): string {
   const t = T[f.lang], c = L[f.lang], root = rel(f.path, "");
-  const alt = f.alternates ? LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${esc(abs(f.alternates![l]))}">`).join("") + `<link rel="alternate" hreflang="x-default" href="${esc(abs(f.alternates.en))}">` : "";
-  const og = f.og ? `<meta property="og:type" content="website"><meta property="og:site_name" content="Mila"><meta property="og:title" content="${esc(f.title)}"><meta property="og:description" content="${esc(f.description)}"><meta property="og:url" content="${esc(abs(f.path))}"><meta property="og:image" content="${esc(f.og.image)}">${f.og.large ? '<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">' : ""}<meta property="og:image:alt" content="${esc(f.og.alt)}"><meta property="og:locale" content="${OG_LOCALE[f.lang]}">${LANGS.filter((l) => l !== f.lang).map((l) => `<meta property="og:locale:alternate" content="${OG_LOCALE[l]}">`).join("")}
+  // the languages the page has (a guide may lack one); x-default the English page, else the first there is
+  const langs = f.alternates ? LANGS.filter((l) => f.alternates![l]) : [], xDefault = f.alternates ? f.alternates.en ?? f.alternates[langs[0]] : undefined;
+  const alt = f.alternates && langs.length > 1 ? langs.map((l) => `<link rel="alternate" hreflang="${l}" href="${esc(abs(f.alternates![l]!))}">`).join("") + `<link rel="alternate" hreflang="x-default" href="${esc(abs(xDefault!))}">` : "";
+  const og = f.og ? `<meta property="og:type" content="website"><meta property="og:site_name" content="${esc(BRAND[f.lang])}"><meta property="og:title" content="${esc(f.title)}"><meta property="og:description" content="${esc(f.description)}"><meta property="og:url" content="${esc(abs(f.path))}"><meta property="og:image" content="${esc(f.og.image)}">${f.og.large ? '<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">' : ""}<meta property="og:image:alt" content="${esc(f.og.alt)}"><meta property="og:locale" content="${OG_LOCALE[f.lang]}">${langs.filter((l) => l !== f.lang).map((l) => `<meta property="og:locale:alternate" content="${OG_LOCALE[l]}">`).join("")}
 <meta name="twitter:card" content="${f.og.large ? "summary_large_image" : "summary"}"><meta name="twitter:title" content="${esc(f.title)}"><meta name="twitter:description" content="${esc(f.description)}"><meta name="twitter:image" content="${esc(f.og.image)}"><meta name="twitter:image:alt" content="${esc(f.og.alt)}">` : "";
-  const switcher = f.alternates ? LANGS.filter((l) => l !== f.lang).map((l) => `<a href="${esc(rel(f.path, f.alternates![l]))}" hreflang="${l}" lang="${l}">${T[l].langName}</a>`).join("") : "";
+  const switcher = f.alternates ? langs.filter((l) => l !== f.lang).map((l) => `<a href="${esc(rel(f.path, f.alternates![l]!))}" hreflang="${l}" lang="${l}">${T[l].langName}</a>`).join("") : "";
   const crumbs = `<nav class="crumbs" aria-label="${esc(t.crumbs)}"><ol>${f.crumbs.map((x, i) => i === f.crumbs.length - 1 ? `<li aria-current="page">${esc(x.name)}</li>` : `<li><a href="${esc(rel(f.path, x.path ?? ""))}">${esc(x.name)}</a></li>`).join("")}</ol></nav>`;
   // the page's own policy: scripts from the site, and this page's inline ones by their hash (site_csp.ts)
   const security = securityMeta([f.script, f.module].filter((x): x is string => !!x));
-  return `<!doctype html><html lang="${f.lang}"><head><meta charset="utf-8">${security}<meta name="viewport" content="width=device-width,initial-scale=1">
+  return `<!doctype html><html lang="${f.lang}"><head><meta charset="utf-8">${security}<meta name="viewport" content="width=device-width,initial-scale=1">${smartBannerMeta(f.appId)}
 <title>${esc(f.title)}</title><meta name="description" content="${esc(f.description)}">${f.noindex ? '<meta name="robots" content="noindex,follow">' : `<meta name="robots" content="max-image-preview:large"><link rel="canonical" href="${esc(abs(f.path))}">`}${alt}
 ${og}<meta name="theme-color" content="#0D1119"><link rel="icon" href="${root}logo.png"><style>${f.css}</style>${(f.ld ?? []).map(jsonLd).join("")}</head><body>
 <a class="skip" href="#main">${esc(t.skip)}</a><div class="wrap"><header><a class="brand" href="${root}${c.home}"><img src="${root}logo.png" alt="" width="40" height="40">MILA</a>${switcher ? `<nav class="lang" aria-label="${esc(t.langNav)}">${switcher}</nav>` : ""}</header>
@@ -806,7 +815,10 @@ const filterScript = `(()=>{const f=document.querySelector("form.filter");if(!f)
 
 type Ctx = { today: string; css: string; appStore: string; active: Race[]; slugs: Map<string, string>; ogImage: (r: Race | null, lang: Lang) => { image: string; large: boolean };
   /** The site has scene.js: the hero gets its scene in the browser. */
-  sceneJs?: boolean };
+  sceneJs?: boolean;
+  /** seo: the App Store id for the Smart App Banner (none until launch), the hubs, and the races whose title another race shares (their
+   *  titles say the place too, so every title on the site is its own). */
+  appId?: string | null; hubs?: Hub[]; titleClash?: Set<string> };
 
 /** One race's page in one language. */
 export function racePage(r: Race, lang: Lang, ctx: Ctx): string {
@@ -874,27 +886,40 @@ export function racePage(r: Race, lang: Lang, ctx: Ctx): string {
     const ps = r.results.slice(0, 3).map((e) => `<p>${esc(t.result(e.year, num(e.finishers, lang), clockTime(e.overall.p50), clockTime(e.overall.p25), clockTime(e.overall.p75), clockTime(e.overall.p10), clockTime(e.overall.p90)))}${e.source ? ` <a href="${esc(e.source)}" rel="nofollow noopener">${esc(t.resultSource)}</a>` : ""}</p>`).join("");
     sections.push(`<section aria-labelledby="h-results"><div class="prose"><h2 id="h-results">${esc(t.resultsH)}</h2>${ps}<p class="note">${esc(t.resultsNote)}</p></div></section>`);
   }
+  // seo: the pace table and the questions, then the hubs the race is in
+  const pace = paceSection(r, lang);
+  if (pace) sections.push(pace);
+  const faq = faqSection(r, lang, today);
+  sections.push(faq.html);
+  const mine = (ctx.hubs ?? []).filter((h) => h.races.some((x) => x.id === r.id));
+  if (mine.length) sections.push(`<section aria-labelledby="h-hubs"><h2 id="h-hubs">${esc(S[lang].seeAlso)}</h2><ul class="hubs">${mine.map((h) => `<li><a href="${esc(rel(path, hubPath(lang, h)))}">${esc(h.name[lang])}</a></li>`).join("")}</ul></section>`);
   const near = nearby(r, ctx.active, today);
   if (near.length) sections.push(`<section aria-labelledby="h-nearby"><h2 id="h-nearby">${esc(t.nearbyH)}</h2><ul class="list">${near.map((x) => `<li><a href="${esc(rel(path, racePath(lang, ctx.slugs.get(x.id)!)))}">${esc(raceTitle(x, lang))}</a><span>${esc([x.next_date ? dateShort(x.next_date, lang) : t.noDateGroup, whereText(x, lang)].filter(Boolean).join(" · "))}</span></li>`).join("")}</ul></section>`);
   const rights = `${L[lang].support}?topic=rights&ref=${encodeURIComponent(abs(path))}#kontakt`;
   sections.push(`<section><p class="sub">${esc(t.ctaH)}</p>${button}<p class="note">${esc(bare ? t.disclaimerNoCourse : t.disclaimer)}</p><p class="note">${esc(t.notAffiliated)} <a href="${esc(rel(path, rights))}" rel="nofollow">${esc(t.rights)}</a></p></section>`);
 
   const og = ctx.ogImage(r, lang), description = metaDescription(r, lang);
-  const ld: object[] = [crumbsLd([{ name: t.home, path: L[lang].home }, { name: t.races, path: indexPath(lang) }, { name: title, path }])];
+  const ld: object[] = [crumbsLd([{ name: t.home, path: L[lang].home }, { name: t.races, path: indexPath(lang) }, { name: title, path }]), faq.ld];
   const sd = startDate(r);
+  // the event only with a real date from the register (a preliminary one says so in the description and as a property); the page is
+  // its url, the organiser's site its organizer's; the distance and the climbing as properties
   if (sd) {
     const sp = info?.start_place, geo = sp?.lat !== undefined && sp?.lon !== undefined ? [sp.lat, sp.lon] : r.start;
     ld.unshift({
-      "@context": "https://schema.org", "@type": "SportsEvent", name: title, sport: "Running", startDate: sd,
+      "@context": "https://schema.org", "@type": "SportsEvent", name: title, sport: "Running", startDate: sd, inLanguage: lang, url: abs(path),
       eventStatus: "https://schema.org/EventScheduled", eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-      description, image: [og.image], ...(r.url ? { url: r.url } : {}),
+      description: r.prelim ? `${cap(t.prelim)}. ${description}` : description, image: [og.image],
+      additionalProperty: [{ "@type": "PropertyValue", name: "distance", value: Math.round(r.km * 100) / 100, unitCode: "KMT", unitText: "km" },
+        ...(climbKnown ? [{ "@type": "PropertyValue", name: "elevationGain", value: r.ascent, unitCode: "MTR", unitText: "m" }] : []),
+        ...(r.prelim ? [{ "@type": "PropertyValue", name: "dateStatus", value: "preliminary" }] : [])],
       location: { "@type": "Place", name: sp?.name ?? (where || r.name),
         address: { "@type": "PostalAddress", ...(r.place ? { addressLocality: r.place } : {}), ...(r.country_code ? { addressCountry: r.country_code } : r.country ? { addressCountry: r.country } : {}) },
         ...(geo ? { geo: { "@type": "GeoCoordinates", latitude: geo[0], longitude: geo[1] } } : {}) },
-      ...(r.organizer || r.url ? { organizer: { "@type": "Organization", ...(r.organizer ? { name: r.organizer } : {}), ...(r.url ? { url: r.url } : {}) } } : {}),
+      // the organiser by name (with its site); a site alone names nobody, so it stays on the page only
+      ...(r.organizer ? { organizer: { "@type": "Organization", name: r.organizer, ...(r.url ? { url: r.url } : {}) } } : {}),
     });
   }
-  return frame({ lang, path, title: pageTitle(r, lang), description, css: ctx.css, today, alternates, og: { ...og, alt: bare ? t.ogAltNoCourse(title) : t.ogAlt(title) }, ld,
+  return frame({ lang, path, title: pageTitle(r, lang, ctx.titleClash?.has(r.id)), description, css: ctx.css, today, alternates, appId: ctx.appId, og: { ...og, alt: bare ? t.ogAltNoCourse(title) : t.ogAlt(title) }, ld,
     body: `<article>${hero}${cta}${sections.join("\n")}</article>`, script: r.next_date && r.next_date >= today ? cdScript(lang) : undefined,
     module: ctx.sceneJs ? sceneScript(rel(path, "scene.js")) : undefined,
     crumbs: [{ name: t.home, path: L[lang].home }, { name: t.races, path: indexPath(lang) }, { name: title }] });
@@ -938,9 +963,328 @@ export function indexPage(lang: Lang, page: number, pages: number, races: Race[]
   const filter = `<form class="filter" hidden aria-label="Filter"><label>${esc(t.filterDistance)}<select name="d"><option value="">${esc(t.all)}</option>${["a", "b", "c", "d"].map((b, i) => `<option value="${b}">${esc(t.buckets[i])}</option>`).join("")}</select></label><label>${esc(t.filterCountry)}<select name="c"><option value="">${esc(t.allCountries)}</option>${countries.map(([k, n]) => `<option value="${esc(k)}">${esc(n)}</option>`).join("")}</select></label></form><p id="nomatch" class="note" hidden>${esc(t.noMatch)}</p>`;
   const pager = pages > 1 ? `<nav class="pager" aria-label="${esc(t.pages)}">${page > 1 ? `<a href="${esc(rel(path, indexPath(lang, page - 1)))}" rel="prev">${esc(t.prev)}</a>` : ""}${Array.from({ length: pages }, (_, i) => i + 1).map((p) => p === page ? `<span aria-current="page">${p}</span>` : `<a href="${esc(rel(path, indexPath(lang, p)))}">${p}</a>`).join("")}${page < pages ? `<a href="${esc(rel(path, indexPath(lang, page + 1)))}" rel="next">${esc(t.next)}</a>` : ""}</nav>` : "";
   const hero = `<div class="race-hero"><div class="eyebrow">${esc(t.races)}</div><h1>${esc(t.indexH1)}${page > 1 ? ` – ${esc(t.pageN(page))}` : ""}</h1><p class="lead">${esc(t.indexLead)}</p><p class="meta">${esc(t.count(total))}</p><div class="ctas">${storeBadge(path, lang, ctx.appStore)}</div><p class="brandline">${esc(t.brandLine)}</p><p class="note">${esc(t.notAffiliatedAll)}</p></div>`;
-  return frame({ lang, path, title: `${t.indexTitle}${page > 1 ? ` – ${t.pageN(page)}` : ""} | Mila`, description: t.indexLead, css: ctx.css, today, alternates,
+  // seo: the hubs on the first page (every other page reaches them through it)
+  const browse = page === 1 ? hubNav(ctx.hubs ?? [], lang, path, S[lang].browseH) : "";
+  return frame({ lang, path, title: `${t.indexTitle}${page > 1 ? ` – ${t.pageN(page)}` : ""} | Mila`, description: page > 1 ? `${S[lang].indexDesc} (${t.pageN(page)})` : S[lang].indexDesc, css: ctx.css, today, alternates, appId: ctx.appId,
     og: { ...ctx.ogImage(null, lang), alt: t.ogDefault }, ld: [crumbsLd([{ name: t.home, path: L[lang].home }, { name: t.races, path: indexPath(lang) }])],
-    body: `${hero}${filter}\n${list}\n${pager}`, script: filterScript, crumbs: [{ name: t.home, path: L[lang].home }, { name: t.races }] });
+    body: `${hero}${browse}${filter}\n${list}\n${pager}`, script: filterScript, crumbs: [{ name: t.home, path: L[lang].home }, { name: t.races }] });
+}
+
+// ------------------------------------------------------------------------------------------------------------- seo: hubs, FAQ, pace table, guides, banner, IndexNow
+//
+// Package "seo" (2026-10-16). Everything here is built from the register's own facts, with plain arithmetic and plain sentences: no
+// forecast, no coaching rule, nothing about how the coach judges.
+//   hubs        the races by city (a place with at least two races), by distance (5 km, 10 km, half marathon, marathon, ultra, trail), by
+//               month (the coming twelve) and by country, in every language, in the sitemap, linked from the index and every race page;
+//               a hub with fewer than two races is never made (no thin pages), and one that falls below two leaves the site
+//   FAQ         per race page from the data there is (date and start, distance and climbing, the course in words, aid stations, cut-offs,
+//               how to pace it: even effort, the climbs named), with FAQPage markup holding exactly the page's text
+//   pace table  a few common target times at even pace: time per km and splits, labelled as arithmetic, never a forecast
+//   guides      pages from a data file (race_pages_guides.json next to this script), only entries marked approved: none yet
+//   banner      Apple's Smart App Banner once race_pages.json has the app's App Store id ("appStoreId"; empty until launch)
+//   IndexNow    the key file at the root, and the addresses that changed in a run, pinged to api.indexnow.org by the workflow
+
+/** The brand as each language writes it (og:site_name, the product's name in markup). */
+export const BRAND: Record<Lang, string> = { sv: "Mila – löpcoach", en: "Mila – running coach", de: "Mila – Laufcoach" };
+/** Apple's Smart App Banner, only for an App Store id (digits); nothing while the id is not set. */
+export function smartBannerMeta(id: string | null | undefined): string {
+  return typeof id === "string" && /^\d{6,12}$/.test(id) ? `<meta name="apple-itunes-app" content="app-id=${id}">` : "";
+}
+
+const S = {
+  sv: {
+    indexDesc: "Loppen i Milas loppregister med bana, höjdprofil, klättringar, vätskekontroller och tempotabell. Välj ditt lopp och få din tempoplan i Mila.",
+    faqH: "Vanliga frågor", qWhen: (n: string) => `När går ${n}?`, qStart: (n: string) => `Vilken tid startar ${n}?`,
+    qDist: (n: string) => `Hur lång är ${n} och hur många höjdmeter är det?`, qCourse: (n: string) => `Hur ser banan på ${n} ut?`,
+    qAid: (n: string) => `Finns det vätskekontroller på ${n}?`, qCut: (n: string) => `Finns det maxtider på ${n}?`, qPace: (n: string) => `Hur lägger jag upp farten på ${n}?`,
+    aWhen: (n: string, d: string, prelim: boolean) => `${n} går ${d}${prelim ? " (preliminärt datum)" : ""}. Kontrollera datum och starttid hos arrangören.`,
+    aNoDate: (last: string | null) => `Datum för nästa upplaga är inte klart än.${last ? ` Senast gick loppet ${last}.` : ""}`,
+    aPassed: (d: string) => `Loppet gick ${d}. Datum för nästa upplaga är inte klart än.`,
+    aStart: (list: string) => `Enligt arrangören: ${list}.`, clock: (t: string) => `kl. ${t}`,
+    aDist: (k: string, up: string | null, down: string | null, hi: string | null) => `Loppet är ${k} långt${up ? ` med ${up} höjdmeter uppför${down ? ` och ${down} nedför` : ""}` : ""}.${hi ? ` Högsta punkten ligger ${hi} m ö.h.` : ""}`,
+    aDistNoClimb: (k: string) => `Loppet är ${k} långt. Arrangören anger inga höjdmeter.`, aDistOrg: (k: string, a: string) => `Loppet är ${k} långt. Arrangören anger ${a} höjdmeter.`,
+    aCourse: (h: string, perKm: string, loop: boolean | null, trail: boolean, climbs: string) => `Banan räknas som ${h}, med ${perKm} höjdmeter per km i snitt. ${climbs} ${loop === null ? "" : loop ? "Start och mål ligger på samma plats. " : "Banan går från start till ett mål på en annan plats. "}Underlaget är ${trail ? "terräng och stig" : "väg"}.`,
+    aClimbs: (n: number, km: string, gain: string, len: string) => n === 1 ? `Den har en klättring på minst 25 höjdmeter, vid km ${km}: ${gain} höjdmeter på ${len}.` : `Den har ${n} klättringar på minst 25 höjdmeter; den största börjar vid km ${km}: ${gain} höjdmeter på ${len}.`,
+    aNoClimbs: "Den har inga sammanhängande klättringar på 25 höjdmeter eller mer.",
+    aAid: (n: number, list: string) => `Ja. Arrangören har ${n === 1 ? "en vätskekontroll" : `${n} vätskekontroller`}: ${list}.`,
+    aCut: (list: string) => `Ja, enligt arrangören: ${list}.`,
+    aPaceEven: "Sikta på en jämn ansträngning hela vägen, och håll igen de första kilometrarna när benen känns pigga och fältet drar iväg.",
+    aPaceFlat: (h: string) => `Banan är ${h}, så ett jämnt tempo per kilometer fungerar bra.`,
+    aPaceHills: (kms: string) => `Sikta på en jämn ansträngning snarare än ett jämnt tempo: låt farten gå ner i uppförsbackarna, hämta tillbaka den när det planar ut, och håll igen de första kilometrarna. De största klättringarna börjar vid ${kms}.`, and: "och",
+    aPaceTail: "I Mila får du en tempoplan för just den här banan efter din egen form.",
+    paceH: "Tempotabell", paceRow: (n: string, t: string) => `${n} på ${t} – tid per km och mellantider`, perKm: "per km", finish: "mål",
+    paceNote: "Tiderna förutsätter jämnt tempo hela vägen. Det är ren räkning, ingen prognos: i backar, i trängsel och vid vätskekontroller varierar tempot.",
+    seeAlso: "Fler lopp som det här", browseH: "Hitta lopp", browseKinds: { city: "Orter", distance: "Distanser", month: "Månader", country: "Länder" },
+    hubName: { city: (p: string) => `Lopp i ${p}`, month: (m: string) => `Lopp i ${m}`, country: (c: string) => `Lopp i ${c}` },
+    distName: { "5k": "5 km-lopp", "10k": "10 km-lopp", half: "Halvmaraton", marathon: "Maraton", ultra: "Ultralopp", trail: "Traillopp" } as Record<string, string>,
+    distAbout: { "5k": "Lopp på omkring 5 km.", "10k": "Lopp på omkring 10 km.", half: "Ett halvmaraton är 21,1 km.", marathon: "Ett maraton är 42,195 km.", ultra: "Ett ultralopp är längre än ett maraton.", trail: "Traillopp går i terräng och på stig, ofta med fler höjdmeter än på väg." } as Record<string, string>,
+    hubTail: "banor, datum och höjdprofiler", hubIntro: (n: number) => `${n} lopp ur Milas loppregister. Varje lopp har en egen sida med bana, höjdprofil, fakta från arrangören och en tempotabell.`,
+    hubNext: (d: string, n: string) => `Närmast på tur: ${n}, ${d}.`, hubClimb: (lo: string, hi: string) => `Höjdmetrarna varierar från ${lo} till ${hi}.`,
+    hubMore: "Fler sätt att hitta lopp", hubDesc: (name: string, n: number) => `${name}: ${n} lopp med bana, datum, höjdprofil och tempotabell. Välj ditt lopp och få din tempoplan i Mila.`,
+    guidesCrumb: "Guider",
+  },
+  en: {
+    indexDesc: "The races in Mila's race register with course, elevation profile, climbs, aid stations and pace table. Pick your race and get your pace plan in Mila.",
+    faqH: "Frequently asked questions", qWhen: (n: string) => `When is ${n}?`, qStart: (n: string) => `What time does ${n} start?`,
+    qDist: (n: string) => `How long is ${n} and how much climbing is there?`, qCourse: (n: string) => `What is the course of ${n} like?`,
+    qAid: (n: string) => `Are there aid stations at ${n}?`, qCut: (n: string) => `Are there cut-off times at ${n}?`, qPace: (n: string) => `How should I pace ${n}?`,
+    aWhen: (n: string, d: string, prelim: boolean) => `${n} takes place on ${d}${prelim ? " (preliminary date)" : ""}. Check the date and start time with the organizer.`,
+    aNoDate: (last: string | null) => `The date of the next edition is not set yet.${last ? ` The race was last held on ${last}.` : ""}`,
+    aPassed: (d: string) => `The race took place on ${d}. The date of the next edition is not set yet.`,
+    aStart: (list: string) => `According to the organizer: ${list}.`, clock: (t: string) => t,
+    aDist: (k: string, up: string | null, down: string | null, hi: string | null) => `The race is ${k}${up ? ` with ${up} m of climbing${down ? ` and ${down} m of descent` : ""}` : ""}.${hi ? ` The highest point is ${hi} m above sea level.` : ""}`,
+    aDistNoClimb: (k: string) => `The race is ${k}. The organizer states no climbing.`, aDistOrg: (k: string, a: string) => `The race is ${k}. The organizer states ${a} m of climbing.`,
+    aCourse: (h: string, perKm: string, loop: boolean | null, trail: boolean, climbs: string) => `The course is ${h}, with ${perKm} m of climbing per km on average. ${climbs} ${loop === null ? "" : loop ? "Start and finish are in the same place. " : "It runs from the start to a finish in another place. "}The surface is ${trail ? "trail" : "road"}.`,
+    aClimbs: (n: number, km: string, gain: string, len: string) => n === 1 ? `It has one climb of at least 25 m, at km ${km}: ${gain} m over ${len}.` : `It has ${n} climbs of at least 25 m; the biggest starts at km ${km}: ${gain} m over ${len}.`,
+    aNoClimbs: "It has no sustained climbs of 25 m or more.",
+    aAid: (n: number, list: string) => `Yes. The organizer lists ${n === 1 ? "one aid station" : `${n} aid stations`}: ${list}.`,
+    aCut: (list: string) => `Yes, according to the organizer: ${list}.`,
+    aPaceEven: "Aim for an even effort the whole way, and hold back in the first kilometres when your legs feel fresh and the field pulls away.",
+    aPaceFlat: (h: string) => `The course is ${h}, so an even pace per kilometre works well.`,
+    aPaceHills: (kms: string) => `Aim for an even effort rather than an even pace: let the pace drop on the climbs, win it back where it levels out, and hold back in the first kilometres. The biggest climbs start at ${kms}.`, and: "and",
+    aPaceTail: "In Mila you get a pace plan for this course, based on your own form.",
+    paceH: "Pace table", paceRow: (n: string, t: string) => `${n} in ${t} – pace per km and splits`, perKm: "per km", finish: "finish",
+    paceNote: "The times assume an even pace the whole way. This is plain arithmetic, not a forecast: on climbs, in crowds and at aid stations the pace varies.",
+    seeAlso: "More races like this", browseH: "Find races", browseKinds: { city: "Places", distance: "Distances", month: "Months", country: "Countries" },
+    hubName: { city: (p: string) => `Races in ${p}`, month: (m: string) => `Races in ${m}`, country: (c: string) => `Races in ${c}` },
+    distName: { "5k": "5K races", "10k": "10K races", half: "Half marathons", marathon: "Marathons", ultra: "Ultra races", trail: "Trail races" } as Record<string, string>,
+    distAbout: { "5k": "Races of about 5 km.", "10k": "Races of about 10 km.", half: "A half marathon is 21.1 km.", marathon: "A marathon is 42.195 km.", ultra: "An ultra is any race longer than a marathon.", trail: "Trail races run on trails and off-road, often with more climbing than on the road." } as Record<string, string>,
+    hubTail: "courses, dates and elevation profiles", hubIntro: (n: number) => `${n} ${n === 1 ? "race" : "races"} from Mila's race register. Every race has its own page with the course, elevation profile, the organizer's facts and a pace table.`,
+    hubNext: (d: string, n: string) => `Next up: ${n}, ${d}.`, hubClimb: (lo: string, hi: string) => `Elevation gain ranges from ${lo} to ${hi} m.`,
+    hubMore: "More ways to find races", hubDesc: (name: string, n: number) => `${name}: ${n} races with course, date, elevation profile and pace table. Pick your race and get your pace plan in Mila.`,
+    guidesCrumb: "Guides",
+  },
+  de: {
+    indexDesc: "Die Läufe in Milas Laufregister mit Strecke, Höhenprofil, Anstiegen, Verpflegung und Pace-Tabelle. Wähle deinen Lauf und hol dir deinen Pace-Plan in Mila.",
+    faqH: "Häufige Fragen", qWhen: (n: string) => `Wann findet ${n} statt?`, qStart: (n: string) => `Wann ist der Start bei ${n}?`,
+    qDist: (n: string) => `Wie lang ist ${n} und wie viele Höhenmeter hat die Strecke?`, qCourse: (n: string) => `Wie ist die Strecke von ${n}?`,
+    qAid: (n: string) => `Gibt es Verpflegungsstellen bei ${n}?`, qCut: (n: string) => `Gibt es Zeitlimits bei ${n}?`, qPace: (n: string) => `Wie teile ich mir ${n} ein?`,
+    aWhen: (n: string, d: string, prelim: boolean) => `${n} findet am ${d} statt${prelim ? " (vorläufiges Datum)" : ""}. Prüfe Datum und Startzeit beim Veranstalter.`,
+    aNoDate: (last: string | null) => `Das Datum der nächsten Ausgabe steht noch nicht fest.${last ? ` Zuletzt fand der Lauf am ${last} statt.` : ""}`,
+    aPassed: (d: string) => `Der Lauf fand am ${d} statt. Das Datum der nächsten Ausgabe steht noch nicht fest.`,
+    aStart: (list: string) => `Laut Veranstalter: ${list}.`, clock: (t: string) => `${t} Uhr`,
+    aDist: (k: string, up: string | null, down: string | null, hi: string | null) => `Der Lauf ist ${k} lang${up ? ` mit ${up} Höhenmetern bergauf${down ? ` und ${down} bergab` : ""}` : ""}.${hi ? ` Der höchste Punkt liegt auf ${hi} m ü. M.` : ""}`,
+    aDistNoClimb: (k: string) => `Der Lauf ist ${k} lang. Der Veranstalter nennt keine Höhenmeter.`, aDistOrg: (k: string, a: string) => `Der Lauf ist ${k} lang. Der Veranstalter gibt ${a} Höhenmeter an.`,
+    aCourse: (h: string, perKm: string, loop: boolean | null, trail: boolean, climbs: string) => `Die Strecke ist ${h}, mit durchschnittlich ${perKm} Höhenmetern pro km. ${climbs} ${loop === null ? "" : loop ? "Start und Ziel liegen am selben Ort. " : "Sie führt vom Start zu einem Ziel an einem anderen Ort. "}Der Untergrund ist ${trail ? "Trail und Gelände" : "Straße"}.`,
+    aClimbs: (n: number, km: string, gain: string, len: string) => n === 1 ? `Sie hat einen Anstieg ab 25 Höhenmetern, bei km ${km}: ${gain} Höhenmeter auf ${len}.` : `Sie hat ${n} Anstiege ab 25 Höhenmetern; der größte beginnt bei km ${km}: ${gain} Höhenmeter auf ${len}.`,
+    aNoClimbs: "Sie hat keine zusammenhängenden Anstiege ab 25 Höhenmetern.",
+    aAid: (n: number, list: string) => `Ja. Der Veranstalter nennt ${n === 1 ? "eine Verpflegungsstelle" : `${n} Verpflegungsstellen`}: ${list}.`,
+    aCut: (list: string) => `Ja, laut Veranstalter: ${list}.`,
+    aPaceEven: "Lauf mit gleichmäßiger Anstrengung und halte dich auf den ersten Kilometern zurück, wenn die Beine frisch sind und das Feld davonzieht.",
+    aPaceFlat: (h: string) => `Die Strecke ist ${h}, ein gleichmäßiges Tempo pro Kilometer passt deshalb gut.`,
+    aPaceHills: (kms: string) => `Lauf eher mit gleichmäßiger Anstrengung als mit gleichmäßigem Tempo: Lass das Tempo an den Anstiegen sinken, hol es zurück, wo es flacher wird, und halte dich auf den ersten Kilometern zurück. Die größten Anstiege beginnen bei ${kms}.`, and: "und",
+    aPaceTail: "In Mila bekommst du einen Pace-Plan für genau diese Strecke, passend zu deiner Form.",
+    paceH: "Pace-Tabelle", paceRow: (n: string, t: string) => `${n} in ${t} – Pace pro km und Zwischenzeiten`, perKm: "pro km", finish: "Ziel",
+    paceNote: "Die Zeiten setzen ein gleichmäßiges Tempo auf der ganzen Strecke voraus. Das ist reine Rechnung, keine Prognose: an Anstiegen, im Gedränge und an Verpflegungsstellen schwankt das Tempo.",
+    seeAlso: "Ähnliche Läufe", browseH: "Läufe finden", browseKinds: { city: "Orte", distance: "Distanzen", month: "Monate", country: "Länder" },
+    hubName: { city: (p: string) => `Läufe in ${p}`, month: (m: string) => `Läufe im ${m}`, country: (c: string) => `Läufe in ${c}` },
+    distName: { "5k": "5-km-Läufe", "10k": "10-km-Läufe", half: "Halbmarathons", marathon: "Marathons", ultra: "Ultraläufe", trail: "Trailläufe" } as Record<string, string>,
+    distAbout: { "5k": "Läufe über rund 5 km.", "10k": "Läufe über rund 10 km.", half: "Ein Halbmarathon ist 21,1 km lang.", marathon: "Ein Marathon ist 42,195 km lang.", ultra: "Ein Ultralauf ist länger als ein Marathon.", trail: "Trailläufe führen über Pfade und durchs Gelände, oft mit mehr Höhenmetern als auf der Straße." } as Record<string, string>,
+    hubTail: "Strecken, Termine und Höhenprofile", hubIntro: (n: number) => `${n} ${n === 1 ? "Lauf" : "Läufe"} aus Milas Laufregister. Jeder Lauf hat eine eigene Seite mit Strecke, Höhenprofil, Angaben des Veranstalters und einer Pace-Tabelle.`,
+    hubNext: (d: string, n: string) => `Als Nächstes: ${n}, ${d}.`, hubClimb: (lo: string, hi: string) => `Die Höhenmeter reichen von ${lo} bis ${hi}.`,
+    hubMore: "Weitere Wege zu deinem Lauf", hubDesc: (name: string, n: number) => `${name}: ${n} Läufe mit Strecke, Datum, Höhenprofil und Pace-Tabelle. Wähle deinen Lauf und hol dir deinen Pace-Plan in Mila.`,
+    guidesCrumb: "Ratgeber",
+  },
+};
+
+// ---- hubs
+
+export type HubKind = "city" | "distance" | "month" | "country";
+export const HUB_KINDS: HubKind[] = ["distance", "country", "city", "month"];
+/** Each kind's folder under the language's race folder: /lopp/stad/umea/, /en/races/city/umea/, /de/laeufe/stadt/umea/. */
+const HUB_DIR: Record<Lang, Record<HubKind, string>> = {
+  sv: { city: "stad", distance: "distans", month: "manad", country: "land" },
+  en: { city: "city", distance: "distance", month: "month", country: "country" },
+  de: { city: "stadt", distance: "distanz", month: "monat", country: "land" },
+};
+/** The distance classes: the common race distances (within a few hundred metres), every race past a marathon, and every trail race. */
+export const DISTANCES: { key: string; test: (r: Pick<Race, "km" | "trail">) => boolean; slug: Record<Lang, string> }[] = [
+  { key: "5k", test: (r) => r.km >= 4.5 && r.km <= 5.5, slug: { sv: "5-km", en: "5k", de: "5-km" } },
+  { key: "10k", test: (r) => r.km >= 9.5 && r.km <= 10.5, slug: { sv: "10-km", en: "10k", de: "10-km" } },
+  { key: "half", test: (r) => r.km >= 20.6 && r.km <= 21.7, slug: { sv: "halvmaraton", en: "half-marathon", de: "halbmarathon" } },
+  { key: "marathon", test: (r) => r.km >= 41.7 && r.km <= 42.8, slug: { sv: "maraton", en: "marathon", de: "marathon" } },
+  { key: "ultra", test: (r) => r.km > 42.8, slug: { sv: "ultra", en: "ultra", de: "ultra" } },
+  { key: "trail", test: (r) => r.trail, slug: { sv: "trail", en: "trail", de: "trail" } },
+];
+/** The fewest races a hub needs: fewer is a thin page, never made. */
+export const HUB_MIN = 2;
+export type Hub = { kind: HubKind; key: string; slug: Record<Lang, string>; name: Record<Lang, string>; races: Race[]; about?: string };
+export const hubPath = (lang: Lang, h: Pick<Hub, "kind" | "slug">) => `${L[lang].dir}/${HUB_DIR[lang][h.kind]}/${h.slug[lang]}/`;
+/** Country names that read better with an article after "in" (en) or "in"/"im" (de). */
+const COUNTRY_IN: Partial<Record<Lang, Record<string, string>>> = {
+  en: { US: "the United States", GB: "the United Kingdom", NL: "the Netherlands", PH: "the Philippines", AE: "the United Arab Emirates", CZ: "the Czech Republic" },
+  de: { CH: "der Schweiz", NL: "den Niederlanden", US: "den USA", TR: "der Türkei", SK: "der Slowakei", PH: "den Philippinen", AE: "den Vereinigten Arabischen Emiraten" },
+};
+/** "juni 2027" in a Swedish sentence; English and German keep the capital ("June 2027", "Juni 2027"). */
+const monthName = (ym: string, lang: Lang) => { const m = monthLabel(ym, lang); return lang === "sv" ? m.charAt(0).toLocaleLowerCase(LOCALE[lang]) + m.slice(1) : m; };
+const addMonths = (ym: string, n: number) => { const [y, m] = ym.split("-").map(Number), t = y * 12 + (m - 1) + n; return `${Math.floor(t / 12)}-${String((t % 12) + 1).padStart(2, "0")}`; };
+
+/** Every hub with at least HUB_MIN races, in a stable order (kind, then key); the races in index order. */
+export function buildHubs(active: Race[], today: string): Hub[] {
+  const out: Hub[] = [], order = (rs: Race[]) => indexOrder(rs, today);
+  for (const d of DISTANCES) {
+    const rs = active.filter(d.test);
+    if (rs.length >= HUB_MIN) out.push({ kind: "distance", key: d.key, slug: d.slug, name: { sv: S.sv.distName[d.key], en: S.en.distName[d.key], de: S.de.distName[d.key] }, races: order(rs), about: d.key });
+  }
+  // countries: by their code (or the register's own name); the slug from the country's name in each language
+  const byCountry = new Map<string, Race[]>();
+  for (const r of active) { const k = r.country_code ?? (r.country ? `x-${slugify(r.country)}` : ""); if (k) byCountry.set(k, [...(byCountry.get(k) ?? []), r]); }
+  for (const [k, rs] of [...byCountry].sort(([a], [b]) => a.localeCompare(b))) {
+    if (rs.length < HUB_MIN) continue;
+    const nm = (l: Lang) => countryName(rs[0], l) ?? k, slug = Object.fromEntries(LANGS.map((l) => [l, slugify(nm(l)) || k.toLowerCase()])) as Record<Lang, string>;
+    out.push({ kind: "country", key: k, slug, name: Object.fromEntries(LANGS.map((l) => [l, S[l].hubName.country(COUNTRY_IN[l]?.[k] ?? nm(l))])) as Record<Lang, string>, races: order(rs) });
+  }
+  // places: the place's name within its country; the same name in two countries gets the country's code in its address
+  const byCity = new Map<string, Race[]>();
+  for (const r of active) { const p = r.place ? slugify(r.place) : ""; if (p) { const k = `${r.country_code ?? r.country ?? ""}|${p}`; byCity.set(k, [...(byCity.get(k) ?? []), r]); } }
+  const cities = [...byCity].filter(([, rs]) => rs.length >= HUB_MIN).sort(([a], [b]) => a.localeCompare(b));
+  const seen = new Map<string, number>();
+  for (const [k] of cities) { const p = k.split("|")[1]; seen.set(p, (seen.get(p) ?? 0) + 1); }
+  for (const [k, rs] of cities) {
+    const [cc, p] = k.split("|"), slug = seen.get(p)! > 1 && cc ? `${p}-${slugify(cc)}` : p, place = rs[0].place!;
+    out.push({ kind: "city", key: k, slug: { sv: slug, en: slug, de: slug }, name: { sv: S.sv.hubName.city(place), en: S.en.hubName.city(place), de: S.de.hubName.city(place) }, races: order(rs) });
+  }
+  // the coming twelve months, this one first
+  for (let i = 0; i < 12; i++) {
+    const ym = addMonths(today.slice(0, 7), i), rs = active.filter((r) => r.next_date && r.next_date >= today && r.next_date.startsWith(ym));
+    if (rs.length >= HUB_MIN) out.push({ kind: "month", key: ym, slug: { sv: ym, en: ym, de: ym }, name: Object.fromEntries(LANGS.map((l) => [l, S[l].hubName.month(monthName(ym, l))])) as Record<Lang, string>, races: order(rs) });
+  }
+  return out;
+}
+
+/** The hubs as links, grouped by kind (the index's "Hitta lopp", a hub's "Fler sätt att hitta lopp"); `skip` leaves one hub out. */
+function hubNav(hubs: Hub[], lang: Lang, from: string, title: string, skip?: Hub): string {
+  const s = S[lang], groups = HUB_KINDS.map((k) => [k, hubs.filter((h) => h.kind === k && h !== skip)] as const).filter(([, hs]) => hs.length);
+  if (!groups.length) return "";
+  return `<section aria-labelledby="h-browse"><h2 id="h-browse">${esc(title)}</h2>${groups.map(([k, hs]) => `<h3>${esc(s.browseKinds[k])}</h3><ul class="hubs">${hs.map((h) => `<li><a href="${esc(rel(from, hubPath(lang, h)))}">${esc(h.name[lang])}</a> <span class="note">(${h.races.length})</span></li>`).join("")}</ul>`).join("")}</section>`;
+}
+
+/** One hub page: a short intro from the races' own facts, the list with date, place, distance and climbing, and links on. */
+export function hubPage(h: Hub, lang: Lang, ctx: Ctx): string {
+  const t = T[lang], s = S[lang], path = hubPath(lang, h), today = ctx.today, rs = h.races;
+  const alternates = Object.fromEntries(LANGS.map((l) => [l, hubPath(l, h)])) as Record<Lang, string>;
+  const next = rs.find((r) => r.next_date && r.next_date >= today), climbs = rs.filter((r) => !courseless(r) || r.ascent > 0).map((r) => r.ascent);
+  const intro = [s.hubIntro(rs.length), h.about ? s.distAbout[h.about] : "", next ? s.hubNext(dateShort(next.next_date!, lang), raceTitle(next, lang)) : "",
+    climbs.length >= 2 ? s.hubClimb(num(Math.min(...climbs), lang), num(Math.max(...climbs), lang)) : ""].filter(Boolean).join(" ");
+  const item = (r: Race) => `<li><a href="${esc(rel(path, racePath(lang, ctx.slugs.get(r.id)!)))}">${esc(raceTitle(r, lang))}</a><span>${esc([r.next_date && r.next_date >= today ? cap(dateLong(r.next_date, lang)) : t.noDateGroup, whereText(r, lang), kmText(r.km, lang), courseless(r) && !r.ascent ? null : `↑ ${num(r.ascent, lang)} m`].filter(Boolean).join(" · "))}</span></li>`;
+  const hero = `<div class="race-hero"><div class="eyebrow">${esc(t.races)}</div><h1>${esc(h.name[lang])}</h1><p class="lead">${esc(intro)}</p><div class="ctas">${storeBadge(path, lang, ctx.appStore)}</div><p class="brandline">${esc(t.brandLine)}</p></div>`;
+  const list = `<section aria-labelledby="h-list"><h2 id="h-list">${esc(t.count(rs.length))}</h2><ul class="list">${rs.map(item).join("")}</ul></section>`;
+  const more = hubNav((ctx.hubs ?? []).filter((x) => x.kind !== "city" || x.races[0].country_code === rs[0].country_code), lang, path, s.hubMore, h);
+  const back = `<section><p><a href="${esc(rel(path, indexPath(lang)))}">${esc(t.allRaces)}</a></p><p class="note">${esc(t.notAffiliatedAll)}</p></section>`;
+  const ld = [crumbsLd([{ name: t.home, path: L[lang].home }, { name: t.races, path: indexPath(lang) }, { name: h.name[lang], path }]),
+    { "@context": "https://schema.org", "@type": "ItemList", name: h.name[lang], numberOfItems: rs.length,
+      itemListElement: rs.slice(0, 100).map((r, i) => ({ "@type": "ListItem", position: i + 1, url: abs(racePath(lang, ctx.slugs.get(r.id)!)), name: raceTitle(r, lang) })) }];
+  return frame({ lang, path, title: `${h.name[lang]} – ${s.hubTail} | Mila`, description: s.hubDesc(h.name[lang], rs.length), css: ctx.css, today, alternates, appId: ctx.appId,
+    og: { ...ctx.ogImage(null, lang), alt: h.name[lang] }, ld, body: `${hero}${list}${more}${back}`,
+    crumbs: [{ name: t.home, path: L[lang].home }, { name: t.races, path: indexPath(lang) }, { name: h.name[lang] }] });
+}
+
+// ---- the race page's FAQ and pace table
+
+/** The race page's questions and answers, from the data there is; the same text goes into the FAQPage markup. */
+export function faqItems(r: Race, lang: Lang, today: string): { q: string; a: string }[] {
+  const t = T[lang], s = S[lang], n = raceTitle(r, lang), out: { q: string; a: string }[] = [];
+  if (r.next_date && r.next_date >= today) out.push({ q: s.qWhen(n), a: s.aWhen(n, dateLong(r.next_date, lang), r.prelim) });
+  else if (r.next_date) out.push({ q: s.qWhen(n), a: s.aPassed(dateLong(r.next_date, lang)) });
+  else out.push({ q: s.qWhen(n), a: s.aNoDate(r.past_dates.length ? dateShort(r.past_dates[r.past_dates.length - 1], lang) : null) });
+  const starts = r.info?.starts ?? [];
+  if (starts.length && r.next_date && r.next_date >= today) out.push({ q: s.qStart(n), a: s.aStart(starts.map((x) => `${x.label ? `${x.label}: ` : ""}${s.clock(x.time)}`).join(", ")) });
+  const bare = courseless(r), k = kmText(r.km, lang);
+  // a race without a course: the climb only as the organiser states it, never a word about a profile nobody has
+  out.push({ q: s.qDist(n), a: bare ? (r.ascent ? s.aDistOrg(k, num(r.ascent, lang)) : s.aDistNoClimb(k)) : s.aDist(k, num(r.ascent, lang), r.descent !== null ? num(r.descent, lang) : null, r.max_ele !== null ? num(r.max_ele, lang) : null) });
+  const climbs = [...r.climbs].sort((a, b) => a.km - b.km);
+  if (!bare) {
+    const big = [...r.climbs].sort((a, b) => b.gain - a.gain)[0], perKm = num(r.ascent / r.km, lang, r.ascent / r.km < 10 ? 1 : 0);
+    out.push({ q: s.qCourse(n), a: s.aCourse(t.hilly[hilliness(r)], perKm, r.course ? isLoop(r.course.pts) : null, r.trail, big ? s.aClimbs(climbs.length, num(big.km, lang, 1), num(big.gain, lang), lenText(big.len, lang)) : s.aNoClimbs) });
+  }
+  if (r.aid_stations?.length) out.push({ q: s.qAid(n), a: s.aAid(r.aid_stations.length, r.aid_stations.map((x) => `${t.at(num(x.km, lang, 1))}${x.what.length ? ` (${x.what.map((w) => t.aidWords[w] ?? w).join(", ")})` : ""}`).join("; ")) });
+  const cuts = r.info?.cutoffs ?? [];
+  if (cuts.length) out.push({ q: s.qCut(n), a: s.aCut(cuts.map((x) => `${t.at(num(x.km, lang, 1))}: ${x.clock ? t.clock(x.clock) : t.elapsed(Math.floor(x.elapsed_min! / 60), x.elapsed_min! % 60)}`).join("; ")) });
+  // pacing in general words: even effort, the climbs where they are; nothing of the coach's own way
+  const hills = [...r.climbs].sort((a, b) => b.gain - a.gain).slice(0, 4).sort((a, b) => a.km - b.km).map((c) => t.at(num(c.km, lang, 1)));
+  const listed = hills.length > 1 ? `${hills.slice(0, -1).join(", ")} ${s.and} ${hills[hills.length - 1]}` : hills.join("");
+  out.push({ q: s.qPace(n), a: `${bare ? s.aPaceEven : hills.length && hilliness(r) >= 1 ? s.aPaceHills(listed) : `${s.aPaceEven} ${s.aPaceFlat(t.hilly[hilliness(r)])}`} ${s.aPaceTail}` });
+  return out;
+}
+
+/** Target times for the pace table: the common ones for the classic distances, else round times from a spread of paces. Seconds. */
+export function paceTargets(km: number): number[] {
+  if (km >= 4.5 && km <= 5.5) return [20, 25, 30, 35].map((m) => m * 60);
+  if (km >= 9.5 && km <= 10.5) return [40, 50, 60, 70].map((m) => m * 60);
+  if (km >= 20.6 && km <= 21.7) return [90, 105, 120, 135].map((m) => m * 60);
+  if (km >= 41.7 && km <= 42.8) return [180, 210, 240, 270].map((m) => m * 60);
+  const round = (s: number) => { const u = s >= 3600 ? 900 : s >= 1200 ? 300 : 60; return Math.round(s / u) * u; };
+  return [...new Set([300, 360, 420, 480].map((p) => round(p * km)))];
+}
+/** Where the splits fall: round kilometres (and halfway on a marathon), at most four before the finish. */
+export function splitPoints(km: number): number[] {
+  if (km >= 41.7 && km <= 42.8) return [10, 21.1, 30, 40];
+  const stepKm = km <= 6 ? 1 : km <= 12 ? 2.5 : km <= 25 ? 5 : 10, out: number[] = [];
+  for (let x = stepKm; x < km - stepKm * 0.4 && out.length < 4; x += stepKm) out.push(Math.round(x * 10) / 10);
+  return out;
+}
+/** "4:59" (minutes and seconds) or "1:45:00". */
+const paceText = (secPerKm: number) => { const s = Math.round(secPerKm); return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`; };
+export const finishText = (s: number) => clockTime(s);
+/** The pace table: per target time the pace per km and the splits at even pace, arithmetic only. Races past 60 km get none (an even
+ *  pace over an ultra says nothing useful). */
+export function paceSection(r: Race, lang: Lang): string {
+  if (r.km > 60) return "";
+  const s = S[lang], t = T[lang], n = raceTitle(r, lang), splits = splitPoints(r.km);
+  const rows = paceTargets(r.km).map((sec) => {
+    const per = sec / r.km;
+    return `<h3>${esc(s.paceRow(n, finishText(sec)))}</h3><p>${esc(`${paceText(per)} ${s.perKm}`)} · ${splits.map((k) => esc(`${t.at(num(k, lang, nearInt(k, 0.01) ? 0 : 1))}: ${clockTime(per * k)}`)).join(" · ")} · ${esc(`${s.finish}: ${finishText(sec)}`)}</p>`;
+  }).join("");
+  return `<section aria-labelledby="h-pace"><h2 id="h-pace">${esc(s.paceH)}</h2>${rows}<p class="note">${esc(s.paceNote)}</p></section>`;
+}
+/** The FAQ section and its FAQPage markup. */
+export function faqSection(r: Race, lang: Lang, today: string): { html: string; ld: object } {
+  const items = faqItems(r, lang, today);
+  return {
+    html: `<section aria-labelledby="h-faq" class="faq"><h2 id="h-faq">${esc(S[lang].faqH)}</h2>${items.map((x) => `<h3>${esc(x.q)}</h3><p>${esc(x.a)}</p>`).join("")}</section>`,
+    ld: { "@context": "https://schema.org", "@type": "FAQPage", inLanguage: lang, mainEntity: items.map((x) => ({ "@type": "Question", name: x.q, acceptedAnswer: { "@type": "Answer", text: x.a } })) },
+  };
+}
+
+// ---- guides (drafts until Patrik approves them: only entries with "approved": true are ever rendered)
+
+export type GuideBlock = { h?: string; p?: string; ul?: string[] };
+export type GuideText = { title: string; description: string; blocks: GuideBlock[] };
+export type Guide = { approved: boolean; slug: Partial<Record<Lang, string>>; updated?: string } & Partial<Record<Lang, GuideText>>;
+const GUIDE_DIR: Record<Lang, string> = { sv: "guider", en: "en/guides", de: "de/ratgeber" };
+export const guidePath = (lang: Lang, slug: string) => `${GUIDE_DIR[lang]}/${slug}/`;
+/** The languages a guide can be published in: approved, with a text and a valid slug. */
+export const guideLangs = (g: Guide): Lang[] => (g.approved === true ? LANGS.filter((l) => g[l]?.title && g[l]?.blocks?.length && typeof g.slug?.[l] === "string" && SLUG.test(g.slug[l]!)) : []);
+/** One guide in one language: its text, then how Mila helps (the same call to action as the race pages). */
+export function guidePage(g: Guide, lang: Lang, ctx: Ctx): string {
+  const t = T[lang], doc = g[lang]!, path = guidePath(lang, g.slug[lang]!), langs = guideLangs(g);
+  const alternates = Object.fromEntries(langs.map((l) => [l, guidePath(l, g.slug[l]!)])) as Partial<Record<Lang, string>>;
+  const body = doc.blocks.map((b) => `${b.h ? `<h2>${esc(b.h)}</h2>` : ""}${b.p ? `<p>${esc(b.p)}</p>` : ""}${b.ul?.length ? `<ul>${b.ul.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}`).join("");
+  const cta = `<div class="ctabox"><h2>${esc(t.ctaH)}</h2><p class="sub">${esc(t.ctaText)}</p><div class="ctas">${storeBadge(path, lang, ctx.appStore)}</div><p class="brandline">${esc(t.brandLine)}</p></div>`;
+  const ld = [{ "@context": "https://schema.org", "@type": "Article", headline: doc.title, description: doc.description, inLanguage: lang, url: abs(path),
+    ...(g.updated && isDay(g.updated) ? { dateModified: g.updated } : {}), image: [ctx.ogImage(null, lang).image],
+    author: { "@type": "Organization", name: "Mila", url: `${SITE}/` }, publisher: { "@type": "Organization", name: "Mila", url: `${SITE}/`, logo: { "@type": "ImageObject", url: `${SITE}/logo.png` } } },
+    crumbsLd([{ name: t.home, path: L[lang].home }, { name: S[lang].guidesCrumb, path }, { name: doc.title, path }])];
+  return frame({ lang, path, title: `${doc.title} | Mila`, description: doc.description, css: ctx.css, today: ctx.today, alternates, appId: ctx.appId,
+    og: { ...ctx.ogImage(null, lang), alt: doc.title }, ld, body: `<article class="prose"><h1>${esc(doc.title)}</h1>${body}</article>${cta}`,
+    crumbs: [{ name: t.home, path: L[lang].home }, { name: doc.title }] });
+}
+
+// ---- IndexNow: the key is public by design (the file at the root proves the site owns it); only changed addresses are sent
+
+export const INDEXNOW_ENDPOINT = "https://api.indexnow.org/indexnow";
+/** At most this many addresses a run (the rest are in the sitemap); IndexNow takes 10 000 a request. */
+export const INDEXNOW_MAX = 2000;
+export const isIndexNowKey = (k: unknown): k is string => typeof k === "string" && /^[a-f0-9]{32}$/.test(k);
+/** Sends the changed addresses (only the site's own, at most INDEXNOW_MAX) to IndexNow; returns how many were sent and the answer. */
+export async function indexNowPing(urls: string[], key: string, fetchFn: typeof fetch = fetch): Promise<{ sent: number; status: number | null }> {
+  if (!isIndexNowKey(key)) throw new Error("indexnow: no valid key");
+  const list = [...new Set(urls.map((u) => u.trim()).filter((u) => u.startsWith(`${SITE}/`) && !/[\s<>"']/.test(u)))].slice(0, INDEXNOW_MAX);
+  if (!list.length) return { sent: 0, status: null };
+  const res = await fetchFn(INDEXNOW_ENDPOINT, { method: "POST", headers: { "Content-Type": "application/json; charset=utf-8" },
+    body: JSON.stringify({ host: new URL(SITE).host, key, keyLocation: `${SITE}/${key}.txt`, urlList: list }), signal: AbortSignal.timeout(30_000) });
+  await res.body?.cancel().catch(() => {});
+  return { sent: list.length, status: res.status };
 }
 
 // ------------------------------------------------------------------------------------------------------------- sitemap and robots
@@ -972,13 +1316,15 @@ async function readBytes(p: string): Promise<Uint8Array | null> { try { return a
 const sameBytes = (a: Uint8Array, b: Uint8Array) => a.length === b.length && a.every((v, i) => v === b[i]);
 
 /** Writes the race pages, the indexes, the share images, sitemap.xml, robots.txt and the slug map into `out` (the site's root). */
-export async function generate(o: { out: string; races: Race[]; ids?: Set<string>; today: string; png?: PngRenderer | null; appStore?: string; allowMassRemoval?: boolean; log?: (s: string) => void }): Promise<Report> {
+export async function generate(o: { out: string; races: Race[]; ids?: Set<string>; today: string; png?: PngRenderer | null; appStore?: string; allowMassRemoval?: boolean; log?: (s: string) => void;
+  /** seo: the App Store id (Smart App Banner), the IndexNow key (its file at the root), the guides (only approved ones are rendered). */
+  appStoreId?: string | null; indexNowKey?: string | null; guides?: Guide[] }): Promise<Report> {
   const out = o.out.replace(/\/+$/, ""), today = o.today, log = o.log ?? (() => {});
   const prev = await readText(`${out}/lopp/slugs.json`);
   const state: State = prev ? JSON.parse(prev) : { version: 1, races: {}, pages: {}, og: {} };
   state.races ??= {}; state.pages ??= {}; state.og ??= {}; state.retired ??= [];
   const feedIds = o.ids ?? new Set(o.races.map((r) => r.id)), usable = new Set(o.races.map((r) => r.id));
-  const report: Report = { races: o.races.length, active: 0, removed: [], added: [], moved: [], written: 0, pngs: 0 };
+  const report: Report = { races: o.races.length, active: 0, removed: [], added: [], moved: [], written: 0, pngs: 0, changed: [], hubs: 0 };
 
   // 1. who left: published races the feed no longer names, and races it still names but whose row cleanRace refuses (their pages leave
   //    rather than stay up stale with facts the feed no longer stands behind). Many at once is a broken feed, not the register (or a feed
@@ -1061,13 +1407,18 @@ export async function generate(o: { out: string; races: Race[]; ids?: Set<string
   for (const l of LANGS) defaults.set(l, await exists(ogDefaultPath(l)));
   const ogImage = (r: Race | null, lang: Lang) => r && hasOg.has(r.id) ? { image: abs(ogPath(slugs.get(r.id)!)), large: true }
     : defaults.get(lang) ? { image: abs(ogDefaultPath(lang)), large: true } : { image: `${SITE}/logo.png`, large: false };
-  const ctx: Ctx = { today, css, appStore, active, slugs, ogImage, sceneJs: await exists("scene.js") };
+  // seo: the hubs, and the races whose page title another race's would repeat (their titles add the place)
+  const hubs = buildHubs(active, today), titles = new Map<string, string[]>();
+  for (const r of active) { const k = pageTitle(r, "sv"); titles.set(k, [...(titles.get(k) ?? []), r.id]); }
+  const titleClash = new Set([...titles.values()].filter((ids) => ids.length > 1).flat());
+  const ctx: Ctx = { today, css, appStore, active, slugs, ogImage, sceneJs: await exists("scene.js"), appId: smartBannerMeta(o.appStoreId) ? o.appStoreId : null, hubs, titleClash };
 
   // 4. the race pages, and the pages of races that left; every indexed page's lastmod moves only when its content does
   const pages: State["pages"] = {};
   const track = async (path: string, html: string) => {
     const h = await sha(stable(html)), was = state.pages[path];
     pages[path] = { hash: h, lastmod: was && was.hash === h ? was.lastmod : today };
+    if (!was || was.hash !== h) report.changed.push(path.startsWith("/") ? staticUrl(path.slice(1)) : abs(path));
     return pages[path].lastmod;
   };
   const raceEntries: SitemapEntry[] = [];
@@ -1090,8 +1441,49 @@ export async function generate(o: { out: string; races: Race[]; ids?: Set<string
   for (const slug of leaving) {
     for (const lang of LANGS) {
       const dir = `${out}/${racePath(lang, slug)}`.replace(/\/$/, "");
-      try { await Deno.remove(dir, { recursive: true }); written++; } catch (e) { if (!(e instanceof Deno.errors.NotFound)) throw e; }
+      try { await Deno.remove(dir, { recursive: true }); written++; report.changed.push(abs(racePath(lang, slug))); } catch (e) { if (!(e instanceof Deno.errors.NotFound)) throw e; }
     }
+  }
+  // seo: the hubs, every language; a hub folder that is no longer a hub (below two races, a month gone by) is deleted
+  const hubEntries: SitemapEntry[] = [], keepHub = new Set<string>();
+  for (const h of hubs) {
+    const alt = Object.fromEntries([...LANGS.map((l) => [l, abs(hubPath(l, h))]), ["x-default", abs(hubPath("en", h))]]);
+    for (const lang of LANGS) {
+      const html = hubPage(h, lang, ctx), path = hubPath(lang, h);
+      keepHub.add(path);
+      await put(`${path}index.html`, html);
+      hubEntries.push({ loc: abs(path), lastmod: await track(path, html), alternates: alt });
+    }
+  }
+  report.hubs = hubs.length;
+  for (const lang of LANGS) for (const kind of HUB_KINDS) {
+    const base = `${L[lang].dir}/${HUB_DIR[lang][kind]}`;
+    try {
+      for await (const e of Deno.readDir(`${out}/${base}`)) {
+        if (!e.isDirectory || keepHub.has(`${base}/${e.name}/`)) continue;
+        await Deno.remove(`${out}/${base}/${e.name}`, { recursive: true }); written++; report.changed.push(abs(`${base}/${e.name}/`));
+      }
+    } catch (e) { if (!(e instanceof Deno.errors.NotFound)) throw e; }
+  }
+  // seo: the approved guides (none until Patrik approves the drafts); a guide no longer approved leaves
+  const guideEntries: SitemapEntry[] = [], keepGuide = new Set<string>();
+  for (const g of o.guides ?? []) {
+    const langs = guideLangs(g);
+    const alt = langs.length > 1 ? Object.fromEntries([...langs.map((l) => [l, abs(guidePath(l, g.slug[l]!))]), ["x-default", abs(guidePath(langs.includes("en") ? "en" : langs[0], g.slug[langs.includes("en") ? "en" : langs[0]]!))]]) : undefined;
+    for (const lang of langs) {
+      const html = guidePage(g, lang, ctx), path = guidePath(lang, g.slug[lang]!);
+      keepGuide.add(path);
+      await put(`${path}index.html`, html);
+      guideEntries.push({ loc: abs(path), lastmod: await track(path, html), alternates: alt });
+    }
+  }
+  for (const lang of LANGS) {
+    try {
+      for await (const e of Deno.readDir(`${out}/${GUIDE_DIR[lang]}`)) {
+        if (!e.isDirectory || keepGuide.has(`${GUIDE_DIR[lang]}/${e.name}/`)) continue;
+        await Deno.remove(`${out}/${GUIDE_DIR[lang]}/${e.name}`, { recursive: true }); written++; report.changed.push(abs(`${GUIDE_DIR[lang]}/${e.name}/`));
+      }
+    } catch (e) { if (!(e instanceof Deno.errors.NotFound)) throw e; }
   }
   // 5. the indexes, page by page in the same order in every language, and no page left over from a longer list
   const ordered = indexOrder(active, today), count = Math.max(1, Math.ceil(ordered.length / INDEX_PAGE_SIZE)), indexEntries: SitemapEntry[] = [];
@@ -1120,8 +1512,10 @@ export async function generate(o: { out: string; races: Race[]; ids?: Set<string
     const alt = g && LANGS.every((l) => roots.includes(g[l])) ? Object.fromEntries([...LANGS.map((l) => [l, staticUrl(g[l])]), ["x-default", staticUrl(g.en)]]) : undefined;
     staticEntries.push({ loc: staticUrl(file), lastmod: await track(`/${file}`, html), alternates: alt });
   }
-  await put("sitemap.xml", sitemapXml([...staticEntries, ...indexEntries, ...raceEntries]));
+  await put("sitemap.xml", sitemapXml([...staticEntries, ...indexEntries, ...hubEntries, ...guideEntries, ...raceEntries]));
   await put("robots.txt", ROBOTS);
+  // seo: IndexNow's key file at the root (the key is public by design)
+  if (isIndexNowKey(o.indexNowKey)) await put(`${o.indexNowKey}.txt`, o.indexNowKey);
   // 7. the slug map, sorted, so it only changes when something did
   state.pages = Object.fromEntries(Object.entries(pages).sort(([a], [b]) => a.localeCompare(b)));
   state.races = Object.fromEntries(Object.entries(state.races).sort(([, a], [, b]) => a.slug.localeCompare(b.slug)));
@@ -1132,6 +1526,18 @@ export async function generate(o: { out: string; races: Race[]; ids?: Set<string
   return report;
 }
 
+/** race_pages.json next to this script (published as tools/race_pages.json): the App Store link and id, and the IndexNow key. */
+export async function siteConfig(file = new URL("./race_pages.json", import.meta.url)): Promise<{ appStoreId: string | null; indexNowKey: string | null }> {
+  try {
+    const c = JSON.parse(await Deno.readTextFile(file));
+    return { appStoreId: smartBannerMeta(String(c?.appStoreId ?? "")) ? String(c.appStoreId) : null, indexNowKey: isIndexNowKey(c?.indexNowKey) ? c.indexNowKey : null };
+  } catch { return { appStoreId: null, indexNowKey: null }; }
+}
+/** The guides' data file next to this script (race_pages_guides.json: a list of Guide); none when it is not there. Only entries with
+ *  "approved": true ever become pages. */
+export async function configuredGuides(file = new URL("./race_pages_guides.json", import.meta.url)): Promise<Guide[]> {
+  try { const g = JSON.parse(await Deno.readTextFile(file)); return Array.isArray(g) ? g.filter((x) => x && typeof x === "object") : []; } catch { return []; }
+}
 /** The App Store link: "appStoreUrl" in race_pages.json next to this script, else APP_STORE_URL. */
 export async function configuredAppStore(file = new URL("./race_pages.json", import.meta.url)): Promise<string> {
   try { return safeUrl(JSON.parse(await Deno.readTextFile(file))?.appStoreUrl, true) ?? APP_STORE_URL; } catch { return APP_STORE_URL; }
@@ -1143,10 +1549,24 @@ if (import.meta.main) {
   const today = opt("--today") ?? new Date().toISOString().slice(0, 10);
   if (!isDay(today)) { console.error("--today: YYYY-MM-DD"); Deno.exit(2); }
   try {
+    const cfg = await siteConfig();
+    // the workflow's last step: send the addresses the build changed to IndexNow (--indexnow-ping <file>, one address a line)
+    const ping = opt("--indexnow-ping");
+    if (ping) {
+      if (!cfg.indexNowKey) { console.log("indexnow: no key in race_pages.json"); Deno.exit(0); }
+      const urls = (await readText(ping) ?? "").split("\n").filter(Boolean);
+      const r = await indexNowPing(urls, cfg.indexNowKey);
+      console.log(`indexnow: ${r.sent} addresses${r.status === null ? "" : `, answer ${r.status}`}`);
+      Deno.exit(0);
+    }
     const feed = await readFeed(opt("--feed") ?? FEED_URL);
     const png = args.includes("--no-png") ? null : await resvgRenderer();
-    const r = await generate({ out, races: feed.races, ids: feed.ids, today, png, appStore: await configuredAppStore(), allowMassRemoval: args.includes("--allow-mass-removal"), log: console.warn });
-    console.log(`race pages: ${r.active} races (${r.races} in the feed), ${r.added.length} new, ${r.moved.length} moved, ${r.removed.length} removed, ${r.pngs} images, ${r.written} files written`);
+    const r = await generate({ out, races: feed.races, ids: feed.ids, today, png, appStore: await configuredAppStore(), allowMassRemoval: args.includes("--allow-mass-removal"), log: console.warn,
+      appStoreId: cfg.appStoreId, indexNowKey: cfg.indexNowKey, guides: await configuredGuides() });
+    // the changed addresses for the IndexNow step (--changed <file>: outside what the workflow commits)
+    const changed = opt("--changed");
+    if (changed) await Deno.writeTextFile(changed, r.changed.join("\n") + (r.changed.length ? "\n" : ""));
+    console.log(`race pages: ${r.active} races (${r.races} in the feed), ${r.added.length} new, ${r.moved.length} moved, ${r.removed.length} removed, ${r.hubs} hubs, ${r.pngs} images, ${r.written} files written, ${r.changed.length} changed`);
   } catch (e) {
     console.error(String(e));
     Deno.exit(1);

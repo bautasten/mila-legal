@@ -1,0 +1,35 @@
+# Mila – running coach
+
+> Mila (Swedish: "Mila – löpcoach", German: "Mila – Laufcoach") is a running coach app for iPhone and Apple Watch. Tagline: "Rätt pass. Rätt dag." – the right run, on the right day. Every morning the coach looks at the runner's own data, form and life, gives its call for the day first and then today's session, all the way to the finish line of the runner's race.
+
+## Who it is for
+
+- Runners aged 18 and over, from the first easy runs to marathons, ultras and trail races.
+- iPhone users. Mila has its own Apple Watch app; other watches and rings (for example Garmin, COROS, Suunto and Polar) work when their app syncs to Apple Health. No watch: runs recorded with the iPhone work too.
+- Mila requires a subscription (with a free trial week in the App Store). It gives general training advice, not medical advice.
+
+## What Mila does
+
+- The coach judges every day: the coach's call first (ready, a normal day or take it easy), then today's session, adapted to sleep, load, how runs felt and what the runner tells the coach in their own words.
+- Plans: a weekly plan with strength programs and sessions the runner can move, a weekly review with next week's plan, and analysis after every run.
+- Races: Mila's race register with courses, elevation profiles, aid stations and cut-off times; a forecast, a pace plan for the hills, a fueling plan, a race guide and race morning in the app; race mode on Apple Watch; splits against the plan and the coach's race analysis afterwards.
+- Food: photograph or describe a meal; the coach estimates it and links it to the training.
+- Shoes: the coach judges how long each pair lasts for the runner; the shoe log can be imported from a picture or a CSV file.
+- Running form: still frames from a video (faces blurred) give observations and drills in the plan.
+- Watch: today's call and session on the wrist, complications, the coach's runs in the Workout app, race mode, and "How did the run go?" after a run.
+
+## Languages and data
+
+- The app and the site are in Swedish, English and German.
+- Accounts are stored in the EU (Ireland). Apple Health data is read on the phone; a summary goes to the coach only after the runner's consent. Mila never sells data or uses it for advertising.
+
+## Key pages
+
+- [Mila (English)](https://milacoach.app/): what Mila is and does
+- [Mila (svenska)](https://milacoach.app/sv.html)
+- [Mila (Deutsch)](https://milacoach.app/index-de.html)
+- [Races](https://milacoach.app/en/races/): courses, elevation profiles, pace tables and FAQs for the races in Mila's race register (Swedish: https://milacoach.app/lopp/, German: https://milacoach.app/de/laeufe/)
+- [Support and contact](https://milacoach.app/support.html)
+- [Privacy policy](https://milacoach.app/privacy-en.html)
+- [Terms of use](https://milacoach.app/terms-en.html)
+- [Sitemap](https://milacoach.app/sitemap.xml)

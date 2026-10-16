@@ -1,6 +1,8 @@
-# Loppsidor: Mila's public race pages (lopp/, en/races/, de/laeufe/, sitemap.xml, robots.txt) generated from the public race feed by
-# tools/race_pages.ts, every hour and on demand (Actions → Loppsidor → Run workflow). Commits only when a file changed; GitHub Pages
-# then publishes the commit. No secrets: the feed is public. The App Store link comes from tools/race_pages.json.
+# Loppsidor: Mila's public race pages (lopp/, en/races/, de/laeufe/ with their hubs, sitemap.xml, robots.txt, the IndexNow key file and,
+# once approved, the guides in guider/, en/guides/, de/ratgeber/) generated from the public race feed by tools/race_pages.ts, every hour
+# and on demand (Actions → Loppsidor → Run workflow). Commits only when a file changed; GitHub Pages then publishes the commit, and the
+# addresses that changed go to IndexNow (Bing and others). No secrets: the feed is public and the IndexNow key is public by design. The
+# App Store link and id and the IndexNow key come from tools/race_pages.json.
 # Source: backend/race_pages_workflow.yml in the Mila repo, published here as .github/workflows/race-pages.yml by backend/publish_legal.sh.
 name: Loppsidor
 
@@ -36,8 +38,8 @@ jobs:
         run: >
           deno run --no-prompt
           --allow-net=vfjofaniwtudzvadxpsd.supabase.co,cdn.jsdelivr.net
-          --allow-read=. --allow-write=.
-          tools/race_pages.ts --out .
+          --allow-read=. --allow-write=.,${{ runner.temp }}
+          tools/race_pages.ts --out . --changed ${{ runner.temp }}/indexnow-changed.txt
 
       - name: Commit and push when something changed
         id: push
@@ -45,7 +47,9 @@ jobs:
           # the identity for the whole job: a push that loses a race pulls with --rebase, which rewrites the commit and needs it too
           # (2026-10-15: "empty ident name" when the site was published at the same moment)
           git config user.name "Mila"; git config user.email "mila@users.noreply.github.com"
-          git add -A -- lopp en de sitemap.xml robots.txt
+          # the pages, the sitemap, robots.txt and the IndexNow key file ('*.txt'); the guides' folder once it exists (or as it leaves)
+          git add -A -- lopp en de sitemap.xml robots.txt '*.txt'
+          if [ -d guider ] || [ -n "$(git ls-files guider)" ]; then git add -A -- guider; fi
           if git diff --cached --quiet; then echo "Inga ändringar."; exit 0; fi
           git commit -qm "Loppsidor $(date -u +%F)"
           for i in 1 2 3; do
@@ -61,3 +65,14 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh api -X POST "repos/${{ github.repository }}/pages/builds" > /dev/null
+
+      # IndexNow: only the addresses this run changed (new, edited or gone; at most 2 000), after GitHub Pages has published them (it is
+      # asked for above; at most five minutes here). The key is public by design (its file is at the site's root); no secret is sent
+      - name: Tell search engines what changed (IndexNow)
+        if: steps.push.outputs.pushed == 'true'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for i in $(seq 30); do [ "$(gh api "repos/${{ github.repository }}/pages/builds/latest" -q .status 2>/dev/null)" = built ] && break; sleep 10; done
+          deno run --no-prompt --allow-net=api.indexnow.org --allow-read=tools,${{ runner.temp }} tools/race_pages.ts --indexnow-ping ${{ runner.temp }}/indexnow-changed.txt

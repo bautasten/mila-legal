@@ -1483,6 +1483,12 @@
    "first": "2026-10-15",
    "og": "e676b05e36b43ceb9e084e98"
   },
+  "3fdac28a-3654-424a-9f5e-741c50012a32": {
+   "slug": "tata-mumbai-marathon-marathon-42k",
+   "name": "Tata Mumbai Marathon – Marathon",
+   "first": "2026-10-17",
+   "og": "da9fb1901d0ed30481a986f3"
+  },
   "c68ff202-984a-4474-a709-70dc560215d9": {
    "slug": "tds-sur-les-traces-des-ducs-de-savoie-hoka-utmb-mont-blanc-145k",
    "name": "TDS – Sur les Traces des Ducs de Savoie (HOKA UTMB Mont-Blanc)",
@@ -1650,6 +1656,12 @@
    "name": "Umåker Trail 15,6 km",
    "first": "2026-10-15",
    "og": "861e9b70f0353ca0c2bdb06f"
+  },
+  "8f673a65-f447-468e-bfc6-6160177c5225": {
+   "slug": "uniper-dusseldorf-marathon-42k",
+   "name": "Uniper Düsseldorf Marathon",
+   "first": "2026-10-17",
+   "og": "d0cc7122f3574a9a16c5da93"
   },
   "77a24fde-e990-4202-a666-3ace659befff": {
    "slug": "ursvik-ultra-uu-hardingen-45-km",
@@ -1880,8 +1892,8 @@
    "lastmod": "2026-10-16"
   },
   "de/laeufe/": {
-   "hash": "21524c7c12428b94f42648b0",
-   "lastmod": "2026-10-16"
+   "hash": "2763703de4bd1979b9a63204",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/101a-corrida-internacional-de-sao-silvestre-15k/": {
    "hash": "d79354d0325024163404c3f1",
@@ -1912,8 +1924,8 @@
    "lastmod": "2026-10-16"
   },
   "de/laeufe/49-leipzig-marathon-2027-marathon-42k/": {
-   "hash": "dd66866b7e89f8c184f32ccd",
-   "lastmod": "2026-10-16"
+   "hash": "316fa8cc95b190f7ceb97d7b",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/54-int-wolfgangseelauf-27-km-klassiker/": {
    "hash": "59f6b82c70866763aee55396",
@@ -2008,12 +2020,12 @@
    "lastmod": "2026-10-16"
   },
   "de/laeufe/berlin-marathon-fran-2027-generali-berlin-marathon-42k/": {
-   "hash": "2750f5c20171dc5fcfac0f02",
-   "lastmod": "2026-10-16"
+   "hash": "13e5621caa88d941309e1df3",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/berliner-halbmarathon-21k/": {
-   "hash": "64628637977680fcec9470a7",
-   "lastmod": "2026-10-16"
+   "hash": "20390934be767d84872ae2f8",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/bestseller-aarhus-city-half-21k/": {
    "hash": "c94b6d4a225aa43ffe62ca78",
@@ -2156,36 +2168,36 @@
    "lastmod": "2026-10-16"
   },
   "de/laeufe/deutsche-post-marathon-bonn-marathon-42k/": {
-   "hash": "b827d419720303122e0cd309",
-   "lastmod": "2026-10-16"
+   "hash": "9121487b98ccda13f9fa786d",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/dhl-stafetten-kobenhavn-5k/": {
    "hash": "aa4fdcd42d7fa4726bc0d0dd",
    "lastmod": "2026-10-16"
   },
   "de/laeufe/distanz/10-km/": {
-   "hash": "95078a43bf61222f8f66f485",
-   "lastmod": "2026-10-16"
+   "hash": "2d69ec56e4107c69138d6a76",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/distanz/5-km/": {
-   "hash": "4bfc2f8c6c35661b722a99b9",
-   "lastmod": "2026-10-16"
+   "hash": "fe7bee9077387709ae3be79e",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/distanz/halbmarathon/": {
-   "hash": "4eedb9fb43638d3d3a7d63c2",
-   "lastmod": "2026-10-16"
+   "hash": "43bbde5c9e0bba093d8815e7",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/distanz/marathon/": {
-   "hash": "a813ab13902384e21538f870",
-   "lastmod": "2026-10-16"
+   "hash": "3678d80083fd5a6c3aef398b",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/distanz/trail/": {
-   "hash": "9cc0ccf679f12e74e1a646f2",
-   "lastmod": "2026-10-16"
+   "hash": "c0c6de56e4497ccdd9559f64",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/distanz/ultra/": {
-   "hash": "010649d138613d744ce45069",
-   "lastmod": "2026-10-16"
+   "hash": "a7ba2ca35a5d90bba38d6ecc",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/dnb-oslo-maraton-maraton-43k/": {
    "hash": "5fb26db692ca6f4f2da95a30",
@@ -2196,8 +2208,8 @@
    "lastmod": "2026-10-16"
   },
   "de/laeufe/dubai-marathon-42k/": {
-   "hash": "f02072fb4497973060c8fca6",
-   "lastmod": "2026-10-16"
+   "hash": "54e7e0bdef4f210537fb0c7d",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/ecotrail-oslo-trail-80-km/": {
    "hash": "6cc7671fb16389dbadbdacca",
@@ -2340,8 +2352,8 @@
    "lastmod": "2026-10-16"
   },
   "de/laeufe/harzquerung-lauf-53-km-wernigerode-nordhausen/": {
-   "hash": "9b3ecce37336956358c23cb2",
-   "lastmod": "2026-10-16"
+   "hash": "5382afd44f198eb47582fd4a",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/hasselbyloppet-10k/": {
    "hash": "8add777cecbd13ca0d98eaf2",
@@ -2468,132 +2480,136 @@
    "lastmod": "2026-10-16"
   },
   "de/laeufe/land/australien/": {
-   "hash": "2b4ef6032147c608599e9f08",
-   "lastmod": "2026-10-16"
+   "hash": "c945e11b982571d5805b1be9",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/land/belgien/": {
-   "hash": "29398bc0ee1a8298d82b0bdf",
-   "lastmod": "2026-10-16"
+   "hash": "8de52bba364b10f610e753c1",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/land/brasilien/": {
-   "hash": "efa2532438b15641d061c15f",
-   "lastmod": "2026-10-16"
+   "hash": "7092129f89a78b26e4d1d241",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/land/danemark/": {
-   "hash": "863fcaadf6898709bdf6a76a",
-   "lastmod": "2026-10-16"
+   "hash": "cb9b0d9622756c92983b764f",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/land/deutschland/": {
-   "hash": "25a22a44a6a13490cbc040ec",
-   "lastmod": "2026-10-16"
+   "hash": "3eadac40801408b873f5aa22",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/land/finnland/": {
-   "hash": "0a1e28be30e7212444a73c5f",
-   "lastmod": "2026-10-16"
+   "hash": "99af57405ddc447940bf2bd7",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/land/frankreich/": {
-   "hash": "2738dd6826590f6e12c804db",
-   "lastmod": "2026-10-16"
+   "hash": "45368117cfb598cbb90fb8c1",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/land/griechenland/": {
-   "hash": "cb85cac3ba73c9707bff58d7",
-   "lastmod": "2026-10-16"
+   "hash": "d1f8e5c0d2f657fcb2529f2c",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/land/hongkong/": {
-   "hash": "6eab6b1caa1f2800231aaf30",
-   "lastmod": "2026-10-16"
+   "hash": "dd17f01639a045eb0c8c4c19",
+   "lastmod": "2026-10-17"
+  },
+  "de/laeufe/land/indien/": {
+   "hash": "3ff981405abaeac979707312",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/land/irland/": {
-   "hash": "f7aac5c04d51035339c66a19",
-   "lastmod": "2026-10-16"
+   "hash": "e99e70fa5e724194ce542de4",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/land/island/": {
-   "hash": "1f56cb30c1b2773d3cc9baf0",
-   "lastmod": "2026-10-16"
+   "hash": "a72544593fd6e0cb0792b9d2",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/land/israel/": {
-   "hash": "efa8637f0586fde08996613e",
-   "lastmod": "2026-10-16"
+   "hash": "849f916a3a478876b4e18034",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/land/italien/": {
-   "hash": "7f83fccc8d4c9b3625c519dd",
-   "lastmod": "2026-10-16"
+   "hash": "3903e7b2f5033301be841427",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/land/japan/": {
-   "hash": "fee6d648f6ddc110b7f49b66",
-   "lastmod": "2026-10-16"
+   "hash": "362ef2ef885b35ae9b375a7b",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/land/kanada/": {
-   "hash": "2aa25e10b25e02fd2e639a55",
-   "lastmod": "2026-10-16"
+   "hash": "3f4d5a00908c7cb6de91ace5",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/land/kina/": {
-   "hash": "b5d217e8fb7466c205d6d2ae",
-   "lastmod": "2026-10-16"
+   "hash": "a88bfbc5b941d5235d18d3f1",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/land/luxemburg/": {
-   "hash": "5abd710d50396a3ab2e59d7d",
-   "lastmod": "2026-10-16"
+   "hash": "8abc57cdfbfd630836a52036",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/land/marokko/": {
-   "hash": "a5bf691e54a47de51bd2756c",
-   "lastmod": "2026-10-16"
+   "hash": "6e16c532c5627a0e241bcf6f",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/land/neuseeland/": {
-   "hash": "7bf17ada073918fbe0378787",
-   "lastmod": "2026-10-16"
+   "hash": "a9b45fc7e909368dac73e4ae",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/land/niederlande/": {
-   "hash": "eea43cd06eb71daa4c819b17",
-   "lastmod": "2026-10-16"
+   "hash": "0cbf2430e842f4f3a844ccdb",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/land/norwegen/": {
-   "hash": "e2d31f24b111297c5ef3bd86",
-   "lastmod": "2026-10-16"
+   "hash": "bd08680968d86d30bd577f5e",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/land/osterreich/": {
-   "hash": "a7c6d8f14dcc93d19d05f20b",
-   "lastmod": "2026-10-16"
+   "hash": "fa6fe9be7b84ab0388adbdc7",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/land/polen/": {
-   "hash": "7835dc3dbc994cd515f48733",
-   "lastmod": "2026-10-16"
+   "hash": "82a648c79894b7ac97a7b1ba",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/land/portugal/": {
-   "hash": "e97d57755b329390ff5d41c7",
-   "lastmod": "2026-10-16"
+   "hash": "d63527dde7389cfa6c034f83",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/land/schweden/": {
-   "hash": "f8e612fe9d3a509095c6c44d",
-   "lastmod": "2026-10-16"
+   "hash": "e8991399509a384c977ee960",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/land/schweiz/": {
-   "hash": "392a43fa04ce6fd590cb8c28",
-   "lastmod": "2026-10-16"
+   "hash": "f9a60a24e372daed9858b11e",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/land/spanien/": {
-   "hash": "33d07da7d6a178971168971b",
-   "lastmod": "2026-10-16"
+   "hash": "75c95ec018ee512521379334",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/land/sudafrika/": {
-   "hash": "8063a9a3a995e601e8d7bf45",
-   "lastmod": "2026-10-16"
+   "hash": "915555474ddb2715712328b3",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/land/sydkorea/": {
-   "hash": "7b61845bb802bfc83d6c7310",
-   "lastmod": "2026-10-16"
+   "hash": "6fb71b48966a14a757ca1c2c",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/land/ungarn/": {
-   "hash": "9182687fa460770c46469686",
-   "lastmod": "2026-10-16"
+   "hash": "f9b8ce44f88731e6fd9cf9d8",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/land/vereinigte-staaten/": {
-   "hash": "6eb3189f6c94490699613739",
-   "lastmod": "2026-10-16"
+   "hash": "30aefb5dbf58516c41190fa7",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/land/vereinigtes-konigreich/": {
-   "hash": "36c328eb25700c2e8975c42b",
-   "lastmod": "2026-10-16"
+   "hash": "09c5dec9701d4ec2cd6f5bd6",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/laugavegur-ultra-marathon-52k/": {
    "hash": "1aa14551155f43960f9d9805",
@@ -2672,8 +2688,8 @@
    "lastmod": "2026-10-16"
   },
   "de/laeufe/marathon-hamburg-marathon-43k/": {
-   "hash": "2a34f041a954ca4ba3323fae",
-   "lastmod": "2026-10-16"
+   "hash": "c52b4ce99e1f5b31b31010d5",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/marathon-international-de-marrakech-marathon-42k/": {
    "hash": "44b2d6c4f22498be6525156b",
@@ -2728,8 +2744,8 @@
    "lastmod": "2026-10-16"
   },
   "de/laeufe/mein-freiburg-marathon-marathon-42k/": {
-   "hash": "5de4adb237762fa7c027f118",
-   "lastmod": "2026-10-16"
+   "hash": "bc54404365ea821ca19877f0",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/melbourne-marathon-42k/": {
    "hash": "12e3f9aebb015a29f898fb73",
@@ -2760,52 +2776,52 @@
    "lastmod": "2026-10-16"
   },
   "de/laeufe/monat/2026-10/": {
-   "hash": "2fcd05d2dae522b636404ce9",
-   "lastmod": "2026-10-16"
+   "hash": "5eb6969043012c2186d15db7",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/monat/2026-11/": {
-   "hash": "14c28e194f13255979a41d07",
-   "lastmod": "2026-10-16"
+   "hash": "3c1fdca618f76e5efecf50b2",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/monat/2026-12/": {
-   "hash": "81fe667554b6c88af3aebc81",
-   "lastmod": "2026-10-16"
+   "hash": "a8f48fc0292d6c89df9b412c",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/monat/2027-01/": {
-   "hash": "803b550215db05aa91423036",
-   "lastmod": "2026-10-16"
+   "hash": "4bf42b06702d6a0489bb7aab",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/monat/2027-02/": {
-   "hash": "2d820eb3cf45bf5e6cd75d00",
-   "lastmod": "2026-10-16"
+   "hash": "a05334ee4cf99c292fda9f2d",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/monat/2027-03/": {
-   "hash": "c7b45685991ac3759aeaa539",
-   "lastmod": "2026-10-16"
+   "hash": "1e7405b3f3f746f323a4eae9",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/monat/2027-04/": {
-   "hash": "c199bd71419f8cdf23e6f80c",
-   "lastmod": "2026-10-16"
+   "hash": "bf8def56ee973c5cb3d349b7",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/monat/2027-05/": {
-   "hash": "64f7d3eb137e521a2489196f",
-   "lastmod": "2026-10-16"
+   "hash": "ee22299c0463ff7918a07454",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/monat/2027-06/": {
-   "hash": "f2ed8cdb93b0230365b9b5bd",
-   "lastmod": "2026-10-16"
+   "hash": "91c677df2be37f1891377b6f",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/monat/2027-07/": {
-   "hash": "7e8aae9723e41f8a13206785",
-   "lastmod": "2026-10-16"
+   "hash": "d9c2f7f954c62990be38f905",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/monat/2027-08/": {
-   "hash": "c373eed78f89a2757086cd02",
-   "lastmod": "2026-10-16"
+   "hash": "c160138aa68979be08aab654",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/monat/2027-09/": {
-   "hash": "3d7323ca9f63394eae80cac3",
-   "lastmod": "2026-10-16"
+   "hash": "dbdd5cfa57d9b46751dbd329",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/montane-lakeland-100-164k/": {
    "hash": "d2b65dd48b20e3eb73546ff6",
@@ -2944,8 +2960,8 @@
    "lastmod": "2026-10-16"
   },
   "de/laeufe/seite/2/": {
-   "hash": "d9dc330f28c18c3fed2dda11",
-   "lastmod": "2026-10-16"
+   "hash": "4d22254e90f1c8366d611afc",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/sentrumslopet-10-km/": {
    "hash": "0655b2bf2f62afe3cb667406",
@@ -2980,88 +2996,88 @@
    "lastmod": "2026-10-16"
   },
   "de/laeufe/stadt/annecy/": {
-   "hash": "391d5cf07f2f76dc309cc893",
-   "lastmod": "2026-10-16"
+   "hash": "3f4e4a1c2694e862cc22a224",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/stadt/barcelona/": {
-   "hash": "01e2931d2816e045b1be02d4",
-   "lastmod": "2026-10-16"
+   "hash": "98e7a4d432288ebea26490f5",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/stadt/berlin/": {
-   "hash": "a4f402772e0115e9765b6dfd",
-   "lastmod": "2026-10-16"
+   "hash": "9dc16284917100c6b874e28c",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/stadt/budapest/": {
-   "hash": "826cdbf86d6430c1e8762d37",
-   "lastmod": "2026-10-16"
+   "hash": "09a31e90ab6e27622d3f3a5e",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/stadt/courmayeur/": {
-   "hash": "44225b79194378f315050002",
-   "lastmod": "2026-10-16"
+   "hash": "adbcc8b8cb98412db5cb7356",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/stadt/goteborg/": {
-   "hash": "f1da373ed7e2a9958afd0fd8",
-   "lastmod": "2026-10-16"
+   "hash": "5d7f1a730f20ba944e8278aa",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/stadt/hamburg/": {
-   "hash": "91e14336ea8c9240a31ed8c9",
-   "lastmod": "2026-10-16"
+   "hash": "23b2b3835b9472bcb0411182",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/stadt/harnosand/": {
-   "hash": "1bbd9e003fde527a28f13bb8",
-   "lastmod": "2026-10-16"
+   "hash": "5c0b41b8e1e8f52980413b9f",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/stadt/helsinki/": {
-   "hash": "506f5b488834fe5ecbb78922",
-   "lastmod": "2026-10-16"
+   "hash": "efa1cdf8d371febce906640c",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/stadt/katoomba/": {
-   "hash": "d83fec620527a41aa858f507",
-   "lastmod": "2026-10-16"
+   "hash": "122bab6cc3a1108dde1288c7",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/stadt/kobenhavn/": {
-   "hash": "d0072811290b47c64a0690f0",
-   "lastmod": "2026-10-16"
+   "hash": "8b765b134faaab7e7eea8aab",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/stadt/london/": {
-   "hash": "16b251a662792bb4bf07180c",
-   "lastmod": "2026-10-16"
+   "hash": "998212be2349c75e386b297f",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/stadt/milngavie/": {
-   "hash": "b03215d16ff01e408fc207dd",
-   "lastmod": "2026-10-16"
+   "hash": "5f9095e8b9a67a4db84b8967",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/stadt/oslo/": {
-   "hash": "18b6599f3d6de8ea90ea69b9",
-   "lastmod": "2026-10-16"
+   "hash": "1f3fdeb15e207d5f345dad3a",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/stadt/oxberg/": {
-   "hash": "3933ba729e983cabd10a8875",
-   "lastmod": "2026-10-16"
+   "hash": "c8f3d781efd9d828f4d7c65a",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/stadt/paris/": {
-   "hash": "f21dd075b3a7d8eae2eb7b73",
-   "lastmod": "2026-10-16"
+   "hash": "d3061f2084890abe1b9d0d38",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/stadt/philadelphia/": {
-   "hash": "d95954b176a41fceb5f31ecd",
-   "lastmod": "2026-10-16"
+   "hash": "fc8ed7e83f2f428ef15ead84",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/stadt/roma/": {
-   "hash": "7eaec6f06723c7f8e3afcc21",
-   "lastmod": "2026-10-16"
+   "hash": "694a4a60e5e38035a1fd3f32",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/stadt/stockholm-norra-djurgarden/": {
-   "hash": "910cd00cd64d66ee57f82876",
-   "lastmod": "2026-10-16"
+   "hash": "adc55df27c0c0b515ec785cc",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/stadt/stockholm/": {
-   "hash": "2e471a3df3ff13bfff1196be",
-   "lastmod": "2026-10-16"
+   "hash": "89d0d1e3013900d91955a938",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/stadt/zurich/": {
-   "hash": "354436c3e9ace77584cb70d8",
-   "lastmod": "2026-10-16"
+   "hash": "d7cf7a46536f2491e705410d",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/standard-chartered-hong-kong-marathon-marathon-42-195-km/": {
    "hash": "ede93fc6f9d4e5b6535ad015",
@@ -3080,8 +3096,8 @@
    "lastmod": "2026-10-16"
   },
   "de/laeufe/swb-marathon-bremen-marathon-42k/": {
-   "hash": "63bc09256ee780880b20d46f",
-   "lastmod": "2026-10-16"
+   "hash": "ba77aa457bc58c21ac77893f",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/swedbank-vilniaus-maratonas-maratonas-42-195-km/": {
    "hash": "89cf2b5c0473fa7bb3b2d320",
@@ -3110,6 +3126,10 @@
   "de/laeufe/tamarack-homes-ottawa-international-marathon-42k/": {
    "hash": "8a330eca72c0825318dd889c",
    "lastmod": "2026-10-16"
+  },
+  "de/laeufe/tata-mumbai-marathon-marathon-42k/": {
+   "hash": "f993e9768a900f239492d7d8",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/tds-sur-les-traces-des-ducs-de-savoie-hoka-utmb-mont-blanc-145k/": {
    "hash": "d920ff43e69b88b2a4349338",
@@ -3215,6 +3235,10 @@
    "hash": "eaecf9e4fd582d348be0c39f",
    "lastmod": "2026-10-16"
   },
+  "de/laeufe/uniper-dusseldorf-marathon-42k/": {
+   "hash": "e5217bc51866d853acf65f72",
+   "lastmod": "2026-10-17"
+  },
   "de/laeufe/ursvik-ultra-uu-hardingen-45-km/": {
    "hash": "088fb6f619193979d842ddc7",
    "lastmod": "2026-10-16"
@@ -3236,8 +3260,8 @@
    "lastmod": "2026-10-16"
   },
   "de/laeufe/vedanta-delhi-half-marathon-21k/": {
-   "hash": "1a826990d229ec858d667488",
-   "lastmod": "2026-10-16"
+   "hash": "3ca144cada8f03c1ef9bf60f",
+   "lastmod": "2026-10-17"
   },
   "de/laeufe/venicemarathon-42k/": {
    "hash": "7ce72af4c1bbfe27f5ff92d7",
@@ -3372,8 +3396,8 @@
    "lastmod": "2026-10-16"
   },
   "en/races/": {
-   "hash": "0d3a62b5a28462ac626685e5",
-   "lastmod": "2026-10-16"
+   "hash": "dbb611a968285491e28eb2ce",
+   "lastmod": "2026-10-17"
   },
   "en/races/101a-corrida-internacional-de-sao-silvestre-15k/": {
    "hash": "c0da17f2bd97f66fd48b1f15",
@@ -3404,8 +3428,8 @@
    "lastmod": "2026-10-16"
   },
   "en/races/49-leipzig-marathon-2027-marathon-42k/": {
-   "hash": "6c489604e34116c6e187e6cb",
-   "lastmod": "2026-10-16"
+   "hash": "651dc241542d942f2d09de95",
+   "lastmod": "2026-10-17"
   },
   "en/races/54-int-wolfgangseelauf-27-km-klassiker/": {
    "hash": "8ec6223cdef37538e5c5cafc",
@@ -3500,12 +3524,12 @@
    "lastmod": "2026-10-16"
   },
   "en/races/berlin-marathon-fran-2027-generali-berlin-marathon-42k/": {
-   "hash": "0c5ff95240d39b5b107e6103",
-   "lastmod": "2026-10-16"
+   "hash": "e9517bebd662a504f7422fb9",
+   "lastmod": "2026-10-17"
   },
   "en/races/berliner-halbmarathon-21k/": {
-   "hash": "3c8e11b78d486d34f735b656",
-   "lastmod": "2026-10-16"
+   "hash": "11f55e8292d109155f749eb9",
+   "lastmod": "2026-10-17"
   },
   "en/races/bestseller-aarhus-city-half-21k/": {
    "hash": "ca9a33556b6c9d17f383270f",
@@ -3604,88 +3628,88 @@
    "lastmod": "2026-10-16"
   },
   "en/races/city/annecy/": {
-   "hash": "058a1ef6cd8d9619ff394c5b",
-   "lastmod": "2026-10-16"
+   "hash": "c8121ed4f5da48ff2d2c865c",
+   "lastmod": "2026-10-17"
   },
   "en/races/city/barcelona/": {
-   "hash": "845e1ae7cf13376d0617e159",
-   "lastmod": "2026-10-16"
+   "hash": "11bd253a1609a5ecce26729a",
+   "lastmod": "2026-10-17"
   },
   "en/races/city/berlin/": {
-   "hash": "ee55daba3c1339fb47b9370f",
-   "lastmod": "2026-10-16"
+   "hash": "e22399cf465fd8494bf80351",
+   "lastmod": "2026-10-17"
   },
   "en/races/city/budapest/": {
-   "hash": "8c0cc10a28097a4d682b5a54",
-   "lastmod": "2026-10-16"
+   "hash": "af8f64516b1465312ca41442",
+   "lastmod": "2026-10-17"
   },
   "en/races/city/courmayeur/": {
-   "hash": "2e9e565a9030a992c4af0223",
-   "lastmod": "2026-10-16"
+   "hash": "6f6a29e0e7267113e88f0596",
+   "lastmod": "2026-10-17"
   },
   "en/races/city/goteborg/": {
-   "hash": "1bb3b69b12810b5662d923ed",
-   "lastmod": "2026-10-16"
+   "hash": "0f73b958953405d831d710d6",
+   "lastmod": "2026-10-17"
   },
   "en/races/city/hamburg/": {
-   "hash": "a99577806bc2c45f949afc80",
-   "lastmod": "2026-10-16"
+   "hash": "877b771e2994dcae478d4551",
+   "lastmod": "2026-10-17"
   },
   "en/races/city/harnosand/": {
-   "hash": "403728ba3fcfa3326d84ba96",
-   "lastmod": "2026-10-16"
+   "hash": "503dd33cf491282515fed548",
+   "lastmod": "2026-10-17"
   },
   "en/races/city/helsinki/": {
-   "hash": "f86d89ca42ebb735c2d4d4bb",
-   "lastmod": "2026-10-16"
+   "hash": "9ac2267dcbec51f047510cc6",
+   "lastmod": "2026-10-17"
   },
   "en/races/city/katoomba/": {
-   "hash": "d66eb6801017b6045532a531",
-   "lastmod": "2026-10-16"
+   "hash": "d9160cd08776aef84c9f0bc5",
+   "lastmod": "2026-10-17"
   },
   "en/races/city/kobenhavn/": {
-   "hash": "12909da7a3e1a606a208f6dd",
-   "lastmod": "2026-10-16"
+   "hash": "dc4ae43857ab0e9eafed0bc4",
+   "lastmod": "2026-10-17"
   },
   "en/races/city/london/": {
-   "hash": "6fcc95889769b8039435dc28",
-   "lastmod": "2026-10-16"
+   "hash": "62bb12f00e949b223d3c8602",
+   "lastmod": "2026-10-17"
   },
   "en/races/city/milngavie/": {
-   "hash": "02ffbce8488110637a26442b",
-   "lastmod": "2026-10-16"
+   "hash": "a1fd034e412dceea06eec5e3",
+   "lastmod": "2026-10-17"
   },
   "en/races/city/oslo/": {
-   "hash": "4947ebea8ffdca4987e3c4df",
-   "lastmod": "2026-10-16"
+   "hash": "d781db68d0ebaf2efbb65e50",
+   "lastmod": "2026-10-17"
   },
   "en/races/city/oxberg/": {
-   "hash": "beb25b8eca72cba7bf5a131b",
-   "lastmod": "2026-10-16"
+   "hash": "2434c1bf51b3e5c3dc385e60",
+   "lastmod": "2026-10-17"
   },
   "en/races/city/paris/": {
-   "hash": "adeeb092ffbc3a8ecf0536f6",
-   "lastmod": "2026-10-16"
+   "hash": "28030e400da3445c590752d5",
+   "lastmod": "2026-10-17"
   },
   "en/races/city/philadelphia/": {
-   "hash": "5f547471b6a03e19740e0ad3",
-   "lastmod": "2026-10-16"
+   "hash": "2b3c4afcbd562e51ff66fa74",
+   "lastmod": "2026-10-17"
   },
   "en/races/city/roma/": {
-   "hash": "ff2c54f717c6ff3a3562fb1e",
-   "lastmod": "2026-10-16"
+   "hash": "d97aa586f506cf061b0066cf",
+   "lastmod": "2026-10-17"
   },
   "en/races/city/stockholm-norra-djurgarden/": {
-   "hash": "f9cde7e76e4b2194b4fd46e4",
-   "lastmod": "2026-10-16"
+   "hash": "b485d204080cc9caf7dc9603",
+   "lastmod": "2026-10-17"
   },
   "en/races/city/stockholm/": {
-   "hash": "6936df15959d224929fccf94",
-   "lastmod": "2026-10-16"
+   "hash": "e562e36cb7cdcde4c8d19f8b",
+   "lastmod": "2026-10-17"
   },
   "en/races/city/zurich/": {
-   "hash": "2231997ebdf1eb97f700ed26",
-   "lastmod": "2026-10-16"
+   "hash": "146685ceeec6a439d3a61be9",
+   "lastmod": "2026-10-17"
   },
   "en/races/comrades-marathon-90k/": {
    "hash": "4761181b750aff8606148215",
@@ -3712,132 +3736,136 @@
    "lastmod": "2026-10-16"
   },
   "en/races/country/australia/": {
-   "hash": "00d1347d6347aa72189b1bbb",
-   "lastmod": "2026-10-16"
+   "hash": "e917cae2e2dbf8aa6938dfec",
+   "lastmod": "2026-10-17"
   },
   "en/races/country/austria/": {
-   "hash": "0d8417aece7eb59afb2a33ba",
-   "lastmod": "2026-10-16"
+   "hash": "892f00aff3723504272a1e31",
+   "lastmod": "2026-10-17"
   },
   "en/races/country/belgium/": {
-   "hash": "bc32615902240680f75a6b7c",
-   "lastmod": "2026-10-16"
+   "hash": "932bee2cb800e0a4f5ec0f03",
+   "lastmod": "2026-10-17"
   },
   "en/races/country/brasilien/": {
-   "hash": "c9051a8575893ae491aca841",
-   "lastmod": "2026-10-16"
+   "hash": "d6d205004686f5866d857857",
+   "lastmod": "2026-10-17"
   },
   "en/races/country/canada/": {
-   "hash": "3db1a82113a76915cdbe8bac",
-   "lastmod": "2026-10-16"
+   "hash": "2183b610943bbc7e0a50a70f",
+   "lastmod": "2026-10-17"
   },
   "en/races/country/denmark/": {
-   "hash": "a22a432ff398a73ac08aa9b6",
-   "lastmod": "2026-10-16"
+   "hash": "c0b9f1af4d8d88ac84c108a8",
+   "lastmod": "2026-10-17"
   },
   "en/races/country/finland/": {
-   "hash": "66ff5fa29de72a52743fe796",
-   "lastmod": "2026-10-16"
+   "hash": "9d62f93ec147a92f1c7090fc",
+   "lastmod": "2026-10-17"
   },
   "en/races/country/france/": {
-   "hash": "7825d14e06b24798f5416ea3",
-   "lastmod": "2026-10-16"
+   "hash": "ac48ad0d23c4b1d3db648a7a",
+   "lastmod": "2026-10-17"
   },
   "en/races/country/germany/": {
-   "hash": "2d3e9e4433a9fecbc2d14d0b",
-   "lastmod": "2026-10-16"
+   "hash": "c29f87febeb2d7753f9977d9",
+   "lastmod": "2026-10-17"
   },
   "en/races/country/greece/": {
-   "hash": "7fbf5db3ea4fbdbbede2f646",
-   "lastmod": "2026-10-16"
+   "hash": "1d179bca436623f5229ed8e6",
+   "lastmod": "2026-10-17"
   },
   "en/races/country/hongkong/": {
-   "hash": "e63f736be8a02944c80773bc",
-   "lastmod": "2026-10-16"
+   "hash": "6db48033ac4b6a2bd0fc4587",
+   "lastmod": "2026-10-17"
   },
   "en/races/country/hungary/": {
-   "hash": "1c5f36f3a67f4e09123a68cc",
-   "lastmod": "2026-10-16"
+   "hash": "393842f896fd8e2d6f49ea20",
+   "lastmod": "2026-10-17"
   },
   "en/races/country/iceland/": {
-   "hash": "65a5e1326095ea598e0ce010",
-   "lastmod": "2026-10-16"
+   "hash": "3b592695a34fa38d30e56edd",
+   "lastmod": "2026-10-17"
+  },
+  "en/races/country/indien/": {
+   "hash": "cea76f84382c2c092d7ab3cd",
+   "lastmod": "2026-10-17"
   },
   "en/races/country/ireland/": {
-   "hash": "241bf1cb0f730c8d718a4d6e",
-   "lastmod": "2026-10-16"
+   "hash": "a5dabfbfb59d3d432618fb3e",
+   "lastmod": "2026-10-17"
   },
   "en/races/country/israel/": {
-   "hash": "7400f24ce4bdb60570ab62d9",
-   "lastmod": "2026-10-16"
+   "hash": "d01c91d5c806ae4852a7d0cb",
+   "lastmod": "2026-10-17"
   },
   "en/races/country/italy/": {
-   "hash": "58e4e99012bf93a8b79d2222",
-   "lastmod": "2026-10-16"
+   "hash": "adacef6fdf9ee15ba6f51b10",
+   "lastmod": "2026-10-17"
   },
   "en/races/country/japan/": {
-   "hash": "290c12efa7f47bb8300a429c",
-   "lastmod": "2026-10-16"
+   "hash": "39f46dae5cccd527a8a5cbcf",
+   "lastmod": "2026-10-17"
   },
   "en/races/country/kina/": {
-   "hash": "4d14546a82b6dc58b3817783",
-   "lastmod": "2026-10-16"
+   "hash": "4f670b7a524c403b6a3f0e42",
+   "lastmod": "2026-10-17"
   },
   "en/races/country/luxembourg/": {
-   "hash": "d2c25f5a33fa753d0f4466d3",
-   "lastmod": "2026-10-16"
+   "hash": "1bd9284711c82d5d803046db",
+   "lastmod": "2026-10-17"
   },
   "en/races/country/morocco/": {
-   "hash": "b150365ce373737ef1b4bbd7",
-   "lastmod": "2026-10-16"
+   "hash": "e97c2dbf7ccaf7f940191b14",
+   "lastmod": "2026-10-17"
   },
   "en/races/country/netherlands/": {
-   "hash": "d1408ab96a1c4cda2321c36d",
-   "lastmod": "2026-10-16"
+   "hash": "1885aedba25196844ad2a108",
+   "lastmod": "2026-10-17"
   },
   "en/races/country/new-zealand/": {
-   "hash": "03012921ba5356d3557532cd",
-   "lastmod": "2026-10-16"
+   "hash": "51b156f2263e724d65215b7d",
+   "lastmod": "2026-10-17"
   },
   "en/races/country/norway/": {
-   "hash": "a13e5b922e33c142162b7ae6",
-   "lastmod": "2026-10-16"
+   "hash": "3aa84a1ebbe5b970276682ca",
+   "lastmod": "2026-10-17"
   },
   "en/races/country/poland/": {
-   "hash": "532018a6d66f49051da028a8",
-   "lastmod": "2026-10-16"
+   "hash": "d57fff1fccec36191820ab87",
+   "lastmod": "2026-10-17"
   },
   "en/races/country/portugal/": {
-   "hash": "b94e343bf9ace05f47b0cd8c",
-   "lastmod": "2026-10-16"
+   "hash": "a9dfa2c4d11a26cc96a7a240",
+   "lastmod": "2026-10-17"
   },
   "en/races/country/south-africa/": {
-   "hash": "a120bd1ebbb61f02d8cacee9",
-   "lastmod": "2026-10-16"
+   "hash": "4d25da88c951c883a928686a",
+   "lastmod": "2026-10-17"
   },
   "en/races/country/spain/": {
-   "hash": "7b5eb86cc862d2a6763e30f3",
-   "lastmod": "2026-10-16"
+   "hash": "d331d46bf9320b51bbd1bf57",
+   "lastmod": "2026-10-17"
   },
   "en/races/country/sweden/": {
-   "hash": "0d64f469db255f370619c28b",
-   "lastmod": "2026-10-16"
+   "hash": "1a37d8464d2271efad24f781",
+   "lastmod": "2026-10-17"
   },
   "en/races/country/switzerland/": {
-   "hash": "f592cfe9ec45c687723e0b47",
-   "lastmod": "2026-10-16"
+   "hash": "6ec8660c710e5ee04ed235ad",
+   "lastmod": "2026-10-17"
   },
   "en/races/country/sydkorea/": {
-   "hash": "3630b8644eedfad8554f6691",
-   "lastmod": "2026-10-16"
+   "hash": "faed6549c3716150d8c8d1a6",
+   "lastmod": "2026-10-17"
   },
   "en/races/country/united-kingdom/": {
-   "hash": "d200e381388784a4ce4044ec",
-   "lastmod": "2026-10-16"
+   "hash": "3e989e7ac896adea41fec7cc",
+   "lastmod": "2026-10-17"
   },
   "en/races/country/united-states/": {
-   "hash": "3074fe9a26a4e0ef563dd906",
-   "lastmod": "2026-10-16"
+   "hash": "3f92908f2e3b92c2fa6f5c4f",
+   "lastmod": "2026-10-17"
   },
   "en/races/cracovia-maraton-42k/": {
    "hash": "2dbb21f521dcdb6376f680e4",
@@ -3860,36 +3888,36 @@
    "lastmod": "2026-10-16"
   },
   "en/races/deutsche-post-marathon-bonn-marathon-42k/": {
-   "hash": "fa8dfd566a5a4ceac8d8ece1",
-   "lastmod": "2026-10-16"
+   "hash": "f6f160ae7f13605c1154908a",
+   "lastmod": "2026-10-17"
   },
   "en/races/dhl-stafetten-kobenhavn-5k/": {
    "hash": "27d428ff42afb554ca7fbe64",
    "lastmod": "2026-10-16"
   },
   "en/races/distance/10k/": {
-   "hash": "df5fc05f9a510c6c1cc11d09",
-   "lastmod": "2026-10-16"
+   "hash": "c54116b46ccf21c8e1066c83",
+   "lastmod": "2026-10-17"
   },
   "en/races/distance/5k/": {
-   "hash": "f60df6c62c058b0e10b7e8de",
-   "lastmod": "2026-10-16"
+   "hash": "277082060acd8e83374329dc",
+   "lastmod": "2026-10-17"
   },
   "en/races/distance/half-marathon/": {
-   "hash": "9c8b64517b217d5623cd1949",
-   "lastmod": "2026-10-16"
+   "hash": "daaf2175afd9d5fa2b88c0fd",
+   "lastmod": "2026-10-17"
   },
   "en/races/distance/marathon/": {
-   "hash": "3100d74e85c1705556491555",
-   "lastmod": "2026-10-16"
+   "hash": "31bdd97a708621096705b42d",
+   "lastmod": "2026-10-17"
   },
   "en/races/distance/trail/": {
-   "hash": "9c89392b0ef13f142f10a2c7",
-   "lastmod": "2026-10-16"
+   "hash": "c4355e0298b957fcbb5daf5a",
+   "lastmod": "2026-10-17"
   },
   "en/races/distance/ultra/": {
-   "hash": "68c05380b2d823968ae7d0ea",
-   "lastmod": "2026-10-16"
+   "hash": "0b33d68669687bd3edf21153",
+   "lastmod": "2026-10-17"
   },
   "en/races/dnb-oslo-maraton-maraton-43k/": {
    "hash": "b83255d332eddeaca7c03147",
@@ -3900,8 +3928,8 @@
    "lastmod": "2026-10-16"
   },
   "en/races/dubai-marathon-42k/": {
-   "hash": "1479d9e0f485aa8814298466",
-   "lastmod": "2026-10-16"
+   "hash": "d74e3e85ae028aad884da155",
+   "lastmod": "2026-10-17"
   },
   "en/races/ecotrail-oslo-trail-80-km/": {
    "hash": "2236590610e27f514df1d678",
@@ -4044,8 +4072,8 @@
    "lastmod": "2026-10-16"
   },
   "en/races/harzquerung-lauf-53-km-wernigerode-nordhausen/": {
-   "hash": "f8c3ef8d1457553b823881d6",
-   "lastmod": "2026-10-16"
+   "hash": "f54284cf1a483dabb627e5b1",
+   "lastmod": "2026-10-17"
   },
   "en/races/hasselbyloppet-10k/": {
    "hash": "af3f2bf0c99189e20c0c28df",
@@ -4248,8 +4276,8 @@
    "lastmod": "2026-10-16"
   },
   "en/races/marathon-hamburg-marathon-43k/": {
-   "hash": "542a71e9902b93a5593fff48",
-   "lastmod": "2026-10-16"
+   "hash": "1411dfde1f47739cbc5213ab",
+   "lastmod": "2026-10-17"
   },
   "en/races/marathon-international-de-marrakech-marathon-42k/": {
    "hash": "2531d7bbdc9755ae8c0abed5",
@@ -4304,8 +4332,8 @@
    "lastmod": "2026-10-16"
   },
   "en/races/mein-freiburg-marathon-marathon-42k/": {
-   "hash": "6d7bed98135fb380006e60d7",
-   "lastmod": "2026-10-16"
+   "hash": "b5138ccb2413d5aa2008b78a",
+   "lastmod": "2026-10-17"
   },
   "en/races/melbourne-marathon-42k/": {
    "hash": "7dc3a9958cc92ff819bfbdbb",
@@ -4340,52 +4368,52 @@
    "lastmod": "2026-10-16"
   },
   "en/races/month/2026-10/": {
-   "hash": "53ed11325ec5dfdf2d6ba27b",
-   "lastmod": "2026-10-16"
+   "hash": "6f864419f299d4cb9e40368f",
+   "lastmod": "2026-10-17"
   },
   "en/races/month/2026-11/": {
-   "hash": "34983c7a041d36432460a94a",
-   "lastmod": "2026-10-16"
+   "hash": "2c543c3eb6b70020a1315e2a",
+   "lastmod": "2026-10-17"
   },
   "en/races/month/2026-12/": {
-   "hash": "c719d5c0cebdfa7435bc7e13",
-   "lastmod": "2026-10-16"
+   "hash": "490b107f11c4df4f3244f1fb",
+   "lastmod": "2026-10-17"
   },
   "en/races/month/2027-01/": {
-   "hash": "ec250ad7d5b9ee7609fefe57",
-   "lastmod": "2026-10-16"
+   "hash": "1a2b592f735b972783083d4d",
+   "lastmod": "2026-10-17"
   },
   "en/races/month/2027-02/": {
-   "hash": "4cb31e05b8da2a804b2b86f1",
-   "lastmod": "2026-10-16"
+   "hash": "580160bf8e2e9e8ce822601f",
+   "lastmod": "2026-10-17"
   },
   "en/races/month/2027-03/": {
-   "hash": "7540a8632bd4d1feb5f21305",
-   "lastmod": "2026-10-16"
+   "hash": "8accc92ff95f09e6b9bcbcc6",
+   "lastmod": "2026-10-17"
   },
   "en/races/month/2027-04/": {
-   "hash": "4f180651c2f8b2fb0eebb69e",
-   "lastmod": "2026-10-16"
+   "hash": "96b8e72e188d110fcfa06f55",
+   "lastmod": "2026-10-17"
   },
   "en/races/month/2027-05/": {
-   "hash": "9d96604a4a1fec348767bc96",
-   "lastmod": "2026-10-16"
+   "hash": "a5fb554dc527d9410d605848",
+   "lastmod": "2026-10-17"
   },
   "en/races/month/2027-06/": {
-   "hash": "44ad70b4e3fd6df869767f22",
-   "lastmod": "2026-10-16"
+   "hash": "97200ebd3617e37d7d8260b2",
+   "lastmod": "2026-10-17"
   },
   "en/races/month/2027-07/": {
-   "hash": "136fd9f73d6515d4bc7d7800",
-   "lastmod": "2026-10-16"
+   "hash": "b059d0de6df704cd2db20163",
+   "lastmod": "2026-10-17"
   },
   "en/races/month/2027-08/": {
-   "hash": "918627a28c72e1c519eb2f58",
-   "lastmod": "2026-10-16"
+   "hash": "867a4c79b9ef175397dfc725",
+   "lastmod": "2026-10-17"
   },
   "en/races/month/2027-09/": {
-   "hash": "7849eb0bdc84380935578fbf",
-   "lastmod": "2026-10-16"
+   "hash": "4ab3fb1d1998cb5ec6f6817c",
+   "lastmod": "2026-10-17"
   },
   "en/races/montreux-trail-festival-mxtreme-100-102-km/": {
    "hash": "384b91e7406f14ce7efe8e2f",
@@ -4452,8 +4480,8 @@
    "lastmod": "2026-10-16"
   },
   "en/races/page/2/": {
-   "hash": "2548afdc0437de9101323789",
-   "lastmod": "2026-10-16"
+   "hash": "b8aa64990f30c6a62baf64b0",
+   "lastmod": "2026-10-17"
   },
   "en/races/pikes-peak-marathon-42k/": {
    "hash": "c36fa9f2b31f4f0a1dd72d41",
@@ -4572,8 +4600,8 @@
    "lastmod": "2026-10-16"
   },
   "en/races/swb-marathon-bremen-marathon-42k/": {
-   "hash": "25919fdb2e2413d0d3070042",
-   "lastmod": "2026-10-16"
+   "hash": "2df0237286a530a6dff2389a",
+   "lastmod": "2026-10-17"
   },
   "en/races/swedbank-vilniaus-maratonas-maratonas-42-195-km/": {
    "hash": "f6b4345f9a09166b5ac8710f",
@@ -4602,6 +4630,10 @@
   "en/races/tamarack-homes-ottawa-international-marathon-42k/": {
    "hash": "07f4bd750ac128c823bdfb85",
    "lastmod": "2026-10-16"
+  },
+  "en/races/tata-mumbai-marathon-marathon-42k/": {
+   "hash": "e2d79604512c4b0fdfd06fe4",
+   "lastmod": "2026-10-17"
   },
   "en/races/tds-sur-les-traces-des-ducs-de-savoie-hoka-utmb-mont-blanc-145k/": {
    "hash": "0c23a95fc88522ef8a30edec",
@@ -4707,6 +4739,10 @@
    "hash": "2430c06c15d9beca74f3ade3",
    "lastmod": "2026-10-16"
   },
+  "en/races/uniper-dusseldorf-marathon-42k/": {
+   "hash": "af4ce0c0b8b0b393ba7aac0f",
+   "lastmod": "2026-10-17"
+  },
   "en/races/ursvik-ultra-uu-hardingen-45-km/": {
    "hash": "e3564c27fdadb4dd08a67c23",
    "lastmod": "2026-10-16"
@@ -4728,8 +4764,8 @@
    "lastmod": "2026-10-16"
   },
   "en/races/vedanta-delhi-half-marathon-21k/": {
-   "hash": "fccc51c9310362704530404c",
-   "lastmod": "2026-10-16"
+   "hash": "d03720f1d8f58a9dc8aa94cc",
+   "lastmod": "2026-10-17"
   },
   "en/races/venicemarathon-42k/": {
    "hash": "1961b767039529b11b798e7f",
@@ -4840,8 +4876,8 @@
    "lastmod": "2026-10-16"
   },
   "lopp/": {
-   "hash": "f85d942a60ab2b4fea2e923d",
-   "lastmod": "2026-10-16"
+   "hash": "062a49e1768e1a1bccc50b46",
+   "lastmod": "2026-10-17"
   },
   "lopp/101a-corrida-internacional-de-sao-silvestre-15k/": {
    "hash": "0df7a506cd74016fa89f823b",
@@ -4872,8 +4908,8 @@
    "lastmod": "2026-10-16"
   },
   "lopp/49-leipzig-marathon-2027-marathon-42k/": {
-   "hash": "83efa7f4915389480467ed3b",
-   "lastmod": "2026-10-16"
+   "hash": "fbde665b7a498d0eaec39f51",
+   "lastmod": "2026-10-17"
   },
   "lopp/54-int-wolfgangseelauf-27-km-klassiker/": {
    "hash": "5381e3d5e3d87ba016e37724",
@@ -4968,12 +5004,12 @@
    "lastmod": "2026-10-16"
   },
   "lopp/berlin-marathon-fran-2027-generali-berlin-marathon-42k/": {
-   "hash": "78c34d92a8fa9b7b654f847b",
-   "lastmod": "2026-10-16"
+   "hash": "8c12630215bb743d505a13c5",
+   "lastmod": "2026-10-17"
   },
   "lopp/berliner-halbmarathon-21k/": {
-   "hash": "efa5c55732b83041ea863f35",
-   "lastmod": "2026-10-16"
+   "hash": "e605c8c0c84ffb7a26485f3d",
+   "lastmod": "2026-10-17"
   },
   "lopp/bestseller-aarhus-city-half-21k/": {
    "hash": "69790a19073f778e002bf95d",
@@ -5116,36 +5152,36 @@
    "lastmod": "2026-10-16"
   },
   "lopp/deutsche-post-marathon-bonn-marathon-42k/": {
-   "hash": "6281f88084550b81e189414a",
-   "lastmod": "2026-10-16"
+   "hash": "a8640ad135132559ed1dcc27",
+   "lastmod": "2026-10-17"
   },
   "lopp/dhl-stafetten-kobenhavn-5k/": {
    "hash": "b732f1a9136bdc15b5669cdd",
    "lastmod": "2026-10-16"
   },
   "lopp/distans/10-km/": {
-   "hash": "3db90b3a9912db866d399003",
-   "lastmod": "2026-10-16"
+   "hash": "6493933e06779dafe04d2407",
+   "lastmod": "2026-10-17"
   },
   "lopp/distans/5-km/": {
-   "hash": "844760a46576af1cec811c49",
-   "lastmod": "2026-10-16"
+   "hash": "77734b29087bbbeff22ca8ff",
+   "lastmod": "2026-10-17"
   },
   "lopp/distans/halvmaraton/": {
-   "hash": "26035713046e1b5fafd54e0e",
-   "lastmod": "2026-10-16"
+   "hash": "3077d3f57f32339819c2d82d",
+   "lastmod": "2026-10-17"
   },
   "lopp/distans/maraton/": {
-   "hash": "9c530318cddbf88b72f2d439",
-   "lastmod": "2026-10-16"
+   "hash": "4034f42f22ed2bc81bf11d12",
+   "lastmod": "2026-10-17"
   },
   "lopp/distans/trail/": {
-   "hash": "18a57e8858dbbb17c64a3f6c",
-   "lastmod": "2026-10-16"
+   "hash": "6fcf1172d35e10c628ca27c6",
+   "lastmod": "2026-10-17"
   },
   "lopp/distans/ultra/": {
-   "hash": "33db8945d68f3e2a2defc116",
-   "lastmod": "2026-10-16"
+   "hash": "60328d8487bee9168fa0155d",
+   "lastmod": "2026-10-17"
   },
   "lopp/dnb-oslo-maraton-maraton-43k/": {
    "hash": "ed2a8e691472d8dfaed0683c",
@@ -5156,8 +5192,8 @@
    "lastmod": "2026-10-16"
   },
   "lopp/dubai-marathon-42k/": {
-   "hash": "f15f670533c32b9ff71a73c8",
-   "lastmod": "2026-10-16"
+   "hash": "9099c1ad3f17f691dd486eb3",
+   "lastmod": "2026-10-17"
   },
   "lopp/ecotrail-oslo-trail-80-km/": {
    "hash": "afe8f1dc9f28e3c3dd2bd067",
@@ -5300,8 +5336,8 @@
    "lastmod": "2026-10-16"
   },
   "lopp/harzquerung-lauf-53-km-wernigerode-nordhausen/": {
-   "hash": "bdc1d551786e399641d7987a",
-   "lastmod": "2026-10-16"
+   "hash": "3296e0cf6bb2729bc0e2be27",
+   "lastmod": "2026-10-17"
   },
   "lopp/hasselbyloppet-10k/": {
    "hash": "101e89d0d6e83dd033797f91",
@@ -5428,132 +5464,136 @@
    "lastmod": "2026-10-16"
   },
   "lopp/land/australien/": {
-   "hash": "49e6b6499afee72bf76fa081",
-   "lastmod": "2026-10-16"
+   "hash": "88f8bbfa120c039992c4f280",
+   "lastmod": "2026-10-17"
   },
   "lopp/land/belgien/": {
-   "hash": "a944cef60c3e98b02c7def58",
-   "lastmod": "2026-10-16"
+   "hash": "27fd8f538a345b77c9633fae",
+   "lastmod": "2026-10-17"
   },
   "lopp/land/brasilien/": {
-   "hash": "4b13436a34ef108560eaeeb8",
-   "lastmod": "2026-10-16"
+   "hash": "f1028b1c75a437f88aedb672",
+   "lastmod": "2026-10-17"
   },
   "lopp/land/danmark/": {
-   "hash": "2352bf4d6d24320a69955809",
-   "lastmod": "2026-10-16"
+   "hash": "76ee383ec0ae646632466887",
+   "lastmod": "2026-10-17"
   },
   "lopp/land/finland/": {
-   "hash": "ad01bd5f8369d97efb94d8b6",
-   "lastmod": "2026-10-16"
+   "hash": "71111cadca499cd469f9b9fa",
+   "lastmod": "2026-10-17"
   },
   "lopp/land/frankrike/": {
-   "hash": "7fafdee5427be7da099ba2c3",
-   "lastmod": "2026-10-16"
+   "hash": "26efd8f35d3adba201d7cc18",
+   "lastmod": "2026-10-17"
   },
   "lopp/land/grekland/": {
-   "hash": "5134a8778718559c1129fc3f",
-   "lastmod": "2026-10-16"
+   "hash": "fd22ed90ebda24181704d226",
+   "lastmod": "2026-10-17"
   },
   "lopp/land/hongkong/": {
-   "hash": "cf5eecae76a022de0f47428a",
-   "lastmod": "2026-10-16"
+   "hash": "0c14811f8ba6b4dd8ee4f8df",
+   "lastmod": "2026-10-17"
+  },
+  "lopp/land/indien/": {
+   "hash": "7f6aaa37437cb0fdc795340e",
+   "lastmod": "2026-10-17"
   },
   "lopp/land/irland/": {
-   "hash": "14ef649d99df250a4bb82cc2",
-   "lastmod": "2026-10-16"
+   "hash": "c71d89582369b463d1dd72b3",
+   "lastmod": "2026-10-17"
   },
   "lopp/land/island/": {
-   "hash": "a6c0dd83844c9937c7945b38",
-   "lastmod": "2026-10-16"
+   "hash": "a05b6a0b325d3580b0e03be1",
+   "lastmod": "2026-10-17"
   },
   "lopp/land/israel/": {
-   "hash": "4b488d61401855b4347896eb",
-   "lastmod": "2026-10-16"
+   "hash": "ecae86e7c7f35b9668ca4083",
+   "lastmod": "2026-10-17"
   },
   "lopp/land/italien/": {
-   "hash": "62655cb92651f4c26f44f4af",
-   "lastmod": "2026-10-16"
+   "hash": "d38d56185db64a2c37b33014",
+   "lastmod": "2026-10-17"
   },
   "lopp/land/japan/": {
-   "hash": "abac6ca8a0030373a6e7b12f",
-   "lastmod": "2026-10-16"
+   "hash": "6a3b4362d069f10bae9e63b8",
+   "lastmod": "2026-10-17"
   },
   "lopp/land/kanada/": {
-   "hash": "cc3b360cd150985de188ed62",
-   "lastmod": "2026-10-16"
+   "hash": "df980b802189b1d5ce5b075f",
+   "lastmod": "2026-10-17"
   },
   "lopp/land/kina/": {
-   "hash": "a114cab0f383bd9ca9848046",
-   "lastmod": "2026-10-16"
+   "hash": "da84a65388b1674c68c10259",
+   "lastmod": "2026-10-17"
   },
   "lopp/land/luxemburg/": {
-   "hash": "067b6a3733df40ab43fa48cd",
-   "lastmod": "2026-10-16"
+   "hash": "26987a30e7e890bb64fd1684",
+   "lastmod": "2026-10-17"
   },
   "lopp/land/marocko/": {
-   "hash": "a52577372b3fbdd6d27aaadd",
-   "lastmod": "2026-10-16"
+   "hash": "46b4fcf771936b059f70b671",
+   "lastmod": "2026-10-17"
   },
   "lopp/land/nederlanderna/": {
-   "hash": "624860758b08743aeb18491f",
-   "lastmod": "2026-10-16"
+   "hash": "acabc5f6d3b23ab6b62a39b3",
+   "lastmod": "2026-10-17"
   },
   "lopp/land/norge/": {
-   "hash": "0cccc162bae1c8db6b2c1a21",
-   "lastmod": "2026-10-16"
+   "hash": "5a7bf9d6008cde94a20fc619",
+   "lastmod": "2026-10-17"
   },
   "lopp/land/nya-zeeland/": {
-   "hash": "7f67dcd63bfe0306c2f4dfb8",
-   "lastmod": "2026-10-16"
+   "hash": "669abe1836e0d9ff1cccbc72",
+   "lastmod": "2026-10-17"
   },
   "lopp/land/osterrike/": {
-   "hash": "1be017ea04f9548bc3c2b81a",
-   "lastmod": "2026-10-16"
+   "hash": "b4913af3edc6630e5571bd92",
+   "lastmod": "2026-10-17"
   },
   "lopp/land/polen/": {
-   "hash": "862339911da426e6673a2d2d",
-   "lastmod": "2026-10-16"
+   "hash": "aeed511a5fab2d09a7fe845d",
+   "lastmod": "2026-10-17"
   },
   "lopp/land/portugal/": {
-   "hash": "fbeed878b33b1c00ffd94abb",
-   "lastmod": "2026-10-16"
+   "hash": "f92c898060a7b301c6c2d4f9",
+   "lastmod": "2026-10-17"
   },
   "lopp/land/schweiz/": {
-   "hash": "6c2a01f36969b2c161620ea3",
-   "lastmod": "2026-10-16"
+   "hash": "c06b52f4da672137891850a7",
+   "lastmod": "2026-10-17"
   },
   "lopp/land/spanien/": {
-   "hash": "cce1b63ae440970aa86dd99e",
-   "lastmod": "2026-10-16"
+   "hash": "eb75f8a57bbdbb515b8577f7",
+   "lastmod": "2026-10-17"
   },
   "lopp/land/storbritannien/": {
-   "hash": "a896dfa0389913cbcc06b976",
-   "lastmod": "2026-10-16"
+   "hash": "0349de9db32f60ceff55324c",
+   "lastmod": "2026-10-17"
   },
   "lopp/land/sverige/": {
-   "hash": "71ab25f7ba32f73c7b5fb81f",
-   "lastmod": "2026-10-16"
+   "hash": "10b137bee74cedc93ded9b86",
+   "lastmod": "2026-10-17"
   },
   "lopp/land/sydafrika/": {
-   "hash": "8add1e3cc635ffdf22bd74d4",
-   "lastmod": "2026-10-16"
+   "hash": "2149e0e84451999118f79de9",
+   "lastmod": "2026-10-17"
   },
   "lopp/land/sydkorea/": {
-   "hash": "3d58bab38948315c79557664",
-   "lastmod": "2026-10-16"
+   "hash": "cd45606e74064899f8871651",
+   "lastmod": "2026-10-17"
   },
   "lopp/land/tyskland/": {
-   "hash": "5d38906b8be60737a3375210",
-   "lastmod": "2026-10-16"
+   "hash": "4ccb9f27f0056b6a2b4c941c",
+   "lastmod": "2026-10-17"
   },
   "lopp/land/ungern/": {
-   "hash": "7a5056af28c7dc0d3acd7448",
-   "lastmod": "2026-10-16"
+   "hash": "5fbe9e11220379595f53ebd4",
+   "lastmod": "2026-10-17"
   },
   "lopp/land/usa/": {
-   "hash": "5fa4ae508c17c5d8edf4ba1b",
-   "lastmod": "2026-10-16"
+   "hash": "b1256f2d7a9e2fd30c78b6bf",
+   "lastmod": "2026-10-17"
   },
   "lopp/laugavegur-ultra-marathon-52k/": {
    "hash": "3d5b14729417dd489550bda4",
@@ -5604,52 +5644,52 @@
    "lastmod": "2026-10-17"
   },
   "lopp/manad/2026-10/": {
-   "hash": "aad3188a345601c6a65dc58a",
-   "lastmod": "2026-10-16"
+   "hash": "36500114c715fb29e354b233",
+   "lastmod": "2026-10-17"
   },
   "lopp/manad/2026-11/": {
-   "hash": "02d5451e73b537099fa44465",
-   "lastmod": "2026-10-16"
+   "hash": "205d91d5ee02b43db39f073b",
+   "lastmod": "2026-10-17"
   },
   "lopp/manad/2026-12/": {
-   "hash": "2b1d73c718a79e2f4bc4d516",
-   "lastmod": "2026-10-16"
+   "hash": "4d6b3d7a68c9c246bcc76924",
+   "lastmod": "2026-10-17"
   },
   "lopp/manad/2027-01/": {
-   "hash": "84b2c68be4eb93883a54954e",
-   "lastmod": "2026-10-16"
+   "hash": "435287e5e9f3f3cf117672a7",
+   "lastmod": "2026-10-17"
   },
   "lopp/manad/2027-02/": {
-   "hash": "53db170d9446cd2be93f2db7",
-   "lastmod": "2026-10-16"
+   "hash": "7fdf51e01867752d403cb528",
+   "lastmod": "2026-10-17"
   },
   "lopp/manad/2027-03/": {
-   "hash": "5f934d740ec8a69dc5ee447b",
-   "lastmod": "2026-10-16"
+   "hash": "623a5b23417163d16b6c1ef0",
+   "lastmod": "2026-10-17"
   },
   "lopp/manad/2027-04/": {
-   "hash": "ff72f38d6a9867fa23b3a1b2",
-   "lastmod": "2026-10-16"
+   "hash": "caf8081bdaa51f347d49eda2",
+   "lastmod": "2026-10-17"
   },
   "lopp/manad/2027-05/": {
-   "hash": "5c3f17b10e6fc2551aab821a",
-   "lastmod": "2026-10-16"
+   "hash": "cfac0d577fa4737eacc3093b",
+   "lastmod": "2026-10-17"
   },
   "lopp/manad/2027-06/": {
-   "hash": "dd0c7e9bfbaa1177d9fb4240",
-   "lastmod": "2026-10-16"
+   "hash": "e35d4128edab72554bc88998",
+   "lastmod": "2026-10-17"
   },
   "lopp/manad/2027-07/": {
-   "hash": "05e40a89d437896222f0a7ae",
-   "lastmod": "2026-10-16"
+   "hash": "b6ade01e307cf3962331252e",
+   "lastmod": "2026-10-17"
   },
   "lopp/manad/2027-08/": {
-   "hash": "75373c2245a8bddea4444c77",
-   "lastmod": "2026-10-16"
+   "hash": "0a6f2ad687839975c423e6e7",
+   "lastmod": "2026-10-17"
   },
   "lopp/manad/2027-09/": {
-   "hash": "f0d3075ac5c5be50c3cdca75",
-   "lastmod": "2026-10-16"
+   "hash": "2bea1520c1845b72b10aedfe",
+   "lastmod": "2026-10-17"
   },
   "lopp/manchester-marathon-42k/": {
    "hash": "da1ebaf45e8e3e31040a7181",
@@ -5680,8 +5720,8 @@
    "lastmod": "2026-10-16"
   },
   "lopp/marathon-hamburg-marathon-43k/": {
-   "hash": "5de82d30e3a3112cd90701ba",
-   "lastmod": "2026-10-16"
+   "hash": "b1ebb09c6eced951e5dfb244",
+   "lastmod": "2026-10-17"
   },
   "lopp/marathon-international-de-marrakech-marathon-42k/": {
    "hash": "c1089626e0fbbcc2aa5c2eea",
@@ -5736,8 +5776,8 @@
    "lastmod": "2026-10-16"
   },
   "lopp/mein-freiburg-marathon-marathon-42k/": {
-   "hash": "3598d2876366153baf7e6bd1",
-   "lastmod": "2026-10-16"
+   "hash": "f103b19782335646afe2dce6",
+   "lastmod": "2026-10-17"
   },
   "lopp/melbourne-marathon-42k/": {
    "hash": "5445a154c92e4e1794271fe1",
@@ -5912,8 +5952,8 @@
    "lastmod": "2026-10-16"
   },
   "lopp/sida/2/": {
-   "hash": "4bd65d28db1658795a78ba34",
-   "lastmod": "2026-10-16"
+   "hash": "1a2165692fe7a3250103d6f5",
+   "lastmod": "2026-10-17"
   },
   "lopp/sinister-7-ultra-100-miler-161k/": {
    "hash": "363f8d54fd61728726b56495",
@@ -5940,88 +5980,88 @@
    "lastmod": "2026-10-16"
   },
   "lopp/stad/annecy/": {
-   "hash": "23fc0ff6d54b06017fea5d16",
-   "lastmod": "2026-10-16"
+   "hash": "704c5114920e98d72c7de260",
+   "lastmod": "2026-10-17"
   },
   "lopp/stad/barcelona/": {
-   "hash": "19b9fa551ce41d7221d6976a",
-   "lastmod": "2026-10-16"
+   "hash": "3566a0ff8369437b97297cc9",
+   "lastmod": "2026-10-17"
   },
   "lopp/stad/berlin/": {
-   "hash": "4d314b4012154fbc641cb5d7",
-   "lastmod": "2026-10-16"
+   "hash": "a45ddf5c33262eda278242b3",
+   "lastmod": "2026-10-17"
   },
   "lopp/stad/budapest/": {
-   "hash": "6af60e54a7800a75529709fa",
-   "lastmod": "2026-10-16"
+   "hash": "1dec079db5e8ad77bc523d7c",
+   "lastmod": "2026-10-17"
   },
   "lopp/stad/courmayeur/": {
-   "hash": "98d29008002e513a10452d6d",
-   "lastmod": "2026-10-16"
+   "hash": "2535a4b1d36bba27b503bcf0",
+   "lastmod": "2026-10-17"
   },
   "lopp/stad/goteborg/": {
-   "hash": "65caf984d2b5f6e2ed11764e",
-   "lastmod": "2026-10-16"
+   "hash": "a22d27c3fd9adbf85aedcccd",
+   "lastmod": "2026-10-17"
   },
   "lopp/stad/hamburg/": {
-   "hash": "7581a10b3d0db6fcbb4b3968",
-   "lastmod": "2026-10-16"
+   "hash": "42765d7b3705f08d3886a7be",
+   "lastmod": "2026-10-17"
   },
   "lopp/stad/harnosand/": {
-   "hash": "3b111e2809651d3769e9788f",
-   "lastmod": "2026-10-16"
+   "hash": "8f45ed8ece934d79391e0fbd",
+   "lastmod": "2026-10-17"
   },
   "lopp/stad/helsinki/": {
-   "hash": "676609086b0811052bc63638",
-   "lastmod": "2026-10-16"
+   "hash": "9090749fb5663f73e59b6928",
+   "lastmod": "2026-10-17"
   },
   "lopp/stad/katoomba/": {
-   "hash": "8df4d6e9cce7c9f9d17659d3",
-   "lastmod": "2026-10-16"
+   "hash": "c3faaadb51010feb34dc3409",
+   "lastmod": "2026-10-17"
   },
   "lopp/stad/kobenhavn/": {
-   "hash": "aa5858262952d076444c8fd0",
-   "lastmod": "2026-10-16"
+   "hash": "ca5a4bc765067239c73afef7",
+   "lastmod": "2026-10-17"
   },
   "lopp/stad/london/": {
-   "hash": "a248c204723c98e89a72189a",
-   "lastmod": "2026-10-16"
+   "hash": "e9d84f6128f3162ada99616a",
+   "lastmod": "2026-10-17"
   },
   "lopp/stad/milngavie/": {
-   "hash": "67a2e949a1f09f2bc35b1ed2",
-   "lastmod": "2026-10-16"
+   "hash": "2979b26e99e5e2be1615c2d2",
+   "lastmod": "2026-10-17"
   },
   "lopp/stad/oslo/": {
-   "hash": "f1602edb3a53340646e67dc5",
-   "lastmod": "2026-10-16"
+   "hash": "7efeddbd53d8c219bfc1f889",
+   "lastmod": "2026-10-17"
   },
   "lopp/stad/oxberg/": {
-   "hash": "6a78bcd9d48903a4dcadd390",
-   "lastmod": "2026-10-16"
+   "hash": "e9d62e8536a49434cfbb765f",
+   "lastmod": "2026-10-17"
   },
   "lopp/stad/paris/": {
-   "hash": "32cc546a78340de87f07bfc6",
-   "lastmod": "2026-10-16"
+   "hash": "ae4fc383a01ed9b8d9f88907",
+   "lastmod": "2026-10-17"
   },
   "lopp/stad/philadelphia/": {
-   "hash": "dc7cf890408e104a6ff14895",
-   "lastmod": "2026-10-16"
+   "hash": "3251901bbb06d44b2dc2edd4",
+   "lastmod": "2026-10-17"
   },
   "lopp/stad/roma/": {
-   "hash": "ca4f444ee51a12c78a2e08fb",
-   "lastmod": "2026-10-16"
+   "hash": "23e537d825ce53abbe5c0c6f",
+   "lastmod": "2026-10-17"
   },
   "lopp/stad/stockholm-norra-djurgarden/": {
-   "hash": "27d22f5be578d4882a9e0d55",
-   "lastmod": "2026-10-16"
+   "hash": "55892edd2eb4eafbb5c2793b",
+   "lastmod": "2026-10-17"
   },
   "lopp/stad/stockholm/": {
-   "hash": "b0d9defb91a4de8bc1365d18",
-   "lastmod": "2026-10-16"
+   "hash": "ca892a9453aca6589b90b6e2",
+   "lastmod": "2026-10-17"
   },
   "lopp/stad/zurich/": {
-   "hash": "2fea3082f1f5897448e87020",
-   "lastmod": "2026-10-16"
+   "hash": "83f1ce8ff290e464a7d073ca",
+   "lastmod": "2026-10-17"
   },
   "lopp/standard-chartered-hong-kong-marathon-marathon-42-195-km/": {
    "hash": "a29e853d4f61a751917a94cb",
@@ -6040,8 +6080,8 @@
    "lastmod": "2026-10-16"
   },
   "lopp/swb-marathon-bremen-marathon-42k/": {
-   "hash": "dfaaa7ff06d0d9c6cf37a892",
-   "lastmod": "2026-10-16"
+   "hash": "19dce686ae60015f304c5f50",
+   "lastmod": "2026-10-17"
   },
   "lopp/swedbank-vilniaus-maratonas-maratonas-42-195-km/": {
    "hash": "4c891c76fa893204b77086f9",
@@ -6070,6 +6110,10 @@
   "lopp/tamarack-homes-ottawa-international-marathon-42k/": {
    "hash": "a7455fa105fba6d61a1ce5ab",
    "lastmod": "2026-10-16"
+  },
+  "lopp/tata-mumbai-marathon-marathon-42k/": {
+   "hash": "a08f34e21e9d7bd244e79ad0",
+   "lastmod": "2026-10-17"
   },
   "lopp/tds-sur-les-traces-des-ducs-de-savoie-hoka-utmb-mont-blanc-145k/": {
    "hash": "464e41f32b232a7ebeca7621",
@@ -6175,6 +6219,10 @@
    "hash": "b6026451a00de9a5e6ad2fb0",
    "lastmod": "2026-10-16"
   },
+  "lopp/uniper-dusseldorf-marathon-42k/": {
+   "hash": "095ce10f7bf69618fdb1413f",
+   "lastmod": "2026-10-17"
+  },
   "lopp/ursvik-ultra-uu-hardingen-45-km/": {
    "hash": "d7d967cd8ffad74af443c035",
    "lastmod": "2026-10-16"
@@ -6196,8 +6244,8 @@
    "lastmod": "2026-10-16"
   },
   "lopp/vedanta-delhi-half-marathon-21k/": {
-   "hash": "5c9e9c720e2e8a7b06b081cd",
-   "lastmod": "2026-10-16"
+   "hash": "e4884e8f5efe98d40ac3ba41",
+   "lastmod": "2026-10-17"
   },
   "lopp/venicemarathon-42k/": {
    "hash": "c0f3185b9e5ddb463e9a639f",

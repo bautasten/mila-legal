@@ -1,0 +1,32 @@
+<!doctype html><html lang="sv"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://vfjofaniwtudzvadxpsd.supabase.co; object-src 'none'; base-uri 'none'; form-action 'self'"><meta name="referrer" content="same-origin"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex, nofollow, noarchive">
+<title>Mila drift</title><link rel="stylesheet" href="dash.css"><style id="antiClickjack">html{display:none!important}</style><script src="../frame.js"></script><script src="dash.js" defer></script></head>
+<body>
+<main id="login" hidden>
+  <form id="f-mail" autocomplete="on">
+    <h1>Mila drift</h1>
+    <p>Logga in med en kod via e-post.</p>
+    <input id="mail" type="email" name="email" autocomplete="username" required placeholder="E-post">
+    <button type="submit">Skicka kod</button>
+    <p class="msg" id="msg1" role="alert"></p>
+  </form>
+  <form id="f-code" hidden autocomplete="off">
+    <h1>Mila drift</h1>
+    <p>Skriv koden från mejlet.</p>
+    <input id="code" inputmode="numeric" pattern="[0-9]{6,10}" maxlength="10" required placeholder="Kod" autocomplete="one-time-code">
+    <button type="submit">Logga in</button>
+    <p class="msg" id="msg2" role="alert"></p>
+  </form>
+</main>
+<div id="app" hidden>
+  <header>
+    <h1>Mila drift</h1>
+    <span class="meta" id="asof"></span>
+    <span class="legend" id="envkeys"></span>
+    <span class="spacer"></span>
+    <button class="ghost" id="reload" type="button">Uppdatera</button>
+    <button class="ghost" id="logout" type="button">Logga ut</button>
+  </header>
+  <div id="board"></div>
+</div>
+<div id="tip" hidden></div>
+</body></html>

@@ -1,6 +1,7 @@
 // Driftpanelen (milacoach.app/dash/): Mila's numbers for the admins only. Sign-in with a code by e-mail (Supabase Auth's e-mail OTP; no
-// account is ever created here), the session's access token kept in this tab only (sessionStorage, gone with the tab, an hour at most;
-// no refresh token is kept), then the function `dashboard` answers aggregates only (_shared/dashboard.ts). Everything is drawn with the
+// account is ever created here); the session stays on this browser while it is used, at most 30 days after the code (session.js: the
+// refresh token kept on this device under one key, the access token in memory, renewed before it runs out; a network error never logs out,
+// it shows "Offline" and retries), then the function `dashboard` answers aggregates only (_shared/dashboard.ts). Everything is drawn with the
 // DOM's own text nodes and hand-made SVG: never markup from strings, no script from anywhere else. Four tabs (dash-flikar): Produktion,
 // TestFlight, Morgonrapport and Övrigt; the last one chosen is remembered in this tab only (sessionStorage), the mail's link (#dag=) opens
 // the Morgonrapport.
@@ -10,14 +11,13 @@
   // the project's public (anon) key, as the app ships it; written in by publish_legal.sh from Secrets.plist (never in git)
   var ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZmam9mYW5pd3R1ZHp2YWR4cHNkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE3MDk2NzIsImV4cCI6MjEwNzI4NTY3Mn0.uENQuzKYjhjoy5XUydXC5mz_HmpIIxGCw4exqJxGBnc";
   var FN = SUPABASE + "/functions/v1/dashboard";
-  var STORE = "mila-dash-session";
   var LOCAL = location.hostname === "localhost" || location.hostname === "127.0.0.1";
   var DEMO = LOCAL && /^#demo\b/.test(location.hash);
   var SVGNS = "http://www.w3.org/2000/svg";
   var ENVS = [["as", "App Store", "--s1"], ["tf", "TestFlight", "--s2"], ["gr", "Granskning", "--s3"], ["okand", "Okänd", "--s4"]];
   var nf = new Intl.NumberFormat("sv-SE"), nf1 = new Intl.NumberFormat("sv-SE", { maximumFractionDigits: 1 }), nf2 = new Intl.NumberFormat("sv-SE", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   var $ = function (id) { return document.getElementById(id); };
-  var data = null, mail = "", timer = null, chosenDay = null, cardW = 600;
+  var data = null, mail = "", timer = null, retryT = null, lastLoad = 0, chosenDay = null, cardW = 600;
 
   // ---- small helpers (text only through textContent)
   function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text !== undefined && text !== null) e.textContent = String(text); return e; }
@@ -537,19 +537,25 @@
     sy.appendChild(el("p", "note", "Mäts inte (ingen ny insamling): " + (notMeasured || []).map(function (x) { return NOT_MEASURED[x] || x; }).join(", ") + "."));
   }
 
-  // ---- sign-in (Supabase Auth's e-mail OTP; no account is created from here)
-  function session() { try { var s = JSON.parse(sessionStorage.getItem(STORE) || "null"); return s && s.t && s.exp > Date.now() + 30e3 ? s : null; } catch (e) { return null; } }
-  function keep(t, secs) { try { sessionStorage.setItem(STORE, JSON.stringify({ t: t, exp: Date.now() + Math.min(Number(secs) || 3600, 3600) * 1000 })); } catch (e) { /* memory only */ } mem = { t: t, exp: Date.now() + Math.min(Number(secs) || 3600, 3600) * 1000 }; }
-  var mem = null;
-  function token() { var s = session() || (mem && mem.exp > Date.now() + 30e3 ? mem : null); return s ? s.t : null; }
-  function forget() { mem = null; try { sessionStorage.removeItem(STORE); } catch (e) { /* none */ } }
+  // ---- sign-in (Supabase Auth's e-mail OTP; no account is created from here) and the session (session.js)
+  var S = MilaDashSession({ url: SUPABASE, anon: ANON, fetch: function (u, i) { return fetch(u, i); }, locks: navigator.locks });
+  var TICK = 120e3, RETRY = [15e3, 30e3, 60e3, 120e3], fails = 0;
   function auth(path, body) {
     return fetch(SUPABASE + "/auth/v1/" + path, { method: "POST", headers: { apikey: ANON, "Content-Type": "application/json" }, body: JSON.stringify(body), credentials: "omit", referrerPolicy: "no-referrer" });
   }
+  function offline(on) { $("offline").hidden = !on; }
+  function stopTimers() { clearInterval(timer); clearTimeout(retryT); timer = retryT = null; }
   function showLogin(msg) {
-    clearInterval(timer); $("app").hidden = true; $("login").hidden = false; $("f-mail").hidden = false; $("f-code").hidden = true;
+    stopTimers(); offline(false); data = null; $("app").hidden = true; $("login").hidden = false; $("f-mail").hidden = false; $("f-code").hidden = true;
     $("msg1").textContent = msg || ""; $("mail").focus();
   }
+  // a refresh that did not give a token: Supabase said no (or 30 days passed) → the login; no network → quiet retries
+  function lost(why) {
+    if (why === "expired") return showLogin("30 dagar sedan inloggningen med kod: logga in igen.");
+    if (why === "auth") return showLogin("Logga in igen.");
+    offline(true); retrySoon();
+  }
+  function retrySoon() { clearTimeout(retryT); retryT = setTimeout(function () { retryT = null; load(); }, RETRY[Math.min(fails++, RETRY.length - 1)]); }
   $("f-mail").addEventListener("submit", function (ev) {
     ev.preventDefault(); mail = $("mail").value.trim(); $("msg1").textContent = "";
     auth("otp", { email: mail, create_user: false }).then(function (r) {
@@ -561,38 +567,57 @@
   $("f-code").addEventListener("submit", function (ev) {
     ev.preventDefault(); $("msg2").textContent = "";
     auth("verify", { type: "email", email: mail, token: $("code").value.trim() }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); }).then(function (x) {
-      if (!x.ok || !x.j || !x.j.access_token) { $("msg2").textContent = "Fel eller för gammal kod."; return; }
-      keep(x.j.access_token, x.j.expires_in); mail = ""; start();
+      if (!x.ok || !S.signedIn(x.j)) { $("msg2").textContent = "Fel eller för gammal kod."; return; }
+      mail = ""; start();
     }, function () { $("msg2").textContent = "Ingen anslutning."; });
   });
-  $("logout").addEventListener("click", function () {
-    var t = token(); forget();
-    if (t) fetch(SUPABASE + "/auth/v1/logout", { method: "POST", headers: { apikey: ANON, Authorization: "Bearer " + t }, credentials: "omit" }).catch(function () {});
-    showLogin("Utloggad.");
-  });
+  $("logout").addEventListener("click", function () { S.logout(); showLogin("Utloggad."); });
   $("reload").addEventListener("click", function () { load(); });
   function subOf(t) { try { var p = JSON.parse(atob(t.split(".")[1].replace(/-/g, "+").replace(/_/g, "/"))); return typeof p.sub === "string" ? p.sub : ""; } catch (e) { return ""; } }
 
+  /** Refresh first when due (or after a 401: once, forced), then the numbers. */
+  var loading = null;
   function load() {
     if (DEMO) return fetch("demo.json").then(function (r) { return r.json(); }).then(function (j) { data = j; render(); });
-    var t = token();
-    if (!t) return showLogin("");
-    $("board").style.opacity = data ? ".6" : "1";
-    return fetch(FN, { headers: { Authorization: "Bearer " + t, apikey: ANON }, credentials: "omit", referrerPolicy: "no-referrer", cache: "no-store" }).then(function (r) {
-      $("board").style.opacity = "1";
-      if (r.status === 401) { forget(); return showLogin("Logga in igen."); }
-      if (r.status === 403) { forget(); return showLogin("Kontot har inte behörighet. Konto-id att lägga i ADMIN_USER_IDS: " + subOf(t)); }
-      if (r.status === 429) { return; }
-      if (!r.ok) { var b = $("board"); while (b.firstChild) b.removeChild(b.firstChild); b.appendChild(el("p", "err", "Siffrorna kunde inte hämtas (" + r.status + "). Försök igen om en stund.")); return; }
-      return r.json().then(function (j) { data = j; render(); });
-    }, function () { $("board").style.opacity = "1"; });
+    if (loading) return loading;
+    loading = fetchData(false).then(function () { loading = null; }, function () { loading = null; });
+    return loading;
+  }
+  function fetchData(retried) {
+    return S.fresh(retried).then(function (x) {
+      if (!x.ok) return lost(x.why);
+      $("board").style.opacity = data ? ".6" : "1";
+      return fetch(FN, { headers: { Authorization: "Bearer " + x.t, apikey: ANON }, credentials: "omit", referrerPolicy: "no-referrer", cache: "no-store" }).then(function (r) {
+        $("board").style.opacity = "1";
+        // a 401 with a token: refresh once (forced) and try again; a 401 after that refresh is real
+        if (r.status === 401) return retried ? (S.logout(), showLogin("Logga in igen.")) : fetchData(true);
+        if (r.status === 403) { S.logout(); return showLogin("Kontot har inte behörighet. Konto-id att lägga i ADMIN_USER_IDS: " + subOf(x.t)); }
+        if (r.status === 429) { return; }
+        // the server could not answer: keep what is drawn (or say so when nothing is), mark offline, try again quietly
+        if (!r.ok) { if (!data) { var b = $("board"); while (b.firstChild) b.removeChild(b.firstChild); b.appendChild(el("p", "err", "Siffrorna kunde inte hämtas (" + r.status + "). Försöker igen.")); } offline(true); return retrySoon(); }
+        return r.json().then(function (j) { data = j; lastLoad = Date.now(); fails = 0; offline(false); clearTimeout(retryT); render(); }, function () { offline(true); retrySoon(); });
+      }, function () { $("board").style.opacity = "1"; offline(true); retrySoon(); });
+    });
   }
   function start() {
     $("login").hidden = true; $("app").hidden = false;
-    load(); clearInterval(timer); timer = setInterval(function () { if (!DEMO && !token()) return showLogin("Sessionen har gått ut."); load(); }, 120e3);
+    stopTimers(); load();
+    // every load refreshes first when the token is due, so a tick after sleep renews before it asks for the numbers
+    timer = setInterval(load, TICK);
   }
+  /** Back from a hidden tab, sleep or no network: refresh first, then load, if the numbers are older than a tick or the token is due. */
+  function wake() {
+    if (DEMO || $("app").hidden || document.visibilityState === "hidden") return;
+    if (Date.now() - lastLoad > TICK || S.due()) load();
+  }
+  document.addEventListener("visibilitychange", wake);
+  addEventListener("focus", wake);
+  addEventListener("pageshow", wake);
+  addEventListener("online", function () { if (!$("app").hidden) load(); });
+  // logged out in another tab of this browser: this one follows
+  addEventListener("storage", function (ev) { if (ev.key === S.DEVICE && ev.newValue === null && !$("app").hidden && !DEMO) { S.forget(); showLogin("Utloggad."); } });
   var resizeT;
   addEventListener("resize", function () { clearTimeout(resizeT); resizeT = setTimeout(function () { if (data) render(); }, 200); });
   if (window.matchMedia) matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function () { if (data) render(); });
-  if (DEMO || token()) start(); else showLogin("");
+  if (DEMO || S.resumable()) start(); else showLogin("");
 })();

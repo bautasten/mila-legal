@@ -1,5 +1,5 @@
 <!doctype html><html lang="sv"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://vfjofaniwtudzvadxpsd.supabase.co; object-src 'none'; base-uri 'none'; form-action 'self'"><meta name="referrer" content="same-origin"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex, nofollow, noarchive">
-<title>Mila drift</title><link rel="stylesheet" href="dash.css"><style id="antiClickjack">html{display:none!important}</style><script src="../frame.js"></script><script src="dash.js" defer></script></head>
+<title>Mila drift</title><link rel="stylesheet" href="dash.css"><style id="antiClickjack">html{display:none!important}</style><script src="../frame.js"></script><script src="session.js" defer></script><script src="dash.js" defer></script></head>
 <body>
 <main id="login" hidden>
   <form id="f-mail" autocomplete="on">
@@ -21,6 +21,7 @@
   <header>
     <h1>Mila drift</h1>
     <span class="meta" id="asof"></span>
+    <span class="offline" id="offline" role="status" hidden>Offline · försöker igen</span>
     <nav class="tabs" id="tabs" role="tablist" aria-label="Flikar"></nav>
     <span class="spacer"></span>
     <button class="ghost" id="reload" type="button">Uppdatera</button>

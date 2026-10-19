@@ -1430,7 +1430,7 @@
    "old": [
     "adidas-stockholm-marathon-42k"
    ],
-   "og": "0646d0ec57c2aa32d6f9f453"
+   "og": "6f8a79d85f336e23d147be25"
   },
   "72e82ef1-9e0a-438d-94a7-f5f74aa54b50": {
    "slug": "swb-marathon-bremen-marathon-42k",
@@ -1892,7 +1892,7 @@
    "lastmod": "2026-10-19"
   },
   "de/laeufe/": {
-   "hash": "c35fb6c300321a608d8f4eca",
+   "hash": "3d70f48339cdbcdc69651da1",
    "lastmod": "2026-10-19"
   },
   "de/laeufe/101a-corrida-internacional-de-sao-silvestre-15k/": {
@@ -2060,8 +2060,8 @@
    "lastmod": "2026-10-16"
   },
   "de/laeufe/blodomloppet-goteborg-10-km/": {
-   "hash": "4982109f41f4604e6893d825",
-   "lastmod": "2026-10-16"
+   "hash": "a7b2cb93935f5dc09c6ea656",
+   "lastmod": "2026-10-19"
   },
   "de/laeufe/bmo-vancouver-marathon-42k/": {
    "hash": "4fd319585e9cf8022c1d9934",
@@ -2132,8 +2132,8 @@
    "lastmod": "2026-10-16"
   },
   "de/laeufe/coop-kungsholmen-runt-10-km/": {
-   "hash": "6c4b0084128917643ed416fc",
-   "lastmod": "2026-10-16"
+   "hash": "e326b8cf7225938b41f18ede",
+   "lastmod": "2026-10-19"
   },
   "de/laeufe/copenhagen-half-marathon-cph-half-21k/": {
    "hash": "0c0dd02eec34e065fe0556f6",
@@ -2188,7 +2188,7 @@
    "lastmod": "2026-10-19"
   },
   "de/laeufe/distanz/marathon/": {
-   "hash": "09540db722ec91949e6b51d0",
+   "hash": "eba2ba2d62bd8ab426417878",
    "lastmod": "2026-10-19"
   },
   "de/laeufe/distanz/trail/": {
@@ -2296,8 +2296,8 @@
    "lastmod": "2026-10-16"
   },
   "de/laeufe/goteborgsvarvet-21k/": {
-   "hash": "dbc791c466fdfcc38d04e378",
-   "lastmod": "2026-10-16"
+   "hash": "b9edf9554defcce4ebea69cd",
+   "lastmod": "2026-10-19"
   },
   "de/laeufe/grand-raid-reunion-la-diagonale-des-fous-180k/": {
    "hash": "1f133ba583002f7c9627bd71",
@@ -2356,8 +2356,8 @@
    "lastmod": "2026-10-17"
   },
   "de/laeufe/hasselbyloppet-10k/": {
-   "hash": "8add777cecbd13ca0d98eaf2",
-   "lastmod": "2026-10-16"
+   "hash": "99de8e612ba869e9686f0619",
+   "lastmod": "2026-10-19"
   },
   "de/laeufe/heineken-0-0-ljubljana-marathon-42-195-km/": {
    "hash": "b0020bd3a6f1831b6656e5b3",
@@ -2460,8 +2460,8 @@
    "lastmod": "2026-10-16"
   },
   "de/laeufe/kullamannen-by-utmb-ultra-100-miles-173k/": {
-   "hash": "388ac62aae2007ad93f916d1",
-   "lastmod": "2026-10-16"
+   "hash": "e9179b96ca7c90b264b9a5c6",
+   "lastmod": "2026-10-19"
   },
   "de/laeufe/kyoto-marathon-2027-42k/": {
    "hash": "6712dc033999d1ca8a8c3ab1",
@@ -2580,7 +2580,7 @@
    "lastmod": "2026-10-19"
   },
   "de/laeufe/land/schweden/": {
-   "hash": "eed2abbc520afafa14a22e60",
+   "hash": "0187f6427ffaf3dff33e8ee1",
    "lastmod": "2026-10-19"
   },
   "de/laeufe/land/schweiz/": {
@@ -2764,8 +2764,8 @@
    "lastmod": "2026-10-16"
   },
   "de/laeufe/midnattsloppet-stockholm-10-km/": {
-   "hash": "72218cc6784245abc272f40f",
-   "lastmod": "2026-10-16"
+   "hash": "f74b85ab973e10506b0271f4",
+   "lastmod": "2026-10-19"
   },
   "de/laeufe/midnight-sun-marathon-42k/": {
    "hash": "2b096712084fbbe75a0f95f5",
@@ -2804,7 +2804,7 @@
    "lastmod": "2026-10-19"
   },
   "de/laeufe/monat/2027-05/": {
-   "hash": "3785bcf869f7a8b284de2af5",
+   "hash": "5d1fb5c25f6ff8690c6b6ff1",
    "lastmod": "2026-10-19"
   },
   "de/laeufe/monat/2027-06/": {
@@ -2908,8 +2908,8 @@
    "lastmod": "2026-10-16"
   },
   "de/laeufe/premiarmilen-10k/": {
-   "hash": "02e55f848bd64e175c903925",
-   "lastmod": "2026-10-16"
+   "hash": "797473a7b0bf009fbe6b361c",
+   "lastmod": "2026-10-19"
   },
   "de/laeufe/raiffeisen-bank-bucharest-marathon-marathon-42k/": {
    "hash": "96c33deab7b65d5b30fabad5",
@@ -3072,7 +3072,7 @@
    "lastmod": "2026-10-19"
   },
   "de/laeufe/stadt/stockholm/": {
-   "hash": "ebaba683df3d90622903d745",
+   "hash": "e98ce4f656b375225bc4439f",
    "lastmod": "2026-10-19"
   },
   "de/laeufe/stadt/zurich/": {
@@ -3092,8 +3092,8 @@
    "lastmod": "2026-10-16"
   },
   "de/laeufe/stockholm-marathon-42k/": {
-   "hash": "d2ae3e2b73edb560b99f9920",
-   "lastmod": "2026-10-16"
+   "hash": "8bd2757a3d1307ebac5b97b6",
+   "lastmod": "2026-10-19"
   },
   "de/laeufe/swb-marathon-bremen-marathon-42k/": {
    "hash": "ba77aa457bc58c21ac77893f",
@@ -3116,8 +3116,8 @@
    "lastmod": "2026-10-16"
   },
   "de/laeufe/sylvesterloppet-10k/": {
-   "hash": "ee32fd91a816fbf1a2ee36cb",
-   "lastmod": "2026-10-16"
+   "hash": "3a288c176f75085260c3f4f2",
+   "lastmod": "2026-10-19"
   },
   "de/laeufe/taipei-marathon-marathon-42-195-km/": {
    "hash": "566a60434dfc8d3e0505ee13",
@@ -3144,8 +3144,8 @@
    "lastmod": "2026-10-16"
   },
   "de/laeufe/tenzing-hillary-everest-marathon-full-marathon-42km/": {
-   "hash": "be6dbc98b2b2deb08a43a2aa",
-   "lastmod": "2026-10-16"
+   "hash": "226e31a8eda249b6a46c8316",
+   "lastmod": "2026-10-19"
   },
   "de/laeufe/three-peaks-race-37k/": {
    "hash": "ac75827e13735ca5046ce32e",
@@ -3156,8 +3156,8 @@
    "lastmod": "2026-10-16"
   },
   "de/laeufe/tjejmilen-10k/": {
-   "hash": "6b4f17a1168bdaec91726550",
-   "lastmod": "2026-10-16"
+   "hash": "e769eeb201c72f4fb5bda2c3",
+   "lastmod": "2026-10-19"
   },
   "de/laeufe/tjurruset-10-km/": {
    "hash": "7ad4f861f7edca06f67d2d05",
@@ -3192,8 +3192,8 @@
    "lastmod": "2026-10-16"
   },
   "de/laeufe/trailovik-22-km/": {
-   "hash": "e06ffb6c71f1d5077ecbf1eb",
-   "lastmod": "2026-10-16"
+   "hash": "5332b4d4fb334704e03fc4c7",
+   "lastmod": "2026-10-19"
   },
   "de/laeufe/trailvasan-30/": {
    "hash": "50bc59fc3b61821a26157055",
@@ -3232,16 +3232,16 @@
    "lastmod": "2026-10-16"
   },
   "de/laeufe/umaker-trail-15-6-km/": {
-   "hash": "eaecf9e4fd582d348be0c39f",
-   "lastmod": "2026-10-16"
+   "hash": "614580365ce5bf15e7c118bc",
+   "lastmod": "2026-10-19"
   },
   "de/laeufe/uniper-dusseldorf-marathon-42k/": {
    "hash": "e5217bc51866d853acf65f72",
    "lastmod": "2026-10-17"
   },
   "de/laeufe/ursvik-ultra-uu-hardingen-45-km/": {
-   "hash": "088fb6f619193979d842ddc7",
-   "lastmod": "2026-10-16"
+   "hash": "a29480b9aab2066be5212a5e",
+   "lastmod": "2026-10-19"
   },
   "de/laeufe/utmb-mont-blanc-utmb-ultra-trail-du-mont-blanc-174k/": {
    "hash": "c321966458a85a3f1cbb667d",
@@ -3256,8 +3256,8 @@
    "lastmod": "2026-10-16"
   },
   "de/laeufe/varruset-stockholm-5-km/": {
-   "hash": "f6feca0974555554bdb3eaa7",
-   "lastmod": "2026-10-16"
+   "hash": "d2be0f887e904438bb688a61",
+   "lastmod": "2026-10-19"
   },
   "de/laeufe/vedanta-delhi-half-marathon-21k/": {
    "hash": "77e98b05366f80a2345da8ed",
@@ -3396,7 +3396,7 @@
    "lastmod": "2026-10-16"
   },
   "en/races/": {
-   "hash": "bb5c2a8d7d22327b96bce6e5",
+   "hash": "e2ee7df1df4acaf85b5e3d77",
    "lastmod": "2026-10-19"
   },
   "en/races/101a-corrida-internacional-de-sao-silvestre-15k/": {
@@ -3564,8 +3564,8 @@
    "lastmod": "2026-10-16"
   },
   "en/races/blodomloppet-goteborg-10-km/": {
-   "hash": "99eb2ed6cd6ac2041492f718",
-   "lastmod": "2026-10-16"
+   "hash": "37a9645436ee6fe419dee41b",
+   "lastmod": "2026-10-19"
   },
   "en/races/bmo-vancouver-marathon-42k/": {
    "hash": "a188d404a10a8078156750f1",
@@ -3704,7 +3704,7 @@
    "lastmod": "2026-10-19"
   },
   "en/races/city/stockholm/": {
-   "hash": "32fd3e98a4d0f571f284f6bd",
+   "hash": "24e9c3274e6a0b21789c3837",
    "lastmod": "2026-10-19"
   },
   "en/races/city/zurich/": {
@@ -3720,8 +3720,8 @@
    "lastmod": "2026-10-16"
   },
   "en/races/coop-kungsholmen-runt-10-km/": {
-   "hash": "2785db6302d02ca4fb506fc9",
-   "lastmod": "2026-10-16"
+   "hash": "08b03a73eb2d9a3ceb7752c5",
+   "lastmod": "2026-10-19"
   },
   "en/races/copenhagen-half-marathon-cph-half-21k/": {
    "hash": "6b77a705e3b02193397ffe0b",
@@ -3848,7 +3848,7 @@
    "lastmod": "2026-10-19"
   },
   "en/races/country/sweden/": {
-   "hash": "1f5e6d38793e83a0b5429bab",
+   "hash": "36e571230b8c7ba1a43df077",
    "lastmod": "2026-10-19"
   },
   "en/races/country/switzerland/": {
@@ -3908,7 +3908,7 @@
    "lastmod": "2026-10-19"
   },
   "en/races/distance/marathon/": {
-   "hash": "6100274ee5972fbcf6d8d783",
+   "hash": "f5ac59fa86430443a452e17b",
    "lastmod": "2026-10-19"
   },
   "en/races/distance/trail/": {
@@ -4016,8 +4016,8 @@
    "lastmod": "2026-10-16"
   },
   "en/races/goteborgsvarvet-21k/": {
-   "hash": "fd02b12161bbeb1a52b616ab",
-   "lastmod": "2026-10-16"
+   "hash": "4dcd966c86e988bee4a97c55",
+   "lastmod": "2026-10-19"
   },
   "en/races/grand-raid-reunion-la-diagonale-des-fous-180k/": {
    "hash": "fbe37e4a517434c4b149050b",
@@ -4076,8 +4076,8 @@
    "lastmod": "2026-10-17"
   },
   "en/races/hasselbyloppet-10k/": {
-   "hash": "af3f2bf0c99189e20c0c28df",
-   "lastmod": "2026-10-16"
+   "hash": "1bcc3b6d5240907234d12aa6",
+   "lastmod": "2026-10-19"
   },
   "en/races/heineken-0-0-ljubljana-marathon-42-195-km/": {
    "hash": "7c2a27e913addf4a665324d7",
@@ -4180,8 +4180,8 @@
    "lastmod": "2026-10-16"
   },
   "en/races/kullamannen-by-utmb-ultra-100-miles-173k/": {
-   "hash": "8d2010c087b8a3aa23189746",
-   "lastmod": "2026-10-16"
+   "hash": "d699671b97923c7de4507782",
+   "lastmod": "2026-10-19"
   },
   "en/races/kyoto-marathon-2027-42k/": {
    "hash": "283cc0d18b2a11f6eb9d6a16",
@@ -4352,8 +4352,8 @@
    "lastmod": "2026-10-16"
   },
   "en/races/midnattsloppet-stockholm-10-km/": {
-   "hash": "51b57e384dcc7ac71f548942",
-   "lastmod": "2026-10-16"
+   "hash": "699d442246e30ba234e68a27",
+   "lastmod": "2026-10-19"
   },
   "en/races/midnight-sun-marathon-42k/": {
    "hash": "527dec1cfabbfce23fc0ce29",
@@ -4396,7 +4396,7 @@
    "lastmod": "2026-10-19"
   },
   "en/races/month/2027-05/": {
-   "hash": "3c176ca82e95ef90c9470d17",
+   "hash": "a8c01d0c9cb9948c0aa99fbc",
    "lastmod": "2026-10-19"
   },
   "en/races/month/2027-06/": {
@@ -4500,8 +4500,8 @@
    "lastmod": "2026-10-16"
   },
   "en/races/premiarmilen-10k/": {
-   "hash": "ca82ec84878056b5556c650b",
-   "lastmod": "2026-10-16"
+   "hash": "a1816c8c5dc5688b1c6b794f",
+   "lastmod": "2026-10-19"
   },
   "en/races/raiffeisen-bank-bucharest-marathon-marathon-42k/": {
    "hash": "4d930902546172e559592985",
@@ -4596,8 +4596,8 @@
    "lastmod": "2026-10-16"
   },
   "en/races/stockholm-marathon-42k/": {
-   "hash": "09edf4e40d86658d3e09614c",
-   "lastmod": "2026-10-16"
+   "hash": "54698c100af81aa411c45755",
+   "lastmod": "2026-10-19"
   },
   "en/races/swb-marathon-bremen-marathon-42k/": {
    "hash": "2df0237286a530a6dff2389a",
@@ -4620,8 +4620,8 @@
    "lastmod": "2026-10-16"
   },
   "en/races/sylvesterloppet-10k/": {
-   "hash": "1cb3ecf5727a78ce04913d8b",
-   "lastmod": "2026-10-16"
+   "hash": "c633e5f51b3d92af73e4e725",
+   "lastmod": "2026-10-19"
   },
   "en/races/taipei-marathon-marathon-42-195-km/": {
    "hash": "5805740628605a11bbaa40f2",
@@ -4648,8 +4648,8 @@
    "lastmod": "2026-10-16"
   },
   "en/races/tenzing-hillary-everest-marathon-full-marathon-42km/": {
-   "hash": "923f7e724d5a177bad6fc26e",
-   "lastmod": "2026-10-16"
+   "hash": "ffea906cdbf7c1146b53209c",
+   "lastmod": "2026-10-19"
   },
   "en/races/three-peaks-race-37k/": {
    "hash": "ebb5120bdc95c73aa2081da4",
@@ -4660,8 +4660,8 @@
    "lastmod": "2026-10-16"
   },
   "en/races/tjejmilen-10k/": {
-   "hash": "ebc05d7e4abd93b28db4a55e",
-   "lastmod": "2026-10-16"
+   "hash": "8ae6ca36eb7b5fe0c066a256",
+   "lastmod": "2026-10-19"
   },
   "en/races/tjurruset-10-km/": {
    "hash": "ae5f1102fe9bda5570764e26",
@@ -4696,8 +4696,8 @@
    "lastmod": "2026-10-16"
   },
   "en/races/trailovik-22-km/": {
-   "hash": "dbeec0752325b3bebc30a7ee",
-   "lastmod": "2026-10-16"
+   "hash": "232b4e257719323f9401dbe1",
+   "lastmod": "2026-10-19"
   },
   "en/races/trailvasan-30/": {
    "hash": "db013f366b50cc8964254ccf",
@@ -4736,16 +4736,16 @@
    "lastmod": "2026-10-16"
   },
   "en/races/umaker-trail-15-6-km/": {
-   "hash": "2430c06c15d9beca74f3ade3",
-   "lastmod": "2026-10-16"
+   "hash": "f71337fec7d2a2677fef86e3",
+   "lastmod": "2026-10-19"
   },
   "en/races/uniper-dusseldorf-marathon-42k/": {
    "hash": "af4ce0c0b8b0b393ba7aac0f",
    "lastmod": "2026-10-17"
   },
   "en/races/ursvik-ultra-uu-hardingen-45-km/": {
-   "hash": "e3564c27fdadb4dd08a67c23",
-   "lastmod": "2026-10-16"
+   "hash": "7f9297b93d385b1b016f8f30",
+   "lastmod": "2026-10-19"
   },
   "en/races/utmb-mont-blanc-utmb-ultra-trail-du-mont-blanc-174k/": {
    "hash": "0f3c461af4eb9271e85d1aea",
@@ -4760,8 +4760,8 @@
    "lastmod": "2026-10-16"
   },
   "en/races/varruset-stockholm-5-km/": {
-   "hash": "208b5adac7020087dbaea2df",
-   "lastmod": "2026-10-16"
+   "hash": "71047ef9695360d31498a1db",
+   "lastmod": "2026-10-19"
   },
   "en/races/vedanta-delhi-half-marathon-21k/": {
    "hash": "d5e11b28c7d9228c14f0fc1f",
@@ -4876,7 +4876,7 @@
    "lastmod": "2026-10-16"
   },
   "lopp/": {
-   "hash": "6d62d9532f2508badd706211",
+   "hash": "b4b4f03923305633feaf9cea",
    "lastmod": "2026-10-19"
   },
   "lopp/101a-corrida-internacional-de-sao-silvestre-15k/": {
@@ -5044,8 +5044,8 @@
    "lastmod": "2026-10-16"
   },
   "lopp/blodomloppet-goteborg-10-km/": {
-   "hash": "6860b4b6016c4051f32628ae",
-   "lastmod": "2026-10-16"
+   "hash": "4eb42286874fee96b0be8e72",
+   "lastmod": "2026-10-19"
   },
   "lopp/bmo-vancouver-marathon-42k/": {
    "hash": "c8c9a6357ef305917ec1a189",
@@ -5116,8 +5116,8 @@
    "lastmod": "2026-10-16"
   },
   "lopp/coop-kungsholmen-runt-10-km/": {
-   "hash": "f28617a922555c127bbbf522",
-   "lastmod": "2026-10-16"
+   "hash": "6ae1ffef34cb2f5e1dec221c",
+   "lastmod": "2026-10-19"
   },
   "lopp/copenhagen-half-marathon-cph-half-21k/": {
    "hash": "25d27fe9891801d0b53eca19",
@@ -5172,7 +5172,7 @@
    "lastmod": "2026-10-19"
   },
   "lopp/distans/maraton/": {
-   "hash": "188d7644015d4ccb2ac040ae",
+   "hash": "ae8c3de033a4f1bf0d280665",
    "lastmod": "2026-10-19"
   },
   "lopp/distans/trail/": {
@@ -5280,8 +5280,8 @@
    "lastmod": "2026-10-16"
   },
   "lopp/goteborgsvarvet-21k/": {
-   "hash": "54accfc2951e936d45cfcb52",
-   "lastmod": "2026-10-16"
+   "hash": "d17d2baaea02c9ae5c90efc3",
+   "lastmod": "2026-10-19"
   },
   "lopp/grand-raid-reunion-la-diagonale-des-fous-180k/": {
    "hash": "2b061b2e50bdfd1f63896567",
@@ -5340,8 +5340,8 @@
    "lastmod": "2026-10-17"
   },
   "lopp/hasselbyloppet-10k/": {
-   "hash": "101e89d0d6e83dd033797f91",
-   "lastmod": "2026-10-16"
+   "hash": "18e0fa169f9801551d2e9bd5",
+   "lastmod": "2026-10-19"
   },
   "lopp/heineken-0-0-ljubljana-marathon-42-195-km/": {
    "hash": "e971ebbbc0030bc34b6b55d8",
@@ -5444,8 +5444,8 @@
    "lastmod": "2026-10-16"
   },
   "lopp/kullamannen-by-utmb-ultra-100-miles-173k/": {
-   "hash": "388e4e4296779516928e1ebb",
-   "lastmod": "2026-10-16"
+   "hash": "3d4acf963bfceb8ffbe09e91",
+   "lastmod": "2026-10-19"
   },
   "lopp/kyoto-marathon-2027-42k/": {
    "hash": "aff6849c587ad6fe2a4978ae",
@@ -5572,7 +5572,7 @@
    "lastmod": "2026-10-19"
   },
   "lopp/land/sverige/": {
-   "hash": "27cafb447ce8d3befed40b90",
+   "hash": "4d00b83216b54d3f0bbdcddc",
    "lastmod": "2026-10-19"
   },
   "lopp/land/sydafrika/": {
@@ -5672,7 +5672,7 @@
    "lastmod": "2026-10-19"
   },
   "lopp/manad/2027-05/": {
-   "hash": "3fc3d84d44a706f9dbcbde93",
+   "hash": "e58cdd8cbcd5aea922dce4ce",
    "lastmod": "2026-10-19"
   },
   "lopp/manad/2027-06/": {
@@ -5796,8 +5796,8 @@
    "lastmod": "2026-10-16"
   },
   "lopp/midnattsloppet-stockholm-10-km/": {
-   "hash": "2ced355e834026d20f3ba656",
-   "lastmod": "2026-10-16"
+   "hash": "4f8b5c5a1b0bbe3d37b79677",
+   "lastmod": "2026-10-19"
   },
   "lopp/midnight-sun-marathon-42k/": {
    "hash": "693824c1811cb57dea70e823",
@@ -5892,8 +5892,8 @@
    "lastmod": "2026-10-16"
   },
   "lopp/premiarmilen-10k/": {
-   "hash": "2b926eca182a5982cf1fb2ef",
-   "lastmod": "2026-10-16"
+   "hash": "218aaa8a3e682ad9145830b3",
+   "lastmod": "2026-10-19"
   },
   "lopp/raiffeisen-bank-bucharest-marathon-marathon-42k/": {
    "hash": "bededf64376e89dd29355be2",
@@ -6056,7 +6056,7 @@
    "lastmod": "2026-10-19"
   },
   "lopp/stad/stockholm/": {
-   "hash": "2631df319d05a8ab19758b32",
+   "hash": "73a6cc99e7c8df87758d073c",
    "lastmod": "2026-10-19"
   },
   "lopp/stad/zurich/": {
@@ -6076,8 +6076,8 @@
    "lastmod": "2026-10-16"
   },
   "lopp/stockholm-marathon-42k/": {
-   "hash": "0069fb33acbf32828152d78d",
-   "lastmod": "2026-10-16"
+   "hash": "d70ce42285ccb5cf22726fc1",
+   "lastmod": "2026-10-19"
   },
   "lopp/swb-marathon-bremen-marathon-42k/": {
    "hash": "19dce686ae60015f304c5f50",
@@ -6100,8 +6100,8 @@
    "lastmod": "2026-10-16"
   },
   "lopp/sylvesterloppet-10k/": {
-   "hash": "4d89f6510ed47733d88ba2d2",
-   "lastmod": "2026-10-16"
+   "hash": "6ca2ee97954b4c2cbfa13c14",
+   "lastmod": "2026-10-19"
   },
   "lopp/taipei-marathon-marathon-42-195-km/": {
    "hash": "deeebc1f98df9b0aaf14f595",
@@ -6128,8 +6128,8 @@
    "lastmod": "2026-10-16"
   },
   "lopp/tenzing-hillary-everest-marathon-full-marathon-42km/": {
-   "hash": "281e759c9b6aa9cc9b78cc0c",
-   "lastmod": "2026-10-16"
+   "hash": "9a63f5f10159342a7eac9972",
+   "lastmod": "2026-10-19"
   },
   "lopp/three-peaks-race-37k/": {
    "hash": "54a021cfa982144638958e93",
@@ -6140,8 +6140,8 @@
    "lastmod": "2026-10-16"
   },
   "lopp/tjejmilen-10k/": {
-   "hash": "9a0aa6dc206cd7d9c8ea5a34",
-   "lastmod": "2026-10-16"
+   "hash": "f935b60938486805067a26f4",
+   "lastmod": "2026-10-19"
   },
   "lopp/tjurruset-10-km/": {
    "hash": "1af6260324d5b37fb56cd26c",
@@ -6176,8 +6176,8 @@
    "lastmod": "2026-10-16"
   },
   "lopp/trailovik-22-km/": {
-   "hash": "1842c0f3217d8c3cf0691f1a",
-   "lastmod": "2026-10-16"
+   "hash": "4c7c874cff5b0380f2f4dd60",
+   "lastmod": "2026-10-19"
   },
   "lopp/trailvasan-30/": {
    "hash": "63ae72512af3f9a0b8bc18be",
@@ -6216,16 +6216,16 @@
    "lastmod": "2026-10-16"
   },
   "lopp/umaker-trail-15-6-km/": {
-   "hash": "b6026451a00de9a5e6ad2fb0",
-   "lastmod": "2026-10-16"
+   "hash": "5c825e63e05fdc19db058c19",
+   "lastmod": "2026-10-19"
   },
   "lopp/uniper-dusseldorf-marathon-42k/": {
    "hash": "095ce10f7bf69618fdb1413f",
    "lastmod": "2026-10-17"
   },
   "lopp/ursvik-ultra-uu-hardingen-45-km/": {
-   "hash": "d7d967cd8ffad74af443c035",
-   "lastmod": "2026-10-16"
+   "hash": "2344cbea380906f80fcc99af",
+   "lastmod": "2026-10-19"
   },
   "lopp/utmb-mont-blanc-utmb-ultra-trail-du-mont-blanc-174k/": {
    "hash": "d37e355985b6bcaa33f903a6",
@@ -6240,8 +6240,8 @@
    "lastmod": "2026-10-16"
   },
   "lopp/varruset-stockholm-5-km/": {
-   "hash": "56c303f995b9a59069804ad2",
-   "lastmod": "2026-10-16"
+   "hash": "9e2cf477552dc10e2843c3fb",
+   "lastmod": "2026-10-19"
   },
   "lopp/vedanta-delhi-half-marathon-21k/": {
    "hash": "a3215b60f753c7c18cba6429",

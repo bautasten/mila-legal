@@ -1840,8 +1840,8 @@
  },
  "pages": {
   "/consumer-health-data.html": {
-   "hash": "ff32edebb5998933d7683419",
-   "lastmod": "2026-10-19"
+   "hash": "15e53386a0f5492608a43d88",
+   "lastmod": "2026-10-22"
   },
   "/index-de.html": {
    "hash": "4b0ad5ab59ab08bc6fe01008",
@@ -1852,16 +1852,16 @@
    "lastmod": "2026-10-19"
   },
   "/privacy-de.html": {
-   "hash": "90518b636416559026ed273d",
-   "lastmod": "2026-10-19"
+   "hash": "6530f1b3894765956d2d44a7",
+   "lastmod": "2026-10-22"
   },
   "/privacy-en.html": {
-   "hash": "66d13c54029449051dfbf5e6",
-   "lastmod": "2026-10-19"
+   "hash": "20a86d4ae4048a1c65f2a20f",
+   "lastmod": "2026-10-22"
   },
   "/privacy.html": {
-   "hash": "15789f0af40c17fc2ef6f6db",
-   "lastmod": "2026-10-19"
+   "hash": "2cd81aa92dfc7264c741104f",
+   "lastmod": "2026-10-22"
   },
   "/support-de.html": {
    "hash": "13f459eb9879f0be126a81d3",
@@ -1880,16 +1880,16 @@
    "lastmod": "2026-10-19"
   },
   "/terms-de.html": {
-   "hash": "52a25b22b4aa6e3eed749f2d",
-   "lastmod": "2026-10-19"
+   "hash": "f6af823bc565d6d3ede08b30",
+   "lastmod": "2026-10-22"
   },
   "/terms-en.html": {
-   "hash": "838e7476a1d83db85be40b41",
-   "lastmod": "2026-10-19"
+   "hash": "bbb26a57338b8eddfcbaa9db",
+   "lastmod": "2026-10-22"
   },
   "/terms.html": {
-   "hash": "98ce7cbad144368490f88163",
-   "lastmod": "2026-10-19"
+   "hash": "871ceb66675427aca0ec80cb",
+   "lastmod": "2026-10-22"
   },
   "de/laeufe/": {
    "hash": "3d70f48339cdbcdc69651da1",
@@ -2336,8 +2336,8 @@
    "lastmod": "2026-10-19"
   },
   "de/laeufe/harmonie-mutuelle-toulouse-metropole-run-experience-le-marathon-des-ge-42k/": {
-   "hash": "9cd5c59b9777cbc421bac011",
-   "lastmod": "2026-10-19"
+   "hash": "4e993d4d3c8476939f46f86d",
+   "lastmod": "2026-10-22"
   },
   "de/laeufe/harno-trail-21-km/": {
    "hash": "9785d1585107ffb9c67879ba",
@@ -2424,8 +2424,8 @@
    "lastmod": "2026-10-16"
   },
   "de/laeufe/javelina-jundred-100-mile-161k/": {
-   "hash": "899d5367d89d355c3132c2b9",
-   "lastmod": "2026-10-16"
+   "hash": "4084bcfe7b3264f45825b870",
+   "lastmod": "2026-10-22"
   },
   "de/laeufe/jungfrau-marathon-42k/": {
    "hash": "bb0552f9d890df2c5fa9e2d9",
@@ -2908,8 +2908,8 @@
    "lastmod": "2026-10-16"
   },
   "de/laeufe/premiarmilen-10k/": {
-   "hash": "797473a7b0bf009fbe6b361c",
-   "lastmod": "2026-10-19"
+   "hash": "10ebdf2d734f2f607579d707",
+   "lastmod": "2026-10-22"
   },
   "de/laeufe/raiffeisen-bank-bucharest-marathon-marathon-42k/": {
    "hash": "96c33deab7b65d5b30fabad5",
@@ -3108,8 +3108,8 @@
    "lastmod": "2026-10-16"
   },
   "de/laeufe/swisscitymarathon-lucerne-marathon-42k/": {
-   "hash": "bc046fd8cb394a8877206575",
-   "lastmod": "2026-10-20"
+   "hash": "0bd3645e18a0e66d13f45e99",
+   "lastmod": "2026-10-22"
   },
   "de/laeufe/sydney-marathon-42k/": {
    "hash": "c1f1d5169be30cd12e17be9f",
@@ -3264,8 +3264,8 @@
    "lastmod": "2026-10-19"
   },
   "de/laeufe/venicemarathon-42k/": {
-   "hash": "62f10b693aadbc1da5e1ad4f",
-   "lastmod": "2026-10-21"
+   "hash": "7daa34da5adaf867545f4ebb",
+   "lastmod": "2026-10-22"
   },
   "de/laeufe/victoria-falls-marathon-full-marathon-42-195-km/": {
    "hash": "70846547de0062ef994cdf06",
@@ -4056,8 +4056,8 @@
    "lastmod": "2026-10-19"
   },
   "en/races/harmonie-mutuelle-toulouse-metropole-run-experience-le-marathon-des-ge-42k/": {
-   "hash": "cd9b089dd34d3977e1918f7a",
-   "lastmod": "2026-10-19"
+   "hash": "5bb7be3823b94c69e1ea144d",
+   "lastmod": "2026-10-22"
   },
   "en/races/harno-trail-21-km/": {
    "hash": "fa467adf40a5ccc7a6c3a13c",
@@ -4144,8 +4144,8 @@
    "lastmod": "2026-10-16"
   },
   "en/races/javelina-jundred-100-mile-161k/": {
-   "hash": "7d6681322c89ecb9caaedef4",
-   "lastmod": "2026-10-16"
+   "hash": "005e9cd1634c4008dd87f177",
+   "lastmod": "2026-10-22"
   },
   "en/races/jungfrau-marathon-42k/": {
    "hash": "39fdac0e83c3e6b16512bf78",
@@ -4500,8 +4500,8 @@
    "lastmod": "2026-10-16"
   },
   "en/races/premiarmilen-10k/": {
-   "hash": "a1816c8c5dc5688b1c6b794f",
-   "lastmod": "2026-10-19"
+   "hash": "156b7aa8fd6715e877d079e0",
+   "lastmod": "2026-10-22"
   },
   "en/races/raiffeisen-bank-bucharest-marathon-marathon-42k/": {
    "hash": "4d930902546172e559592985",
@@ -4612,8 +4612,8 @@
    "lastmod": "2026-10-16"
   },
   "en/races/swisscitymarathon-lucerne-marathon-42k/": {
-   "hash": "b4eeaf7dbdabcf746ce51f46",
-   "lastmod": "2026-10-20"
+   "hash": "c71477ae906dabbb0f673936",
+   "lastmod": "2026-10-22"
   },
   "en/races/sydney-marathon-42k/": {
    "hash": "7591f3c5e5f04be33def0791",
@@ -4768,8 +4768,8 @@
    "lastmod": "2026-10-19"
   },
   "en/races/venicemarathon-42k/": {
-   "hash": "b6114f3e0f2afc4440f422c3",
-   "lastmod": "2026-10-21"
+   "hash": "8c117cdf750ededc5fffb3cb",
+   "lastmod": "2026-10-22"
   },
   "en/races/victoria-falls-marathon-full-marathon-42-195-km/": {
    "hash": "221e5b818515ea0326121d7c",
@@ -5320,8 +5320,8 @@
    "lastmod": "2026-10-19"
   },
   "lopp/harmonie-mutuelle-toulouse-metropole-run-experience-le-marathon-des-ge-42k/": {
-   "hash": "64ca47ac6f09209423a2f6be",
-   "lastmod": "2026-10-19"
+   "hash": "ae1db2bfe48954073568ed8a",
+   "lastmod": "2026-10-22"
   },
   "lopp/harno-trail-21-km/": {
    "hash": "da8ba7a039db7ad1eadfb105",
@@ -5408,8 +5408,8 @@
    "lastmod": "2026-10-16"
   },
   "lopp/javelina-jundred-100-mile-161k/": {
-   "hash": "bc2caa9efb51e60bd59090cc",
-   "lastmod": "2026-10-16"
+   "hash": "fc67be901b662463b1f8b593",
+   "lastmod": "2026-10-22"
   },
   "lopp/jungfrau-marathon-42k/": {
    "hash": "48c8ffe7a3a85fff7cf00320",
@@ -5892,8 +5892,8 @@
    "lastmod": "2026-10-16"
   },
   "lopp/premiarmilen-10k/": {
-   "hash": "218aaa8a3e682ad9145830b3",
-   "lastmod": "2026-10-19"
+   "hash": "0e0a6378b009389e7eb58030",
+   "lastmod": "2026-10-22"
   },
   "lopp/raiffeisen-bank-bucharest-marathon-marathon-42k/": {
    "hash": "bededf64376e89dd29355be2",
@@ -6092,8 +6092,8 @@
    "lastmod": "2026-10-16"
   },
   "lopp/swisscitymarathon-lucerne-marathon-42k/": {
-   "hash": "7e12d3567c94cdc4f9897083",
-   "lastmod": "2026-10-20"
+   "hash": "90d9408030af47da4b92a514",
+   "lastmod": "2026-10-22"
   },
   "lopp/sydney-marathon-42k/": {
    "hash": "66b907c067a6c39ee272ade2",
@@ -6248,8 +6248,8 @@
    "lastmod": "2026-10-19"
   },
   "lopp/venicemarathon-42k/": {
-   "hash": "5cee202310bfa7a5b88b231c",
-   "lastmod": "2026-10-21"
+   "hash": "6342a2e85235a62a6885d916",
+   "lastmod": "2026-10-22"
   },
   "lopp/victoria-falls-marathon-full-marathon-42-195-km/": {
    "hash": "be6403483a6adcdafec3881a",

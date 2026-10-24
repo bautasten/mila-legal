@@ -1,6 +1,6 @@
 # Mila – running coach
 
-> Mila (Swedish: "Mila – löpcoach", German: "Mila – Laufcoach") is a running coach app for iPhone and Apple Watch. Tagline: "Rätt pass. Rätt dag." – the right run, on the right day. Every morning the coach looks at the runner's own data, form and life, gives its call for the day first and then today's session, all the way to the finish line of the runner's race.
+> Mila (Swedish: "Mila – löpcoach", German: "Mila – Laufcoach", Norwegian: "Mila – Løpecoach", Danish: "Mila – Løbecoach", Finnish: "Mila – Juoksuvalmentaja", French: "Mila – Coach running", Spanish: "Mila – Coach de running") is a running coach app for iPhone and Apple Watch. Tagline: "Rätt pass. Rätt dag." – the right run, on the right day (Norwegian "Rett økt. Rett dag.", Danish "Den rette træning. Den rette dag.", Finnish "Oikea harjoitus. Oikea päivä.", French "La bonne séance. Le bon jour.", Spanish "La sesión justa. El día justo."). Every morning the coach looks at the runner's own data, form and life, gives its call for the day first and then today's session, all the way to the finish line of the runner's race.
 
 ## Who it is for
 
@@ -20,7 +20,7 @@
 
 ## Languages and data
 
-- The app and the site are in Swedish, English and German.
+- The app and the site are in Swedish, English, German, Norwegian (Bokmål), Danish, Finnish, French and Spanish.
 - Accounts are stored in the EU (Ireland). Apple Health data is read on the phone; a summary goes to the coach only after the runner's consent. Mila never sells data or uses it for advertising.
 
 ## Key pages
@@ -28,8 +28,13 @@
 - [Mila (English)](https://milacoach.app/): what Mila is and does
 - [Mila (svenska)](https://milacoach.app/sv.html)
 - [Mila (Deutsch)](https://milacoach.app/index-de.html)
-- [Races](https://milacoach.app/en/races/): courses, elevation profiles, pace tables and FAQs for the races in Mila's race register (Swedish: https://milacoach.app/lopp/, German: https://milacoach.app/de/laeufe/)
-- [Support and contact](https://milacoach.app/support.html)
+- [Mila (norsk)](https://milacoach.app/index-nb.html)
+- [Mila (dansk)](https://milacoach.app/index-da.html)
+- [Mila (suomi)](https://milacoach.app/index-fi.html)
+- [Mila (français)](https://milacoach.app/index-fr.html)
+- [Mila (español)](https://milacoach.app/index-es.html)
+- [Races](https://milacoach.app/en/races/): courses, elevation profiles, pace tables and FAQs for the races in Mila's race register (Swedish: https://milacoach.app/lopp/, German: https://milacoach.app/de/laeufe/, Norwegian: https://milacoach.app/nb/lop/, Danish: https://milacoach.app/da/lob/, Finnish: https://milacoach.app/fi/kisat/, French: https://milacoach.app/fr/courses/, Spanish: https://milacoach.app/es/carreras/)
+- [Support and contact](https://milacoach.app/support.html) (also in Swedish, German, Norwegian, Danish, Finnish, French and Spanish: support-sv.html, support-de.html, support-nb.html, support-da.html, support-fi.html, support-fr.html, support-es.html)
 - [Privacy policy](https://milacoach.app/privacy-en.html)
 - [Terms of use](https://milacoach.app/terms-en.html)
 - [Sitemap](https://milacoach.app/sitemap.xml)

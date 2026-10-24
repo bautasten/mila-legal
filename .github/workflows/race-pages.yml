@@ -1,4 +1,4 @@
-# Loppsidor: Mila's public race pages (lopp/, en/races/, de/laeufe/ with their hubs, sitemap.xml, robots.txt, the IndexNow key file and,
+# Loppsidor: Mila's public race pages (lopp/, en/races/, de/laeufe/, nb/lop/, da/lob/, fi/kisat/, fr/courses/, es/carreras/ with their hubs, sitemap.xml, robots.txt, the IndexNow key file and,
 # once approved, the guides in guider/, en/guides/, de/ratgeber/) generated from the public race feed by tools/race_pages.ts, every hour
 # and on demand (Actions → Loppsidor → Run workflow). Commits only when a file changed; GitHub Pages then publishes the commit, and the
 # addresses that changed go to IndexNow (Bing and others). No secrets: the feed is public and the IndexNow key is public by design. The
@@ -48,7 +48,7 @@ jobs:
           # (2026-10-15: "empty ident name" when the site was published at the same moment)
           git config user.name "Mila"; git config user.email "mila@users.noreply.github.com"
           # the pages, the sitemap, robots.txt and the IndexNow key file ('*.txt'); the guides' folder once it exists (or as it leaves)
-          git add -A -- lopp en de sitemap.xml robots.txt '*.txt'
+          git add -A -- lopp en de nb da fi fr es sitemap.xml robots.txt '*.txt'
           if [ -d guider ] || [ -n "$(git ls-files guider)" ]; then git add -A -- guider; fi
           if git diff --cached --quiet; then echo "Inga ändringar."; exit 0; fi
           git commit -qm "Loppsidor $(date -u +%F)"

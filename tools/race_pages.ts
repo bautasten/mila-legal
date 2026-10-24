@@ -5,6 +5,8 @@
 //   Swedish  https://milacoach.app/lopp/<slug>/         index /lopp/        (pages 2… /lopp/sida/2/)
 //   English  https://milacoach.app/en/races/<slug>/     index /en/races/    (/en/races/page/2/)
 //   German   https://milacoach.app/de/laeufe/<slug>/    index /de/laeufe/   (/de/laeufe/seite/2/)
+//   Norwegian /nb/lop/<slug>/, Danish /da/lob/<slug>/, Finnish /fi/kisat/<slug>/, French /fr/courses/<slug>/, Spanish /es/carreras/<slug>/
+//            (pages 2… /nb/lop/side/2/, /da/lob/side/2/, /fi/kisat/sivu/2/, /fr/courses/page/2/, /es/carreras/pagina/2/)
 //   the share image /lopp/<slug>/og.png (1200×630: the course's profile and shape over the race's scene, rendered with resvg-wasm),
 //   the hero's scene drawn in the browser by /scene.js (scene.ts built by scene_js.sh) when the site has it, one default image per
 //   language (<index>/og.png), sitemap.xml (the site's own pages too) and robots.txt
@@ -27,7 +29,7 @@
 // once (a broken feed) stops without writing.
 // Files are only written when their content changes (the countdown is coarse and refined in the browser), so the hourly job seldom commits.
 //
-// The course description: Swedish pages show the coach's own description (races.comment, Mila's text); English and German pages show
+// The course description: Swedish pages show the coach's own description (races.comment, Mila's text); the other languages' pages show
 // a short summary built here from the course's numbers (no AI at build time: no key in CI, no cost), never the Swedish text.
 //
 // Run here (a local preview in marketing-site/, git-ignored; serve it with `deno run -A jsr:@std/http/file-server marketing-site`):
@@ -65,10 +67,13 @@ export async function fetchPinned(f: { url: string; sha256: string }, fetchFn: t
 export const INDEX_PAGE_SIZE = 200, NEARBY_MAX = 6, MASS_REMOVAL_SHARE = 1 / 3, MASS_REMOVAL_MIN = 5;
 const RESERVED_SLUGS = new Set(["sida", "page", "seite", "og", "index", "en", "de", "lopp", "races", "laeufe",
   // the hub pages' folders (seo): /lopp/stad/…, /en/races/city/…, /de/laeufe/stadt/…
-  "stad", "distans", "manad", "land", "city", "distance", "month", "country", "stadt", "distanz", "monat"]);
+  "stad", "distans", "manad", "land", "city", "distance", "month", "country", "stadt", "distanz", "monat",
+  // sprak5: nb, da, fi, fr, es (language codes, race folders, pagination and hub folders)
+  "nb", "da", "fi", "fr", "es", "lop", "lob", "kisat", "courses", "carreras", "side", "sivu", "pagina",
+  "by", "distanse", "maned", "maaned", "kaupunki", "matka", "kuukausi", "maa", "ville", "mois", "pays", "ciudad", "distancia", "mes", "pais"]);
 
-export type Lang = "sv" | "en" | "de";
-export const LANGS: Lang[] = ["sv", "en", "de"];
+export type Lang = "sv" | "en" | "de" | "nb" | "da" | "fi" | "fr" | "es";
+export const LANGS: Lang[] = ["sv", "en", "de", "nb", "da", "fi", "fr", "es"];
 /** [latitude, longitude, elevation m, km from the start] */
 export type Point = [number, number, number, number];
 export type Climb = { km: number; len: number; gain: number; grade: number; top: number };
@@ -245,14 +250,23 @@ async function getJson(url: string, fetchFn: typeof fetch, sleep: (ms: number) =
 
 // ------------------------------------------------------------------------------------------------------------- words
 
-const LOCALE: Record<Lang, string> = { sv: "sv-SE", en: "en-GB", de: "de-DE" };
-const OG_LOCALE: Record<Lang, string> = { sv: "sv_SE", en: "en_GB", de: "de_DE" };
+const LOCALE: Record<Lang, string> = { sv: "sv-SE", en: "en-GB", de: "de-DE", nb: "nb-NO", da: "da-DK", fi: "fi-FI", fr: "fr-FR", es: "es-ES" };
+const OG_LOCALE: Record<Lang, string> = { sv: "sv_SE", en: "en_GB", de: "de_DE", nb: "nb_NO", da: "da_DK", fi: "fi_FI", fr: "fr_FR", es: "es_ES" };
 /** Where each language lives: its folder, the pagination word, and the site's own pages in that language. */
 const L: Record<Lang, { dir: string; pageWord: string; home: string; support: string; privacy: string; terms: string }> = {
   sv: { dir: "lopp", pageWord: "sida", home: "sv.html", support: "support-sv.html", privacy: "privacy.html", terms: "terms.html" },
   en: { dir: "en/races", pageWord: "page", home: "", support: "support.html", privacy: "privacy-en.html", terms: "terms-en.html" },
   de: { dir: "de/laeufe", pageWord: "seite", home: "index-de.html", support: "support-de.html", privacy: "privacy-de.html", terms: "terms-de.html" },
+  nb: { dir: "nb/lop", pageWord: "side", home: "index-nb.html", support: "support-nb.html", privacy: "privacy-nb.html", terms: "terms-nb.html" },
+  da: { dir: "da/lob", pageWord: "side", home: "index-da.html", support: "support-da.html", privacy: "privacy-da.html", terms: "terms-da.html" },
+  fi: { dir: "fi/kisat", pageWord: "sivu", home: "index-fi.html", support: "support-fi.html", privacy: "privacy-fi.html", terms: "terms-fi.html" },
+  fr: { dir: "fr/courses", pageWord: "page", home: "index-fr.html", support: "support-fr.html", privacy: "privacy-fr.html", terms: "terms-fr.html" },
+  es: { dir: "es/carreras", pageWord: "pagina", home: "index-es.html", support: "support-es.html", privacy: "privacy-es.html", terms: "terms-es.html" },
 };
+/** A clock time as French writes it: "9 h 30". */
+const frClock = (t: string) => `${Number(t.slice(0, 2))} h ${t.slice(3)}`;
+/** The colon and semicolon between a label and its value, a list's items: French puts a non-breaking space before them. */
+const cl = (lang: Lang) => (lang === "fr" ? "\u00a0: " : ": "), sc = (lang: Lang) => (lang === "fr" ? "\u00a0; " : "; ");
 
 const T = {
   sv: {
@@ -402,6 +416,251 @@ const T = {
     ogAlt: (n: string) => `Höhenprofil und Strecke von ${n}`, ogDefault: "Läufe – Strecke, Höhenprofil und Pace-Plan", support: "Support", privacy: "Datenschutzerklärung", terms: "Nutzungsbedingungen", contact: "Über Mila und Kontakt", report: "Melden",
     metaTail: "Strecke und Höhenprofil ansehen und deinen Pace-Plan in Mila holen.", metaAid: (n: number) => `${n} Verpflegungsstellen`, metaClimb: (a: string) => `${a} Höhenmeter`, metaHigh: (h: string) => `höchster Punkt ${h} m`,
   },
+  nb: {
+    langName: "Norsk", langNav: "Språk", skip: "Hopp til innholdet", crumbs: "Brødsmuler", home: "Mila", races: "Løp", brandLine: "Rett økt. Rett dag.",
+    titleTail: "løype, høydeprofil og tempoplan", indexTitle: "Løp – løyper, høydeprofiler og tempoplaner", indexH1: "Finn ditt neste løp",
+    indexLead: "Løyper fra Milas løpsregister med høydeprofil, stigninger, drikkestasjoner og makstider. Velg løpet ditt og få en personlig prognose, tempoplan og energiplan i Mila.",
+    pageN: (n: number) => `side ${n}`, count: (n: number) => `${n} løp`,
+    distance: "Distanse", climbing: "Høydemeter", highest: "Høyeste punkt", terrain: "Underlag", character: "Karakter", start: "Start", aid: "Drikkestasjoner",
+    trail: "Terreng og sti", road: "Vei", trailRace: "terrengløp", roadRace: "gateløp", masl: "moh.",
+    hilly: ["flat", "lett kupert", "kupert", "svært kupert", "fjellpreget"], perKm: (x: string) => `${x} m per km`,
+    profileH: "Høydeprofil", profileTitle: (n: string) => `Høydeprofil for ${n}`,
+    profileDesc: (km: string, lo: string, hi: string, n: number) => `Høyden langs løypas ${km}${n ? `, med ${n} ${n === 1 ? "drikkestasjon" : "drikkestasjoner"} markert` : ""}: fra ${lo} til ${hi} moh.`,
+    dem: "Høydene kommer fra en høydemodell, ikke fra løypefilen.",
+    runners: (n: number) => n === 1 ? "Høydene er målt av en løper som har løpt løpet med Mila, ikke hentet fra en høydemodell." : `Høydene er målt av ${n} løpere som har løpt løpet med Mila, ikke hentet fra en høydemodell.`,
+    routeH: "Løypa", routeTitle: (n: string) => `Løypetraseen for ${n}`,
+    routeDesc: (loop: boolean) => loop ? "Løypa sett ovenfra, nord opp. Start og mål på samme sted." : "Løypa sett ovenfra, nord opp, fra start til mål.",
+    legend: (loop: boolean, aid: boolean) => `${loop ? "Grønt punkt: start og mål." : "Grønt punkt: start. Hvitt punkt: mål."}${aid ? " Små grønne punkter: drikkestasjoner." : ""}`,
+    official: "Løype fra arrangøren", organiserPage: "arrangørens side", upload: "Løypa bygger på en løypefil lastet opp i Mila og kan avvike fra årets offisielle løype.",
+    aboutH: "Om løypa", coachNote: "",
+    climbsH: "Stigninger", climbsCaption: "Stigninger på minst 25 høydemeter. Stigningsgraden er snittet fra bunn til topp.",
+    climbCols: ["Starter ved", "Lengde", "Høydemeter", "Stigning", "Topp (moh.)"], noClimbs: "Løypa har ingen sammenhengende stigninger på 25 høydemeter eller mer.",
+    aidH: "Drikkestasjoner", aidOne: "Drikkestasjon", aidCaption: "Drikkestasjoner ifølge arrangøren.", aidCols: ["Ved", "Her finnes"], aidNone: "ikke oppgitt",
+    aidWords: { vatten: "vann", sportdryck: "sportsdrikk", gel: "gel", mat: "mat", salt: "salt" } as Record<string, string>,
+    practicalH: "Før start", startsH: "Starttider", placeH: "Startsted", showMap: "Vis på kart", cutoffsH: "Makstider", cutoffCaption: "Makstider ifølge arrangøren.",
+    cutoffCols: ["Ved", "Senest"], clock: (t: string) => `kl. ${t}`, elapsed: (h: number, m: number) => `${h} t${m ? ` ${m} min` : ""} etter start`,
+    kitH: "Obligatorisk utstyr", source: "Kilde", checked: (d: string) => `hentet ${d}`, at: (km: string) => `km ${km}`,
+    resultsH: "Resultater fra tidligere år",
+    result: (y: number, n: string, p50: string, p25: string, p75: string, p10: string, p90: string) =>
+      `I ${y} fullførte ${n} løpere. Mediantiden var ${p50}; den midterste halvdelen av feltet kom i mål mellom ${p25} og ${p75}, og 80 % mellom ${p10} og ${p90}.`,
+    resultsNote: "Oppsummert fra de offisielle resultatlistene: bare antall og tider, ingen navn eller enkeltresultater.", resultSource: "resultatlisten",
+    ctaH: "Forbered deg med Mila",
+    ctaText: "Mila er en løpecoach i en app. Legger du et løp inn i planen din, planlegger coachen ukene fram til start etter formen din, og gir deg en tidsprognose og en plan for tempo, drikke og energi i løypa.",
+    notAffiliated: "Mila er ikke tilknyttet, sponset av eller godkjent av arrangøren eller løpets sponsorer. Navn og varemerker tilhører sine eiere.",
+    notAffiliatedAll: "Mila er ikke tilknyttet, sponset av eller godkjent av løpenes arrangører eller sponsorer. Navn og varemerker tilhører sine eiere.",
+    rights: "Arrangør eller rettighetshaver? Be om endring eller fjerning", officialName: "Offisielt navn",
+    published: "Løype publisert av arrangøren på", elevAttribution: "Høydedata: Terrain Tiles (AWS Open Data) med data fra blant annet SRTM, ArcticDEM, EU-DEM, GMTED2010, ETOPO1, NED og 3DEP.",
+    movedTitle: "Siden har flyttet | Mila", moved: "Siden har flyttet.", movedLink: "Til siden",
+    store: "Last ned fra App Store", nearbyH: "Flere løp i nærheten", organizer: "Arrangør",
+    disclaimer: "Opplysningene kommer fra løypefilen og arrangørens informasjon. Sjekk dato, starttider og regler hos arrangøren.",
+    disclaimerNoCourse: "Opplysningene kommer fra arrangørens informasjon. Sjekk dato, starttider og regler hos arrangøren.",
+    noCourse: "Arrangøren publiserer ikke løypa som fil, så her finnes verken kart eller høydeprofil. Løypetraseen finner du hos arrangøren.",
+    aboutRaceH: "Om løpet", titleTailNoCourse: "dato, distanse og tempoplan", metaTailNoCourse: "Se dato og distanse og få tempoplanen din i Mila.", ogAltNoCourse: (n: string) => `${n} – løp i Milas løpsregister`,
+    prelim: "foreløpig dato", noDate: "Datoen for neste utgave er ikke klar ennå.", last: (d: string) => `Sist: ${d}.`,
+    passed: (d: string) => `Løpet gikk ${d}. Datoen for neste utgave er ikke klar ennå.`,
+    cd: { today: "i dag", tomorrow: "i morgen", days: "om # dager", weeks: "om # uker", months: "om # måneder", past: "er gjennomført" },
+    allRaces: "Se alle løp",
+    noDateGroup: "Dato ikke klar", filterDistance: "Distanse", filterCountry: "Land", all: "Alle distanser", allCountries: "Alle land",
+    buckets: ["Opptil 10 km", "11–21 km", "22–42 km", "Ultra, over 42 km"], noMatch: "Ingen løp passer filteret.", pages: "Sider", prev: "Forrige", next: "Neste",
+    ogAlt: (n: string) => `Høydeprofil og løype for ${n}`, ogDefault: "Løp – løype, høydeprofil og tempoplan", support: "Support", privacy: "Personvernerklæring", terms: "Vilkår", contact: "Om Mila og kontakt", report: "Rapporter",
+    metaTail: "Se løype og høydeprofil og få tempoplanen din i Mila.", metaAid: (n: number) => `${n} drikkestasjoner`, metaClimb: (a: string) => `${a} høydemeter`, metaHigh: (h: string) => `høyeste punkt ${h} m`,
+  },
+  da: {
+    langName: "Dansk", langNav: "Sprog", skip: "Spring til indholdet", crumbs: "Brødkrummer", home: "Mila", races: "Løb", brandLine: "Den rette træning. Den rette dag.",
+    titleTail: "rute, højdeprofil og tempoplan", indexTitle: "Løb – ruter, højdeprofiler og tempoplaner", indexH1: "Find dit næste løb",
+    indexLead: "Ruter fra Milas løbskalender med højdeprofil, stigninger, væskedepoter og maksimaltider. Vælg dit løb, og få en personlig prognose, tempoplan og energiplan i Mila.",
+    pageN: (n: number) => `side ${n}`, count: (n: number) => `${n} løb`,
+    distance: "Distance", climbing: "Højdemeter", highest: "Højeste punkt", terrain: "Underlag", character: "Karakter", start: "Start", aid: "Væskedepoter",
+    trail: "Terræn og sti", road: "Vej", trailRace: "trailløb", roadRace: "vejløb", masl: "m o.h.",
+    hilly: ["flad", "let kuperet", "kuperet", "meget kuperet", "bjergrig"], perKm: (x: string) => `${x} m pr. km`,
+    profileH: "Højdeprofil", profileTitle: (n: string) => `Højdeprofil for ${n}`,
+    profileDesc: (km: string, lo: string, hi: string, n: number) => `Højden langs rutens ${km}${n ? `, med ${n} ${n === 1 ? "væskedepot" : "væskedepoter"} markeret` : ""}: fra ${lo} til ${hi} m o.h.`,
+    dem: "Højderne kommer fra en højdemodel, ikke fra rutefilen.",
+    runners: (n: number) => n === 1 ? "Højderne er målt af en løber, der har gennemført løbet med Mila, ikke hentet fra en højdemodel." : `Højderne er målt af ${n} løbere, der har gennemført løbet med Mila, ikke hentet fra en højdemodel.`,
+    routeH: "Ruten", routeTitle: (n: string) => `Rutens forløb for ${n}`,
+    routeDesc: (loop: boolean) => loop ? "Ruten set oppefra, nord opad. Start og mål samme sted." : "Ruten set oppefra, nord opad, fra start til mål.",
+    legend: (loop: boolean, aid: boolean) => `${loop ? "Grøn prik: start og mål." : "Grøn prik: start. Hvid prik: mål."}${aid ? " Små grønne prikker: væskedepoter." : ""}`,
+    official: "Rute fra arrangøren", organiserPage: "arrangørens side", upload: "Ruten bygger på en rutefil uploadet i Mila og kan afvige fra årets officielle rute.",
+    aboutH: "Om ruten", coachNote: "",
+    climbsH: "Stigninger", climbsCaption: "Stigninger på mindst 25 højdemeter. Hældningen er gennemsnittet fra bund til top.",
+    climbCols: ["Begynder ved", "Længde", "Højdemeter", "Hældning", "Top (m o.h.)"], noClimbs: "Ruten har ingen sammenhængende stigninger på 25 højdemeter eller mere.",
+    aidH: "Væskedepoter", aidOne: "Væskedepot", aidCaption: "Væskedepoter ifølge arrangøren.", aidCols: ["Ved", "Her er"], aidNone: "ikke oplyst",
+    aidWords: { vatten: "vand", sportdryck: "sportsdrik", gel: "gel", mat: "mad", salt: "salt" } as Record<string, string>,
+    practicalH: "Før start", startsH: "Starttider", placeH: "Startsted", showMap: "Vis på kort", cutoffsH: "Maksimaltider", cutoffCaption: "Maksimaltider ifølge arrangøren.",
+    cutoffCols: ["Ved", "Senest"], clock: (t: string) => `kl. ${t}`, elapsed: (h: number, m: number) => `${h} t${m ? ` ${m} min` : ""} efter start`,
+    kitH: "Obligatorisk udstyr", source: "Kilde", checked: (d: string) => `hentet ${d}`, at: (km: string) => `km ${km}`,
+    resultsH: "Resultater fra tidligere år",
+    result: (y: number, n: string, p50: string, p25: string, p75: string, p10: string, p90: string) =>
+      `I ${y} gennemførte ${n} løbere. Mediantiden var ${p50}; den midterste halvdel af feltet kom i mål mellem ${p25} og ${p75}, og 80 % mellem ${p10} og ${p90}.`,
+    resultsNote: "Opsummeret fra de officielle resultatlister: kun antal og tider, ingen navne eller enkeltresultater.", resultSource: "resultatlisten",
+    ctaH: "Forbered dig med Mila",
+    ctaText: "Mila er en løbecoach i en app. Lægger du et løb ind i din plan, planlægger coachen ugerne frem til start efter din form og giver dig en tidsprognose og en plan for tempo, væske og energi på ruten.",
+    notAffiliated: "Mila er ikke tilknyttet, sponsoreret af eller godkendt af arrangøren eller løbets sponsorer. Navne og varemærker tilhører deres ejere.",
+    notAffiliatedAll: "Mila er ikke tilknyttet, sponsoreret af eller godkendt af løbenes arrangører eller sponsorer. Navne og varemærker tilhører deres ejere.",
+    rights: "Arrangør eller rettighedshaver? Bed om ændring eller fjernelse", officialName: "Officielt navn",
+    published: "Rute offentliggjort af arrangøren på", elevAttribution: "Højdedata: Terrain Tiles (AWS Open Data) med data fra bl.a. SRTM, ArcticDEM, EU-DEM, GMTED2010, ETOPO1, NED og 3DEP.",
+    movedTitle: "Siden er flyttet | Mila", moved: "Siden er flyttet.", movedLink: "Til siden",
+    store: "Hent i App Store", nearbyH: "Flere løb i nærheden", organizer: "Arrangør",
+    disclaimer: "Oplysningerne kommer fra rutefilen og arrangørens information. Tjek dato, starttider og regler hos arrangøren.",
+    disclaimerNoCourse: "Oplysningerne kommer fra arrangørens information. Tjek dato, starttider og regler hos arrangøren.",
+    noCourse: "Arrangøren offentliggør ikke ruten som fil, så her er hverken kort eller højdeprofil. Rutens forløb finder du hos arrangøren.",
+    aboutRaceH: "Om løbet", titleTailNoCourse: "dato, distance og tempoplan", metaTailNoCourse: "Se dato og distance, og få din tempoplan i Mila.", ogAltNoCourse: (n: string) => `${n} – løb i Milas løbskalender`,
+    prelim: "foreløbig dato", noDate: "Datoen for næste udgave er ikke fastlagt endnu.", last: (d: string) => `Senest: ${d}.`,
+    passed: (d: string) => `Løbet blev afviklet ${d}. Datoen for næste udgave er ikke fastlagt endnu.`,
+    cd: { today: "i dag", tomorrow: "i morgen", days: "om # dage", weeks: "om # uger", months: "om # måneder", past: "er afviklet" },
+    allRaces: "Se alle løb",
+    noDateGroup: "Dato ikke fastlagt", filterDistance: "Distance", filterCountry: "Land", all: "Alle distancer", allCountries: "Alle lande",
+    buckets: ["Op til 10 km", "11–21 km", "22–42 km", "Ultra, over 42 km"], noMatch: "Ingen løb passer til filteret.", pages: "Sider", prev: "Forrige", next: "Næste",
+    ogAlt: (n: string) => `Højdeprofil og rute for ${n}`, ogDefault: "Løb – rute, højdeprofil og tempoplan", support: "Support", privacy: "Privatlivspolitik", terms: "Vilkår", contact: "Om Mila og kontakt", report: "Rapportér",
+    metaTail: "Se rute og højdeprofil, og få din tempoplan i Mila.", metaAid: (n: number) => `${n} væskedepoter`, metaClimb: (a: string) => `${a} højdemeter`, metaHigh: (h: string) => `højeste punkt ${h} m`,
+  },
+  fi: {
+    langName: "Suomi", langNav: "Kieli", skip: "Siirry sisältöön", crumbs: "Murupolku", home: "Mila", races: "Kisat", brandLine: "Oikea harjoitus. Oikea päivä.",
+    titleTail: "reitti, korkeusprofiili ja vauhtisuunnitelma", indexTitle: "Kisat – reitit, korkeusprofiilit ja vauhtisuunnitelmat", indexH1: "Löydä seuraava kisasi",
+    indexLead: "Reitit Milan kisakalenterista: korkeusprofiili, nousut, juomapisteet ja maksimiajat. Valitse kisasi, niin saat Milasta henkilökohtaisen ennusteen, vauhtisuunnitelman ja energiasuunnitelman.",
+    pageN: (n: number) => `sivu ${n}`, count: (n: number) => `${n} ${n === 1 ? "kisa" : "kisaa"}`,
+    distance: "Matka", climbing: "Nousumetrit", highest: "Korkein kohta", terrain: "Alusta", character: "Luonne", start: "Lähtö", aid: "Juomapisteet",
+    trail: "Maasto ja polku", road: "Maantie", trailRace: "polkujuoksu", roadRace: "maantiejuoksu", masl: "m mpy",
+    hilly: ["tasainen", "loivasti mäkinen", "mäkinen", "hyvin mäkinen", "vuoristoinen"], perKm: (x: string) => `${x} m/km`,
+    profileH: "Korkeusprofiili", profileTitle: (n: string) => `Korkeusprofiili: ${n}`,
+    profileDesc: (km: string, lo: string, hi: string, n: number) => `Korkeus ${km}:n reitin varrella${n ? `, ${n} ${n === 1 ? "juomapiste" : "juomapistettä"} merkitty` : ""}: ${lo}–${hi} m mpy.`,
+    dem: "Korkeudet ovat korkeusmallista, eivät reittitiedostosta.",
+    runners: (n: number) => n === 1 ? "Korkeudet on mitannut juoksija, joka on juossut kisan Milan kanssa; niitä ei ole otettu korkeusmallista." : `Korkeudet on mitannut ${n} juoksijaa, jotka ovat juosseet kisan Milan kanssa; niitä ei ole otettu korkeusmallista.`,
+    routeH: "Reitti", routeTitle: (n: string) => `Reitin kulku: ${n}`,
+    routeDesc: (loop: boolean) => loop ? "Reitti ylhäältä nähtynä, pohjoinen ylhäällä. Lähtö ja maali samassa paikassa." : "Reitti ylhäältä nähtynä, pohjoinen ylhäällä, lähdöstä maaliin.",
+    legend: (loop: boolean, aid: boolean) => `${loop ? "Vihreä piste: lähtö ja maali." : "Vihreä piste: lähtö. Valkoinen piste: maali."}${aid ? " Pienet vihreät pisteet: juomapisteet." : ""}`,
+    official: "Järjestäjän reitti", organiserPage: "järjestäjän sivu", upload: "Reitti perustuu Milaan ladattuun reittitiedostoon ja voi poiketa tämän vuoden virallisesta reitistä.",
+    aboutH: "Tietoa reitistä", coachNote: "",
+    climbsH: "Nousut", climbsCaption: "Vähintään 25 nousumetrin nousut. Jyrkkyys on keskiarvo alhaalta huipulle.",
+    climbCols: ["Alkaa kohdassa", "Pituus", "Nousumetrit", "Jyrkkyys", "Huippu (m mpy)"], noClimbs: "Reitillä ei ole yhtenäisiä vähintään 25 nousumetrin nousuja.",
+    aidH: "Juomapisteet", aidOne: "Juomapiste", aidCaption: "Juomapisteet järjestäjän mukaan.", aidCols: ["Kohta", "Tarjolla"], aidNone: "ei ilmoitettu",
+    aidWords: { vatten: "vesi", sportdryck: "urheilujuoma", gel: "geeli", mat: "ruoka", salt: "suola" } as Record<string, string>,
+    practicalH: "Ennen lähtöä", startsH: "Lähtöajat", placeH: "Lähtöpaikka", showMap: "Näytä kartalla", cutoffsH: "Maksimiajat", cutoffCaption: "Maksimiajat järjestäjän mukaan.",
+    cutoffCols: ["Kohta", "Viimeistään"], clock: (t: string) => `klo ${t}`, elapsed: (h: number, m: number) => `${h} h${m ? ` ${m} min` : ""} lähdöstä`,
+    kitH: "Pakolliset varusteet", source: "Lähde", checked: (d: string) => `haettu ${d}`, at: (km: string) => `km ${km}`,
+    resultsH: "Tuloksia aiemmista kisoista",
+    result: (y: number, n: string, p50: string, p25: string, p75: string, p10: string, p90: string) =>
+      `Vuonna ${y} maaliin tuli ${n} juoksijaa. Mediaaniaika oli ${p50}; kentän keskimmäinen puolikas tuli maaliin ajassa ${p25}–${p75} ja 80 % ajassa ${p10}–${p90}.`,
+    resultsNote: "Koottu virallisista tulosluetteloista: vain määrät ja ajat, ei nimiä eikä yksittäisiä tuloksia.", resultSource: "tulosluettelo",
+    ctaH: "Valmistaudu Milan kanssa",
+    ctaText: "Mila on juoksuvalmentaja sovelluksessa. Kun lisäät kisan suunnitelmaasi, valmentaja suunnittelee viikot starttiin asti kuntosi mukaan ja antaa sinulle loppuaikaennusteen sekä suunnitelman vauhdista, juomisesta ja energiasta reitillä.",
+    notAffiliated: "Mila ei ole yhteydessä järjestäjään eikä kisan sponsoreihin, eivätkä ne sponsoroi tai suosittele Milaa. Nimet ja tavaramerkit kuuluvat omistajilleen.",
+    notAffiliatedAll: "Mila ei ole yhteydessä kisojen järjestäjiin eikä sponsoreihin, eivätkä ne sponsoroi tai suosittele Milaa. Nimet ja tavaramerkit kuuluvat omistajilleen.",
+    rights: "Järjestäjä tai oikeuksien haltija? Pyydä muutosta tai poistoa", officialName: "Virallinen nimi",
+    published: "Järjestäjän julkaisema reitti sivustolla", elevAttribution: "Korkeustiedot: Terrain Tiles (AWS Open Data), aineistoina muun muassa SRTM, ArcticDEM, EU-DEM, GMTED2010, ETOPO1, NED ja 3DEP.",
+    movedTitle: "Sivu on siirtynyt | Mila", moved: "Sivu on siirtynyt.", movedLink: "Siirry sivulle",
+    store: "Lataa App Storesta", nearbyH: "Lisää kisoja lähellä", organizer: "Järjestäjä",
+    disclaimer: "Tiedot ovat reittitiedostosta ja järjestäjän tiedoista. Tarkista päivä, lähtöajat ja säännöt järjestäjältä.",
+    disclaimerNoCourse: "Tiedot ovat järjestäjän tiedoista. Tarkista päivä, lähtöajat ja säännöt järjestäjältä.",
+    noCourse: "Järjestäjä ei julkaise reittiä tiedostona, joten tässä ei ole karttaa eikä korkeusprofiilia. Reitin kulku löytyy järjestäjältä.",
+    aboutRaceH: "Tietoa kisasta", titleTailNoCourse: "päivä, matka ja vauhtisuunnitelma", metaTailNoCourse: "Katso päivä ja matka ja hae vauhtisuunnitelmasi Milasta.", ogAltNoCourse: (n: string) => `${n} – kisa Milan kisakalenterissa`,
+    prelim: "alustava päivä", noDate: "Seuraavan kisan päivä ei ole vielä selvillä.", last: (d: string) => `Viimeksi: ${d}.`,
+    passed: (d: string) => `Kisa juostiin ${d}. Seuraavan kisan päivä ei ole vielä selvillä.`,
+    cd: { today: "tänään", tomorrow: "huomenna", days: "# päivän päästä", weeks: "# viikon päästä", months: "# kuukauden päästä", past: "on jo juostu" },
+    allRaces: "Katso kaikki kisat",
+    noDateGroup: "Päivä ei selvillä", filterDistance: "Matka", filterCountry: "Maa", all: "Kaikki matkat", allCountries: "Kaikki maat",
+    buckets: ["Enintään 10 km", "11–21 km", "22–42 km", "Ultra, yli 42 km"], noMatch: "Yksikään kisa ei vastaa suodatinta.", pages: "Sivut", prev: "Edellinen", next: "Seuraava",
+    ogAlt: (n: string) => `Korkeusprofiili ja reitti: ${n}`, ogDefault: "Kisat – reitti, korkeusprofiili ja vauhtisuunnitelma", support: "Tuki", privacy: "Tietosuojaseloste", terms: "Käyttöehdot", contact: "Tietoa Milasta ja yhteystiedot", report: "Ilmoita",
+    metaTail: "Katso reitti ja korkeusprofiili ja hae vauhtisuunnitelmasi Milasta.", metaAid: (n: number) => `${n} juomapistettä`, metaClimb: (a: string) => `${a} nousumetriä`, metaHigh: (h: string) => `korkein kohta ${h} m`,
+  },
+  fr: {
+    langName: "Français", langNav: "Langue", skip: "Aller au contenu", crumbs: "Fil d’Ariane", home: "Mila", races: "Courses", brandLine: "La bonne séance. Le bon jour.",
+    titleTail: "parcours, profil d’altitude et plan d’allure", indexTitle: "Courses – parcours, profils d’altitude et plans d’allure", indexH1: "Trouve ta prochaine course",
+    indexLead: "Les parcours du calendrier des courses de Mila, avec profil d’altitude, montées, ravitaillements et barrières horaires. Choisis ta course et obtiens dans Mila un pronostic personnel, un plan d’allure et un plan de ravitaillement.",
+    pageN: (n: number) => `page ${n}`, count: (n: number) => `${n} ${n === 1 ? "course" : "courses"}`,
+    distance: "Distance", climbing: "Dénivelé positif", highest: "Point culminant", terrain: "Terrain", character: "Profil", start: "Départ", aid: "Ravitaillements",
+    trail: "Trail et sentiers", road: "Route", trailRace: "un trail", roadRace: "une course sur route", masl: "m d’altitude",
+    hilly: ["plat", "légèrement vallonné", "vallonné", "très vallonné", "montagneux"], perKm: (x: string) => `${x} m par km`,
+    profileH: "Profil d’altitude", profileTitle: (n: string) => `Profil d’altitude : ${n}`,
+    profileDesc: (km: string, lo: string, hi: string, n: number) => `L’altitude le long des ${km} du parcours${n ? `, avec ${n} ${n === 1 ? "ravitaillement indiqué" : "ravitaillements indiqués"}` : ""} : de ${lo} à ${hi} m d’altitude.`,
+    dem: "Les altitudes proviennent d’un modèle d’élévation, pas du fichier du parcours.",
+    runners: (n: number) => n === 1 ? "Les altitudes ont été mesurées par une personne qui a couru l’épreuve avec Mila, et non tirées d’un modèle d’élévation." : `Les altitudes ont été mesurées par ${n} coureurs qui ont couru l’épreuve avec Mila, et non tirées d’un modèle d’élévation.`,
+    routeH: "Le parcours", routeTitle: (n: string) => `Tracé du parcours : ${n}`,
+    routeDesc: (loop: boolean) => loop ? "Le parcours vu du dessus, nord en haut. Départ et arrivée au même endroit." : "Le parcours vu du dessus, nord en haut, du départ à l’arrivée.",
+    legend: (loop: boolean, aid: boolean) => `${loop ? "Point vert : départ et arrivée." : "Point vert : départ. Point blanc : arrivée."}${aid ? " Petits points verts : ravitaillements." : ""}`,
+    official: "Parcours fourni par l’organisateur", organiserPage: "site de l’organisateur", upload: "Le parcours s’appuie sur un fichier importé dans Mila et peut différer du parcours officiel de cette année.",
+    aboutH: "À propos du parcours", coachNote: "",
+    climbsH: "Montées", climbsCaption: "Montées d’au moins 25 m de dénivelé. La pente est la moyenne du bas jusqu’au sommet.",
+    climbCols: ["Début", "Longueur", "Dénivelé", "Pente", "Sommet (m d’altitude)"], noClimbs: "Le parcours ne compte aucune montée continue de 25 m ou plus.",
+    aidH: "Ravitaillements", aidOne: "Ravitaillement", aidCaption: "Ravitaillements selon l’organisateur.", aidCols: ["Au", "Ce qu’on y trouve"], aidNone: "non précisé",
+    aidWords: { vatten: "eau", sportdryck: "boisson énergétique", gel: "gels", mat: "nourriture", salt: "sel" } as Record<string, string>,
+    practicalH: "Avant le départ", startsH: "Heures de départ", placeH: "Lieu de départ", showMap: "Voir sur la carte", cutoffsH: "Barrières horaires", cutoffCaption: "Barrières horaires selon l’organisateur.",
+    cutoffCols: ["Au", "Au plus tard"], clock: (t: string) => frClock(t), elapsed: (h: number, m: number) => `${h} h${m ? ` ${m} min` : ""} après le départ`,
+    kitH: "Matériel obligatoire", source: "Source", checked: (d: string) => `consulté le ${d}`, at: (km: string) => `km ${km}`,
+    resultsH: "Résultats des éditions précédentes",
+    result: (y: number, n: string, p50: string, p25: string, p75: string, p10: string, p90: string) =>
+      `En ${y}, ${n} coureurs ont franchi la ligne d’arrivée. Le temps médian était de ${p50} ; la moitié centrale du peloton a terminé entre ${p25} et ${p75}, et 80 % entre ${p10} et ${p90}.`,
+    resultsNote: "Résumé à partir des résultats officiels : uniquement des effectifs et des temps, ni noms ni résultats individuels.", resultSource: "résultats",
+    ctaH: "Prépare-toi avec Mila",
+    ctaText: "Mila est une app avec un coach de course à pied. Ajoute une course à ton plan : le coach planifie tes semaines jusqu’au départ selon ta forme, et te donne un pronostic de temps et un plan pour l’allure, l’hydratation et l’énergie sur le parcours.",
+    notAffiliated: "Mila n’est ni affiliée à l’organisateur ou aux sponsors de la course, ni sponsorisée ou approuvée par eux. Les noms et les marques appartiennent à leurs propriétaires.",
+    notAffiliatedAll: "Mila n’est ni affiliée aux organisateurs ou aux sponsors des courses, ni sponsorisée ou approuvée par eux. Les noms et les marques appartiennent à leurs propriétaires.",
+    rights: "Organisateur ou ayant droit ? Demander une modification ou un retrait", officialName: "Nom officiel",
+    published: "Parcours publié par l’organisateur sur", elevAttribution: "Données d’altitude : Terrain Tiles (AWS Open Data), avec notamment des données SRTM, ArcticDEM, EU-DEM, GMTED2010, ETOPO1, NED et 3DEP.",
+    movedTitle: "Cette page a été déplacée | Mila", moved: "Cette page a été déplacée.", movedLink: "Aller à la page",
+    store: "Télécharger dans l’App Store", nearbyH: "Autres courses à proximité", organizer: "Organisateur",
+    disclaimer: "Les informations proviennent du fichier du parcours et de l’organisateur. Vérifie la date, les heures de départ et le règlement auprès de l’organisateur.",
+    disclaimerNoCourse: "Les informations proviennent de l’organisateur. Vérifie la date, les heures de départ et le règlement auprès de l’organisateur.",
+    noCourse: "L’organisateur ne publie pas le parcours sous forme de fichier, il n’y a donc ici ni carte ni profil d’altitude. Le tracé est disponible auprès de l’organisateur.",
+    aboutRaceH: "À propos de la course", titleTailNoCourse: "date, distance et plan d’allure", metaTailNoCourse: "Consulte la date et la distance, et obtiens ton plan d’allure dans Mila.", ogAltNoCourse: (n: string) => `${n} – course du calendrier de Mila`,
+    prelim: "date provisoire", noDate: "La date de la prochaine édition n’est pas encore fixée.", last: (d: string) => `Dernière édition : ${d}.`,
+    passed: (d: string) => `La course a eu lieu le ${d}. La date de la prochaine édition n’est pas encore fixée.`,
+    cd: { today: "aujourd’hui", tomorrow: "demain", days: "dans # jours", weeks: "dans # semaines", months: "dans # mois", past: "a eu lieu" },
+    allRaces: "Voir toutes les courses",
+    noDateGroup: "Date non fixée", filterDistance: "Distance", filterCountry: "Pays", all: "Toutes les distances", allCountries: "Tous les pays",
+    buckets: ["Jusqu’à 10 km", "11–21 km", "22–42 km", "Ultra, plus de 42 km"], noMatch: "Aucune course ne correspond au filtre.", pages: "Pages", prev: "Précédente", next: "Suivante",
+    ogAlt: (n: string) => `Profil d’altitude et parcours : ${n}`, ogDefault: "Courses – parcours, profil d’altitude et plan d’allure", support: "Assistance", privacy: "Politique de confidentialité", terms: "Conditions d’utilisation", contact: "À propos de Mila et contact", report: "Signaler",
+    metaTail: "Consulte le parcours et le profil d’altitude, et obtiens ton plan d’allure dans Mila.", metaAid: (n: number) => `${n} ravitaillements`, metaClimb: (a: string) => `${a} m de D+`, metaHigh: (h: string) => `point culminant ${h} m`,
+  },
+  es: {
+    langName: "Español", langNav: "Idioma", skip: "Saltar al contenido", crumbs: "Ruta de navegación", home: "Mila", races: "Carreras", brandLine: "La sesión justa. El día justo.",
+    titleTail: "recorrido, perfil de altitud y plan de ritmo", indexTitle: "Carreras – recorridos, perfiles de altitud y planes de ritmo", indexH1: "Encuentra tu próxima carrera",
+    indexLead: "Recorridos del calendario de carreras de Mila con perfil de altitud, subidas, avituallamientos y tiempos de corte. Elige tu carrera y consigue en Mila un pronóstico personal, un plan de ritmo y un plan de avituallamiento.",
+    pageN: (n: number) => `página ${n}`, count: (n: number) => `${n} ${n === 1 ? "carrera" : "carreras"}`,
+    distance: "Distancia", climbing: "Desnivel positivo", highest: "Punto más alto", terrain: "Superficie", character: "Perfil", start: "Salida", aid: "Avituallamientos",
+    trail: "Trail y sendero", road: "Asfalto", trailRace: "una carrera de trail", roadRace: "una carrera en ruta", masl: "m s. n. m.",
+    hilly: ["llano", "ligeramente ondulado", "ondulado", "muy ondulado", "montañoso"], perKm: (x: string) => `${x} m por km`,
+    profileH: "Perfil de altitud", profileTitle: (n: string) => `Perfil de altitud de ${n}`,
+    profileDesc: (km: string, lo: string, hi: string, n: number) => `La altitud a lo largo de los ${km} del recorrido${n ? `, con ${n} ${n === 1 ? "avituallamiento marcado" : "avituallamientos marcados"}` : ""}: de ${lo} a ${hi} m s. n. m.`,
+    dem: "Las altitudes proceden de un modelo de elevación, no del archivo del recorrido.",
+    runners: (n: number) => n === 1 ? "Las altitudes las ha medido una persona que corrió la carrera con Mila; no proceden de un modelo de elevación." : `Las altitudes las han medido ${n} corredores que corrieron la carrera con Mila; no proceden de un modelo de elevación.`,
+    routeH: "El recorrido", routeTitle: (n: string) => `Trazado del recorrido de ${n}`,
+    routeDesc: (loop: boolean) => loop ? "El recorrido visto desde arriba, con el norte arriba. Salida y meta en el mismo lugar." : "El recorrido visto desde arriba, con el norte arriba, de la salida a la meta.",
+    legend: (loop: boolean, aid: boolean) => `${loop ? "Punto verde: salida y meta." : "Punto verde: salida. Punto blanco: meta."}${aid ? " Puntos verdes pequeños: avituallamientos." : ""}`,
+    official: "Recorrido del organizador", organiserPage: "web del organizador", upload: "El recorrido se basa en un archivo subido a Mila y puede diferir del recorrido oficial de este año.",
+    aboutH: "Sobre el recorrido", coachNote: "",
+    climbsH: "Subidas", climbsCaption: "Subidas de al menos 25 m de desnivel. La pendiente es la media de abajo arriba.",
+    climbCols: ["Empieza en", "Longitud", "Desnivel", "Pendiente", "Cima (m s. n. m.)"], noClimbs: "El recorrido no tiene subidas continuas de 25 m o más.",
+    aidH: "Avituallamientos", aidOne: "Avituallamiento", aidCaption: "Avituallamientos según el organizador.", aidCols: ["En", "Qué hay"], aidNone: "sin especificar",
+    aidWords: { vatten: "agua", sportdryck: "bebida isotónica", gel: "geles", mat: "comida", salt: "sal" } as Record<string, string>,
+    practicalH: "Antes de la salida", startsH: "Horas de salida", placeH: "Lugar de salida", showMap: "Ver en el mapa", cutoffsH: "Tiempos de corte", cutoffCaption: "Tiempos de corte según el organizador.",
+    cutoffCols: ["En", "Como muy tarde"], clock: (t: string) => `${t} h`, elapsed: (h: number, m: number) => `${h} h${m ? ` ${m} min` : ""} desde la salida`,
+    kitH: "Material obligatorio", source: "Fuente", checked: (d: string) => `consultado el ${d}`, at: (km: string) => `km ${km}`,
+    resultsH: "Resultados de ediciones anteriores",
+    result: (y: number, n: string, p50: string, p25: string, p75: string, p10: string, p90: string) =>
+      `En ${y} terminaron ${n} corredores. El tiempo mediano fue ${p50}; la mitad central del pelotón llegó a meta entre ${p25} y ${p75}, y el 80 % entre ${p10} y ${p90}.`,
+    resultsNote: "Resumido a partir de las clasificaciones oficiales: solo cifras y tiempos, sin nombres ni resultados individuales.", resultSource: "clasificación",
+    ctaH: "Prepárate con Mila",
+    ctaText: "Mila es un coach de running en una app. Si añades una carrera a tu plan, el coach planifica tus semanas hasta la salida según tu forma y te da un pronóstico de tiempo y un plan de ritmo, hidratación y energía para el recorrido.",
+    notAffiliated: "Mila no está vinculada al organizador ni a los patrocinadores de la carrera, ni está patrocinada o avalada por ellos. Los nombres y las marcas pertenecen a sus propietarios.",
+    notAffiliatedAll: "Mila no está vinculada a los organizadores ni a los patrocinadores de las carreras, ni está patrocinada o avalada por ellos. Los nombres y las marcas pertenecen a sus propietarios.",
+    rights: "¿Organizador o titular de derechos? Solicitar un cambio o la retirada", officialName: "Nombre oficial",
+    published: "Recorrido publicado por el organizador en", elevAttribution: "Datos de altitud: Terrain Tiles (AWS Open Data), con datos de SRTM, ArcticDEM, EU-DEM, GMTED2010, ETOPO1, NED y 3DEP, entre otros.",
+    movedTitle: "Esta página se ha trasladado | Mila", moved: "Esta página se ha trasladado.", movedLink: "Ir a la página",
+    store: "Descárgalo en el App Store", nearbyH: "Más carreras cerca", organizer: "Organizador",
+    disclaimer: "Los datos proceden del archivo del recorrido y de la información del organizador. Comprueba la fecha, las horas de salida y el reglamento con el organizador.",
+    disclaimerNoCourse: "Los datos proceden de la información del organizador. Comprueba la fecha, las horas de salida y el reglamento con el organizador.",
+    noCourse: "El organizador no publica el recorrido como archivo, así que aquí no hay mapa ni perfil de altitud. El trazado está en la web del organizador.",
+    aboutRaceH: "Sobre la carrera", titleTailNoCourse: "fecha, distancia y plan de ritmo", metaTailNoCourse: "Consulta la fecha y la distancia y consigue tu plan de ritmo en Mila.", ogAltNoCourse: (n: string) => `${n} – carrera del calendario de Mila`,
+    prelim: "fecha provisional", noDate: "La fecha de la próxima edición aún no está fijada.", last: (d: string) => `Última edición: ${d}.`,
+    passed: (d: string) => `La carrera se celebró el ${d}. La fecha de la próxima edición aún no está fijada.`,
+    cd: { today: "hoy", tomorrow: "mañana", days: "dentro de # días", weeks: "dentro de # semanas", months: "dentro de # meses", past: "ya se celebró" },
+    allRaces: "Ver todas las carreras",
+    noDateGroup: "Fecha sin fijar", filterDistance: "Distancia", filterCountry: "País", all: "Todas las distancias", allCountries: "Todos los países",
+    buckets: ["Hasta 10 km", "11–21 km", "22–42 km", "Ultra, más de 42 km"], noMatch: "Ninguna carrera coincide con el filtro.", pages: "Páginas", prev: "Anterior", next: "Siguiente",
+    ogAlt: (n: string) => `Perfil de altitud y recorrido de ${n}`, ogDefault: "Carreras – recorrido, perfil de altitud y plan de ritmo", support: "Soporte", privacy: "Política de privacidad", terms: "Condiciones de uso", contact: "Sobre Mila y contacto", report: "Denunciar",
+    metaTail: "Consulta el recorrido y el perfil de altitud y consigue tu plan de ritmo en Mila.", metaAid: (n: number) => `${n} avituallamientos`, metaClimb: (a: string) => `${a} m de desnivel`, metaHigh: (h: string) => `punto más alto ${h} m`,
+  },
 };
 
 // ------------------------------------------------------------------------------------------------------------- formatting
@@ -488,6 +747,16 @@ const ENTRY_WORDS: Record<Lang, { h: string; closes: (d: string) => string; pric
     between: (a, b) => `${a}–${b}`, from: (a) => `from ${a}`, source: "Source", checked: (d) => `retrieved ${d}` },
   de: { h: "Anmeldung und Startnummer", closes: (d) => `Anmeldeschluss ist am ${d}.`, price: (d, p) => p ? `${p} bis einschließlich ${d}.` : `Der Preis steigt nach dem ${d}.`, pickupH: "Startnummernausgabe",
     between: (a, b) => `${a}–${b} Uhr`, from: (a) => `ab ${a} Uhr`, source: "Quelle", checked: (d) => `abgerufen am ${d}` },
+  nb: { h: "Påmelding og startnummer", closes: (d) => `Påmeldingen stenger ${d}.`, price: (d, p) => p ? `${p} til og med ${d}.` : `Prisen øker etter ${d}.`, pickupH: "Utdeling av startnummer",
+    between: (a, b) => `kl. ${a}–${b}`, from: (a) => `fra kl. ${a}`, source: "Kilde", checked: (d) => `hentet ${d}` },
+  da: { h: "Tilmelding og startnummer", closes: (d) => `Tilmeldingen lukker ${d}.`, price: (d, p) => p ? `${p} til og med ${d}.` : `Prisen stiger efter ${d}.`, pickupH: "Udlevering af startnumre",
+    between: (a, b) => `kl. ${a}–${b}`, from: (a) => `fra kl. ${a}`, source: "Kilde", checked: (d) => `hentet ${d}` },
+  fi: { h: "Ilmoittautuminen ja numerolappu", closes: (d) => `Ilmoittautuminen sulkeutuu ${d}.`, price: (d, p) => p ? `${p} ${d} asti.` : `Hinta nousee ${d} jälkeen.`, pickupH: "Numerolappujen jako",
+    between: (a, b) => `klo ${a}–${b}`, from: (a) => `klo ${a} alkaen`, source: "Lähde", checked: (d) => `haettu ${d}` },
+  fr: { h: "Inscription et dossard", closes: (d) => `Clôture des inscriptions le ${d}.`, price: (d, p) => p ? `${p} jusqu’au ${d} inclus.` : `Hausse du tarif après le ${d}.`, pickupH: "Retrait des dossards",
+    between: (a, b) => `de ${frClock(a)} à ${frClock(b)}`, from: (a) => `à partir de ${frClock(a)}`, source: "Source", checked: (d) => `consulté le ${d}` },
+  es: { h: "Inscripción y dorsal", closes: (d) => `La inscripción cierra el ${d}.`, price: (d, p) => p ? `${p} hasta el ${d} incluido.` : `El precio sube después del ${d}.`, pickupH: "Recogida de dorsales",
+    between: (a, b) => `de ${a} a ${b} h`, from: (a) => `desde las ${a} h`, source: "Fuente", checked: (d) => `consultado el ${d}` },
 };
 /** deadline: the organiser's dates for the coming edition as their own section, only the ones still ahead (registration and prices from
  *  today, pickup days from today to the race); with the source page. Null when nothing is ahead or the race has no coming date. */
@@ -500,11 +769,13 @@ export function entrySection(r: Pick<Race, "entry" | "next_date">, lang: Lang, t
   const pk = (e.pickup ?? []).filter((p) => p.day >= today && p.day <= r.next_date!);
   const pick = pk.length ? `<h3>${esc(w.pickupH)}</h3><ul>${pk.map((p) => `<li>${esc(cap(dateLong(p.day, lang)))}${p.from ? `, ${esc(p.to ? w.between(p.from, p.to) : w.from(p.from))}` : ""}</li>`).join("")}</ul>${e.pickup_where ? `<p>${esc(e.pickup_where)}</p>` : ""}` : "";
   if (!items.length && !pick) return null;
-  const src = e.source ? `<p class="note">${esc(w.source)}: <a href="${esc(e.source)}" rel="noopener nofollow">${esc(hostOf(e.source))}</a>${e.checked ? `, ${esc(w.checked(dateShort(e.checked, lang)))}` : ""}</p>` : "";
+  const src = e.source ? `<p class="note">${esc(w.source)}${cl(lang)}<a href="${esc(e.source)}" rel="noopener nofollow">${esc(hostOf(e.source))}</a>${e.checked ? `, ${esc(w.checked(dateShort(e.checked, lang)))}` : ""}</p>` : "";
   return `<section aria-labelledby="h-entry"><h2 id="h-entry">${esc(w.h)}</h2>${items.length ? `<ul>${items.join("")}</ul>` : ""}${pick}${src}</section>`;
 }
-export const dateLong = (day: string, lang: Lang) => dayDate(day).toLocaleDateString(LOCALE[lang], { weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
-export const dateShort = (day: string, lang: Lang) => dayDate(day).toLocaleDateString(LOCALE[lang], { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
+export const dateLong = (day: string, lang: Lang) => first(dayDate(day).toLocaleDateString(LOCALE[lang], { weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }), lang);
+export const dateShort = (day: string, lang: Lang) => first(dayDate(day).toLocaleDateString(LOCALE[lang], { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }), lang);
+/** French writes the first of a month as "1er mai". */
+const first = (d: string, lang: Lang) => (lang === "fr" ? d.replace(/(^|\s)1 (?=\p{L})/u, (_, sp) => `${sp}1er `) : d);
 const cap = (s: string) => s.charAt(0).toLocaleUpperCase() + s.slice(1);
 const monthLabel = (ym: string, lang: Lang) => cap(dayDate(`${ym}-15`).toLocaleDateString(LOCALE[lang], { month: "long", year: "numeric", timeZone: "UTC" }));
 const daysBetween = (a: string, b: string) => Math.round((Date.parse(b + "T12:00:00Z") - Date.parse(a + "T12:00:00Z")) / 864e5);
@@ -610,7 +881,7 @@ export function profileSvg(r: Race, lang: Lang): string {
   const aid = (r.aid_stations ?? []).map((s) => {
     const x = f1(X(Math.min(s.km, kmMax))), y = f1(Y(at(pts, s.km)[2]));
     const what = s.what.length ? s.what.map((w) => t.aidWords[w] ?? w).join(", ") : t.aidNone;
-    return `<g><title>${esc(`${t.aidOne}, ${t.at(num(s.km, lang, 1))}: ${what}`)}</title><line class="aml" x1="${x}" x2="${x}" y1="${y}" y2="${base}"/><circle class="am" cx="${x}" cy="${y}" r="5"/></g>`;
+    return `<g><title>${esc(`${t.aidOne}, ${t.at(num(s.km, lang, 1))}${cl(lang)}${what}`)}</title><line class="aml" x1="${x}" x2="${x}" y1="${y}" y2="${base}"/><circle class="am" cx="${x}" cy="${y}" r="5"/></g>`;
   }).join("");
   const id = `prof-${lang}`;
   return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-labelledby="${id}-t ${id}-d" xmlns="http://www.w3.org/2000/svg"><title id="${id}-t">${esc(t.profileTitle(raceTitle(r, lang)))}</title><desc id="${id}-d">${esc(t.profileDesc(kmText(r.km, lang), num(eMin, lang), num(eMax, lang), (r.aid_stations ?? []).length))}</desc>${g}<path class="pf" d="${line}L${f1(X(kmMax))} ${base}L${f1(X(0))} ${base}Z"/><path class="pl" d="${line}"/>${aid}</svg>`;
@@ -646,10 +917,12 @@ function wrap(s: string, max: number, lines = 3): string[] {
   if (out.length > lines) { out.length = lines; out[lines - 1] = out[lines - 1].slice(0, max - 1) + "…"; }
   return out.map((l) => (l.length > max + 6 ? l.slice(0, max + 5) + "…" : l));
 }
+/** The share image's number style by the race's country (one image serves every language). */
+const OG_LANG: Record<string, Lang> = { NO: "nb", DK: "da", FI: "fi", FR: "fr", ES: "es" };
 /** The share image (1200×630) as SVG for resvg: the name, distance and climbing, the course's shape and its profile. One image per race
  *  for all three languages, so the only text on it is the name, the numbers and the place. */
 export function ogSvg(r: Race): string {
-  const lang: Lang = r.country_code && ["GB", "IE", "US", "CA", "AU", "NZ"].includes(r.country_code) ? "en" : "sv";
+  const lang: Lang = r.country_code && ["GB", "IE", "US", "CA", "AU", "NZ"].includes(r.country_code) ? "en" : (r.country_code && OG_LANG[r.country_code]) || "sv";
   const name = raceTitle(r, lang).replace(/ (?=km$)/, "\u00a0");
   let size = 64, lines = wrap(name, 17, 3);
   if (lines.length > 2) { size = 50; lines = wrap(name, 22, 3); }
@@ -725,6 +998,10 @@ export function aboutText(r: Race, lang: Lang): string[] {
   } else if (lang === "en") {
     out.push(`${title} is a ${r.trail ? t.trailRace : t.roadRace}${where ? ` in ${where}${where.includes(",") ? "," : ""}` : ""} over ${k}. The course climbs ${num(r.ascent, lang)} m${r.descent !== null ? ` and descends ${num(r.descent, lang)} m` : ""} in total, ${t.perKm(perKm)}, which makes it ${h}.${hasEle ? ` The highest point is ${num(r.max_ele!, lang)} m above sea level and the lowest ${num(r.min_ele!, lang)} m.` : ""}`);
     out.push(big ? `The biggest climb starts at km ${num(big.km, lang, 1)}: ${num(big.gain, lang)} m of ascent over ${lenText(big.len, lang)} at ${num(big.grade, lang, 1)} % on average, up to ${num(big.top, lang)} m.${climbs.length > 1 ? ` In total the course has ${climbs.length} climbs of at least 25 m; the last one starts at km ${num(lastC.km, lang, 1)}.` : ""}` : t.noClimbs);
+  } else if (lang !== "de") {
+    const p = PROSE[lang]!;
+    out.push(`${p.intro(title, r.trail ? t.trailRace : t.roadRace, where, k)}${p.climb(num(r.ascent, lang), r.descent !== null ? num(r.descent, lang) : null, t.perKm(perKm), h, hasEle ? num(r.max_ele!, lang) : null, hasEle ? num(r.min_ele!, lang) : null)}`);
+    out.push(big ? p.big(num(big.km, lang, 1), num(big.gain, lang), lenText(big.len, lang), num(big.grade, lang, 1), num(big.top, lang), climbs.length, num(lastC.km, lang, 1)) : t.noClimbs);
   } else {
     out.push(`${title} ist ein ${r.trail ? t.trailRace : t.roadRace}${where ? ` in ${where}${where.includes(",") ? "," : ""}` : ""} über ${k}. Die Strecke hat insgesamt ${num(r.ascent, lang)} Höhenmeter bergauf${r.descent !== null ? ` und ${num(r.descent, lang)} bergab` : ""}, ${t.perKm(perKm)}, und ist damit ${h}.${hasEle ? ` Der höchste Punkt liegt auf ${num(r.max_ele!, lang)} m ü. M., der tiefste auf ${num(r.min_ele!, lang)} m.` : ""}`);
     out.push(big ? `Der größte Anstieg beginnt bei km ${num(big.km, lang, 1)}: ${num(big.gain, lang)} Höhenmeter auf ${lenText(big.len, lang)} mit durchschnittlich ${num(big.grade, lang, 1)} % Steigung, bis auf ${num(big.top, lang)} m.${climbs.length > 1 ? ` Insgesamt hat die Strecke ${climbs.length} Anstiege ab 25 Höhenmetern; der letzte beginnt bei km ${num(lastC.km, lang, 1)}.` : ""}` : t.noClimbs);
@@ -738,17 +1015,79 @@ export function aboutNoCourse(r: Race, lang: Lang): string[] {
   const t = T[lang], k = kmText(r.km, lang), where = whereText(r, lang), title = r.name, a = num(r.ascent, lang), out: string[] = [];
   if (lang === "sv") out.push(`${title} är ett ${r.trail ? t.trailRace : t.roadRace}${where ? ` i ${where}` : ""} på ${k}.${r.ascent ? ` Arrangören anger ${a} höjdmeter.` : ""}`);
   else if (lang === "en") out.push(`${title} is a ${r.trail ? t.trailRace : t.roadRace}${where ? ` in ${where}${where.includes(",") ? "," : ""}` : ""} over ${k}.${r.ascent ? ` The organizer states ${a} m of climbing.` : ""}`);
-  else out.push(`${title} ist ein ${r.trail ? t.trailRace : t.roadRace}${where ? ` in ${where}${where.includes(",") ? "," : ""}` : ""} über ${k}.${r.ascent ? ` Der Veranstalter gibt ${a} Höhenmeter an.` : ""}`);
+  else if (lang === "de") out.push(`${title} ist ein ${r.trail ? t.trailRace : t.roadRace}${where ? ` in ${where}${where.includes(",") ? "," : ""}` : ""} über ${k}.${r.ascent ? ` Der Veranstalter gibt ${a} Höhenmeter an.` : ""}`);
+  else { const p = PROSE[lang]!; out.push(`${p.intro(title, r.trail ? t.trailRace : t.roadRace, where, k)}${r.ascent ? p.orgClimb(a) : ""}`); }
   out.push(...aidText(r, lang));
   return out;
 }
-/** The organiser's aid stations and cut-offs in a sentence, and the app's line on the English and German pages. */
+/** The summary's sentences in the languages added in sprak5 (the Swedish, English and German ones are written out above): the race, the
+ *  climbing, the biggest climb, the organiser's aid stations and cut-offs, and the app's line. */
+const PROSE: Partial<Record<Lang, {
+  intro: (title: string, kind: string, where: string, k: string) => string;
+  climb: (up: string, down: string | null, perKm: string, h: string, hi: string | null, lo: string | null) => string;
+  big: (km: string, gain: string, len: string, grade: string, top: string, count: number, lastKm: string) => string;
+  orgClimb: (a: string) => string; aid: (n: number, a0: string, a1: string) => string; cuts: (n: number) => string; app: string; appNoCourse: string;
+}>> = {
+  nb: {
+    intro: (title, kind, where, k) => `${title} er et ${kind} på ${k}${where ? ` i ${where}` : ""}.`,
+    climb: (up, down, perKm, h, hi, lo) => ` Løypa har ${up} høydemeter oppover${down ? ` og ${down} nedover` : ""}, ${perKm}, og regnes dermed som ${h}.${hi ? ` Høyeste punkt ligger ${hi} moh. og laveste ${lo} moh.` : ""}`,
+    big: (km, gain, len, grade, top, count, lastKm) => `Den største stigningen starter ved km ${km}: ${gain} høydemeter på ${len} med ${grade} % i snitt, opp til ${top} moh.${count > 1 ? ` Totalt har løypa ${count} stigninger på minst 25 høydemeter; den siste starter ved km ${lastKm}.` : ""}`,
+    orgClimb: (a) => ` Arrangøren oppgir ${a} høydemeter.`,
+    aid: (n, a0, a1) => n === 1 ? `Arrangøren har én drikkestasjon langs løypa, ved km ${a0}.` : `Arrangøren har ${n} drikkestasjoner langs løypa, den første ved km ${a0} og den siste ved km ${a1}.`,
+    cuts: (n) => ` Det er ${n === 1 ? "én makstid" : `${n} makstider`} langs løypa.`,
+    app: "I Mila-appen beskriver coachen løypa i detalj på ditt språk og planlegger tempo og energi for den.",
+    appNoCourse: "I Mila-appen planlegger coachen tempo og energi for dette løpet.",
+  },
+  da: {
+    intro: (title, kind, where, k) => `${title} er et ${kind} på ${k}${where ? ` i ${where}` : ""}.`,
+    climb: (up, down, perKm, h, hi, lo) => ` Ruten har ${up} højdemeter stigning${down ? ` og ${down} højdemeter fald` : ""}, ${perKm}, og regnes dermed som ${h}.${hi ? ` Det højeste punkt ligger ${hi} m o.h. og det laveste ${lo} m o.h.` : ""}`,
+    big: (km, gain, len, grade, top, count, lastKm) => `Den største stigning begynder ved km ${km}: ${gain} højdemeter på ${len} med ${grade} % i snit, op til ${top} m o.h.${count > 1 ? ` I alt har ruten ${count} stigninger på mindst 25 højdemeter; den sidste begynder ved km ${lastKm}.` : ""}`,
+    orgClimb: (a) => ` Arrangøren oplyser ${a} højdemeter.`,
+    aid: (n, a0, a1) => n === 1 ? `Arrangøren har ét væskedepot langs ruten, ved km ${a0}.` : `Arrangøren har ${n} væskedepoter langs ruten, det første ved km ${a0} og det sidste ved km ${a1}.`,
+    cuts: (n) => ` Der er ${n === 1 ? "én maksimaltid" : `${n} maksimaltider`} langs ruten.`,
+    app: "I Mila-appen beskriver coachen ruten i detaljer på dit sprog og planlægger dit tempo og din energi til den.",
+    appNoCourse: "I Mila-appen planlægger coachen dit tempo og din energi til dette løb.",
+  },
+  fi: {
+    intro: (title, kind, where, k) => `${title} on ${k}:n ${kind}${where ? ` (${where})` : ""}.`,
+    climb: (up, down, perKm, h, hi, lo) => ` Reitillä on nousua ${up} m${down ? ` ja laskua ${down} m` : ""}, ${perKm}, joten reitti on ${h}.${hi ? ` Korkein kohta on ${hi} m ja matalin ${lo} m merenpinnan yläpuolella.` : ""}`,
+    big: (km, gain, len, grade, top, count, lastKm) => `Suurin nousu alkaa kohdassa km ${km}: ${gain} nousumetriä ${len}:n matkalla, keskimäärin ${grade} %, ja huippu on ${top} m mpy.${count > 1 ? ` Reitillä on yhteensä ${count} vähintään 25 nousumetrin nousua; viimeinen alkaa kohdassa km ${lastKm}.` : ""}`,
+    orgClimb: (a) => ` Järjestäjän mukaan nousua on ${a} m.`,
+    aid: (n, a0, a1) => n === 1 ? `Järjestäjällä on reitin varrella yksi juomapiste, kohdassa km ${a0}.` : `Järjestäjällä on reitin varrella ${n} juomapistettä, ensimmäinen kohdassa km ${a0} ja viimeinen kohdassa km ${a1}.`,
+    cuts: (n) => ` Reitillä on ${n === 1 ? "yksi maksimiaika" : `${n} maksimiaikaa`}.`,
+    app: "Mila-sovelluksessa valmentaja kuvailee reitin tarkasti omalla kielelläsi ja suunnittelee vauhtisi ja energiasi sille.",
+    appNoCourse: "Mila-sovelluksessa valmentaja suunnittelee vauhtisi ja energiasi tähän kisaan.",
+  },
+  fr: {
+    intro: (title, kind, where, k) => `${title} est ${kind} de ${k}${where ? ` (${where})` : ""}.`,
+    climb: (up, down, perKm, h, hi, lo) => ` Le parcours compte ${up} m de dénivelé positif${down ? ` et ${down} m de dénivelé négatif` : ""}, soit ${perKm}\u00a0: il est donc ${h}.${hi ? ` Le point culminant est à ${hi} m d’altitude et le point le plus bas à ${lo} m.` : ""}`,
+    big: (km, gain, len, grade, top, count, lastKm) => `La plus grande montée commence au km ${km}\u00a0: ${gain} m de dénivelé sur ${len}, à ${grade} % de moyenne, jusqu’à ${top} m d’altitude.${count > 1 ? ` Au total, le parcours compte ${count} montées d’au moins 25 m\u00a0; la dernière commence au km ${lastKm}.` : ""}`,
+    orgClimb: (a) => ` L’organisateur annonce ${a} m de dénivelé positif.`,
+    aid: (n, a0, a1) => n === 1 ? `L’organisateur prévoit un ravitaillement, au km ${a0}.` : `L’organisateur prévoit ${n} ravitaillements, le premier au km ${a0} et le dernier au km ${a1}.`,
+    cuts: (n) => ` Le parcours compte ${n === 1 ? "une barrière horaire" : `${n} barrières horaires`}.`,
+    app: "Dans l’app Mila, le coach décrit le parcours en détail dans ta langue et planifie ton allure et ton ravitaillement.",
+    appNoCourse: "Dans l’app Mila, le coach planifie ton allure et ton ravitaillement pour cette course.",
+  },
+  es: {
+    intro: (title, kind, where, k) => `${title} es ${kind} de ${k}${where ? ` (${where})` : ""}.`,
+    climb: (up, down, perKm, h, hi, lo) => ` El recorrido acumula ${up} m de desnivel positivo${down ? ` y ${down} m de desnivel negativo` : ""}, ${perKm}, así que es ${h}.${hi ? ` El punto más alto está a ${hi} m sobre el nivel del mar y el más bajo a ${lo} m.` : ""}`,
+    big: (km, gain, len, grade, top, count, lastKm) => `La subida más grande empieza en el km ${km}: ${gain} m de desnivel en ${len}, con un ${grade} % de media, hasta los ${top} m.${count > 1 ? ` En total, el recorrido tiene ${count} subidas de al menos 25 m; la última empieza en el km ${lastKm}.` : ""}`,
+    orgClimb: (a) => ` El organizador indica ${a} m de desnivel positivo.`,
+    aid: (n, a0, a1) => n === 1 ? `El organizador prevé un avituallamiento, en el km ${a0}.` : `El organizador prevé ${n} avituallamientos, el primero en el km ${a0} y el último en el km ${a1}.`,
+    cuts: (n) => ` Hay ${n === 1 ? "un tiempo de corte" : `${n} tiempos de corte`} a lo largo del recorrido.`,
+    app: "En la app Mila, el coach describe el recorrido en detalle en tu idioma y planifica tu ritmo y tu avituallamiento.",
+    appNoCourse: "En la app Mila, el coach planifica tu ritmo y tu avituallamiento para esta carrera.",
+  },
+};
+/** The organiser's aid stations and cut-offs in a sentence, and the app's line on every page but the Swedish one. */
 function aidText(r: Race, lang: Lang): string[] {
   const out: string[] = [];
   const aid = r.aid_stations ?? [], cuts = r.info?.cutoffs ?? [];
   const a0 = aid.length ? num(aid[0].km, lang, 1) : "", a1 = aid.length ? num(aid[aid.length - 1].km, lang, 1) : "";
   const p3 = lang === "sv"
     ? `${aid.length ? `Arrangören har ${aid.length === 1 ? `en vätskekontroll längs banan, vid km ${a0}` : `${aid.length} vätskekontroller längs banan, den första vid km ${a0} och den sista vid km ${a1}`}.` : ""}${cuts.length ? ` Det finns ${cuts.length === 1 ? "en maxtid" : `${cuts.length} maxtider`} längs banan.` : ""}`
+    : PROSE[lang]
+    ? `${aid.length ? PROSE[lang]!.aid(aid.length, a0, a1) : ""}${cuts.length ? PROSE[lang]!.cuts(cuts.length) : ""}`
     : lang === "en"
     ? `${aid.length ? `The organizer lists ${aid.length === 1 ? `one aid station, at km ${a0}` : `${aid.length} aid stations, the first at km ${a0} and the last at km ${a1}`}.` : ""}${cuts.length ? ` There ${cuts.length === 1 ? "is one cut-off time" : `are ${cuts.length} cut-off times`} along the course.` : ""}`
     : `${aid.length ? `Der Veranstalter nennt ${aid.length === 1 ? `eine Verpflegungsstelle bei km ${a0}` : `${aid.length} Verpflegungsstellen, die erste bei km ${a0} und die letzte bei km ${a1}`}.` : ""}${cuts.length ? ` Entlang der Strecke gibt es ${cuts.length === 1 ? "ein Zeitlimit" : `${cuts.length} Zeitlimits`}.` : ""}`;
@@ -756,10 +1095,12 @@ function aidText(r: Race, lang: Lang): string[] {
   if (courseless(r)) {
     if (lang === "en") out.push("In the Mila app, the coach plans your pacing and fueling for this race.");
     if (lang === "de") out.push("In der Mila-App plant der Coach dein Pacing und deine Verpflegung für diesen Lauf.");
+    if (PROSE[lang]) out.push(PROSE[lang]!.appNoCourse);
     return out;
   }
   if (lang === "en") out.push("In the Mila app, the coach describes the course in detail in your language and plans your pacing and fueling for it.");
   if (lang === "de") out.push("In der Mila-App beschreibt der Coach die Strecke ausführlich in deiner Sprache und plant dein Pacing und deine Verpflegung dafür.");
+  if (PROSE[lang]) out.push(PROSE[lang]!.app);
   return out;
 }
 
@@ -845,8 +1186,13 @@ ${crumbs}
 }
 /** Apple's App Store badge linking to the app: Apple's own localized artwork (the site's badges/, from Apple's marketing tools), never a
  *  button of our own that reads like it; its alt text is the badge's words (t.store). 50 px high, as on the product page. */
-const storeBadge = (path: string, lang: Lang, url: string) =>
-  `<a class="store" href="${esc(url)}"><img src="${esc(rel(path, `badges/app-store-${lang}.svg`))}" alt="${esc(T[lang].store)}" width="150" height="50"></a>`;
+const storeBadge = (path: string, lang: Lang, url: string) => {
+  const b = BADGE_LANGS.includes(lang) ? lang : "en";
+  return `<a class="store" href="${esc(url)}"><img src="${esc(rel(path, `badges/app-store-${b}.svg`))}" alt="${esc(T[b].store)}" width="150" height="50"></a>`;
+};
+/** The languages whose badge artwork from Apple is in the site's badges/ (app-store-<lang>.svg); the others show the English badge, with
+ *  its own words as the alt text, until Apple's localized artwork for them is added there (then add the language here). */
+const BADGE_LANGS: Lang[] = ["sv", "en", "de"];
 const crumbsLd = (items: { name: string; path: string }[]) => ({ "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: items.map((x, i) => ({ "@type": "ListItem", position: i + 1, name: x.name, item: abs(x.path) })) });
 /** The browser refines the countdown to exact days (the page itself says it in coarse steps). */
 const cdScript = (lang: Lang) => `(()=>{const w=${JSON.stringify(T[lang].cd)};for(const e of document.querySelectorAll(".cd[data-day]")){const n=Math.round((Date.parse(e.dataset.day+"T12:00:00")-Date.now())/864e5),m=Math.round(n/30.44);e.textContent=n<0?w.past:n===0?w.today:n===1?w.tomorrow:n<14?w.days.replace("#",n):n<60?w.weeks.replace("#",Math.floor(n/7)):w.months.replace("#",m)}})();`;
@@ -877,7 +1223,7 @@ export function racePage(r: Race, lang: Lang, ctx: Ctx): string {
   else if (r.next_date) when = `${esc(t.passed(dateLong(r.next_date, lang)))}${where ? ` · ${esc(where)}` : ""}`;
   else when = `${esc(t.noDate)}${r.past_dates.length ? ` ${esc(t.last(dateShort(r.past_dates[r.past_dates.length - 1], lang)))}` : ""}${where ? ` · ${esc(where)}` : ""}`;
   const orgLink = r.url ? `<a href="${esc(r.url)}" rel="noopener nofollow">${esc(r.organizer ? t.organiserPage : cap(t.organiserPage))}</a>` : "";
-  const org = r.organizer ? `<p class="meta">${esc(t.organizer)}: ${esc(r.organizer)}${orgLink ? ` · ${orgLink}` : ""}</p>` : orgLink ? `<p class="meta">${orgLink}</p>` : "";
+  const org = r.organizer ? `<p class="meta">${esc(t.organizer)}${cl(lang)}${esc(r.organizer)}${orgLink ? ` · ${orgLink}` : ""}</p>` : orgLink ? `<p class="meta">${orgLink}</p>` : "";
   const start = mainStart(r);
   // a race without a course: the climb only as the organiser states it, and no character a profile would give
   const bare = courseless(r), climbKnown = !bare || r.ascent > 0;
@@ -890,7 +1236,7 @@ export function racePage(r: Race, lang: Lang, ctx: Ctx): string {
   const spec = raceSceneSpec(r, { startIso: startDate(r), today });
   const scene = ctx.sceneJs ? ` data-scene="${esc(JSON.stringify({ ...spec, profile: spec.profile.map((v) => Math.round(v * 1000) / 1000), relief: Math.round(spec.relief) }))}"` : "";
   // the name in the headings is without its sponsors; the official name stays here when it differs
-  const official = displayName(r.name) !== r.name ? `<p class="meta">${esc(t.officialName)}: ${esc(r.name)}</p>` : "";
+  const official = displayName(r.name) !== r.name ? `<p class="meta">${esc(t.officialName)}${cl(lang)}${esc(r.name)}</p>` : "";
   const hero = `<div class="race-hero"${scene}><div class="eyebrow">${esc([t.races, country].filter(Boolean).join(" · "))}</div><h1>${esc(title)}</h1><p class="meta">${when}</p>${official}${org}
 <dl class="facts">${facts.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl></div>`;
   const button = `<div class="ctas">${storeBadge(path, lang, ctx.appStore)}</div><p class="brandline">${esc(t.brandLine)}</p>`;
@@ -917,7 +1263,7 @@ export function racePage(r: Race, lang: Lang, ctx: Ctx): string {
   }
   const prac: string[] = [];
   if (r.aid_stations?.length) prac.push(`<h3>${esc(t.aidH)}</h3>${table(t.aidCaption, t.aidCols, r.aid_stations.map((s) => [esc(t.at(num(s.km, lang, 1))), esc(s.what.length ? s.what.map((w) => t.aidWords[w] ?? w).join(", ") : t.aidNone)]), [])}`);
-  if (info?.starts?.length && r.next_date && r.next_date >= today) prac.push(`<h3>${esc(t.startsH)}</h3><ul>${info.starts.map((s) => `<li>${s.label ? `${esc(s.label)}: ` : ""}${esc(t.clock(s.time))}</li>`).join("")}</ul>`);
+  if (info?.starts?.length && r.next_date && r.next_date >= today) prac.push(`<h3>${esc(t.startsH)}</h3><ul>${info.starts.map((s) => `<li>${s.label ? `${esc(s.label)}${cl(lang)}` : ""}${esc(t.clock(s.time))}</li>`).join("")}</ul>`);
   if (info?.start_place) {
     const p = info.start_place, map = p.lat !== undefined && p.lon !== undefined ? ` · <a href="https://www.openstreetmap.org/?mlat=${p.lat}&amp;mlon=${p.lon}#map=15/${p.lat}/${p.lon}" rel="noopener nofollow">${esc(t.showMap)}</a>` : "";
     prac.push(`<h3>${esc(t.placeH)}</h3><p>${esc(p.name)}${map}</p>`);
@@ -928,7 +1274,7 @@ export function racePage(r: Race, lang: Lang, ctx: Ctx): string {
   const entryHtml = entrySection(r, lang, today);
   if (entryHtml) sections.push(entryHtml);
   if (prac.length) {
-    const src = info?.source ? `<p class="note">${esc(t.source)}: <a href="${esc(info.source)}" rel="noopener nofollow">${esc(hostOf(info.source))}</a>${info.checked ? `, ${esc(t.checked(dateShort(info.checked, lang)))}` : ""}</p>` : "";
+    const src = info?.source ? `<p class="note">${esc(t.source)}${cl(lang)}<a href="${esc(info.source)}" rel="noopener nofollow">${esc(hostOf(info.source))}</a>${info.checked ? `, ${esc(t.checked(dateShort(info.checked, lang)))}` : ""}</p>` : "";
     sections.push(`<section aria-labelledby="h-practical"><h2 id="h-practical">${esc(t.practicalH)}</h2>${prac.join("")}${src}</section>`);
   }
   if (r.results.length) {
@@ -1034,7 +1380,8 @@ export function indexPage(lang: Lang, page: number, pages: number, races: Race[]
 //   IndexNow    the key file at the root, and the addresses that changed in a run, pinged to api.indexnow.org by the workflow
 
 /** The brand as each language writes it (og:site_name, the product's name in markup). */
-export const BRAND: Record<Lang, string> = { sv: "Mila – löpcoach", en: "Mila – running coach", de: "Mila – Laufcoach" };
+export const BRAND: Record<Lang, string> = { sv: "Mila – löpcoach", en: "Mila – running coach", de: "Mila – Laufcoach", nb: "Mila – løpecoach", da: "Mila – løbecoach",
+  fi: "Mila – juoksuvalmentaja", fr: "Mila – coach de course à pied", es: "Mila – coach de running" };
 /** Apple's Smart App Banner, only for an App Store id (digits); nothing while the id is not set. */
 export function smartBannerMeta(id: string | null | undefined): string {
   return typeof id === "string" && /^\d{6,12}$/.test(id) ? `<meta name="apple-itunes-app" content="app-id=${id}">` : "";
@@ -1134,6 +1481,161 @@ const S = {
     hubMore: "Weitere Wege zu deinem Lauf", hubDesc: (name: string, n: number) => `${name}: ${n} Läufe mit Strecke, Datum, Höhenprofil und Pace-Tabelle. Wähle deinen Lauf und hol dir deinen Pace-Plan in Mila.`,
     guidesCrumb: "Ratgeber",
   },
+  nb: {
+    indexDesc: "Løpene i Milas løpsregister med løype, høydeprofil, stigninger, drikkestasjoner og tempotabell. Velg løpet ditt og få tempoplanen din i Mila.",
+    faqH: "Vanlige spørsmål", qWhen: (n: string) => `Når går ${n}?`, qStart: (n: string) => `Når starter ${n}?`,
+    qDist: (n: string) => `Hvor langt er ${n}, og hvor mange høydemeter er det?`, qCourse: (n: string) => `Hvordan er løypa i ${n}?`,
+    qAid: (n: string) => `Er det drikkestasjoner i ${n}?`, qCut: (n: string) => `Er det makstider i ${n}?`, qPace: (n: string) => `Hvordan legger jeg opp farten i ${n}?`,
+    aWhen: (n: string, d: string, prelim: boolean) => `${n} går ${d}${prelim ? " (foreløpig dato)" : ""}. Sjekk dato og starttid hos arrangøren.`,
+    aNoDate: (last: string | null) => `Datoen for neste utgave er ikke klar ennå.${last ? ` Løpet gikk sist ${last}.` : ""}`,
+    aPassed: (d: string) => `Løpet gikk ${d}. Datoen for neste utgave er ikke klar ennå.`,
+    aStart: (list: string) => `Ifølge arrangøren: ${list}.`, clock: (t: string) => `kl. ${t}`,
+    aDist: (k: string, up: string | null, down: string | null, hi: string | null) => `Løpet er ${k} langt${up ? ` med ${up} høydemeter oppover${down ? ` og ${down} nedover` : ""}` : ""}.${hi ? ` Høyeste punkt ligger ${hi} moh.` : ""}`,
+    aDistNoClimb: (k: string) => `Løpet er ${k} langt. Arrangøren oppgir ingen høydemeter.`, aDistOrg: (k: string, a: string) => `Løpet er ${k} langt. Arrangøren oppgir ${a} høydemeter.`,
+    aCourse: (h: string, perKm: string, loop: boolean | null, trail: boolean, climbs: string) => `Løypa regnes som ${h}, med ${perKm} høydemeter per km i snitt. ${climbs} ${loop === null ? "" : loop ? "Start og mål ligger på samme sted. " : "Løypa går fra start til et mål på et annet sted. "}Underlaget er ${trail ? "terreng og sti" : "vei"}.`,
+    aClimbs: (n: number, km: string, gain: string, len: string) => n === 1 ? `Den har én stigning på minst 25 høydemeter, ved km ${km}: ${gain} høydemeter på ${len}.` : `Den har ${n} stigninger på minst 25 høydemeter; den største starter ved km ${km}: ${gain} høydemeter på ${len}.`,
+    aNoClimbs: "Den har ingen sammenhengende stigninger på 25 høydemeter eller mer.",
+    aAid: (n: number, list: string) => `Ja. Arrangøren har ${n === 1 ? "én drikkestasjon" : `${n} drikkestasjoner`}: ${list}.`,
+    aCut: (list: string) => `Ja, ifølge arrangøren: ${list}.`,
+    aPaceEven: "Sikt på en jevn innsats hele veien, og hold igjen de første kilometerne når beina føles friske og feltet drar fra.",
+    aPaceFlat: (h: string) => `Løypa er ${h}, så et jevnt tempo per kilometer fungerer godt.`,
+    aPaceHills: (kms: string) => `Sikt på en jevn innsats heller enn et jevnt tempo: la farten gå ned i motbakkene, hent den inn igjen når det flater ut, og hold igjen de første kilometerne. De største stigningene starter ved ${kms}.`, and: "og",
+    aPaceTail: "I Mila får du en tempoplan for akkurat denne løypa etter din egen form.",
+    paceH: "Tempotabell", paceRow: (n: string, t: string) => `${n} på ${t} – tid per km og mellomtider`, perKm: "per km", finish: "mål",
+    paceNote: "Tidene forutsetter jevnt tempo hele veien. Det er ren regning, ingen prognose: i bakker, i trengsel og ved drikkestasjoner varierer tempoet.",
+    seeAlso: "Flere løp som dette", browseH: "Finn løp", browseKinds: { city: "Steder", distance: "Distanser", month: "Måneder", country: "Land" },
+    hubName: { city: (p: string) => `Løp i ${p}`, month: (m: string) => `Løp i ${m}`, country: (c: string) => `Løp i ${c}` },
+    distName: { "5k": "5 km-løp", "10k": "10 km-løp", half: "Halvmaraton", marathon: "Maraton", ultra: "Ultraløp", trail: "Terrengløp" } as Record<string, string>,
+    distAbout: { "5k": "Løp på omtrent 5 km.", "10k": "Løp på omtrent 10 km.", half: "Et halvmaraton er 21,1 km.", marathon: "Et maraton er 42,195 km.", ultra: "Et ultraløp er lengre enn et maraton.", trail: "Terrengløp går i terreng og på sti, ofte med flere høydemeter enn på vei." } as Record<string, string>,
+    hubTail: "løyper, datoer og høydeprofiler", hubIntro: (n: number) => `${n} løp fra Milas løpsregister. Hvert løp har en egen side med løype, høydeprofil, fakta fra arrangøren og en tempotabell.`,
+    hubNext: (d: string, n: string) => `Nærmest for tur: ${n}, ${d}.`, hubClimb: (lo: string, hi: string) => `Høydemeterne varierer fra ${lo} til ${hi}.`,
+    hubMore: "Flere måter å finne løp på", hubDesc: (name: string, n: number) => `${name}: ${n} løp med løype, dato, høydeprofil og tempotabell. Velg løpet ditt og få tempoplanen din i Mila.`,
+    guidesCrumb: "Guider",
+  },
+  da: {
+    indexDesc: "Løbene i Milas løbskalender med rute, højdeprofil, stigninger, væskedepoter og tempotabel. Vælg dit løb, og få din tempoplan i Mila.",
+    faqH: "Ofte stillede spørgsmål", qWhen: (n: string) => `Hvornår løbes ${n}?`, qStart: (n: string) => `Hvornår starter ${n}?`,
+    qDist: (n: string) => `Hvor langt er ${n}, og hvor mange højdemeter er der?`, qCourse: (n: string) => `Hvordan er ruten på ${n}?`,
+    qAid: (n: string) => `Er der væskedepoter på ${n}?`, qCut: (n: string) => `Er der maksimaltider på ${n}?`, qPace: (n: string) => `Hvordan fordeler jeg farten på ${n}?`,
+    aWhen: (n: string, d: string, prelim: boolean) => `${n} løbes ${d}${prelim ? " (foreløbig dato)" : ""}. Tjek dato og starttid hos arrangøren.`,
+    aNoDate: (last: string | null) => `Datoen for næste udgave er ikke fastlagt endnu.${last ? ` Løbet blev senest afviklet ${last}.` : ""}`,
+    aPassed: (d: string) => `Løbet blev afviklet ${d}. Datoen for næste udgave er ikke fastlagt endnu.`,
+    aStart: (list: string) => `Ifølge arrangøren: ${list}.`, clock: (t: string) => `kl. ${t}`,
+    aDist: (k: string, up: string | null, down: string | null, hi: string | null) => `Løbet er ${k} langt${up ? ` med ${up} højdemeter stigning${down ? ` og ${down} højdemeter fald` : ""}` : ""}.${hi ? ` Det højeste punkt ligger ${hi} m o.h.` : ""}`,
+    aDistNoClimb: (k: string) => `Løbet er ${k} langt. Arrangøren oplyser ingen højdemeter.`, aDistOrg: (k: string, a: string) => `Løbet er ${k} langt. Arrangøren oplyser ${a} højdemeter.`,
+    aCourse: (h: string, perKm: string, loop: boolean | null, trail: boolean, climbs: string) => `Ruten regnes som ${h}, med ${perKm} højdemeter pr. km i snit. ${climbs} ${loop === null ? "" : loop ? "Start og mål ligger samme sted. " : "Ruten går fra start til et mål et andet sted. "}Underlaget er ${trail ? "terræn og sti" : "vej"}.`,
+    aClimbs: (n: number, km: string, gain: string, len: string) => n === 1 ? `Den har én stigning på mindst 25 højdemeter, ved km ${km}: ${gain} højdemeter på ${len}.` : `Den har ${n} stigninger på mindst 25 højdemeter; den største begynder ved km ${km}: ${gain} højdemeter på ${len}.`,
+    aNoClimbs: "Den har ingen sammenhængende stigninger på 25 højdemeter eller mere.",
+    aAid: (n: number, list: string) => `Ja. Arrangøren har ${n === 1 ? "ét væskedepot" : `${n} væskedepoter`}: ${list}.`,
+    aCut: (list: string) => `Ja, ifølge arrangøren: ${list}.`,
+    aPaceEven: "Gå efter en jævn indsats hele vejen, og hold igen de første kilometer, når benene føles friske, og feltet trækker fra.",
+    aPaceFlat: (h: string) => `Ruten er ${h}, så et jævnt tempo pr. kilometer fungerer godt.`,
+    aPaceHills: (kms: string) => `Gå efter en jævn indsats frem for et jævnt tempo: lad farten falde på stigningerne, hent den igen, når det flader ud, og hold igen de første kilometer. De største stigninger begynder ved ${kms}.`, and: "og",
+    aPaceTail: "I Mila får du en tempoplan til netop denne rute efter din egen form.",
+    paceH: "Tempotabel", paceRow: (n: string, t: string) => `${n} på ${t} – tid pr. km og mellemtider`, perKm: "pr. km", finish: "mål",
+    paceNote: "Tiderne forudsætter et jævnt tempo hele vejen. Det er ren regning, ingen prognose: på stigninger, i trængsel og ved væskedepoter svinger tempoet.",
+    seeAlso: "Flere løb som dette", browseH: "Find løb", browseKinds: { city: "Byer", distance: "Distancer", month: "Måneder", country: "Lande" },
+    hubName: { city: (p: string) => `Løb i ${p}`, month: (m: string) => `Løb i ${m}`, country: (c: string) => `Løb i ${c}` },
+    distName: { "5k": "5 km-løb", "10k": "10 km-løb", half: "Halvmaraton", marathon: "Maraton", ultra: "Ultraløb", trail: "Trailløb" } as Record<string, string>,
+    distAbout: { "5k": "Løb på omkring 5 km.", "10k": "Løb på omkring 10 km.", half: "Et halvmaraton er 21,1 km.", marathon: "Et maraton er 42,195 km.", ultra: "Et ultraløb er længere end et maraton.", trail: "Trailløb foregår i terræn og på stier, ofte med flere højdemeter end på vej." } as Record<string, string>,
+    hubTail: "ruter, datoer og højdeprofiler", hubIntro: (n: number) => `${n} løb fra Milas løbskalender. Hvert løb har sin egen side med rute, højdeprofil, fakta fra arrangøren og en tempotabel.`,
+    hubNext: (d: string, n: string) => `Næste løb: ${n}, ${d}.`, hubClimb: (lo: string, hi: string) => `Højdemeterne går fra ${lo} til ${hi}.`,
+    hubMore: "Flere måder at finde løb på", hubDesc: (name: string, n: number) => `${name}: ${n} løb med rute, dato, højdeprofil og tempotabel. Vælg dit løb, og få din tempoplan i Mila.`,
+    guidesCrumb: "Guides",
+  },
+  fi: {
+    indexDesc: "Milan kisakalenterin kisat: reitti, korkeusprofiili, nousut, juomapisteet ja vauhtitaulukko. Valitse kisasi ja hae vauhtisuunnitelmasi Milasta.",
+    faqH: "Usein kysyttyä", qWhen: (n: string) => `${n}: milloin kisa juostaan?`, qStart: (n: string) => `${n}: mihin aikaan lähtö on?`,
+    qDist: (n: string) => `${n}: kuinka pitkä matka on ja paljonko nousua on?`, qCourse: (n: string) => `${n}: millainen reitti on?`,
+    qAid: (n: string) => `${n}: onko reitillä juomapisteitä?`, qCut: (n: string) => `${n}: onko kisassa maksimiaikoja?`, qPace: (n: string) => `${n}: miten jaan vauhtini?`,
+    aWhen: (n: string, d: string, prelim: boolean) => `${n} juostaan ${d}${prelim ? " (alustava päivä)" : ""}. Tarkista päivä ja lähtöaika järjestäjältä.`,
+    aNoDate: (last: string | null) => `Seuraavan kisan päivä ei ole vielä selvillä.${last ? ` Viimeksi kisa juostiin ${last}.` : ""}`,
+    aPassed: (d: string) => `Kisa juostiin ${d}. Seuraavan kisan päivä ei ole vielä selvillä.`,
+    aStart: (list: string) => `Järjestäjän mukaan: ${list}.`, clock: (t: string) => `klo ${t}`,
+    aDist: (k: string, up: string | null, down: string | null, hi: string | null) => `Matka on ${k}${up ? `, nousua ${up} m${down ? ` ja laskua ${down} m` : ""}` : ""}.${hi ? ` Korkein kohta on ${hi} m mpy.` : ""}`,
+    aDistNoClimb: (k: string) => `Matka on ${k}. Järjestäjä ei ilmoita nousumetrejä.`, aDistOrg: (k: string, a: string) => `Matka on ${k}. Järjestäjän mukaan nousua on ${a} m.`,
+    aCourse: (h: string, perKm: string, loop: boolean | null, trail: boolean, climbs: string) => `Reitti on ${h}, nousua keskimäärin ${perKm} m kilometrillä. ${climbs} ${loop === null ? "" : loop ? "Lähtö ja maali ovat samassa paikassa. " : "Reitti kulkee lähdöstä maaliin, joka on eri paikassa. "}Alusta on ${trail ? "maastoa ja polkua" : "maantietä"}.`,
+    aClimbs: (n: number, km: string, gain: string, len: string) => n === 1 ? `Reitillä on yksi vähintään 25 nousumetrin nousu, kohdassa km ${km}: ${gain} m ${len}:n matkalla.` : `Reitillä on ${n} vähintään 25 nousumetrin nousua; suurin alkaa kohdassa km ${km}: ${gain} m ${len}:n matkalla.`,
+    aNoClimbs: "Reitillä ei ole yhtenäisiä vähintään 25 nousumetrin nousuja.",
+    aAid: (n: number, list: string) => `Kyllä. Järjestäjällä on ${n === 1 ? "yksi juomapiste" : `${n} juomapistettä`}: ${list}.`,
+    aCut: (list: string) => `Kyllä, järjestäjän mukaan: ${list}.`,
+    aPaceEven: "Pyri tasaiseen rasitukseen koko matkan, ja jarruttele ensimmäisillä kilometreillä, kun jalat tuntuvat kevyiltä ja muut karkaavat edelle.",
+    aPaceFlat: (h: string) => `Reitti on ${h}, joten tasainen vauhti kilometriä kohden toimii hyvin.`,
+    aPaceHills: (kms: string) => `Pyri tasaiseen rasitukseen mieluummin kuin tasaiseen vauhtiin: anna vauhdin hidastua ylämäissä, ota se takaisin, kun maasto tasaantuu, ja jarruttele ensimmäisillä kilometreillä. Suurimmat nousut alkavat kohdissa ${kms}.`, and: "ja",
+    aPaceTail: "Milasta saat juuri tälle reitille vauhtisuunnitelman oman kuntosi mukaan.",
+    paceH: "Vauhtitaulukko", paceRow: (n: string, t: string) => `${n} ajassa ${t} – vauhti kilometrillä ja väliajat`, perKm: "min/km", finish: "maali",
+    paceNote: "Ajat olettavat tasaisen vauhdin koko matkan. Tämä on pelkkää laskentaa, ei ennuste: mäissä, ruuhkassa ja juomapisteillä vauhti vaihtelee.",
+    seeAlso: "Lisää samanlaisia kisoja", browseH: "Löydä kisa", browseKinds: { city: "Paikkakunnat", distance: "Matkat", month: "Kuukaudet", country: "Maat" },
+    hubName: { city: (p: string) => `Juoksukisat: ${p}`, month: (m: string) => `Juoksukisat: ${m}`, country: (c: string) => `Juoksukisat: ${c}` },
+    distName: { "5k": "5 km:n kisat", "10k": "10 km:n kisat", half: "Puolimaratonit", marathon: "Maratonit", ultra: "Ultrajuoksut", trail: "Polkujuoksut" } as Record<string, string>,
+    distAbout: { "5k": "Noin 5 km:n kisoja.", "10k": "Noin 10 km:n kisoja.", half: "Puolimaraton on 21,1 km.", marathon: "Maraton on 42,195 km.", ultra: "Ultrajuoksu on maratonia pidempi.", trail: "Polkujuoksut kulkevat maastossa ja poluilla, usein mäkisemmin kuin maantiellä." } as Record<string, string>,
+    hubTail: "reitit, päivät ja korkeusprofiilit", hubIntro: (n: number) => `${n} ${n === 1 ? "kisa" : "kisaa"} Milan kisakalenterista. Jokaisella kisalla on oma sivu, jossa on reitti, korkeusprofiili, järjestäjän tiedot ja vauhtitaulukko.`,
+    hubNext: (d: string, n: string) => `Seuraavana vuorossa: ${n}, ${d}.`, hubClimb: (lo: string, hi: string) => `Nousua on ${lo}–${hi} m.`,
+    hubMore: "Lisää tapoja löytää kisoja", hubDesc: (name: string, n: number) => `${name}: ${n} kisaa, joissa on reitti, päivä, korkeusprofiili ja vauhtitaulukko. Valitse kisasi ja hae vauhtisuunnitelmasi Milasta.`,
+    guidesCrumb: "Oppaat",
+  },
+  fr: {
+    indexDesc: "Les courses du calendrier de Mila avec parcours, profil d’altitude, montées, ravitaillements et tableau d’allures. Choisis ta course et obtiens ton plan d’allure dans Mila.",
+    faqH: "Questions fréquentes", qWhen: (n: string) => `Quand a lieu ${n} ?`, qStart: (n: string) => `À quelle heure part ${n} ?`,
+    qDist: (n: string) => `${n} : quelle distance et quel dénivelé ?`, qCourse: (n: string) => `${n} : à quoi ressemble le parcours ?`,
+    qAid: (n: string) => `${n} : y a-t-il des ravitaillements ?`, qCut: (n: string) => `${n} : y a-t-il des barrières horaires ?`, qPace: (n: string) => `${n} : comment gérer mon allure ?`,
+    aWhen: (n: string, d: string, prelim: boolean) => `${n} a lieu le ${d}${prelim ? " (date provisoire)" : ""}. Vérifie la date et l’heure de départ auprès de l’organisateur.`,
+    aNoDate: (last: string | null) => `La date de la prochaine édition n’est pas encore fixée.${last ? ` La dernière édition a eu lieu le ${last}.` : ""}`,
+    aPassed: (d: string) => `La course a eu lieu le ${d}. La date de la prochaine édition n’est pas encore fixée.`,
+    aStart: (list: string) => `Selon l’organisateur : ${list}.`, clock: (t: string) => frClock(t),
+    aDist: (k: string, up: string | null, down: string | null, hi: string | null) => `La course fait ${k}${up ? `, avec ${up} m de dénivelé positif${down ? ` et ${down} m de dénivelé négatif` : ""}` : ""}.${hi ? ` Le point culminant est à ${hi} m d’altitude.` : ""}`,
+    aDistNoClimb: (k: string) => `La course fait ${k}. L’organisateur n’indique pas de dénivelé.`, aDistOrg: (k: string, a: string) => `La course fait ${k}. L’organisateur annonce ${a} m de dénivelé positif.`,
+    aCourse: (h: string, perKm: string, loop: boolean | null, trail: boolean, climbs: string) => `Le parcours est ${h}, avec ${perKm} m de dénivelé par km en moyenne. ${climbs} ${loop === null ? "" : loop ? "Le départ et l’arrivée sont au même endroit. " : "Il va du départ à une arrivée située ailleurs. "}On y court ${trail ? "sur sentiers et en nature" : "sur route"}.`,
+    aClimbs: (n: number, km: string, gain: string, len: string) => n === 1 ? `Il compte une montée d’au moins 25 m, au km ${km} : ${gain} m sur ${len}.` : `Il compte ${n} montées d’au moins 25 m ; la plus grande commence au km ${km} : ${gain} m sur ${len}.`,
+    aNoClimbs: "Il ne compte aucune montée continue de 25 m ou plus.",
+    aAid: (n: number, list: string) => `Oui. L’organisateur prévoit ${n === 1 ? "un ravitaillement" : `${n} ravitaillements`} : ${list}.`,
+    aCut: (list: string) => `Oui, selon l’organisateur : ${list}.`,
+    aPaceEven: "Vise un effort régulier du début à la fin, et retiens-toi sur les premiers kilomètres, quand les jambes sont fraîches et que le peloton part vite.",
+    aPaceFlat: (h: string) => `Le parcours est ${h}, une allure régulière au kilomètre convient donc bien.`,
+    aPaceHills: (kms: string) => `Vise un effort régulier plutôt qu’une allure régulière : laisse l’allure baisser dans les montées, reprends-la quand le terrain s’aplanit, et retiens-toi sur les premiers kilomètres. Les plus grandes montées commencent au ${kms}.`, and: "et",
+    aPaceTail: "Dans Mila, tu obtiens un plan d’allure pour ce parcours, adapté à ta forme.",
+    paceH: "Tableau d’allures", paceRow: (n: string, t: string) => `${n} en ${t} – allure au km et temps de passage`, perKm: "min/km", finish: "arrivée",
+    paceNote: "Les temps supposent une allure régulière du début à la fin. C’est un simple calcul, pas un pronostic : dans les montées, dans la foule et aux ravitaillements, l’allure varie.",
+    seeAlso: "D’autres courses de ce type", browseH: "Trouver une course", browseKinds: { city: "Villes", distance: "Distances", month: "Mois", country: "Pays" },
+    hubName: { city: (p: string) => `Courses à ${p}`, month: (m: string) => `Courses en ${m}`, country: (c: string) => /^(au|aux|à|en) /.test(c) ? `Courses ${c}` : `Courses en ${c}` },
+    distName: { "5k": "Courses de 5 km", "10k": "Courses de 10 km", half: "Semi-marathons", marathon: "Marathons", ultra: "Ultras", trail: "Trails" } as Record<string, string>,
+    distAbout: { "5k": "Des courses d’environ 5 km.", "10k": "Des courses d’environ 10 km.", half: "Un semi-marathon fait 21,1 km.", marathon: "Un marathon fait 42,195 km.", ultra: "Un ultra est une course plus longue qu’un marathon.", trail: "Les trails se courent sur sentiers et en nature, souvent avec plus de dénivelé que sur route." } as Record<string, string>,
+    hubTail: "parcours, dates et profils d’altitude", hubIntro: (n: number) => `${n} ${n === 1 ? "course" : "courses"} du calendrier de Mila. Chaque course a sa propre page avec le parcours, le profil d’altitude, les informations de l’organisateur et un tableau d’allures.`,
+    hubNext: (d: string, n: string) => `Prochaine course : ${n}, le ${d}.`, hubClimb: (lo: string, hi: string) => `Le dénivelé positif va de ${lo} à ${hi} m.`,
+    hubMore: "D’autres façons de trouver une course", hubDesc: (name: string, n: number) => `${name} : ${n} courses avec parcours, date, profil d’altitude et tableau d’allures. Choisis ta course et obtiens ton plan d’allure dans Mila.`,
+    guidesCrumb: "Guides",
+  },
+  es: {
+    indexDesc: "Las carreras del calendario de Mila con recorrido, perfil de altitud, subidas, avituallamientos y tabla de ritmos. Elige tu carrera y consigue tu plan de ritmo en Mila.",
+    faqH: "Preguntas frecuentes", qWhen: (n: string) => `¿Cuándo es ${n}?`, qStart: (n: string) => `¿A qué hora sale ${n}?`,
+    qDist: (n: string) => `¿Cuánto mide ${n} y cuánto desnivel tiene?`, qCourse: (n: string) => `¿Cómo es el recorrido de ${n}?`,
+    qAid: (n: string) => `¿Hay avituallamientos en ${n}?`, qCut: (n: string) => `¿Hay tiempos de corte en ${n}?`, qPace: (n: string) => `¿Cómo reparto el ritmo en ${n}?`,
+    aWhen: (n: string, d: string, prelim: boolean) => `${n} se celebra el ${d}${prelim ? " (fecha provisional)" : ""}. Comprueba la fecha y la hora de salida con el organizador.`,
+    aNoDate: (last: string | null) => `La fecha de la próxima edición aún no está fijada.${last ? ` La última edición se celebró el ${last}.` : ""}`,
+    aPassed: (d: string) => `La carrera se celebró el ${d}. La fecha de la próxima edición aún no está fijada.`,
+    aStart: (list: string) => `Según el organizador: ${list}.`, clock: (t: string) => `${t} h`,
+    aDist: (k: string, up: string | null, down: string | null, hi: string | null) => `La carrera tiene ${k}${up ? `, con ${up} m de desnivel positivo${down ? ` y ${down} m de desnivel negativo` : ""}` : ""}.${hi ? ` El punto más alto está a ${hi} m sobre el nivel del mar.` : ""}`,
+    aDistNoClimb: (k: string) => `La carrera tiene ${k}. El organizador no indica desnivel.`, aDistOrg: (k: string, a: string) => `La carrera tiene ${k}. El organizador indica ${a} m de desnivel positivo.`,
+    aCourse: (h: string, perKm: string, loop: boolean | null, trail: boolean, climbs: string) => `El recorrido es ${h}, con ${perKm} m de desnivel por km de media. ${climbs} ${loop === null ? "" : loop ? "La salida y la meta están en el mismo lugar. " : "Va de la salida a una meta situada en otro lugar. "}Se corre ${trail ? "por senderos y caminos" : "sobre asfalto"}.`,
+    aClimbs: (n: number, km: string, gain: string, len: string) => n === 1 ? `Tiene una subida de al menos 25 m, en el km ${km}: ${gain} m en ${len}.` : `Tiene ${n} subidas de al menos 25 m; la mayor empieza en el km ${km}: ${gain} m en ${len}.`,
+    aNoClimbs: "No tiene subidas continuas de 25 m o más.",
+    aAid: (n: number, list: string) => `Sí. El organizador prevé ${n === 1 ? "un avituallamiento" : `${n} avituallamientos`}: ${list}.`,
+    aCut: (list: string) => `Sí, según el organizador: ${list}.`,
+    aPaceEven: "Busca un esfuerzo constante de principio a fin y contente en los primeros kilómetros, cuando las piernas van frescas y el pelotón sale rápido.",
+    aPaceFlat: (h: string) => `El recorrido es ${h}, así que un ritmo constante por kilómetro funciona bien.`,
+    aPaceHills: (kms: string) => `Busca un esfuerzo constante más que un ritmo constante: deja que el ritmo baje en las subidas, recupéralo cuando el terreno se allane y contente en los primeros kilómetros. Las subidas más grandes empiezan en el ${kms}.`, and: "y",
+    aPaceTail: "En Mila tienes un plan de ritmo para este recorrido, según tu propia forma.",
+    paceH: "Tabla de ritmos", paceRow: (n: string, t: string) => `${n} en ${t} – ritmo por km y tiempos de paso`, perKm: "min/km", finish: "meta",
+    paceNote: "Los tiempos suponen un ritmo constante de principio a fin. Es pura aritmética, no un pronóstico: en las subidas, entre la gente y en los avituallamientos el ritmo varía.",
+    seeAlso: "Más carreras como esta", browseH: "Buscar carreras", browseKinds: { city: "Ciudades", distance: "Distancias", month: "Meses", country: "Países" },
+    hubName: { city: (p: string) => `Carreras en ${p}`, month: (m: string) => `Carreras en ${m}`, country: (c: string) => `Carreras en ${c}` },
+    distName: { "5k": "Carreras de 5 km", "10k": "Carreras de 10 km", half: "Medias maratones", marathon: "Maratones", ultra: "Ultras", trail: "Carreras de trail" } as Record<string, string>,
+    distAbout: { "5k": "Carreras de unos 5 km.", "10k": "Carreras de unos 10 km.", half: "Una media maratón tiene 21,1 km.", marathon: "Una maratón tiene 42,195 km.", ultra: "Una ultra es cualquier carrera más larga que una maratón.", trail: "Las carreras de trail van por senderos y caminos, a menudo con más desnivel que en asfalto." } as Record<string, string>,
+    hubTail: "recorridos, fechas y perfiles de altitud", hubIntro: (n: number) => `${n} ${n === 1 ? "carrera" : "carreras"} del calendario de Mila. Cada carrera tiene su propia página con el recorrido, el perfil de altitud, los datos del organizador y una tabla de ritmos.`,
+    hubNext: (d: string, n: string) => `La próxima: ${n}, el ${d}.`, hubClimb: (lo: string, hi: string) => `El desnivel positivo va de ${lo} a ${hi} m.`,
+    hubMore: "Más formas de buscar carreras", hubDesc: (name: string, n: number) => `${name}: ${n} carreras con recorrido, fecha, perfil de altitud y tabla de ritmos. Elige tu carrera y consigue tu plan de ritmo en Mila.`,
+    guidesCrumb: "Guías",
+  },
 };
 
 // ---- hubs
@@ -1145,27 +1647,35 @@ const HUB_DIR: Record<Lang, Record<HubKind, string>> = {
   sv: { city: "stad", distance: "distans", month: "manad", country: "land" },
   en: { city: "city", distance: "distance", month: "month", country: "country" },
   de: { city: "stadt", distance: "distanz", month: "monat", country: "land" },
+  nb: { city: "by", distance: "distanse", month: "maned", country: "land" },
+  da: { city: "by", distance: "distance", month: "maaned", country: "land" },
+  fi: { city: "kaupunki", distance: "matka", month: "kuukausi", country: "maa" },
+  fr: { city: "ville", distance: "distance", month: "mois", country: "pays" },
+  es: { city: "ciudad", distance: "distancia", month: "mes", country: "pais" },
 };
 /** The distance classes: the common race distances (within a few hundred metres), every race past a marathon, and every trail race. */
 export const DISTANCES: { key: string; test: (r: Pick<Race, "km" | "trail">) => boolean; slug: Record<Lang, string> }[] = [
-  { key: "5k", test: (r) => r.km >= 4.5 && r.km <= 5.5, slug: { sv: "5-km", en: "5k", de: "5-km" } },
-  { key: "10k", test: (r) => r.km >= 9.5 && r.km <= 10.5, slug: { sv: "10-km", en: "10k", de: "10-km" } },
-  { key: "half", test: (r) => r.km >= 20.6 && r.km <= 21.7, slug: { sv: "halvmaraton", en: "half-marathon", de: "halbmarathon" } },
-  { key: "marathon", test: (r) => r.km >= 41.7 && r.km <= 42.8, slug: { sv: "maraton", en: "marathon", de: "marathon" } },
-  { key: "ultra", test: (r) => r.km > 42.8, slug: { sv: "ultra", en: "ultra", de: "ultra" } },
-  { key: "trail", test: (r) => r.trail, slug: { sv: "trail", en: "trail", de: "trail" } },
+  { key: "5k", test: (r) => r.km >= 4.5 && r.km <= 5.5, slug: { sv: "5-km", en: "5k", de: "5-km", nb: "5-km", da: "5-km", fi: "5-km", fr: "5-km", es: "5-km" } },
+  { key: "10k", test: (r) => r.km >= 9.5 && r.km <= 10.5, slug: { sv: "10-km", en: "10k", de: "10-km", nb: "10-km", da: "10-km", fi: "10-km", fr: "10-km", es: "10-km" } },
+  { key: "half", test: (r) => r.km >= 20.6 && r.km <= 21.7, slug: { sv: "halvmaraton", en: "half-marathon", de: "halbmarathon", nb: "halvmaraton", da: "halvmaraton", fi: "puolimaraton", fr: "semi-marathon", es: "media-maraton" } },
+  { key: "marathon", test: (r) => r.km >= 41.7 && r.km <= 42.8, slug: { sv: "maraton", en: "marathon", de: "marathon", nb: "maraton", da: "maraton", fi: "maraton", fr: "marathon", es: "maraton" } },
+  { key: "ultra", test: (r) => r.km > 42.8, slug: { sv: "ultra", en: "ultra", de: "ultra", nb: "ultra", da: "ultra", fi: "ultra", fr: "ultra", es: "ultra" } },
+  { key: "trail", test: (r) => r.trail, slug: { sv: "trail", en: "trail", de: "trail", nb: "terrenglop", da: "trail", fi: "polkujuoksu", fr: "trail", es: "trail" } },
 ];
 /** The fewest races a hub needs: fewer is a thin page, never made. */
 export const HUB_MIN = 2;
 export type Hub = { kind: HubKind; key: string; slug: Record<Lang, string>; name: Record<Lang, string>; races: Race[]; about?: string };
 export const hubPath = (lang: Lang, h: Pick<Hub, "kind" | "slug">) => `${L[lang].dir}/${HUB_DIR[lang][h.kind]}/${h.slug[lang]}/`;
-/** Country names that read better with an article after "in" (en) or "in"/"im" (de). */
+/** Country names that read better with an article after "in" (en) or "in"/"im" (de); in French the whole "au/aux/à …" where "en …" is wrong. */
 const COUNTRY_IN: Partial<Record<Lang, Record<string, string>>> = {
   en: { US: "the United States", GB: "the United Kingdom", NL: "the Netherlands", PH: "the Philippines", AE: "the United Arab Emirates", CZ: "the Czech Republic" },
   de: { CH: "der Schweiz", NL: "den Niederlanden", US: "den USA", TR: "der Türkei", SK: "der Slowakei", PH: "den Philippinen", AE: "den Vereinigten Arabischen Emiraten" },
+  fr: { DK: "au Danemark", PT: "au Portugal", LU: "au Luxembourg", LI: "au Liechtenstein", GB: "au Royaume-Uni", JP: "au Japon", CA: "au Canada", MX: "au Mexique",
+    BR: "au Brésil", CL: "au Chili", PE: "au Pérou", MA: "au Maroc", KE: "au Kenya", NP: "au Népal", VN: "au Vietnam", US: "aux États-Unis", NL: "aux Pays-Bas",
+    PH: "aux Philippines", AE: "aux Émirats arabes unis", MC: "à Monaco", SG: "à Singapour" },
 };
-/** "juni 2027" in a Swedish sentence; English and German keep the capital ("June 2027", "Juni 2027"). */
-const monthName = (ym: string, lang: Lang) => { const m = monthLabel(ym, lang); return lang === "sv" ? m.charAt(0).toLocaleLowerCase(LOCALE[lang]) + m.slice(1) : m; };
+/** "juni 2027" in a Swedish (Norwegian, Danish, Finnish, French, Spanish) sentence; English and German keep the capital ("June 2027", "Juni 2027"). */
+const monthName = (ym: string, lang: Lang) => { const m = monthLabel(ym, lang); return lang !== "en" && lang !== "de" ? m.charAt(0).toLocaleLowerCase(LOCALE[lang]) + m.slice(1) : m; };
 const addMonths = (ym: string, n: number) => { const [y, m] = ym.split("-").map(Number), t = y * 12 + (m - 1) + n; return `${Math.floor(t / 12)}-${String((t % 12) + 1).padStart(2, "0")}`; };
 
 /** Every hub with at least HUB_MIN races, in a stable order (kind, then key); the races in index order. */
@@ -1173,7 +1683,7 @@ export function buildHubs(active: Race[], today: string): Hub[] {
   const out: Hub[] = [], order = (rs: Race[]) => indexOrder(rs, today);
   for (const d of DISTANCES) {
     const rs = active.filter(d.test);
-    if (rs.length >= HUB_MIN) out.push({ kind: "distance", key: d.key, slug: d.slug, name: { sv: S.sv.distName[d.key], en: S.en.distName[d.key], de: S.de.distName[d.key] }, races: order(rs), about: d.key });
+    if (rs.length >= HUB_MIN) out.push({ kind: "distance", key: d.key, slug: d.slug, name: Object.fromEntries(LANGS.map((l) => [l, S[l].distName[d.key]])) as Record<Lang, string>, races: order(rs), about: d.key });
   }
   // countries: by their code (or the register's own name); the slug from the country's name in each language
   const byCountry = new Map<string, Race[]>();
@@ -1191,12 +1701,12 @@ export function buildHubs(active: Race[], today: string): Hub[] {
   for (const [k] of cities) { const p = k.split("|")[1]; seen.set(p, (seen.get(p) ?? 0) + 1); }
   for (const [k, rs] of cities) {
     const [cc, p] = k.split("|"), slug = seen.get(p)! > 1 && cc ? `${p}-${slugify(cc)}` : p, place = rs[0].place!;
-    out.push({ kind: "city", key: k, slug: { sv: slug, en: slug, de: slug }, name: { sv: S.sv.hubName.city(place), en: S.en.hubName.city(place), de: S.de.hubName.city(place) }, races: order(rs) });
+    out.push({ kind: "city", key: k, slug: Object.fromEntries(LANGS.map((l) => [l, slug])) as Record<Lang, string>, name: Object.fromEntries(LANGS.map((l) => [l, S[l].hubName.city(place)])) as Record<Lang, string>, races: order(rs) });
   }
   // the coming twelve months, this one first
   for (let i = 0; i < 12; i++) {
     const ym = addMonths(today.slice(0, 7), i), rs = active.filter((r) => r.next_date && r.next_date >= today && r.next_date.startsWith(ym));
-    if (rs.length >= HUB_MIN) out.push({ kind: "month", key: ym, slug: { sv: ym, en: ym, de: ym }, name: Object.fromEntries(LANGS.map((l) => [l, S[l].hubName.month(monthName(ym, l))])) as Record<Lang, string>, races: order(rs) });
+    if (rs.length >= HUB_MIN) out.push({ kind: "month", key: ym, slug: Object.fromEntries(LANGS.map((l) => [l, ym])) as Record<Lang, string>, name: Object.fromEntries(LANGS.map((l) => [l, S[l].hubName.month(monthName(ym, l))])) as Record<Lang, string>, races: order(rs) });
   }
   return out;
 }
@@ -1237,7 +1747,7 @@ export function faqItems(r: Race, lang: Lang, today: string): { q: string; a: st
   else if (r.next_date) out.push({ q: s.qWhen(n), a: s.aPassed(dateLong(r.next_date, lang)) });
   else out.push({ q: s.qWhen(n), a: s.aNoDate(r.past_dates.length ? dateShort(r.past_dates[r.past_dates.length - 1], lang) : null) });
   const starts = r.info?.starts ?? [];
-  if (starts.length && r.next_date && r.next_date >= today) out.push({ q: s.qStart(n), a: s.aStart(starts.map((x) => `${x.label ? `${x.label}: ` : ""}${s.clock(x.time)}`).join(", ")) });
+  if (starts.length && r.next_date && r.next_date >= today) out.push({ q: s.qStart(n), a: s.aStart(starts.map((x) => `${x.label ? `${x.label}${cl(lang)}` : ""}${s.clock(x.time)}`).join(", ")) });
   const bare = courseless(r), k = kmText(r.km, lang);
   // a race without a course: the climb only as the organiser states it, never a word about a profile nobody has
   out.push({ q: s.qDist(n), a: bare ? (r.ascent ? s.aDistOrg(k, num(r.ascent, lang)) : s.aDistNoClimb(k)) : s.aDist(k, num(r.ascent, lang), r.descent !== null ? num(r.descent, lang) : null, r.max_ele !== null ? num(r.max_ele, lang) : null) });
@@ -1246,9 +1756,9 @@ export function faqItems(r: Race, lang: Lang, today: string): { q: string; a: st
     const big = [...r.climbs].sort((a, b) => b.gain - a.gain)[0], perKm = num(r.ascent / r.km, lang, r.ascent / r.km < 10 ? 1 : 0);
     out.push({ q: s.qCourse(n), a: s.aCourse(t.hilly[hilliness(r)], perKm, r.course ? isLoop(r.course.pts) : null, r.trail, big ? s.aClimbs(climbs.length, num(big.km, lang, 1), num(big.gain, lang), lenText(big.len, lang)) : s.aNoClimbs) });
   }
-  if (r.aid_stations?.length) out.push({ q: s.qAid(n), a: s.aAid(r.aid_stations.length, r.aid_stations.map((x) => `${t.at(num(x.km, lang, 1))}${x.what.length ? ` (${x.what.map((w) => t.aidWords[w] ?? w).join(", ")})` : ""}`).join("; ")) });
+  if (r.aid_stations?.length) out.push({ q: s.qAid(n), a: s.aAid(r.aid_stations.length, r.aid_stations.map((x) => `${t.at(num(x.km, lang, 1))}${x.what.length ? ` (${x.what.map((w) => t.aidWords[w] ?? w).join(", ")})` : ""}`).join(sc(lang))) });
   const cuts = r.info?.cutoffs ?? [];
-  if (cuts.length) out.push({ q: s.qCut(n), a: s.aCut(cuts.map((x) => `${t.at(num(x.km, lang, 1))}: ${x.clock ? t.clock(x.clock) : t.elapsed(Math.floor(x.elapsed_min! / 60), x.elapsed_min! % 60)}`).join("; ")) });
+  if (cuts.length) out.push({ q: s.qCut(n), a: s.aCut(cuts.map((x) => `${t.at(num(x.km, lang, 1))}${cl(lang)}${x.clock ? t.clock(x.clock) : t.elapsed(Math.floor(x.elapsed_min! / 60), x.elapsed_min! % 60)}`).join(sc(lang))) });
   // pacing in general words: even effort, the climbs where they are; nothing of the coach's own way
   const hills = [...r.climbs].sort((a, b) => b.gain - a.gain).slice(0, 4).sort((a, b) => a.km - b.km).map((c) => t.at(num(c.km, lang, 1)));
   const listed = hills.length > 1 ? `${hills.slice(0, -1).join(", ")} ${s.and} ${hills[hills.length - 1]}` : hills.join("");
@@ -1282,7 +1792,7 @@ export function paceSection(r: Race, lang: Lang): string {
   const s = S[lang], t = T[lang], n = raceTitle(r, lang), splits = splitPoints(r.km);
   const rows = paceTargets(r.km).map((sec) => {
     const per = sec / r.km;
-    return `<h3>${esc(s.paceRow(n, finishText(sec)))}</h3><p>${esc(`${paceText(per)} ${s.perKm}`)} · ${splits.map((k) => esc(`${t.at(num(k, lang, nearInt(k, 0.01) ? 0 : 1))}: ${clockTime(per * k)}`)).join(" · ")} · ${esc(`${s.finish}: ${finishText(sec)}`)}</p>`;
+    return `<h3>${esc(s.paceRow(n, finishText(sec)))}</h3><p>${esc(`${paceText(per)} ${s.perKm}`)} · ${splits.map((k) => esc(`${t.at(num(k, lang, nearInt(k, 0.01) ? 0 : 1))}${cl(lang)}${clockTime(per * k)}`)).join(" · ")} · ${esc(`${s.finish}${cl(lang)}${finishText(sec)}`)}</p>`;
   }).join("");
   return `<section aria-labelledby="h-pace"><h2 id="h-pace">${esc(s.paceH)}</h2>${rows}<p class="note">${esc(s.paceNote)}</p></section>`;
 }
@@ -1300,7 +1810,7 @@ export function faqSection(r: Race, lang: Lang, today: string): { html: string; 
 export type GuideBlock = { h?: string; p?: string; ul?: string[] };
 export type GuideText = { title: string; description: string; blocks: GuideBlock[] };
 export type Guide = { approved: boolean; slug: Partial<Record<Lang, string>>; updated?: string } & Partial<Record<Lang, GuideText>>;
-const GUIDE_DIR: Record<Lang, string> = { sv: "guider", en: "en/guides", de: "de/ratgeber" };
+const GUIDE_DIR: Record<Lang, string> = { sv: "guider", en: "en/guides", de: "de/ratgeber", nb: "nb/guider", da: "da/guides", fi: "fi/oppaat", fr: "fr/guides", es: "es/guias" };
 export const guidePath = (lang: Lang, slug: string) => `${GUIDE_DIR[lang]}/${slug}/`;
 /** The languages a guide can be published in: approved, with a text and a valid slug. */
 export const guideLangs = (g: Guide): Lang[] => (g.approved === true ? LANGS.filter((l) => g[l]?.title && g[l]?.blocks?.length && typeof g.slug?.[l] === "string" && SLUG.test(g.slug[l]!)) : []);
@@ -1340,8 +1850,10 @@ export async function indexNowPing(urls: string[], key: string, fetchFn: typeof 
 
 /** The site's own pages in each language (alternates in the sitemap); any other page at the root is listed on its own. */
 const STATIC_GROUPS: Record<Lang, string>[] = [
-  { sv: "sv.html", en: "index.html", de: "index-de.html" }, { sv: "support-sv.html", en: "support.html", de: "support-de.html" },
-  { sv: "privacy.html", en: "privacy-en.html", de: "privacy-de.html" }, { sv: "terms.html", en: "terms-en.html", de: "terms-de.html" },
+  { sv: "sv.html", en: "index.html", de: "index-de.html", nb: "index-nb.html", da: "index-da.html", fi: "index-fi.html", fr: "index-fr.html", es: "index-es.html" },
+  { sv: "support-sv.html", en: "support.html", de: "support-de.html", nb: "support-nb.html", da: "support-da.html", fi: "support-fi.html", fr: "support-fr.html", es: "support-es.html" },
+  { sv: "privacy.html", en: "privacy-en.html", de: "privacy-de.html", nb: "privacy-nb.html", da: "privacy-da.html", fi: "privacy-fi.html", fr: "privacy-fr.html", es: "privacy-es.html" },
+  { sv: "terms.html", en: "terms-en.html", de: "terms-de.html", nb: "terms-nb.html", da: "terms-da.html", fi: "terms-fi.html", fr: "terms-fr.html", es: "terms-es.html" },
 ];
 const staticUrl = (file: string) => (file === "index.html" ? `${SITE}/` : `${SITE}/${file}`);
 export type SitemapEntry = { loc: string; lastmod?: string; alternates?: Record<string, string> };

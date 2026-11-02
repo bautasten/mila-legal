@@ -98,6 +98,8 @@ export type Race = {
   /** False: an official race whose organiser publishes no course file (no course; ascent is the organiser's stated climb, 0 unknown). */
   has_course: boolean;
   start: [number, number] | null; course: { pts: Point[] } | null;
+  /** seo round, 2026-11-02: true when the feed named the country without its code and the code comes from the name (countryCodeOf). */
+  country_guessed?: boolean;
 };
 export type State = {
   version: 1;
@@ -108,6 +110,9 @@ export type State = {
   og: Record<string, string>;
   /** A hash of every slug a race that left had (slugHash): never given to another race, never a name in the map. */
   retired?: string[];
+  /** seo round, 2026-11-02: every hub address that changed (a country the register named without its code had the register's Swedish
+   *  name in every language: /en/races/country/brasilien/), and the hub it belongs to. Kept for good, each a page that sends the reader on. */
+  hubMoved?: Record<string, { lang: Lang; kind: HubKind; key: string }>;
 };
 export type PngRenderer = (svg: string) => Uint8Array | Promise<Uint8Array>;
 export type Report = { races: number; active: number; removed: string[]; added: string[]; moved: string[]; written: number; pngs: number;
@@ -153,9 +158,10 @@ export function cleanRace(x: any): Race | null {
     if (source) info.source = source;
     if (isDay(i.checked)) info.checked = i.checked;
   }
+  const code = typeof x.country_code === "string" && /^[A-Z]{2}$/.test(x.country_code) ? x.country_code : null, guessed = code ? null : countryCodeOf(str(x.country, 60));
   return {
     id, slug: typeof x.slug === "string" && SLUG.test(x.slug) && x.slug.length <= 80 ? x.slug : "", name, place: str(x.place, 80), country: str(x.country, 60),
-    country_code: typeof x.country_code === "string" && /^[A-Z]{2}$/.test(x.country_code) ? x.country_code : null, organizer: str(x.organizer, 120), url: safeUrl(x.url),
+    country_code: code ?? guessed, ...(!code && guessed ? { country_guessed: true } : {}), organizer: str(x.organizer, 120), url: safeUrl(x.url),
     next_date: isDay(x.next_date) ? x.next_date : null, prelim: x.prelim !== false, past_dates: arr(x.past_dates).filter(isDay).sort().slice(-5), km,
     ascent: isNum(x.ascent) ? Math.max(0, Math.round(x.ascent)) : 0, descent: isNum(x.descent) ? Math.round(x.descent) : null, trail: x.trail !== false,
     min_ele: isNum(x.min_ele) ? Math.round(x.min_ele) : null, max_ele: isNum(x.max_ele) ? Math.round(x.max_ele) : null,
@@ -272,7 +278,7 @@ const T = {
   sv: {
     langName: "Svenska", langNav: "Språk", skip: "Hoppa till innehållet", crumbs: "Brödsmulor", home: "Mila", races: "Lopp", brandLine: "Rätt pass. Rätt dag.",
     titleTail: "bana, höjdprofil och tempoplan", indexTitle: "Lopp – banor, höjdprofiler och tempoplaner", indexH1: "Lopp att springa",
-    indexLead: "Banor ur Milas loppregister med höjdprofil, klättringar, vätskekontroller och maxtider. Välj ditt lopp och få en personlig prognos, tempoplan och energiplan i Mila.",
+    indexLead: "Lopp ur Milas loppregister med datum och fakta från arrangören. När arrangören publicerar banan visar sidan också karta, höjdprofil och klättringar. Välj ditt lopp och få en personlig prognos, tempoplan och energiplan i Mila.",
     pageN: (n: number) => `sida ${n}`, count: (n: number) => `${n} lopp`,
     distance: "Distans", climbing: "Höjdmeter", highest: "Högsta punkt", terrain: "Underlag", character: "Karaktär", start: "Start", aid: "Vätskekontroller",
     trail: "Terräng och stig", road: "Väg", trailRace: "terränglopp", roadRace: "landsvägslopp", masl: "m ö.h.",
@@ -321,7 +327,7 @@ const T = {
   en: {
     langName: "English", langNav: "Language", skip: "Skip to content", crumbs: "Breadcrumbs", home: "Mila", races: "Races", brandLine: "The right run, on the right day.",
     titleTail: "course, elevation profile and pace plan", indexTitle: "Races – courses, elevation profiles and pace plans", indexH1: "Races to run",
-    indexLead: "Courses from Mila's race register with elevation profile, climbs, aid stations and cut-off times. Pick your race and get a personal forecast, pace plan and fueling plan in Mila.",
+    indexLead: "Races from Mila's race register with the date and the organizer's facts. Where the organizer publishes the course, the page also shows the map, elevation profile and climbs. Pick your race and get a personal forecast, pace plan and fueling plan in Mila.",
     pageN: (n: number) => `page ${n}`, count: (n: number) => `${n} ${n === 1 ? "race" : "races"}`,
     distance: "Distance", climbing: "Elevation gain", highest: "Highest point", terrain: "Surface", character: "Profile", start: "Start", aid: "Aid stations",
     trail: "Trail", road: "Road", trailRace: "trail race", roadRace: "road race", masl: "m a.s.l.",
@@ -370,7 +376,7 @@ const T = {
   de: {
     langName: "Deutsch", langNav: "Sprache", skip: "Zum Inhalt springen", crumbs: "Brotkrümelnavigation", home: "Mila", races: "Läufe", brandLine: "Der richtige Lauf am richtigen Tag.",
     titleTail: "Strecke, Höhenprofil und Pace-Plan", indexTitle: "Läufe – Strecken, Höhenprofile und Pace-Pläne", indexH1: "Läufe zum Mitlaufen",
-    indexLead: "Strecken aus Milas Laufregister mit Höhenprofil, Anstiegen, Verpflegungsstellen und Zeitlimits. Wähle deinen Lauf und hol dir in Mila deine persönliche Prognose, deinen Pace-Plan und deinen Verpflegungsplan.",
+    indexLead: "Läufe aus Milas Laufregister mit Termin und Angaben des Veranstalters. Wenn der Veranstalter die Strecke veröffentlicht, zeigt die Seite auch Karte, Höhenprofil und Anstiege. Wähle deinen Lauf und hol dir in Mila deine persönliche Prognose, deinen Pace-Plan und deinen Verpflegungsplan.",
     pageN: (n: number) => `Seite ${n}`, count: (n: number) => `${n} ${n === 1 ? "Lauf" : "Läufe"}`,
     distance: "Distanz", climbing: "Höhenmeter", highest: "Höchster Punkt", terrain: "Untergrund", character: "Profil", start: "Start", aid: "Verpflegungsstellen",
     trail: "Trail und Gelände", road: "Straße", trailRace: "Traillauf", roadRace: "Straßenlauf", masl: "m ü. M.",
@@ -419,7 +425,7 @@ const T = {
   nb: {
     langName: "Norsk", langNav: "Språk", skip: "Hopp til innholdet", crumbs: "Brødsmuler", home: "Mila", races: "Løp", brandLine: "Rett økt. Rett dag.",
     titleTail: "løype, høydeprofil og tempoplan", indexTitle: "Løp – løyper, høydeprofiler og tempoplaner", indexH1: "Finn ditt neste løp",
-    indexLead: "Løyper fra Milas løpsregister med høydeprofil, stigninger, drikkestasjoner og makstider. Velg løpet ditt og få en personlig prognose, tempoplan og energiplan i Mila.",
+    indexLead: "Løp fra Milas løpsregister med dato og fakta fra arrangøren. Når arrangøren publiserer løypa, viser siden også kart, høydeprofil og stigninger. Velg løpet ditt og få en personlig prognose, tempoplan og energiplan i Mila.",
     pageN: (n: number) => `side ${n}`, count: (n: number) => `${n} løp`,
     distance: "Distanse", climbing: "Høydemeter", highest: "Høyeste punkt", terrain: "Underlag", character: "Karakter", start: "Start", aid: "Drikkestasjoner",
     trail: "Terreng og sti", road: "Vei", trailRace: "terrengløp", roadRace: "gateløp", masl: "moh.",
@@ -468,7 +474,7 @@ const T = {
   da: {
     langName: "Dansk", langNav: "Sprog", skip: "Spring til indholdet", crumbs: "Brødkrummer", home: "Mila", races: "Løb", brandLine: "Den rette træning. Den rette dag.",
     titleTail: "rute, højdeprofil og tempoplan", indexTitle: "Løb – ruter, højdeprofiler og tempoplaner", indexH1: "Find dit næste løb",
-    indexLead: "Ruter fra Milas løbskalender med højdeprofil, stigninger, væskedepoter og maksimaltider. Vælg dit løb, og få en personlig prognose, tempoplan og energiplan i Mila.",
+    indexLead: "Løb fra Milas løbskalender med dato og fakta fra arrangøren. Når arrangøren offentliggør ruten, viser siden også kort, højdeprofil og stigninger. Vælg dit løb, og få en personlig prognose, tempoplan og energiplan i Mila.",
     pageN: (n: number) => `side ${n}`, count: (n: number) => `${n} løb`,
     distance: "Distance", climbing: "Højdemeter", highest: "Højeste punkt", terrain: "Underlag", character: "Karakter", start: "Start", aid: "Væskedepoter",
     trail: "Terræn og sti", road: "Vej", trailRace: "trailløb", roadRace: "vejløb", masl: "m o.h.",
@@ -517,7 +523,7 @@ const T = {
   fi: {
     langName: "Suomi", langNav: "Kieli", skip: "Siirry sisältöön", crumbs: "Murupolku", home: "Mila", races: "Kisat", brandLine: "Oikea harjoitus. Oikea päivä.",
     titleTail: "reitti, korkeusprofiili ja vauhtisuunnitelma", indexTitle: "Kisat – reitit, korkeusprofiilit ja vauhtisuunnitelmat", indexH1: "Löydä seuraava kisasi",
-    indexLead: "Reitit Milan kisakalenterista: korkeusprofiili, nousut, juomapisteet ja maksimiajat. Valitse kisasi, niin saat Milasta henkilökohtaisen ennusteen, vauhtisuunnitelman ja energiasuunnitelman.",
+    indexLead: "Kisat Milan kisakalenterista: päivä ja järjestäjän tiedot. Kun järjestäjä julkaisee reitin, sivulla on myös kartta, korkeusprofiili ja nousut. Valitse kisasi, niin saat Milasta henkilökohtaisen ennusteen, vauhtisuunnitelman ja energiasuunnitelman.",
     pageN: (n: number) => `sivu ${n}`, count: (n: number) => `${n} ${n === 1 ? "kisa" : "kisaa"}`,
     distance: "Matka", climbing: "Nousumetrit", highest: "Korkein kohta", terrain: "Alusta", character: "Luonne", start: "Lähtö", aid: "Juomapisteet",
     trail: "Maasto ja polku", road: "Maantie", trailRace: "polkujuoksu", roadRace: "maantiejuoksu", masl: "m mpy",
@@ -566,7 +572,7 @@ const T = {
   fr: {
     langName: "Français", langNav: "Langue", skip: "Aller au contenu", crumbs: "Fil d’Ariane", home: "Mila", races: "Courses", brandLine: "La bonne séance. Le bon jour.",
     titleTail: "parcours, profil d’altitude et plan d’allure", indexTitle: "Courses – parcours, profils d’altitude et plans d’allure", indexH1: "Trouve ta prochaine course",
-    indexLead: "Les parcours du calendrier des courses de Mila, avec profil d’altitude, montées, ravitaillements et barrières horaires. Choisis ta course et obtiens dans Mila un pronostic personnel, un plan d’allure et un plan de ravitaillement.",
+    indexLead: "Les courses du calendrier de Mila, avec la date et les informations de l’organisateur. Quand l’organisateur publie le parcours, la page montre aussi la carte, le profil d’altitude et les montées. Choisis ta course et obtiens dans Mila un pronostic personnel, un plan d’allure et un plan de ravitaillement.",
     pageN: (n: number) => `page ${n}`, count: (n: number) => `${n} ${n === 1 ? "course" : "courses"}`,
     distance: "Distance", climbing: "Dénivelé positif", highest: "Point culminant", terrain: "Terrain", character: "Profil", start: "Départ", aid: "Ravitaillements",
     trail: "Trail et sentiers", road: "Route", trailRace: "un trail", roadRace: "une course sur route", masl: "m d’altitude",
@@ -615,7 +621,7 @@ const T = {
   es: {
     langName: "Español", langNav: "Idioma", skip: "Saltar al contenido", crumbs: "Ruta de navegación", home: "Mila", races: "Carreras", brandLine: "La sesión justa. El día justo.",
     titleTail: "recorrido, perfil de altitud y plan de ritmo", indexTitle: "Carreras – recorridos, perfiles de altitud y planes de ritmo", indexH1: "Encuentra tu próxima carrera",
-    indexLead: "Recorridos del calendario de carreras de Mila con perfil de altitud, subidas, avituallamientos y tiempos de corte. Elige tu carrera y consigue en Mila un pronóstico personal, un plan de ritmo y un plan de avituallamiento.",
+    indexLead: "Carreras del calendario de Mila con la fecha y los datos del organizador. Cuando el organizador publica el recorrido, la página muestra también el mapa, el perfil de altitud y las subidas. Elige tu carrera y consigue en Mila un pronóstico personal, un plan de ritmo y un plan de avituallamiento.",
     pageN: (n: number) => `página ${n}`, count: (n: number) => `${n} ${n === 1 ? "carrera" : "carreras"}`,
     distance: "Distancia", climbing: "Desnivel positivo", highest: "Punto más alto", terrain: "Superficie", character: "Perfil", start: "Salida", aid: "Avituallamientos",
     trail: "Trail y sendero", road: "Asfalto", trailRace: "una carrera de trail", roadRace: "una carrera en ruta", masl: "m s. n. m.",
@@ -794,6 +800,31 @@ const clockTime = (s: number) => {
   return h ? `${h}:${String(m).padStart(2, "0")}:${String(sec).padStart(2, "0")}` : `${m}:${String(sec).padStart(2, "0")}`;
 };
 const regionNames = new Map<Lang, Intl.DisplayNames>();
+/** seo round, 2026-11-02: the country's code from its name in any of the site's languages ("Brasilien", "Brazil" → BR), for a race the
+ *  register names without a code; so its pages and its country hub say the country's own name in every language. Null when unknown. */
+let codeByName: Map<string, string> | null = null;
+export function countryCodeOf(name: string | null): string | null {
+  if (!name) return null;
+  if (!codeByName) {
+    codeByName = new Map();
+    // retired codes (DD East Germany, CS, YU, SU …), groupings (EU, UN, QO) and private-use codes still have names in Intl and would
+    // win alphabetically ("Tyskland" → DD): never a race's country
+    const NOT = new Set(["AN", "BU", "CS", "DD", "FX", "NH", "NT", "RH", "SU", "TP", "VD", "YD", "YU", "ZR", "EU", "EZ", "UN", "QO", "ZZ", "XA", "XB", "AC", "CP", "DG", "EA", "IC", "TA"]);
+    const A = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    for (const l of LANGS) {
+      const d = new Intl.DisplayNames([LOCALE[l]], { type: "region" });
+      for (const a of A) for (const b of A) {
+        const code = a + b;
+        if (NOT.has(code)) continue;
+        let n: string | undefined;
+        try { n = d.of(code); } catch { continue; }
+        const k = n && n !== code ? slugify(n) : "";
+        if (k && !codeByName.has(k)) codeByName.set(k, code);
+      }
+    }
+  }
+  return codeByName.get(slugify(name)) ?? null;
+}
 export function countryName(r: Pick<Race, "country" | "country_code">, lang: Lang): string | null {
   if (r.country_code) {
     try {
@@ -1178,7 +1209,7 @@ function frame(f: Frame): string {
   return `<!doctype html><html lang="${f.lang}"><head><meta charset="utf-8">${security}<meta name="viewport" content="width=device-width,initial-scale=1">${smartBannerMeta(f.appId)}
 <title>${esc(f.title)}</title><meta name="description" content="${esc(f.description)}">${f.noindex ? '<meta name="robots" content="noindex,follow">' : `<meta name="robots" content="max-image-preview:large"><link rel="canonical" href="${esc(abs(f.path))}">`}${alt}
 ${og}<meta name="theme-color" content="#0D1119"><link rel="icon" href="${root}logo.png"><style>${f.css}</style>${(f.ld ?? []).map(jsonLd).join("")}</head><body>
-<a class="skip" href="#main">${esc(t.skip)}</a><div class="wrap"><header><a class="brand" href="${root}${c.home}"><img src="${root}logo.png" alt="" width="40" height="40">MILA</a>${switcher ? `<nav class="lang" aria-label="${esc(t.langNav)}">${switcher}</nav>` : ""}</header>
+<a class="skip" href="#main">${esc(t.skip)}</a><div class="wrap"><header><a class="brand" href="${root}${c.home}"><img src="${root}logo-80.png" alt="" width="40" height="40">MILA</a>${switcher ? `<nav class="lang" aria-label="${esc(t.langNav)}">${switcher}</nav>` : ""}</header>
 ${crumbs}
 <main id="main">${f.body}</main>
 <footer><a href="${root}${c.support}">${esc(t.support)}</a><a href="${root}${c.privacy}">${esc(t.privacy)}</a><a href="${root}${c.terms}">${esc(t.terms)}</a><a href="${root}${c.support}#provider">${esc(t.contact)}</a><a href="${root}${c.support}?topic=report&amp;ref=${encodeURIComponent(abs(f.path))}#kontakt" rel="nofollow">${esc(t.report)}</a><br><br>${esc(t.notAffiliatedAll)}<br><br>© ${f.today.slice(0, 4)} Mila</footer></div>${f.script ? `<script>${f.script}</script>` : ""}${f.module ? `<script type="module">${f.module}</script>` : ""}</body></html>
@@ -1323,7 +1354,11 @@ export function racePage(r: Race, lang: Lang, ctx: Ctx): string {
 /** A race's old address (a slug that had a sponsor in front): a page with noindex that sends the reader on to the race's page (a refresh
  *  at once, the canonical link, and a plain link), with no name of its own. */
 export function movedPage(fromSlug: string, toSlug: string, lang: Lang, ctx: Pick<Ctx, "css" | "today">): string {
-  const t = T[lang], path = racePath(lang, fromSlug), to = racePath(lang, toSlug), href = rel(path, to);
+  return movedTo(racePath(lang, fromSlug), racePath(lang, toSlug), lang, ctx);
+}
+/** Any old address (a race's or a hub's) as a noindex page that sends the reader on to `to`. */
+export function movedTo(path: string, to: string, lang: Lang, ctx: Pick<Ctx, "css" | "today">): string {
+  const t = T[lang], href = rel(path, to);
   const html = frame({ lang, path, title: t.movedTitle, description: t.moved, css: ctx.css, today: ctx.today, noindex: true,
     body: `<div class="race-hero"><div class="eyebrow">${esc(t.races)}</div><p class="lead">${esc(t.moved)}</p><div class="ctas"><a class="cta" href="${esc(href)}">${esc(t.movedLink)}</a><a class="cta alt" href="${esc(rel(path, indexPath(lang)))}">${esc(t.allRaces)}</a></div></div>`,
     crumbs: [{ name: t.home, path: L[lang].home }, { name: t.races, path: indexPath(lang) }, { name: t.moved }] });
@@ -1389,7 +1424,7 @@ export function smartBannerMeta(id: string | null | undefined): string {
 
 const S = {
   sv: {
-    indexDesc: "Loppen i Milas loppregister med bana, höjdprofil, klättringar, vätskekontroller och tempotabell. Välj ditt lopp och få din tempoplan i Mila.",
+    indexDesc: "Loppen i Milas loppregister: datum, distans och arrangörens fakta, och bana och höjdprofil där de finns. Välj ditt lopp och få din tempoplan i Mila.",
     faqH: "Vanliga frågor", qWhen: (n: string) => `När går ${n}?`, qStart: (n: string) => `Vilken tid startar ${n}?`,
     qDist: (n: string) => `Hur lång är ${n} och hur många höjdmeter är det?`, qCourse: (n: string) => `Hur ser banan på ${n} ut?`,
     qAid: (n: string) => `Finns det vätskekontroller på ${n}?`, qCut: (n: string) => `Finns det maxtider på ${n}?`, qPace: (n: string) => `Hur lägger jag upp farten på ${n}?`,
@@ -1414,13 +1449,13 @@ const S = {
     hubName: { city: (p: string) => `Lopp i ${p}`, month: (m: string) => `Lopp i ${m}`, country: (c: string) => `Lopp i ${c}` },
     distName: { "5k": "5 km-lopp", "10k": "10 km-lopp", half: "Halvmaraton", marathon: "Maraton", ultra: "Ultralopp", trail: "Traillopp" } as Record<string, string>,
     distAbout: { "5k": "Lopp på omkring 5 km.", "10k": "Lopp på omkring 10 km.", half: "Ett halvmaraton är 21,1 km.", marathon: "Ett maraton är 42,195 km.", ultra: "Ett ultralopp är längre än ett maraton.", trail: "Traillopp går i terräng och på stig, ofta med fler höjdmeter än på väg." } as Record<string, string>,
-    hubTail: "banor, datum och höjdprofiler", hubIntro: (n: number) => `${n} lopp ur Milas loppregister. Varje lopp har en egen sida med bana, höjdprofil, fakta från arrangören och en tempotabell.`,
+    hubTail: "banor, datum och höjdprofiler", hubIntro: (n: number) => `${n} lopp ur Milas loppregister. Varje lopp har en egen sida med datum och fakta från arrangören, och bana och höjdprofil när arrangören publicerar dem.`,
     hubNext: (d: string, n: string) => `Närmast på tur: ${n}, ${d}.`, hubClimb: (lo: string, hi: string) => `Höjdmetrarna varierar från ${lo} till ${hi}.`,
-    hubMore: "Fler sätt att hitta lopp", hubDesc: (name: string, n: number) => `${name}: ${n} lopp med bana, datum, höjdprofil och tempotabell. Välj ditt lopp och få din tempoplan i Mila.`,
+    hubMore: "Fler sätt att hitta lopp", hubDesc: (name: string, n: number) => `${name}: ${n} lopp med datum, distans och arrangörens fakta, och bana och höjdprofil där de finns. Få din tempoplan i Mila.`,
     guidesCrumb: "Guider",
   },
   en: {
-    indexDesc: "The races in Mila's race register with course, elevation profile, climbs, aid stations and pace table. Pick your race and get your pace plan in Mila.",
+    indexDesc: "The races in Mila's race register: date, distance and the organizer's facts, plus course and elevation profile where published. Get your pace plan in Mila.",
     faqH: "Frequently asked questions", qWhen: (n: string) => `When is ${n}?`, qStart: (n: string) => `What time does ${n} start?`,
     qDist: (n: string) => `How long is ${n} and how much climbing is there?`, qCourse: (n: string) => `What is the course of ${n} like?`,
     qAid: (n: string) => `Are there aid stations at ${n}?`, qCut: (n: string) => `Are there cut-off times at ${n}?`, qPace: (n: string) => `How should I pace ${n}?`,
@@ -1445,13 +1480,13 @@ const S = {
     hubName: { city: (p: string) => `Races in ${p}`, month: (m: string) => `Races in ${m}`, country: (c: string) => `Races in ${c}` },
     distName: { "5k": "5K races", "10k": "10K races", half: "Half marathons", marathon: "Marathons", ultra: "Ultra races", trail: "Trail races" } as Record<string, string>,
     distAbout: { "5k": "Races of about 5 km.", "10k": "Races of about 10 km.", half: "A half marathon is 21.1 km.", marathon: "A marathon is 42.195 km.", ultra: "An ultra is any race longer than a marathon.", trail: "Trail races run on trails and off-road, often with more climbing than on the road." } as Record<string, string>,
-    hubTail: "courses, dates and elevation profiles", hubIntro: (n: number) => `${n} ${n === 1 ? "race" : "races"} from Mila's race register. Every race has its own page with the course, elevation profile, the organizer's facts and a pace table.`,
+    hubTail: "courses, dates and elevation profiles", hubIntro: (n: number) => `${n} ${n === 1 ? "race" : "races"} from Mila's race register. Every race has its own page with the date and the organizer's facts, plus the course and elevation profile where the organizer publishes them.`,
     hubNext: (d: string, n: string) => `Next up: ${n}, ${d}.`, hubClimb: (lo: string, hi: string) => `Elevation gain ranges from ${lo} to ${hi} m.`,
-    hubMore: "More ways to find races", hubDesc: (name: string, n: number) => `${name}: ${n} races with course, date, elevation profile and pace table. Pick your race and get your pace plan in Mila.`,
+    hubMore: "More ways to find races", hubDesc: (name: string, n: number) => `${name}: ${n} races with date, distance and the organizer's facts, plus course and elevation profile where published. Get your pace plan in Mila.`,
     guidesCrumb: "Guides",
   },
   de: {
-    indexDesc: "Die Läufe in Milas Laufregister mit Strecke, Höhenprofil, Anstiegen, Verpflegung und Pace-Tabelle. Wähle deinen Lauf und hol dir deinen Pace-Plan in Mila.",
+    indexDesc: "Die Läufe in Milas Laufregister: Termin, Distanz und Angaben des Veranstalters, dazu Strecke und Höhenprofil, wo vorhanden. Dein Pace-Plan in Mila.",
     faqH: "Häufige Fragen", qWhen: (n: string) => `Wann findet ${n} statt?`, qStart: (n: string) => `Wann ist der Start bei ${n}?`,
     qDist: (n: string) => `Wie lang ist ${n} und wie viele Höhenmeter hat die Strecke?`, qCourse: (n: string) => `Wie ist die Strecke von ${n}?`,
     qAid: (n: string) => `Gibt es Verpflegungsstellen bei ${n}?`, qCut: (n: string) => `Gibt es Zeitlimits bei ${n}?`, qPace: (n: string) => `Wie teile ich mir ${n} ein?`,
@@ -1476,13 +1511,13 @@ const S = {
     hubName: { city: (p: string) => `Läufe in ${p}`, month: (m: string) => `Läufe im ${m}`, country: (c: string) => `Läufe in ${c}` },
     distName: { "5k": "5-km-Läufe", "10k": "10-km-Läufe", half: "Halbmarathons", marathon: "Marathons", ultra: "Ultraläufe", trail: "Trailläufe" } as Record<string, string>,
     distAbout: { "5k": "Läufe über rund 5 km.", "10k": "Läufe über rund 10 km.", half: "Ein Halbmarathon ist 21,1 km lang.", marathon: "Ein Marathon ist 42,195 km lang.", ultra: "Ein Ultralauf ist länger als ein Marathon.", trail: "Trailläufe führen über Pfade und durchs Gelände, oft mit mehr Höhenmetern als auf der Straße." } as Record<string, string>,
-    hubTail: "Strecken, Termine und Höhenprofile", hubIntro: (n: number) => `${n} ${n === 1 ? "Lauf" : "Läufe"} aus Milas Laufregister. Jeder Lauf hat eine eigene Seite mit Strecke, Höhenprofil, Angaben des Veranstalters und einer Pace-Tabelle.`,
+    hubTail: "Strecken, Termine und Höhenprofile", hubIntro: (n: number) => `${n} ${n === 1 ? "Lauf" : "Läufe"} aus Milas Laufregister. Jeder Lauf hat eine eigene Seite mit Termin und Angaben des Veranstalters, dazu Strecke und Höhenprofil, wenn der Veranstalter sie veröffentlicht.`,
     hubNext: (d: string, n: string) => `Als Nächstes: ${n}, ${d}.`, hubClimb: (lo: string, hi: string) => `Die Höhenmeter reichen von ${lo} bis ${hi}.`,
-    hubMore: "Weitere Wege zu deinem Lauf", hubDesc: (name: string, n: number) => `${name}: ${n} Läufe mit Strecke, Datum, Höhenprofil und Pace-Tabelle. Wähle deinen Lauf und hol dir deinen Pace-Plan in Mila.`,
+    hubMore: "Weitere Wege zu deinem Lauf", hubDesc: (name: string, n: number) => `${name}: ${n} Läufe mit Termin, Distanz und Angaben des Veranstalters, dazu Strecke und Höhenprofil, wo vorhanden. Dein Pace-Plan in Mila.`,
     guidesCrumb: "Ratgeber",
   },
   nb: {
-    indexDesc: "Løpene i Milas løpsregister med løype, høydeprofil, stigninger, drikkestasjoner og tempotabell. Velg løpet ditt og få tempoplanen din i Mila.",
+    indexDesc: "Løpene i Milas løpsregister: dato, distanse og arrangørens fakta, og løype og høydeprofil der de finnes. Velg løpet ditt og få tempoplanen din i Mila.",
     faqH: "Vanlige spørsmål", qWhen: (n: string) => `Når går ${n}?`, qStart: (n: string) => `Når starter ${n}?`,
     qDist: (n: string) => `Hvor langt er ${n}, og hvor mange høydemeter er det?`, qCourse: (n: string) => `Hvordan er løypa i ${n}?`,
     qAid: (n: string) => `Er det drikkestasjoner i ${n}?`, qCut: (n: string) => `Er det makstider i ${n}?`, qPace: (n: string) => `Hvordan legger jeg opp farten i ${n}?`,
@@ -1507,13 +1542,13 @@ const S = {
     hubName: { city: (p: string) => `Løp i ${p}`, month: (m: string) => `Løp i ${m}`, country: (c: string) => `Løp i ${c}` },
     distName: { "5k": "5 km-løp", "10k": "10 km-løp", half: "Halvmaraton", marathon: "Maraton", ultra: "Ultraløp", trail: "Terrengløp" } as Record<string, string>,
     distAbout: { "5k": "Løp på omtrent 5 km.", "10k": "Løp på omtrent 10 km.", half: "Et halvmaraton er 21,1 km.", marathon: "Et maraton er 42,195 km.", ultra: "Et ultraløp er lengre enn et maraton.", trail: "Terrengløp går i terreng og på sti, ofte med flere høydemeter enn på vei." } as Record<string, string>,
-    hubTail: "løyper, datoer og høydeprofiler", hubIntro: (n: number) => `${n} løp fra Milas løpsregister. Hvert løp har en egen side med løype, høydeprofil, fakta fra arrangøren og en tempotabell.`,
+    hubTail: "løyper, datoer og høydeprofiler", hubIntro: (n: number) => `${n} løp fra Milas løpsregister. Hvert løp har en egen side med dato og fakta fra arrangøren, og løype og høydeprofil når arrangøren publiserer dem.`,
     hubNext: (d: string, n: string) => `Nærmest for tur: ${n}, ${d}.`, hubClimb: (lo: string, hi: string) => `Høydemeterne varierer fra ${lo} til ${hi}.`,
-    hubMore: "Flere måter å finne løp på", hubDesc: (name: string, n: number) => `${name}: ${n} løp med løype, dato, høydeprofil og tempotabell. Velg løpet ditt og få tempoplanen din i Mila.`,
+    hubMore: "Flere måter å finne løp på", hubDesc: (name: string, n: number) => `${name}: ${n} løp med dato, distanse og arrangørens fakta, og løype og høydeprofil der de finnes. Få tempoplanen din i Mila.`,
     guidesCrumb: "Guider",
   },
   da: {
-    indexDesc: "Løbene i Milas løbskalender med rute, højdeprofil, stigninger, væskedepoter og tempotabel. Vælg dit løb, og få din tempoplan i Mila.",
+    indexDesc: "Løbene i Milas løbskalender: dato, distance og arrangørens fakta, og rute og højdeprofil, hvor de findes. Vælg dit løb, og få din tempoplan i Mila.",
     faqH: "Ofte stillede spørgsmål", qWhen: (n: string) => `Hvornår løbes ${n}?`, qStart: (n: string) => `Hvornår starter ${n}?`,
     qDist: (n: string) => `Hvor langt er ${n}, og hvor mange højdemeter er der?`, qCourse: (n: string) => `Hvordan er ruten på ${n}?`,
     qAid: (n: string) => `Er der væskedepoter på ${n}?`, qCut: (n: string) => `Er der maksimaltider på ${n}?`, qPace: (n: string) => `Hvordan fordeler jeg farten på ${n}?`,
@@ -1538,13 +1573,13 @@ const S = {
     hubName: { city: (p: string) => `Løb i ${p}`, month: (m: string) => `Løb i ${m}`, country: (c: string) => `Løb i ${c}` },
     distName: { "5k": "5 km-løb", "10k": "10 km-løb", half: "Halvmaraton", marathon: "Maraton", ultra: "Ultraløb", trail: "Trailløb" } as Record<string, string>,
     distAbout: { "5k": "Løb på omkring 5 km.", "10k": "Løb på omkring 10 km.", half: "Et halvmaraton er 21,1 km.", marathon: "Et maraton er 42,195 km.", ultra: "Et ultraløb er længere end et maraton.", trail: "Trailløb foregår i terræn og på stier, ofte med flere højdemeter end på vej." } as Record<string, string>,
-    hubTail: "ruter, datoer og højdeprofiler", hubIntro: (n: number) => `${n} løb fra Milas løbskalender. Hvert løb har sin egen side med rute, højdeprofil, fakta fra arrangøren og en tempotabel.`,
+    hubTail: "ruter, datoer og højdeprofiler", hubIntro: (n: number) => `${n} løb fra Milas løbskalender. Hvert løb har sin egen side med dato og fakta fra arrangøren, og rute og højdeprofil, når arrangøren offentliggør dem.`,
     hubNext: (d: string, n: string) => `Næste løb: ${n}, ${d}.`, hubClimb: (lo: string, hi: string) => `Højdemeterne går fra ${lo} til ${hi}.`,
-    hubMore: "Flere måder at finde løb på", hubDesc: (name: string, n: number) => `${name}: ${n} løb med rute, dato, højdeprofil og tempotabel. Vælg dit løb, og få din tempoplan i Mila.`,
+    hubMore: "Flere måder at finde løb på", hubDesc: (name: string, n: number) => `${name}: ${n} løb med dato, distance og arrangørens fakta, og rute og højdeprofil, hvor de findes. Få din tempoplan i Mila.`,
     guidesCrumb: "Guides",
   },
   fi: {
-    indexDesc: "Milan kisakalenterin kisat: reitti, korkeusprofiili, nousut, juomapisteet ja vauhtitaulukko. Valitse kisasi ja hae vauhtisuunnitelmasi Milasta.",
+    indexDesc: "Milan kisakalenterin kisat: päivä, matka ja järjestäjän tiedot sekä reitti ja korkeusprofiili, kun ne ovat saatavilla. Hae vauhtisuunnitelmasi Milasta.",
     faqH: "Usein kysyttyä", qWhen: (n: string) => `${n}: milloin kisa juostaan?`, qStart: (n: string) => `${n}: mihin aikaan lähtö on?`,
     qDist: (n: string) => `${n}: kuinka pitkä matka on ja paljonko nousua on?`, qCourse: (n: string) => `${n}: millainen reitti on?`,
     qAid: (n: string) => `${n}: onko reitillä juomapisteitä?`, qCut: (n: string) => `${n}: onko kisassa maksimiaikoja?`, qPace: (n: string) => `${n}: miten jaan vauhtini?`,
@@ -1569,13 +1604,13 @@ const S = {
     hubName: { city: (p: string) => `Juoksukisat: ${p}`, month: (m: string) => `Juoksukisat: ${m}`, country: (c: string) => `Juoksukisat: ${c}` },
     distName: { "5k": "5 km:n kisat", "10k": "10 km:n kisat", half: "Puolimaratonit", marathon: "Maratonit", ultra: "Ultrajuoksut", trail: "Polkujuoksut" } as Record<string, string>,
     distAbout: { "5k": "Noin 5 km:n kisoja.", "10k": "Noin 10 km:n kisoja.", half: "Puolimaraton on 21,1 km.", marathon: "Maraton on 42,195 km.", ultra: "Ultrajuoksu on maratonia pidempi.", trail: "Polkujuoksut kulkevat maastossa ja poluilla, usein mäkisemmin kuin maantiellä." } as Record<string, string>,
-    hubTail: "reitit, päivät ja korkeusprofiilit", hubIntro: (n: number) => `${n} ${n === 1 ? "kisa" : "kisaa"} Milan kisakalenterista. Jokaisella kisalla on oma sivu, jossa on reitti, korkeusprofiili, järjestäjän tiedot ja vauhtitaulukko.`,
+    hubTail: "reitit, päivät ja korkeusprofiilit", hubIntro: (n: number) => `${n} ${n === 1 ? "kisa" : "kisaa"} Milan kisakalenterista. Jokaisella kisalla on oma sivu, jossa on päivä ja järjestäjän tiedot sekä reitti ja korkeusprofiili, kun järjestäjä julkaisee ne.`,
     hubNext: (d: string, n: string) => `Seuraavana vuorossa: ${n}, ${d}.`, hubClimb: (lo: string, hi: string) => `Nousua on ${lo}–${hi} m.`,
-    hubMore: "Lisää tapoja löytää kisoja", hubDesc: (name: string, n: number) => `${name}: ${n} kisaa, joissa on reitti, päivä, korkeusprofiili ja vauhtitaulukko. Valitse kisasi ja hae vauhtisuunnitelmasi Milasta.`,
+    hubMore: "Lisää tapoja löytää kisoja", hubDesc: (name: string, n: number) => `${name}: ${n} kisaa – päivä, matka ja järjestäjän tiedot sekä reitti ja korkeusprofiili, kun ne ovat saatavilla. Hae vauhtisuunnitelmasi Milasta.`,
     guidesCrumb: "Oppaat",
   },
   fr: {
-    indexDesc: "Les courses du calendrier de Mila avec parcours, profil d’altitude, montées, ravitaillements et tableau d’allures. Choisis ta course et obtiens ton plan d’allure dans Mila.",
+    indexDesc: "Les courses du calendrier de Mila : date, distance et infos de l’organisateur, avec parcours et profil d’altitude s’ils existent. Ton plan d’allure dans Mila.",
     faqH: "Questions fréquentes", qWhen: (n: string) => `Quand a lieu ${n} ?`, qStart: (n: string) => `À quelle heure part ${n} ?`,
     qDist: (n: string) => `${n} : quelle distance et quel dénivelé ?`, qCourse: (n: string) => `${n} : à quoi ressemble le parcours ?`,
     qAid: (n: string) => `${n} : y a-t-il des ravitaillements ?`, qCut: (n: string) => `${n} : y a-t-il des barrières horaires ?`, qPace: (n: string) => `${n} : comment gérer mon allure ?`,
@@ -1600,13 +1635,13 @@ const S = {
     hubName: { city: (p: string) => `Courses à ${p}`, month: (m: string) => `Courses en ${m}`, country: (c: string) => /^(au|aux|à|en) /.test(c) ? `Courses ${c}` : `Courses en ${c}` },
     distName: { "5k": "Courses de 5 km", "10k": "Courses de 10 km", half: "Semi-marathons", marathon: "Marathons", ultra: "Ultras", trail: "Trails" } as Record<string, string>,
     distAbout: { "5k": "Des courses d’environ 5 km.", "10k": "Des courses d’environ 10 km.", half: "Un semi-marathon fait 21,1 km.", marathon: "Un marathon fait 42,195 km.", ultra: "Un ultra est une course plus longue qu’un marathon.", trail: "Les trails se courent sur sentiers et en nature, souvent avec plus de dénivelé que sur route." } as Record<string, string>,
-    hubTail: "parcours, dates et profils d’altitude", hubIntro: (n: number) => `${n} ${n === 1 ? "course" : "courses"} du calendrier de Mila. Chaque course a sa propre page avec le parcours, le profil d’altitude, les informations de l’organisateur et un tableau d’allures.`,
+    hubTail: "parcours, dates et profils d’altitude", hubIntro: (n: number) => `${n} ${n === 1 ? "course" : "courses"} du calendrier de Mila. Chaque course a sa propre page avec la date et les informations de l’organisateur, ainsi que le parcours et le profil d’altitude quand l’organisateur les publie.`,
     hubNext: (d: string, n: string) => `Prochaine course : ${n}, le ${d}.`, hubClimb: (lo: string, hi: string) => `Le dénivelé positif va de ${lo} à ${hi} m.`,
-    hubMore: "D’autres façons de trouver une course", hubDesc: (name: string, n: number) => `${name} : ${n} courses avec parcours, date, profil d’altitude et tableau d’allures. Choisis ta course et obtiens ton plan d’allure dans Mila.`,
+    hubMore: "D’autres façons de trouver une course", hubDesc: (name: string, n: number) => `${name} : ${n} courses avec date, distance et infos de l’organisateur, avec parcours et profil d’altitude s’ils existent. Ton plan d’allure dans Mila.`,
     guidesCrumb: "Guides",
   },
   es: {
-    indexDesc: "Las carreras del calendario de Mila con recorrido, perfil de altitud, subidas, avituallamientos y tabla de ritmos. Elige tu carrera y consigue tu plan de ritmo en Mila.",
+    indexDesc: "Las carreras del calendario de Mila: fecha, distancia y datos del organizador, y recorrido y perfil de altitud si existen. Tu plan de ritmo en Mila.",
     faqH: "Preguntas frecuentes", qWhen: (n: string) => `¿Cuándo es ${n}?`, qStart: (n: string) => `¿A qué hora sale ${n}?`,
     qDist: (n: string) => `¿Cuánto mide ${n} y cuánto desnivel tiene?`, qCourse: (n: string) => `¿Cómo es el recorrido de ${n}?`,
     qAid: (n: string) => `¿Hay avituallamientos en ${n}?`, qCut: (n: string) => `¿Hay tiempos de corte en ${n}?`, qPace: (n: string) => `¿Cómo reparto el ritmo en ${n}?`,
@@ -1631,9 +1666,9 @@ const S = {
     hubName: { city: (p: string) => `Carreras en ${p}`, month: (m: string) => `Carreras en ${m}`, country: (c: string) => `Carreras en ${c}` },
     distName: { "5k": "Carreras de 5 km", "10k": "Carreras de 10 km", half: "Medias maratones", marathon: "Maratones", ultra: "Ultras", trail: "Carreras de trail" } as Record<string, string>,
     distAbout: { "5k": "Carreras de unos 5 km.", "10k": "Carreras de unos 10 km.", half: "Una media maratón tiene 21,1 km.", marathon: "Una maratón tiene 42,195 km.", ultra: "Una ultra es cualquier carrera más larga que una maratón.", trail: "Las carreras de trail van por senderos y caminos, a menudo con más desnivel que en asfalto." } as Record<string, string>,
-    hubTail: "recorridos, fechas y perfiles de altitud", hubIntro: (n: number) => `${n} ${n === 1 ? "carrera" : "carreras"} del calendario de Mila. Cada carrera tiene su propia página con el recorrido, el perfil de altitud, los datos del organizador y una tabla de ritmos.`,
+    hubTail: "recorridos, fechas y perfiles de altitud", hubIntro: (n: number) => `${n} ${n === 1 ? "carrera" : "carreras"} del calendario de Mila. Cada carrera tiene su propia página con la fecha y los datos del organizador, y el recorrido y el perfil de altitud cuando el organizador los publica.`,
     hubNext: (d: string, n: string) => `La próxima: ${n}, el ${d}.`, hubClimb: (lo: string, hi: string) => `El desnivel positivo va de ${lo} a ${hi} m.`,
-    hubMore: "Más formas de buscar carreras", hubDesc: (name: string, n: number) => `${name}: ${n} carreras con recorrido, fecha, perfil de altitud y tabla de ritmos. Elige tu carrera y consigue tu plan de ritmo en Mila.`,
+    hubMore: "Más formas de buscar carreras", hubDesc: (name: string, n: number) => `${name}: ${n} carreras con fecha, distancia y datos del organizador, y recorrido y perfil de altitud si existen. Tu plan de ritmo en Mila.`,
     guidesCrumb: "Guías",
   },
 };
@@ -1664,7 +1699,9 @@ export const DISTANCES: { key: string; test: (r: Pick<Race, "km" | "trail">) => 
 ];
 /** The fewest races a hub needs: fewer is a thin page, never made. */
 export const HUB_MIN = 2;
-export type Hub = { kind: HubKind; key: string; slug: Record<Lang, string>; name: Record<Lang, string>; races: Race[]; about?: string };
+export type Hub = { kind: HubKind; key: string; slug: Record<Lang, string>; name: Record<Lang, string>; races: Race[]; about?: string;
+  /** seo round, 2026-11-02: the slugs this hub had before (a guessed country: the register's own name in every language). */
+  old?: Partial<Record<Lang, string[]>> };
 export const hubPath = (lang: Lang, h: Pick<Hub, "kind" | "slug">) => `${L[lang].dir}/${HUB_DIR[lang][h.kind]}/${h.slug[lang]}/`;
 /** Country names that read better with an article after "in" (en) or "in"/"im" (de); in French the whole "au/aux/à …" where "en …" is wrong. */
 const COUNTRY_IN: Partial<Record<Lang, Record<string, string>>> = {
@@ -1691,7 +1728,11 @@ export function buildHubs(active: Race[], today: string): Hub[] {
   for (const [k, rs] of [...byCountry].sort(([a], [b]) => a.localeCompare(b))) {
     if (rs.length < HUB_MIN) continue;
     const nm = (l: Lang) => countryName(rs[0], l) ?? k, slug = Object.fromEntries(LANGS.map((l) => [l, slugify(nm(l)) || k.toLowerCase()])) as Record<Lang, string>;
-    out.push({ kind: "country", key: k, slug, name: Object.fromEntries(LANGS.map((l) => [l, S[l].hubName.country(COUNTRY_IN[l]?.[k] ?? nm(l))])) as Record<Lang, string>, races: order(rs) });
+    // a country the register named without its code had, before its code was guessed, that name as its slug in every language
+    const was = [...new Set(rs.filter((r) => r.country_guessed && r.country).map((r) => slugify(r.country!)))].filter(Boolean);
+    const old = Object.fromEntries(LANGS.map((l) => [l, was.filter((w) => w !== slug[l])]).filter(([, w]) => w.length)) as Partial<Record<Lang, string[]>>;
+    out.push({ kind: "country", key: k, slug, name: Object.fromEntries(LANGS.map((l) => [l, S[l].hubName.country(COUNTRY_IN[l]?.[k] ?? nm(l))])) as Record<Lang, string>, races: order(rs),
+      ...(Object.keys(old).length ? { old } : {}) });
   }
   // places: the place's name within its country; the same name in two countries gets the country's code in its address
   const byCity = new Map<string, Race[]>();
@@ -2017,6 +2058,41 @@ export async function generate(o: { out: string; races: Race[]; ids?: Set<string
     }
   }
   report.hubs = hubs.length;
+  // seo round, 2026-11-02: a hub's old addresses stay, each sending the reader on to the hub (or, once the hub is gone, to the language's
+  // race index); a real hub at the same address wins
+  state.hubMoved ??= {};
+  for (const h of hubs) for (const [lang, slugs] of Object.entries(h.old ?? {}) as [Lang, string[]][]) {
+    for (const s of slugs) state.hubMoved[hubPath(lang, { kind: h.kind, slug: { ...h.slug, [lang]: s } })] = { lang, kind: h.kind, key: h.key };
+  }
+  // and any published country or place folder that is no longer a hub but names a country under another address than its own (a hub
+  // from before its code was guessed, gone below two races or given its code by the register since): it moved, it did not leave
+  for (const lang of LANGS) for (const kind of ["country", "city"] as const) {
+    const base = `${L[lang].dir}/${HUB_DIR[lang][kind]}`;
+    try {
+      for await (const e of Deno.readDir(`${out}/${base}`)) {
+        const from = `${base}/${e.name}/`;
+        if (!e.isDirectory || keepHub.has(from) || state.hubMoved[from]) continue;
+        if (kind === "country") {
+          const code = countryCodeOf(e.name), own = code ? slugify(countryName({ country_code: code, country: null }, lang) ?? "") : "";
+          if (code && own && own !== e.name) state.hubMoved[from] = { lang, kind, key: code };
+        } else {
+          // a place shared by two countries carries the country in its address: "rio-brasilien" is now "rio-br"
+          // (every split point, so places and countries of several words both work: "sao-paulo-brasilien", "auckland-nya-zeeland")
+          const parts = e.name.split("-");
+          for (let i = 1; i < parts.length; i++) {
+            const code = countryCodeOf(parts.slice(i).join("-")), key = code ? `${code}|${parts.slice(0, i).join("-")}` : "";
+            if (key && hubs.some((h) => h.kind === "city" && h.key === key)) { state.hubMoved[from] = { lang, kind, key }; break; }
+          }
+        }
+      }
+    } catch (err) { if (!(err instanceof Deno.errors.NotFound)) throw err; }
+  }
+  for (const [from, to] of Object.entries(state.hubMoved)) {
+    if (keepHub.has(from) || !LANGS.includes(to.lang)) continue;
+    const h = hubs.find((x) => x.kind === to.kind && x.key === to.key);
+    await put(`${from}index.html`, movedTo(from, h ? hubPath(to.lang, h) : indexPath(to.lang), to.lang, ctx));
+    keepHub.add(from);
+  }
   for (const lang of LANGS) for (const kind of HUB_KINDS) {
     const base = `${L[lang].dir}/${HUB_DIR[lang][kind]}`;
     try {

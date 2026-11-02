@@ -1911,8 +1911,15 @@ export async function slugHash(slug: string): Promise<string> { return (await sh
 async function sha(text: string): Promise<string> {
   return [...new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text)))].slice(0, 12).map((x) => x.toString(16).padStart(2, "0")).join("");
 }
-/** A page's content for its lastmod: without the countdown and the footer's year, so a page counts as changed only when its facts did. */
-const stable = (html: string) => html.replace(/<span class="cd"[^>]*>[^<]*<\/span>/g, "").replace(/© \d{4} Mila/, "");
+/** A page's content for its lastmod: without the countdown and the footer's year, so a page counts as changed only when its facts did.
+ *  seo round, 2026-11-02: only its title, description, structured data (prices, the event's facts) and <main>, so a change to the
+ *  site's frame (the stylesheet, the header's logo, the footer) moves no lastmod; a page without <main> counts whole. */
+export const stable = (html: string) => {
+  const main = /<main[ >][\s\S]*<\/main>/.exec(html)?.[0];
+  const own = main ? [/<title>[\s\S]*?<\/title>/.exec(html)?.[0] ?? "", /<meta name="description" content="[^"]*">/.exec(html)?.[0] ?? "",
+    ...(html.match(/<script type="application\/ld\+json">[\s\S]*?<\/script>/g) ?? []), main].join("\n") : html;
+  return own.replace(/<span class="cd"[^>]*>[^<]*<\/span>/g, "").replace(/© \d{4} Mila/, "");
+};
 async function readText(p: string): Promise<string | null> { try { return await Deno.readTextFile(p); } catch (e) { if (e instanceof Deno.errors.NotFound) return null; throw e; } }
 async function readBytes(p: string): Promise<Uint8Array | null> { try { return await Deno.readFile(p); } catch (e) { if (e instanceof Deno.errors.NotFound) return null; throw e; } }
 const sameBytes = (a: Uint8Array, b: Uint8Array) => a.length === b.length && a.every((v, i) => v === b[i]);

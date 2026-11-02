@@ -21,3 +21,24 @@ export function csp(inline: string[] = []): string {
 export function securityMeta(inline: string[] = [], referrer = "strict-origin-when-cross-origin"): string {
   return `<meta http-equiv="Content-Security-Policy" content="${csp(inline)}"><meta name="referrer" content="${referrer}">`;
 }
+
+// The language switch (lang-switch, 2026-11-02; Patrik: "det är lite konstigt att språket man visar försvinner"): every page's header
+// shows the language it is in, and opening it lists every language the page has, each in its own name, the current one marked and not a
+// link to itself. A <details> menu, so it works with no script under this policy (lang.js, from the site, only closes it on a tap
+// outside or Escape, as a native menu does); one copy of the markup for the hand-written pages
+// (checked against this by tests/lang_switch_test.ts), legal_site.ts and race_pages.ts. The order is the site's: sv en de nb da fi fr es.
+/** Each language in its own name. */
+export const LANG_NAMES: Record<string, string> = { sv: "Svenska", en: "English", de: "Deutsch", nb: "Norsk", da: "Dansk", fi: "Suomi", fr: "Français", es: "Español" };
+/** The switch's name for screen readers (the nav landmark and the closed menu's prefix), per language. */
+export const LANG_NAV: Record<string, string> = { sv: "Språk", en: "Language", de: "Sprache", nb: "Språk", da: "Sprog", fi: "Kieli", fr: "Langue", es: "Idioma" };
+const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+/** The header's switch for a page in `lang`; `links` holds the address of the same page in each language it has, in the site's order;
+ *  `script` the address of the site's lang.js, when the site has it (it only adds listeners, so it runs where it stands). */
+export function langSwitch(lang: string, links: [string, string][], script?: string): string {
+  const item = ([l, href]: [string, string]) => l === lang
+    ? `<li><span aria-current="page" lang="${l}"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>${LANG_NAMES[l]}</span></li>`
+    : `<li><a href="${esc(href)}" hreflang="${l}" lang="${l}">${LANG_NAMES[l]}</a></li>`;
+  return `<nav class="lang" aria-label="${LANG_NAV[lang]}"><details><summary><svg class="globe" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.4 2.3 3.6 5.1 3.6 8.5s-1.2 6.2-3.6 8.5c-2.4-2.3-3.6-5.1-3.6-8.5s1.2-6.2 3.6-8.5z"/></svg>`
+    + `<span class="sr">${LANG_NAV[lang]}: </span>${LANG_NAMES[lang]}<svg class="chev" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m7 10 5 5 5-5"/></svg></summary>`
+    + `<ul>${links.map(item).join("")}</ul></details></nav>${script ? `<script src="${esc(script)}"></script>` : ""}`;
+}

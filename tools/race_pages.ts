@@ -39,7 +39,7 @@
 
 import { raceSceneSpec } from "./scene.ts";
 import { mapHash, type MapRenderer, mapRenderer, routeFrame } from "./race_maps.ts";
-import { securityMeta } from "./site_csp.ts";
+import { securityMeta, langSwitch } from "./site_csp.ts";
 
 export const SITE = "https://milacoach.app";
 export const FEED_URL = "https://vfjofaniwtudzvadxpsd.supabase.co/functions/v1/race-feed";
@@ -281,7 +281,7 @@ const cl = (lang: Lang) => (lang === "fr" ? "\u00a0: " : ": "), sc = (lang: Lang
 
 const T = {
   sv: {
-    langName: "Svenska", langNav: "Språk", skip: "Hoppa till innehållet", crumbs: "Brödsmulor", home: "Mila", races: "Lopp", brandLine: "Rätt pass. Rätt dag.",
+    skip: "Hoppa till innehållet", crumbs: "Brödsmulor", home: "Mila", races: "Lopp", brandLine: "Rätt pass. Rätt dag.",
     titleTail: "bana, höjdprofil och tempoplan", indexTitle: "Lopp – banor, höjdprofiler och tempoplaner", indexH1: "Lopp att springa",
     indexLead: "Lopp ur Milas loppregister med datum och fakta från arrangören. När arrangören publicerar banan visar sidan också karta, höjdprofil och klättringar. Välj ditt lopp och få en personlig prognos, tempoplan och energiplan i Mila.",
     pageN: (n: number) => `sida ${n}`, count: (n: number) => `${n} lopp`,
@@ -330,7 +330,7 @@ const T = {
     metaTail: "Se bana och höjdprofil och få din tempoplan i Mila.", metaAid: (n: number) => `${n} vätskekontroller`, metaClimb: (a: string) => `${a} höjdmeter`, metaHigh: (h: string) => `högsta punkt ${h} m`,
   },
   en: {
-    langName: "English", langNav: "Language", skip: "Skip to content", crumbs: "Breadcrumbs", home: "Mila", races: "Races", brandLine: "The right run, on the right day.",
+    skip: "Skip to content", crumbs: "Breadcrumbs", home: "Mila", races: "Races", brandLine: "The right run, on the right day.",
     titleTail: "course, elevation profile and pace plan", indexTitle: "Races – courses, elevation profiles and pace plans", indexH1: "Races to run",
     indexLead: "Races from Mila's race register with the date and the organizer's facts. Where the organizer publishes the course, the page also shows the map, elevation profile and climbs. Pick your race and get a personal forecast, pace plan and fueling plan in Mila.",
     pageN: (n: number) => `page ${n}`, count: (n: number) => `${n} ${n === 1 ? "race" : "races"}`,
@@ -379,7 +379,7 @@ const T = {
     metaTail: "See the course and elevation profile and get your pace plan in Mila.", metaAid: (n: number) => `${n} aid stations`, metaClimb: (a: string) => `${a} m of climbing`, metaHigh: (h: string) => `highest point ${h} m`,
   },
   de: {
-    langName: "Deutsch", langNav: "Sprache", skip: "Zum Inhalt springen", crumbs: "Brotkrümelnavigation", home: "Mila", races: "Läufe", brandLine: "Der richtige Lauf am richtigen Tag.",
+    skip: "Zum Inhalt springen", crumbs: "Brotkrümelnavigation", home: "Mila", races: "Läufe", brandLine: "Der richtige Lauf am richtigen Tag.",
     titleTail: "Strecke, Höhenprofil und Pace-Plan", indexTitle: "Läufe – Strecken, Höhenprofile und Pace-Pläne", indexH1: "Läufe zum Mitlaufen",
     indexLead: "Läufe aus Milas Laufregister mit Termin und Angaben des Veranstalters. Wenn der Veranstalter die Strecke veröffentlicht, zeigt die Seite auch Karte, Höhenprofil und Anstiege. Wähle deinen Lauf und hol dir in Mila deine persönliche Prognose, deinen Pace-Plan und deinen Verpflegungsplan.",
     pageN: (n: number) => `Seite ${n}`, count: (n: number) => `${n} ${n === 1 ? "Lauf" : "Läufe"}`,
@@ -428,7 +428,7 @@ const T = {
     metaTail: "Strecke und Höhenprofil ansehen und deinen Pace-Plan in Mila holen.", metaAid: (n: number) => `${n} Verpflegungsstellen`, metaClimb: (a: string) => `${a} Höhenmeter`, metaHigh: (h: string) => `höchster Punkt ${h} m`,
   },
   nb: {
-    langName: "Norsk", langNav: "Språk", skip: "Hopp til innholdet", crumbs: "Brødsmuler", home: "Mila", races: "Løp", brandLine: "Rett økt. Rett dag.",
+    skip: "Hopp til innholdet", crumbs: "Brødsmuler", home: "Mila", races: "Løp", brandLine: "Rett økt. Rett dag.",
     titleTail: "løype, høydeprofil og tempoplan", indexTitle: "Løp – løyper, høydeprofiler og tempoplaner", indexH1: "Finn ditt neste løp",
     indexLead: "Løp fra Milas løpsregister med dato og fakta fra arrangøren. Når arrangøren publiserer løypa, viser siden også kart, høydeprofil og stigninger. Velg løpet ditt og få en personlig prognose, tempoplan og energiplan i Mila.",
     pageN: (n: number) => `side ${n}`, count: (n: number) => `${n} løp`,
@@ -477,7 +477,7 @@ const T = {
     metaTail: "Se løype og høydeprofil og få tempoplanen din i Mila.", metaAid: (n: number) => `${n} drikkestasjoner`, metaClimb: (a: string) => `${a} høydemeter`, metaHigh: (h: string) => `høyeste punkt ${h} m`,
   },
   da: {
-    langName: "Dansk", langNav: "Sprog", skip: "Spring til indholdet", crumbs: "Brødkrummer", home: "Mila", races: "Løb", brandLine: "Den rette træning. Den rette dag.",
+    skip: "Spring til indholdet", crumbs: "Brødkrummer", home: "Mila", races: "Løb", brandLine: "Den rette træning. Den rette dag.",
     titleTail: "rute, højdeprofil og tempoplan", indexTitle: "Løb – ruter, højdeprofiler og tempoplaner", indexH1: "Find dit næste løb",
     indexLead: "Løb fra Milas løbskalender med dato og fakta fra arrangøren. Når arrangøren offentliggør ruten, viser siden også kort, højdeprofil og stigninger. Vælg dit løb, og få en personlig prognose, tempoplan og energiplan i Mila.",
     pageN: (n: number) => `side ${n}`, count: (n: number) => `${n} løb`,
@@ -526,7 +526,7 @@ const T = {
     metaTail: "Se rute og højdeprofil, og få din tempoplan i Mila.", metaAid: (n: number) => `${n} væskedepoter`, metaClimb: (a: string) => `${a} højdemeter`, metaHigh: (h: string) => `højeste punkt ${h} m`,
   },
   fi: {
-    langName: "Suomi", langNav: "Kieli", skip: "Siirry sisältöön", crumbs: "Murupolku", home: "Mila", races: "Kisat", brandLine: "Oikea harjoitus. Oikea päivä.",
+    skip: "Siirry sisältöön", crumbs: "Murupolku", home: "Mila", races: "Kisat", brandLine: "Oikea harjoitus. Oikea päivä.",
     titleTail: "reitti, korkeusprofiili ja vauhtisuunnitelma", indexTitle: "Kisat – reitit, korkeusprofiilit ja vauhtisuunnitelmat", indexH1: "Löydä seuraava kisasi",
     indexLead: "Kisat Milan kisakalenterista: päivä ja järjestäjän tiedot. Kun järjestäjä julkaisee reitin, sivulla on myös kartta, korkeusprofiili ja nousut. Valitse kisasi, niin saat Milasta henkilökohtaisen ennusteen, vauhtisuunnitelman ja energiasuunnitelman.",
     pageN: (n: number) => `sivu ${n}`, count: (n: number) => `${n} ${n === 1 ? "kisa" : "kisaa"}`,
@@ -575,7 +575,7 @@ const T = {
     metaTail: "Katso reitti ja korkeusprofiili ja hae vauhtisuunnitelmasi Milasta.", metaAid: (n: number) => `${n} juomapistettä`, metaClimb: (a: string) => `${a} nousumetriä`, metaHigh: (h: string) => `korkein kohta ${h} m`,
   },
   fr: {
-    langName: "Français", langNav: "Langue", skip: "Aller au contenu", crumbs: "Fil d’Ariane", home: "Mila", races: "Courses", brandLine: "La bonne séance. Le bon jour.",
+    skip: "Aller au contenu", crumbs: "Fil d’Ariane", home: "Mila", races: "Courses", brandLine: "La bonne séance. Le bon jour.",
     titleTail: "parcours, profil d’altitude et plan d’allure", indexTitle: "Courses – parcours, profils d’altitude et plans d’allure", indexH1: "Trouve ta prochaine course",
     indexLead: "Les courses du calendrier de Mila, avec la date et les informations de l’organisateur. Quand l’organisateur publie le parcours, la page montre aussi la carte, le profil d’altitude et les montées. Choisis ta course et obtiens dans Mila un pronostic personnel, un plan d’allure et un plan de ravitaillement.",
     pageN: (n: number) => `page ${n}`, count: (n: number) => `${n} ${n === 1 ? "course" : "courses"}`,
@@ -624,7 +624,7 @@ const T = {
     metaTail: "Consulte le parcours et le profil d’altitude, et obtiens ton plan d’allure dans Mila.", metaAid: (n: number) => `${n} ravitaillements`, metaClimb: (a: string) => `${a} m de D+`, metaHigh: (h: string) => `point culminant ${h} m`,
   },
   es: {
-    langName: "Español", langNav: "Idioma", skip: "Saltar al contenido", crumbs: "Ruta de navegación", home: "Mila", races: "Carreras", brandLine: "La sesión justa. El día justo.",
+    skip: "Saltar al contenido", crumbs: "Ruta de navegación", home: "Mila", races: "Carreras", brandLine: "La sesión justa. El día justo.",
     titleTail: "recorrido, perfil de altitud y plan de ritmo", indexTitle: "Carreras – recorridos, perfiles de altitud y planes de ritmo", indexH1: "Encuentra tu próxima carrera",
     indexLead: "Carreras del calendario de Mila con la fecha y los datos del organizador. Cuando el organizador publica el recorrido, la página muestra también el mapa, el perfil de altitud y las subidas. Elige tu carrera y consigue en Mila un pronóstico personal, un plan de ritmo y un plan de avituallamiento.",
     pageN: (n: number) => `página ${n}`, count: (n: number) => `${n} ${n === 1 ? "carrera" : "carreras"}`,
@@ -1238,6 +1238,8 @@ type Frame = {
   lang: Lang; path: string; title: string; description: string; css: string; body: string; today: string;
   /** The site has motion.js (redesign 2026-11): the page loads it, as the last thing in the body. */
   motion?: boolean;
+  /** lang-switch: the site has lang.js: the language switch loads it. */
+  langJs?: boolean;
   alternates?: Partial<Record<Lang, string>> | null; noindex?: boolean; og?: { image: string; alt: string; large: boolean }; ld?: object[]; script?: string; module?: string;
   crumbs: { name: string; path?: string }[];
   /** The app's App Store id: Apple's Smart App Banner on the page (seo; off while it is not set). */
@@ -1250,7 +1252,8 @@ function frame(f: Frame): string {
   const alt = f.alternates && langs.length > 1 ? langs.map((l) => `<link rel="alternate" hreflang="${l}" href="${esc(abs(f.alternates![l]!))}">`).join("") + `<link rel="alternate" hreflang="x-default" href="${esc(abs(xDefault!))}">` : "";
   const og = f.og ? `<meta property="og:type" content="website"><meta property="og:site_name" content="${esc(BRAND[f.lang])}"><meta property="og:title" content="${esc(f.title)}"><meta property="og:description" content="${esc(f.description)}"><meta property="og:url" content="${esc(abs(f.path))}"><meta property="og:image" content="${esc(f.og.image)}">${f.og.large ? '<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">' : ""}<meta property="og:image:alt" content="${esc(f.og.alt)}"><meta property="og:locale" content="${OG_LOCALE[f.lang]}">${langs.filter((l) => l !== f.lang).map((l) => `<meta property="og:locale:alternate" content="${OG_LOCALE[l]}">`).join("")}
 <meta name="twitter:card" content="${f.og.large ? "summary_large_image" : "summary"}"><meta name="twitter:title" content="${esc(f.title)}"><meta name="twitter:description" content="${esc(f.description)}"><meta name="twitter:image" content="${esc(f.og.image)}"><meta name="twitter:image:alt" content="${esc(f.og.alt)}">` : "";
-  const switcher = f.alternates ? langs.filter((l) => l !== f.lang).map((l) => `<a href="${esc(rel(f.path, f.alternates![l]!))}" hreflang="${l}" lang="${l}">${T[l].langName}</a>`).join("") : "";
+  // the switch shows the page's own language and lists every language the page has (site_csp.ts langSwitch); none for a one-language page
+  const switcher = f.alternates && langs.length > 1 && langs.includes(f.lang) ? langSwitch(f.lang, langs.map((l) => [l, rel(f.path, f.alternates![l]!)]), f.langJs ? `${root}lang.js` : undefined) : "";
   const crumbs = `<nav class="crumbs" aria-label="${esc(t.crumbs)}"><ol>${f.crumbs.map((x, i) => i === f.crumbs.length - 1 ? `<li aria-current="page">${esc(x.name)}</li>` : `<li><a href="${esc(rel(f.path, x.path ?? ""))}">${esc(x.name)}</a></li>`).join("")}</ol></nav>`;
   // the page's own policy: scripts from the site, and this page's inline ones by their hash (site_csp.ts)
   // redesign 2026-11: the display face preloaded (site.css holds its @font-face) and the site's motion (motion.js, from the site, so
@@ -1259,7 +1262,7 @@ function frame(f: Frame): string {
   return `<!doctype html><html lang="${f.lang}"><head><meta charset="utf-8">${security}<meta name="viewport" content="width=device-width,initial-scale=1">${smartBannerMeta(f.appId)}
 <title>${esc(f.title)}</title><meta name="description" content="${esc(f.description)}">${f.noindex ? '<meta name="robots" content="noindex,follow">' : `<meta name="robots" content="max-image-preview:large"><link rel="canonical" href="${esc(abs(f.path))}">`}${alt}
 ${og}<meta name="theme-color" content="#0D1119"><link rel="icon" href="${root}favicon.ico" sizes="32x32"><link rel="icon" href="${root}apple-touch-icon.png" type="image/png" sizes="180x180"><link rel="apple-touch-icon" href="${root}apple-touch-icon.png"><link rel="preload" href="${root}fonts/BarlowCondensed-Bold-latin.woff2" as="font" type="font/woff2" crossorigin><style>${f.css}</style>${(f.ld ?? []).map(jsonLd).join("")}</head><body>
-<a class="skip" href="#main">${esc(t.skip)}</a><div class="wrap"><header><a class="brand" href="${root}${c.home}"><img src="${root}logo-80.png" alt="" width="40" height="40">MILA</a>${switcher ? `<nav class="lang" aria-label="${esc(t.langNav)}">${switcher}</nav>` : ""}</header>
+<a class="skip" href="#main">${esc(t.skip)}</a><div class="wrap"><header><a class="brand" href="${root}${c.home}"><img src="${root}logo-80.png" alt="" width="40" height="40">MILA</a>${switcher}</header>
 ${crumbs}
 <main id="main">${f.body}</main>
 <footer><a href="${root}${c.support}">${esc(t.support)}</a><a href="${root}${c.privacy}">${esc(t.privacy)}</a><a href="${root}${c.terms}">${esc(t.terms)}</a><a href="${root}${c.support}#provider">${esc(t.contact)}</a><a href="${root}${c.support}?topic=report&amp;ref=${encodeURIComponent(abs(f.path))}#kontakt" rel="nofollow">${esc(t.report)}</a><br><br>${esc(t.notAffiliatedAll)}<br><br>© ${f.today.slice(0, 4)} Mila</footer></div>${f.script ? `<script>${f.script}</script>` : ""}${f.module ? `<script type="module">${f.module}</script>` : ""}${f.motion ? `<script src="${root}motion.js"></script>` : ""}</body></html>
@@ -1288,6 +1291,8 @@ type Ctx = { today: string; css: string; appStore: string; active: Race[]; slugs
   hasMap?: Set<string>;
   /** The site has motion.js: race pages, indexes, hubs and guides load it. */
   motionJs?: boolean;
+  /** lang-switch: the site has lang.js (the language menu closes on a tap outside or Escape): the switch loads it. */
+  langJs?: boolean;
   /** seo: the App Store id for the Smart App Banner (none until launch), the hubs, and the races whose title another race shares (their
    *  titles say the place too, so every title on the site is its own). */
   appId?: string | null; hubs?: Hub[]; titleClash?: Set<string>;
@@ -1404,7 +1409,7 @@ export function racePage(r: Race, lang: Lang, ctx: Ctx): string {
       ...(r.organizer ? { organizer: { "@type": "Organization", name: r.organizer, ...(r.url ? { url: r.url } : {}) } } : {}),
     });
   }
-  return frame({ lang, path, title: pageTitle(r, lang, ctx.titleClash?.has(r.id)), description, css: ctx.css, today, alternates, appId: ctx.appId, motion: ctx.motionJs, og: { ...og, alt: bare ? t.ogAltNoCourse(title) : t.ogAlt(title) }, ld,
+  return frame({ lang, path, title: pageTitle(r, lang, ctx.titleClash?.has(r.id)), description, css: ctx.css, today, alternates, appId: ctx.appId, motion: ctx.motionJs, langJs: ctx.langJs, og: { ...og, alt: bare ? t.ogAltNoCourse(title) : t.ogAlt(title) }, ld,
     // site-calm: the profile right under the facts, before the call to action (in the HTML, so the reading order is the visual one)
     body: `<article>${hero}${sections[0]?.startsWith('<section aria-labelledby="h-profile"') ? sections.shift() + cta : cta}${sections.join("\n")}</article>`, script: r.next_date && r.next_date >= today ? cdScript(lang) : undefined,
     crumbs: [{ name: t.home, path: L[lang].home }, { name: t.races, path: indexPath(lang) }, { name: title }] });
@@ -1456,7 +1461,7 @@ export function indexPage(lang: Lang, page: number, pages: number, races: Race[]
   const browse = page === 1 ? hubNav(ctx.hubs ?? [], lang, path, S[lang].browseH) : "";
   const guides = page === 1 ? (ctx.guides ?? []).filter((g) => guideLangs(g).includes(lang)) : [];
   const guideNav = guides.length ? `<section aria-labelledby="h-guides"><h2 id="h-guides">${esc(S[lang].guidesCrumb)}</h2><ul class="hubs">${guides.map((g) => `<li><a href="${esc(rel(path, guidePath(lang, g.slug[lang]!)))}">${esc(g[lang]!.title)}</a></li>`).join("")}</ul></section>` : "";
-  return frame({ lang, path, title: `${t.indexTitle}${page > 1 ? ` – ${t.pageN(page)}` : ""} | Mila`, description: page > 1 ? `${S[lang].indexDesc} (${t.pageN(page)})` : S[lang].indexDesc, css: ctx.css, today, alternates, appId: ctx.appId, motion: ctx.motionJs,
+  return frame({ lang, path, title: `${t.indexTitle}${page > 1 ? ` – ${t.pageN(page)}` : ""} | Mila`, description: page > 1 ? `${S[lang].indexDesc} (${t.pageN(page)})` : S[lang].indexDesc, css: ctx.css, today, alternates, appId: ctx.appId, motion: ctx.motionJs, langJs: ctx.langJs,
     og: { ...ctx.ogImage(null, lang), alt: t.ogDefault }, ld: [crumbsLd([{ name: t.home, path: L[lang].home }, { name: t.races, path: indexPath(lang) }])],
     body: `${hero}${browse}${guideNav}${filter}\n${list}\n${pager}`, script: filterScript, crumbs: [{ name: t.home, path: L[lang].home }, { name: t.races }] });
 }
@@ -1835,7 +1840,7 @@ export function hubPage(h: Hub, lang: Lang, ctx: Ctx): string {
   const ld = [crumbsLd([{ name: t.home, path: L[lang].home }, { name: t.races, path: indexPath(lang) }, { name: h.name[lang], path }]),
     { "@context": "https://schema.org", "@type": "ItemList", name: h.name[lang], numberOfItems: rs.length,
       itemListElement: rs.slice(0, 100).map((r, i) => ({ "@type": "ListItem", position: i + 1, url: abs(racePath(lang, ctx.slugs.get(r.id)!)), name: raceTitle(r, lang) })) }];
-  return frame({ lang, path, title: `${h.name[lang]} – ${s.hubTail} | Mila`, description: s.hubDesc(h.name[lang], rs.length), css: ctx.css, today, alternates, appId: ctx.appId, motion: ctx.motionJs,
+  return frame({ lang, path, title: `${h.name[lang]} – ${s.hubTail} | Mila`, description: s.hubDesc(h.name[lang], rs.length), css: ctx.css, today, alternates, appId: ctx.appId, motion: ctx.motionJs, langJs: ctx.langJs,
     og: { ...ctx.ogImage(null, lang), alt: h.name[lang] }, ld, body: `${hero}${list}${more}${back}`,
     crumbs: [{ name: t.home, path: L[lang].home }, { name: t.races, path: indexPath(lang) }, { name: h.name[lang] }] });
 }
@@ -1926,7 +1931,7 @@ export function guidePage(g: Guide, lang: Lang, ctx: Ctx): string {
     ...(g.updated && isDay(g.updated) ? { dateModified: g.updated } : {}), image: [ctx.ogImage(null, lang).image],
     author: { "@type": "Organization", name: "Mila", url: `${SITE}/` }, publisher: { "@type": "Organization", name: "Mila", url: `${SITE}/`, logo: { "@type": "ImageObject", url: `${SITE}/logo.png` } } },
     crumbsLd([{ name: t.home, path: L[lang].home }, { name: S[lang].guidesCrumb, path }, { name: doc.title, path }])];
-  return frame({ lang, path, title: `${doc.title} | Mila`, description: doc.description, css: ctx.css, today: ctx.today, alternates, appId: ctx.appId, motion: ctx.motionJs,
+  return frame({ lang, path, title: `${doc.title} | Mila`, description: doc.description, css: ctx.css, today: ctx.today, alternates, appId: ctx.appId, motion: ctx.motionJs, langJs: ctx.langJs,
     og: { ...ctx.ogImage(null, lang), alt: doc.title }, ld, body: `<article class="prose"><h1>${esc(doc.title)}</h1>${body}</article>${cta}`,
     crumbs: [{ name: t.home, path: L[lang].home }, { name: doc.title }] });
 }
@@ -2103,7 +2108,7 @@ export async function generate(o: { out: string; races: Race[]; ids?: Set<string
   const hubs = buildHubs(active, today), titles = new Map<string, string[]>();
   for (const r of active) { const k = pageTitle(r, "sv"); titles.set(k, [...(titles.get(k) ?? []), r.id]); }
   const titleClash = new Set([...titles.values()].filter((ids) => ids.length > 1).flat());
-  const ctx: Ctx = { today, css, appStore, active, slugs, ogImage, hasMap, sceneJs: await exists("scene.js"), motionJs: await exists("motion.js"), appId: smartBannerMeta(o.appStoreId) ? o.appStoreId : null, hubs, titleClash, guides: o.guides };
+  const ctx: Ctx = { today, css, appStore, active, slugs, ogImage, hasMap, sceneJs: await exists("scene.js"), motionJs: await exists("motion.js"), langJs: await exists("lang.js"), appId: smartBannerMeta(o.appStoreId) ? o.appStoreId : null, hubs, titleClash, guides: o.guides };
 
   // 4. the race pages, and the pages of races that left; every indexed page's lastmod moves only when its content does
   const pages: State["pages"] = {};

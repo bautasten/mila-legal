@@ -17,11 +17,20 @@ a:hover{text-decoration-thickness:2px}
 .sr{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .wrap{max-width:1200px;margin:0 auto;padding:0 clamp(16px,4vw,40px)}.narrow{max-width:780px}
 
-/* the header: the brand, and every language as a quiet link (a strip that scrolls sideways on phones; none is hidden) */
+/* the header: the brand, and the language switch: the page's own language, opening to every language in its own name with the current
+   one marked (lang-switch 2026-11-02, site_csp.ts langSwitch; a <details> menu, no script; 44 px rows) */
 header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 0}
 .brand{display:flex;align-items:center;gap:12px;font-family:var(--display);font-weight:700;font-size:28px;letter-spacing:.06em;color:var(--ink);text-decoration:none;flex:none}.brand img{width:38px;height:38px;border-radius:10px}
-.lang{display:flex;gap:2px;flex-wrap:wrap;justify-content:flex-end}
-.lang a{color:var(--ink2);text-decoration:none;font-size:14.5px;padding:7px 11px;border-radius:999px;transition:background-color .2s,color .2s}.lang a:hover{background:var(--surface);color:var(--ink)}
+.lang{position:relative;flex:none}
+.lang summary{display:flex;align-items:center;gap:8px;min-height:44px;padding:0 14px 0 12px;border:1px solid var(--line);border-radius:999px;color:var(--ink2);font-size:15px;cursor:pointer;list-style:none;-webkit-user-select:none;user-select:none;transition:background-color .2s,color .2s,border-color .2s}
+.lang summary::-webkit-details-marker{display:none}
+.lang summary:hover,.lang details[open] summary{background:var(--surface);color:var(--ink);border-color:#33405A}
+.lang svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.lang .chev{width:16px;height:16px;transition:transform .2s var(--ease)}.lang details[open] .chev{transform:rotate(180deg)}
+.lang ul{position:absolute;right:0;top:calc(100% + 8px);z-index:30;list-style:none;margin:0;padding:6px;min-width:200px;background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:0 18px 40px -12px rgba(0,0,0,.6)}
+.lang li a,.lang li span{display:flex;align-items:center;gap:10px;min-height:44px;padding:0 14px 0 40px;border-radius:10px;font-size:16px;color:var(--ink2);text-decoration:none;white-space:nowrap}
+.lang li span{padding-left:12px;color:var(--ink);font-weight:600}.lang .tick{color:var(--accent)}
+.lang li a:hover{background:var(--line);color:var(--ink)}
 
 /* type */
 h1,h2,h3,.brandline{font-family:var(--display);font-weight:700;text-wrap:balance;overflow-wrap:break-word;hyphens:auto}
@@ -141,9 +150,7 @@ footer .provider{margin:16px 0 12px;color:var(--muted);font-size:13px}footer .pr
 }
 
 @media (max-width:900px){
-header{flex-wrap:wrap;padding:14px 0 6px;gap:6px}
-.lang{width:100%;flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;scrollbar-width:none;margin:0 -8px;padding:2px 0;-webkit-mask-image:linear-gradient(90deg,#000 88%,transparent);mask-image:linear-gradient(90deg,#000 88%,transparent)}.lang::-webkit-scrollbar{display:none}
-.lang a{flex:none}
+header{padding:14px 0 6px}
 .hero{grid-template-columns:1fr;padding-top:18px}
 .grid,.principles{grid-template-columns:1fr}
 .feature{grid-template-columns:1fr}

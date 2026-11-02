@@ -694,7 +694,10 @@ const lenText = (m: number, lang: Lang) => (m >= 1000 ? kmText(m / 1000, lang) :
 /** The name already holds the distance ("Ultravasan 90", "Lidingöloppet 30 km"). */
 export function nameHasKm(name: string, km: number): boolean {
   const d1 = String(Math.round(km * 10) / 10);
-  return [String(Math.round(km)), d1, d1.replace(".", ",")].some((v) => new RegExp(`(^|[^0-9.,])${v.replace(".", "\\.")}(?![0-9])`).test(name));
+  if ([String(Math.round(km)), d1, d1.replace(".", ",")].some((v) => new RegExp(`(^|[^0-9.,])${v.replace(".", "\\.")}(?![0-9])`).test(name))) return true;
+  // seo round 2, 2026-11-02: the official distance in the name ("Marathon 42,2 km") for a measured course of 42.7 km is the distance;
+  // a second one beside it ("42,2 km 42,7 km") only confuses
+  return [...name.matchAll(/(?:^|[^0-9.,])(\d+(?:[.,]\d+)?)\s?(?:km|k)(?![\p{L}\p{N}])/giu)].some((m) => Math.abs(Number(m[1].replace(",", ".")) - km) <= km * 0.05);
 }
 /** The race's name as headlines show it: without its sponsors (displayName), with the distance unless the name has it. */
 export const raceTitle = (r: Pick<Race, "name" | "km">, lang: Lang) => { const n = displayName(r.name); return nameHasKm(n, r.km) ? n : `${n} ${kmShort(r.km, lang)}`; };
@@ -1145,9 +1148,45 @@ function metaDescription(r: Race, lang: Lang): string {
 }
 /** "Härnö Trail 21 km 2027 – bana, höjdprofil och tempoplan | Mila" */
 export function pageTitle(r: Race, lang: Lang, withPlace = false): string {
-  const y = r.next_date?.slice(0, 4), name = raceTitle(r, lang), place = withPlace && r.place && !name.includes(r.place) ? `, ${r.place}` : "";
-  return `${name}${place}${y && !name.includes(y) ? ` ${y}` : ""} – ${courseless(r) ? T[lang].titleTailNoCourse : T[lang].titleTail} | Mila`;
+  const y = r.next_date?.slice(0, 4), name = raceTitle(r, lang), where = withPlace && r.place && !name.includes(r.place) ? r.place : "";
+  const year = y && !name.includes(y) ? ` ${y}` : "", place = where ? `, ${where}` : "";
+  const full = `${name}${place}${year} – ${courseless(r) ? T[lang].titleTailNoCourse : T[lang].titleTail} | Mila`;
+  // seo round 2, 2026-11-02: at most TITLE_MAX characters (what a search result shows): first shorter tails in the page's language
+  // (a tail keeps the languages' titles apart), then the name is cut at a word with "…"; the distance, the place and the year stay, so
+  // two distances of one race never share a title
+  if (full.length <= TITLE_MAX) return full;
+  const tails = SHORT_TAIL[lang][courseless(r) ? 1 : 0];
+  for (const t of tails) { const x = `${name}${place}${year} – ${t} | Mila`; if (x.length <= TITLE_MAX) return x; }
+  const tail = ` – ${tails[tails.length - 1]} | Mila`, km = ` ${kmShort(r.km, lang)}`, bare = displayName(r.name);
+  // a place so long that little of the name would be left is cut too (it is only there to tell two races of one name apart)
+  let at = place;
+  const spare = TITLE_MAX - `${km}${year}${tail}`.length - 1 - TITLE_NAME_MIN;
+  if (at.length > spare) at = spare > 6 ? `${cutAt(place, spare - 1)}…` : "";
+  const head = cutAt(bare, Math.max(TITLE_NAME_MIN, TITLE_MAX - `${km}${at}${year}${tail}`.length - 1));
+  return `${head}${head === bare ? "" : "…"}${nameHasKm(head, r.km) ? "" : km}${at}${year}${tail}`;
 }
+/** A race page's title is at most this long; a cut name keeps at least TITLE_NAME_MIN characters. */
+export const TITLE_MAX = 60, TITLE_NAME_MIN = 12;
+/** `s` in at most `room` characters, cut after a whole word: never on a small linking word ("de"), a bare number or inside a bracket. */
+function cutAt(s: string, room: number): string {
+  if (s.length <= room) return s;
+  let words = s.slice(0, room + 1).split(" ");
+  words.pop();   // the last word is cut in the middle (or is the space after a whole one)
+  let head = words.join(" ");
+  const open = head.lastIndexOf("(");
+  if (open > 3 && (head.match(/\(/g) ?? []).length > (head.match(/\)/g) ?? []).length) head = head.slice(0, open);
+  words = head.trim().split(" ");
+  while (words.length > 1 && /^(\p{Ll}{1,3}|[\d.,]+|[-–:&+])$/u.test(words[words.length - 1])) words.pop();
+  head = words.join(" ");
+  if (head.length < Math.min(10, room)) head = s.slice(0, room);
+  return head.replace(/[\uD800-\uDBFF]$/, "").replace(/[\s,.:;–(-]+$/, "");
+}
+/** The shorter tails of a long title, longest first: with a course, and (no course file) without. */
+const SHORT_TAIL: Record<Lang, [string[], string[]]> = {
+  sv: [["bana och höjdprofil", "bana"], ["datum och tempoplan", "lopp"]], en: [["course and profile", "course"], ["date and pace plan", "race"]],
+  de: [["Strecke und Profil", "Strecke"], ["Termin und Pace-Plan", "Lauf"]], nb: [["løype og høydeprofil", "løype"], ["distanse og tempoplan", "løp"]],
+  da: [["rute og højdeprofil", "rute"], ["distance og tempoplan", "løb"]], fi: [["reitti ja profiili", "reitti"], ["päivä ja vauhtisuunnitelma", "kisa"]],
+  fr: [["parcours et profil", "parcours"], ["date et plan d’allure", "course"]], es: [["recorrido y perfil", "recorrido"], ["fecha y plan de ritmo", "carrera"]] };
 
 function table(caption: string, cols: string[], rows: string[][], numeric: number[]): string {
   return `<div class="tw"><table><caption>${esc(caption)}</caption><thead><tr>${cols.map((c, i) => `<th scope="col"${numeric.includes(i) ? ' class="n"' : ""}>${esc(c)}</th>`).join("")}</tr></thead><tbody>`
@@ -1208,7 +1247,7 @@ function frame(f: Frame): string {
   const security = securityMeta([f.script, f.module].filter((x): x is string => !!x));
   return `<!doctype html><html lang="${f.lang}"><head><meta charset="utf-8">${security}<meta name="viewport" content="width=device-width,initial-scale=1">${smartBannerMeta(f.appId)}
 <title>${esc(f.title)}</title><meta name="description" content="${esc(f.description)}">${f.noindex ? '<meta name="robots" content="noindex,follow">' : `<meta name="robots" content="max-image-preview:large"><link rel="canonical" href="${esc(abs(f.path))}">`}${alt}
-${og}<meta name="theme-color" content="#0D1119"><link rel="icon" href="${root}logo.png"><style>${f.css}</style>${(f.ld ?? []).map(jsonLd).join("")}</head><body>
+${og}<meta name="theme-color" content="#0D1119"><link rel="icon" href="${root}favicon.ico" sizes="32x32"><link rel="icon" href="${root}apple-touch-icon.png" type="image/png" sizes="180x180"><link rel="apple-touch-icon" href="${root}apple-touch-icon.png"><style>${f.css}</style>${(f.ld ?? []).map(jsonLd).join("")}</head><body>
 <a class="skip" href="#main">${esc(t.skip)}</a><div class="wrap"><header><a class="brand" href="${root}${c.home}"><img src="${root}logo-80.png" alt="" width="40" height="40">MILA</a>${switcher ? `<nav class="lang" aria-label="${esc(t.langNav)}">${switcher}</nav>` : ""}</header>
 ${crumbs}
 <main id="main">${f.body}</main>
@@ -1241,7 +1280,9 @@ type Ctx = { today: string; css: string; appStore: string; active: Race[]; slugs
   sceneJs?: boolean;
   /** seo: the App Store id for the Smart App Banner (none until launch), the hubs, and the races whose title another race shares (their
    *  titles say the place too, so every title on the site is its own). */
-  appId?: string | null; hubs?: Hub[]; titleClash?: Set<string> };
+  appId?: string | null; hubs?: Hub[]; titleClash?: Set<string>;
+  /** seo round 2, 2026-11-02: the approved guides, linked quietly from the race index in the languages they have. */
+  guides?: Guide[] };
 
 /** One race's page in one language. */
 export function racePage(r: Race, lang: Lang, ctx: Ctx): string {
@@ -1395,9 +1436,11 @@ export function indexPage(lang: Lang, page: number, pages: number, races: Race[]
   const hero = `<div class="race-hero"><div class="eyebrow">${esc(t.races)}</div><h1>${esc(t.indexH1)}${page > 1 ? ` – ${esc(t.pageN(page))}` : ""}</h1><p class="lead">${esc(t.indexLead)}</p><p class="meta">${esc(t.count(total))}</p><div class="ctas">${storeBadge(path, lang, ctx.appStore)}</div><p class="brandline">${esc(t.brandLine)}</p><p class="note">${esc(t.notAffiliatedAll)}</p></div>`;
   // seo: the hubs on the first page (every other page reaches them through it)
   const browse = page === 1 ? hubNav(ctx.hubs ?? [], lang, path, S[lang].browseH) : "";
+  const guides = page === 1 ? (ctx.guides ?? []).filter((g) => guideLangs(g).includes(lang)) : [];
+  const guideNav = guides.length ? `<section aria-labelledby="h-guides"><h2 id="h-guides">${esc(S[lang].guidesCrumb)}</h2><ul class="hubs">${guides.map((g) => `<li><a href="${esc(rel(path, guidePath(lang, g.slug[lang]!)))}">${esc(g[lang]!.title)}</a></li>`).join("")}</ul></section>` : "";
   return frame({ lang, path, title: `${t.indexTitle}${page > 1 ? ` – ${t.pageN(page)}` : ""} | Mila`, description: page > 1 ? `${S[lang].indexDesc} (${t.pageN(page)})` : S[lang].indexDesc, css: ctx.css, today, alternates, appId: ctx.appId,
     og: { ...ctx.ogImage(null, lang), alt: t.ogDefault }, ld: [crumbsLd([{ name: t.home, path: L[lang].home }, { name: t.races, path: indexPath(lang) }])],
-    body: `${hero}${browse}${filter}\n${list}\n${pager}`, script: filterScript, crumbs: [{ name: t.home, path: L[lang].home }, { name: t.races }] });
+    body: `${hero}${browse}${guideNav}${filter}\n${list}\n${pager}`, script: filterScript, crumbs: [{ name: t.home, path: L[lang].home }, { name: t.races }] });
 }
 
 // ------------------------------------------------------------------------------------------------------------- seo: hubs, FAQ, pace table, guides, banner, IndexNow
@@ -2020,7 +2063,7 @@ export async function generate(o: { out: string; races: Race[]; ids?: Set<string
   const hubs = buildHubs(active, today), titles = new Map<string, string[]>();
   for (const r of active) { const k = pageTitle(r, "sv"); titles.set(k, [...(titles.get(k) ?? []), r.id]); }
   const titleClash = new Set([...titles.values()].filter((ids) => ids.length > 1).flat());
-  const ctx: Ctx = { today, css, appStore, active, slugs, ogImage, sceneJs: await exists("scene.js"), appId: smartBannerMeta(o.appStoreId) ? o.appStoreId : null, hubs, titleClash };
+  const ctx: Ctx = { today, css, appStore, active, slugs, ogImage, sceneJs: await exists("scene.js"), appId: smartBannerMeta(o.appStoreId) ? o.appStoreId : null, hubs, titleClash, guides: o.guides };
 
   // 4. the race pages, and the pages of races that left; every indexed page's lastmod moves only when its content does
   const pages: State["pages"] = {};

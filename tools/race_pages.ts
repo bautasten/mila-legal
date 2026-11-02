@@ -1207,28 +1207,34 @@ export function nearby(r: Race, all: Race[], today: string): Race[] {
 // ------------------------------------------------------------------------------------------------------------- the page frame
 
 const RACE_CSS = `[hidden]{display:none!important}.skip{position:absolute;left:-9999px;top:0}.skip:focus{left:12px;top:12px;z-index:9;background:var(--surface);color:var(--ink);padding:8px 12px;border-radius:8px}
-.crumbs ol{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px;font-size:14px;color:var(--muted)}.crumbs li+li:before{content:"›";margin-right:6px}.crumbs a{color:var(--ink2);text-decoration:none}
-.race-hero{padding:22px 0 40px}.race-hero h1{margin-bottom:12px}
-.race-hero.scened{position:relative;isolation:isolate;padding:28px 24px 30px;margin-top:8px;border-radius:22px;overflow:hidden}.race-hero.scened::before{content:"";position:absolute;inset:0;z-index:-2;background:var(--scene) center 60%/cover no-repeat}
-.race-hero.scened::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(13,17,25,.88),rgba(13,17,25,.82) 60%,rgba(13,17,25,.7)),linear-gradient(0deg,rgba(13,17,25,.9),rgba(13,17,25,0) 45%)}.meta{font-size:18px;color:var(--ink2);margin:0 0 6px}.cd{color:var(--good);font-weight:600}
+.crumbs ol{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px;font-size:14px;color:var(--muted)}.crumbs li+li:before{content:"›";margin-right:6px}.crumbs a{color:var(--ink2);text-decoration:none}.crumbs a:hover{color:var(--ink)}
+.race-hero{padding:clamp(28px,5vw,64px) 0 clamp(40px,6vw,72px)}.race-hero h1{margin:16px 0 18px;max-width:14em}.race-hero .lead{margin-bottom:6px}
+.race-hero[data-scene]{position:relative;isolation:isolate;margin:10px calc(50% - 50vw) 0;padding:clamp(56px,9vw,140px) max(clamp(16px,4vw,40px),calc(50vw - 560px)) clamp(36px,5vw,64px);overflow:hidden;--sy:0px}
+.race-hero.scened::before{content:"";position:absolute;inset:-80px 0 0;z-index:-2;background:var(--scene) center 60%/cover no-repeat;transform:translateY(var(--sy))}
+.race-hero.scened::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(13,17,25,.84),rgba(13,17,25,.55) 55%,rgba(13,17,25,.2)),linear-gradient(0deg,var(--bg),rgba(13,17,25,0) 45%)}
+.meta{font-size:clamp(16px,1.4vw,18px);color:var(--ink2);margin:0 0 6px;max-width:46em}.cd{color:var(--good);font-weight:600}
 .badge{display:inline-block;font-size:13px;border:1px solid var(--line);border-radius:999px;padding:1px 10px;color:var(--ink2);margin-left:8px;vertical-align:2px}
-.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin:26px 0 0}.facts div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 16px}.facts dt{font-size:12.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;overflow-wrap:anywhere;hyphens:auto}.facts dd{margin:2px 0 0;font-size:18px;font-weight:700;line-height:1.35}
-figure{margin:0}.chart{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:10px}.chart svg{display:block;width:100%;height:auto}figcaption{font-size:14px;color:var(--muted);margin-top:8px}
-.pf{fill:rgba(110,143,255,.22)}.pl{fill:none;stroke:var(--accent);stroke-width:2.2;stroke-linejoin:round}.gl{stroke:var(--line);stroke-width:1}.ax{fill:var(--muted);font-size:12px}.am{fill:var(--good);stroke:var(--surface);stroke-width:2}.aml{stroke:var(--good);stroke-dasharray:3 4;opacity:.6}.rt{fill:none;stroke:var(--accent);stroke-width:3;stroke-linejoin:round;stroke-linecap:round}.st{fill:var(--good)}.fi{fill:var(--ink)}.sb{stroke:var(--ink2);stroke-width:2}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start}.prose p{color:var(--ink2);max-width:42em}main h3{font-size:18px;margin:22px 0 8px}main ul{color:var(--ink2)}
-.tw{overflow-x:auto;margin-bottom:10px}table{width:100%;border-collapse:collapse;font-size:15.5px}caption{text-align:left;color:var(--muted);font-size:14px;padding-bottom:6px}th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--muted);font-weight:600;font-size:14px}td{color:var(--ink2)}.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}td:first-child{white-space:nowrap}
-.ctabox{background:var(--surface);border:1px solid var(--accent);border-radius:20px;padding:28px;margin:0 0 44px}.ctabox h2{font-size:24px}.ctabox .ctas{margin-top:18px}.brandline{font-weight:800;font-size:20px;margin:18px 0 0;color:var(--ink)}
-.list{list-style:none;margin:0;padding:0}.list li{padding:12px 0;border-bottom:1px solid var(--line)}.list a{font-weight:700;text-decoration:none}.list span{display:block;color:var(--ink2);font-size:15px}
-.filter{display:flex;flex-wrap:wrap;gap:14px;margin:0 0 10px}.filter label{flex:1 1 200px;margin:0;color:var(--ink2)}section.grp{padding:28px 0}.grp h3{font-size:14px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin:20px 0 2px}
-.hubs{display:flex;flex-wrap:wrap;gap:8px 18px;list-style:none;margin:0 0 8px;padding:0}.faq h3{margin-top:18px}.faq p{color:var(--ink2);max-width:42em;margin:4px 0}
-.pager{display:flex;gap:10px;flex-wrap:wrap;padding:30px 0}.pager a,.pager span{border:1px solid var(--line);border-radius:10px;padding:8px 14px;text-decoration:none}.pager [aria-current]{background:var(--surface);color:var(--ink)}
-@media (max-width:820px){.two{grid-template-columns:1fr}.race-hero.scened{padding:22px 18px 26px;border-radius:18px}.race-hero.scened::after{background:rgba(13,17,25,.86)}}`;
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1px;margin:34px 0 0;background:var(--line);border:1px solid var(--line);border-radius:18px;overflow:hidden}.facts div{background:rgba(13,17,25,.82);padding:14px 18px 16px}
+.facts dt{font-family:var(--display);font-weight:600;font-size:13.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;overflow-wrap:anywhere;hyphens:auto}.facts dd{margin:4px 0 0;font-family:var(--display);font-size:30px;font-weight:700;line-height:1.05}
+figure{margin:0}.chart{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:clamp(10px,1.6vw,18px)}.chart svg{display:block;width:100%;height:auto}figcaption{font-size:14px;color:var(--muted);margin-top:10px;max-width:60em}
+.pf{fill:rgba(92,145,255,.16)}.pl{fill:none;stroke:var(--accent);stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round}.gl{stroke:var(--line);stroke-width:1}.ax{fill:var(--muted);font-size:12px}.am{fill:var(--good);stroke:var(--surface);stroke-width:2}.aml{stroke:var(--good);stroke-dasharray:3 4;opacity:.6}.rt{fill:none;stroke:var(--accent);stroke-width:3;stroke-linejoin:round;stroke-linecap:round}.st{fill:var(--good)}.fi{fill:var(--ink)}.sb{stroke:var(--ink2);stroke-width:2}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,64px);align-items:start}.prose p{color:var(--ink2);max-width:42em}main h3{font-size:24px;margin:28px 0 10px}main ul{color:var(--ink2)}
+.tw{overflow-x:auto;margin-bottom:10px}table{width:100%;border-collapse:collapse;font-size:15.5px}caption{text-align:left;color:var(--muted);font-size:14px;padding-bottom:8px}th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top}th{font-family:var(--display);color:var(--muted);font-weight:600;font-size:14px;text-transform:uppercase;letter-spacing:.08em}td{color:var(--ink2)}tbody tr:hover td{background:var(--surface)}.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}td:first-child{white-space:nowrap}
+.ctabox{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:clamp(24px,4vw,48px);margin:0 0 clamp(48px,6vw,80px)}.ctabox h2{font-size:clamp(32px,4vw,44px)}.ctabox .sub{margin-bottom:0}.ctabox .ctas{margin-top:22px}.brandline{font-size:clamp(26px,3vw,34px);line-height:1;margin:22px 0 0;color:var(--ink)}
+.list{list-style:none;margin:0;padding:0}.list li{border-bottom:1px solid var(--line);padding:14px 0}.list a{font-family:var(--display);font-weight:600;font-size:23px;line-height:1.15;text-decoration:none;color:var(--ink);transition:color .2s}.list a:hover{color:var(--accent)}.list span{display:block;color:var(--ink2);font-size:15px;margin-top:2px}
+.filter{display:flex;flex-wrap:wrap;gap:14px;margin:0 0 10px;padding:clamp(28px,4vw,40px) 0 0}.filter label{flex:1 1 200px;margin:0;color:var(--ink2)}section.grp{padding:clamp(36px,5vw,56px) 0}div.grp{padding:0}.grp h3{font-family:var(--display);font-size:15px;font-weight:600;text-transform:uppercase;letter-spacing:.16em;color:var(--muted);margin:28px 0 4px}
+.hubs{display:flex;flex-wrap:wrap;gap:10px;list-style:none;margin:0 0 8px;padding:0}.hubs a{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:7px 15px;color:var(--ink);text-decoration:none;font-size:15px;transition:border-color .2s,background-color .2s}.hubs a:hover{border-color:var(--accent);background:var(--surface)}
+article>section,main>section:not(.grp){padding:clamp(48px,6vw,88px) 0}.faq h3{margin-top:26px}.faq p{color:var(--ink2);max-width:42em;margin:6px 0}
+.pager{display:flex;gap:8px;flex-wrap:wrap;padding:36px 0}.pager a,.pager span{border:1px solid var(--line);border-radius:12px;padding:8px 15px;text-decoration:none;min-width:44px;text-align:center}.pager [aria-current]{background:var(--surface);color:var(--ink)}
+@media (max-width:900px){.two{grid-template-columns:1fr}.race-hero[data-scene]{padding-top:48px}.race-hero.scened::after{background:linear-gradient(0deg,var(--bg),rgba(13,17,25,.82) 40%),rgba(13,17,25,.6)}.facts dd{font-size:26px}}`;
 /** Used when the output holds no site.css: the site's dark palette and frame. */
-const FALLBACK_CSS = `:root{color-scheme:dark;--bg:#0D1119;--surface:#151B26;--ink:#E8ECF3;--ink2:#AEB7C6;--muted:#7F8A9C;--line:#263041;--accent:#5C91FF;--good:#3CCB7F;--bad:#F2706B}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,system-ui,sans-serif;line-height:1.6}a{color:var(--accent)}.wrap{max-width:1040px;margin:0 auto;padding:0 20px}header{display:flex;align-items:center;justify-content:space-between;padding:22px 0}.brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:22px;color:var(--ink);text-decoration:none}.brand img{width:40px;height:40px;border-radius:10px}.lang{display:flex;gap:8px}.lang a{color:var(--ink2);text-decoration:none;font-size:15px;border:1px solid var(--line);padding:6px 12px;border-radius:999px}h1{font-size:clamp(34px,5.4vw,60px);line-height:1.06;margin:12px 0 18px}h2{font-size:26px;margin:0 0 10px}.eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:13px;color:var(--accent);font-weight:700}.lead{font-size:19px;color:var(--ink2)}.cta{display:inline-block;background:var(--accent);color:#0D1119;padding:14px 22px;border-radius:12px;font-weight:700;text-decoration:none}.ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}.cta.alt{background:transparent;color:var(--ink);border:1px solid var(--line)}.note{font-size:14px;color:var(--muted)}section{padding:56px 0;border-top:1px solid var(--line)}.sub{color:var(--ink2)}select{width:100%;font:inherit;color:var(--ink);background:var(--surface);padding:11px;border:1px solid var(--line);border-radius:10px}footer{padding:34px 0 50px;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}footer a{color:var(--ink2);margin-right:16px}`;
+const FALLBACK_CSS = `:root{color-scheme:dark;--bg:#0D1119;--surface:#151B26;--ink:#E8ECF3;--ink2:#AEB7C6;--muted:#7F8A9C;--line:#263041;--accent:#5C91FF;--good:#3CCB7F;--bad:#F2706B}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,system-ui,sans-serif;line-height:1.6}a{color:var(--accent)}.wrap{max-width:1040px;margin:0 auto;padding:0 20px}header{display:flex;align-items:center;justify-content:space-between;padding:22px 0}.brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:22px;color:var(--ink);text-decoration:none}.brand img{width:40px;height:40px;border-radius:10px}.lang{display:flex;gap:8px}.lang a{color:var(--ink2);text-decoration:none;font-size:15px;border:1px solid var(--line);padding:6px 12px;border-radius:999px}h1{font-size:clamp(34px,5.4vw,60px);line-height:1.06;margin:12px 0 18px}h2{font-size:26px;margin:0 0 10px}.eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:13px;color:var(--accent);font-weight:700}.lead{font-size:19px;color:var(--ink2)}.cta{display:inline-block;background:var(--accent);color:#0D1119;padding:14px 22px;border-radius:12px;font-weight:700;text-decoration:none}.ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}.cta.alt{background:transparent;color:var(--ink);border:1px solid var(--line)}.note{font-size:14px;color:var(--muted)}section{padding:56px 0;border-top:1px solid var(--line)}.sub{color:var(--ink2)}select{width:100%;font:inherit;color:var(--ink);background:var(--surface);padding:11px;border:1px solid var(--line);border-radius:10px}footer{padding:34px 0 50px;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}footer a{color:var(--ink2);margin-right:16px}body{overflow-x:clip}.sr{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}`;
 const minCss = (css: string) => css.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\s*\n\s*/g, "").replace(/\s{2,}/g, " ").trim();
 
 type Frame = {
   lang: Lang; path: string; title: string; description: string; css: string; body: string; today: string;
+  /** The site has motion.js (redesign 2026-11): the page loads it, as the last thing in the body. */
+  motion?: boolean;
   alternates?: Partial<Record<Lang, string>> | null; noindex?: boolean; og?: { image: string; alt: string; large: boolean }; ld?: object[]; script?: string; module?: string;
   crumbs: { name: string; path?: string }[];
   /** The app's App Store id: Apple's Smart App Banner on the page (seo; off while it is not set). */
@@ -1244,14 +1250,16 @@ function frame(f: Frame): string {
   const switcher = f.alternates ? langs.filter((l) => l !== f.lang).map((l) => `<a href="${esc(rel(f.path, f.alternates![l]!))}" hreflang="${l}" lang="${l}">${T[l].langName}</a>`).join("") : "";
   const crumbs = `<nav class="crumbs" aria-label="${esc(t.crumbs)}"><ol>${f.crumbs.map((x, i) => i === f.crumbs.length - 1 ? `<li aria-current="page">${esc(x.name)}</li>` : `<li><a href="${esc(rel(f.path, x.path ?? ""))}">${esc(x.name)}</a></li>`).join("")}</ol></nav>`;
   // the page's own policy: scripts from the site, and this page's inline ones by their hash (site_csp.ts)
+  // redesign 2026-11: the display face preloaded (site.css holds its @font-face) and the site's motion (motion.js, from the site, so
+  // the policy is unchanged); both outside <main>, so no page's lastmod moves for them
   const security = securityMeta([f.script, f.module].filter((x): x is string => !!x));
   return `<!doctype html><html lang="${f.lang}"><head><meta charset="utf-8">${security}<meta name="viewport" content="width=device-width,initial-scale=1">${smartBannerMeta(f.appId)}
 <title>${esc(f.title)}</title><meta name="description" content="${esc(f.description)}">${f.noindex ? '<meta name="robots" content="noindex,follow">' : `<meta name="robots" content="max-image-preview:large"><link rel="canonical" href="${esc(abs(f.path))}">`}${alt}
-${og}<meta name="theme-color" content="#0D1119"><link rel="icon" href="${root}favicon.ico" sizes="32x32"><link rel="icon" href="${root}apple-touch-icon.png" type="image/png" sizes="180x180"><link rel="apple-touch-icon" href="${root}apple-touch-icon.png"><style>${f.css}</style>${(f.ld ?? []).map(jsonLd).join("")}</head><body>
+${og}<meta name="theme-color" content="#0D1119"><link rel="icon" href="${root}favicon.ico" sizes="32x32"><link rel="icon" href="${root}apple-touch-icon.png" type="image/png" sizes="180x180"><link rel="apple-touch-icon" href="${root}apple-touch-icon.png"><link rel="preload" href="${root}fonts/BarlowCondensed-Bold-latin.woff2" as="font" type="font/woff2" crossorigin><style>${f.css}</style>${(f.ld ?? []).map(jsonLd).join("")}</head><body>
 <a class="skip" href="#main">${esc(t.skip)}</a><div class="wrap"><header><a class="brand" href="${root}${c.home}"><img src="${root}logo-80.png" alt="" width="40" height="40">MILA</a>${switcher ? `<nav class="lang" aria-label="${esc(t.langNav)}">${switcher}</nav>` : ""}</header>
 ${crumbs}
 <main id="main">${f.body}</main>
-<footer><a href="${root}${c.support}">${esc(t.support)}</a><a href="${root}${c.privacy}">${esc(t.privacy)}</a><a href="${root}${c.terms}">${esc(t.terms)}</a><a href="${root}${c.support}#provider">${esc(t.contact)}</a><a href="${root}${c.support}?topic=report&amp;ref=${encodeURIComponent(abs(f.path))}#kontakt" rel="nofollow">${esc(t.report)}</a><br><br>${esc(t.notAffiliatedAll)}<br><br>© ${f.today.slice(0, 4)} Mila</footer></div>${f.script ? `<script>${f.script}</script>` : ""}${f.module ? `<script type="module">${f.module}</script>` : ""}</body></html>
+<footer><a href="${root}${c.support}">${esc(t.support)}</a><a href="${root}${c.privacy}">${esc(t.privacy)}</a><a href="${root}${c.terms}">${esc(t.terms)}</a><a href="${root}${c.support}#provider">${esc(t.contact)}</a><a href="${root}${c.support}?topic=report&amp;ref=${encodeURIComponent(abs(f.path))}#kontakt" rel="nofollow">${esc(t.report)}</a><br><br>${esc(t.notAffiliatedAll)}<br><br>© ${f.today.slice(0, 4)} Mila</footer></div>${f.script ? `<script>${f.script}</script>` : ""}${f.module ? `<script type="module">${f.module}</script>` : ""}${f.motion ? `<script src="${root}motion.js"></script>` : ""}</body></html>
 `;
 }
 /** Apple's App Store badge linking to the app: Apple's own localized artwork (the site's badges/, from Apple's marketing tools), never a
@@ -1267,7 +1275,8 @@ const crumbsLd = (items: { name: string; path: string }[]) => ({ "@context": "ht
 /** The browser refines the countdown to exact days (the page itself says it in coarse steps). */
 const cdScript = (lang: Lang) => `(()=>{const w=${JSON.stringify(T[lang].cd)};for(const e of document.querySelectorAll(".cd[data-day]")){const n=Math.round((Date.parse(e.dataset.day+"T12:00:00")-Date.now())/864e5),m=Math.round(n/30.44);e.textContent=n<0?w.past:n===0?w.today:n===1?w.tomorrow:n<14?w.days.replace("#",n):n<60?w.weeks.replace("#",Math.floor(n/7)):w.months.replace("#",m)}})();`;
 /** The hero's scene, drawn in the browser by the site's scene.js (scene.ts) from the spec in data-scene, as wide as the hero is; the
- *  class "scened" turns on its frame and scrim (RACE_CSS). Without the script the hero stays as it is. */
+ *  class "scened" turns on its picture and scrim (RACE_CSS; the full-width frame is there from the start, so nothing shifts). Without
+ *  the script the hero stays as it is. */
 export const sceneScript = (src: string) => "import{sceneSvg}from" + JSON.stringify(src)
   + ";const e=document.querySelector('.race-hero[data-scene]');if(e){const b=e.getBoundingClientRect(),h=Math.round(Math.min(1600,Math.max(500,1200*b.height/Math.max(1,b.width)))),"
   + "s=sceneSvg(JSON.parse(e.dataset.scene),{width:1200,height:h,idPrefix:'h'});e.style.setProperty('--scene','url(\"data:image/svg+xml;charset=utf-8,'+encodeURIComponent(s)+'\")');e.classList.add('scened')}";
@@ -1278,6 +1287,8 @@ const filterScript = `(()=>{const f=document.querySelector("form.filter");if(!f)
 type Ctx = { today: string; css: string; appStore: string; active: Race[]; slugs: Map<string, string>; ogImage: (r: Race | null, lang: Lang) => { image: string; large: boolean };
   /** The site has scene.js: the hero gets its scene in the browser. */
   sceneJs?: boolean;
+  /** The site has motion.js: race pages, indexes, hubs and guides load it. */
+  motionJs?: boolean;
   /** seo: the App Store id for the Smart App Banner (none until launch), the hubs, and the races whose title another race shares (their
    *  titles say the place too, so every title on the site is its own). */
   appId?: string | null; hubs?: Hub[]; titleClash?: Set<string>;
@@ -1386,7 +1397,7 @@ export function racePage(r: Race, lang: Lang, ctx: Ctx): string {
       ...(r.organizer ? { organizer: { "@type": "Organization", name: r.organizer, ...(r.url ? { url: r.url } : {}) } } : {}),
     });
   }
-  return frame({ lang, path, title: pageTitle(r, lang, ctx.titleClash?.has(r.id)), description, css: ctx.css, today, alternates, appId: ctx.appId, og: { ...og, alt: bare ? t.ogAltNoCourse(title) : t.ogAlt(title) }, ld,
+  return frame({ lang, path, title: pageTitle(r, lang, ctx.titleClash?.has(r.id)), description, css: ctx.css, today, alternates, appId: ctx.appId, motion: ctx.motionJs, og: { ...og, alt: bare ? t.ogAltNoCourse(title) : t.ogAlt(title) }, ld,
     body: `<article>${hero}${cta}${sections.join("\n")}</article>`, script: r.next_date && r.next_date >= today ? cdScript(lang) : undefined,
     module: ctx.sceneJs ? sceneScript(rel(path, "scene.js")) : undefined,
     crumbs: [{ name: t.home, path: L[lang].home }, { name: t.races, path: indexPath(lang) }, { name: title }] });
@@ -1438,7 +1449,7 @@ export function indexPage(lang: Lang, page: number, pages: number, races: Race[]
   const browse = page === 1 ? hubNav(ctx.hubs ?? [], lang, path, S[lang].browseH) : "";
   const guides = page === 1 ? (ctx.guides ?? []).filter((g) => guideLangs(g).includes(lang)) : [];
   const guideNav = guides.length ? `<section aria-labelledby="h-guides"><h2 id="h-guides">${esc(S[lang].guidesCrumb)}</h2><ul class="hubs">${guides.map((g) => `<li><a href="${esc(rel(path, guidePath(lang, g.slug[lang]!)))}">${esc(g[lang]!.title)}</a></li>`).join("")}</ul></section>` : "";
-  return frame({ lang, path, title: `${t.indexTitle}${page > 1 ? ` – ${t.pageN(page)}` : ""} | Mila`, description: page > 1 ? `${S[lang].indexDesc} (${t.pageN(page)})` : S[lang].indexDesc, css: ctx.css, today, alternates, appId: ctx.appId,
+  return frame({ lang, path, title: `${t.indexTitle}${page > 1 ? ` – ${t.pageN(page)}` : ""} | Mila`, description: page > 1 ? `${S[lang].indexDesc} (${t.pageN(page)})` : S[lang].indexDesc, css: ctx.css, today, alternates, appId: ctx.appId, motion: ctx.motionJs,
     og: { ...ctx.ogImage(null, lang), alt: t.ogDefault }, ld: [crumbsLd([{ name: t.home, path: L[lang].home }, { name: t.races, path: indexPath(lang) }])],
     body: `${hero}${browse}${guideNav}${filter}\n${list}\n${pager}`, script: filterScript, crumbs: [{ name: t.home, path: L[lang].home }, { name: t.races }] });
 }
@@ -1817,7 +1828,7 @@ export function hubPage(h: Hub, lang: Lang, ctx: Ctx): string {
   const ld = [crumbsLd([{ name: t.home, path: L[lang].home }, { name: t.races, path: indexPath(lang) }, { name: h.name[lang], path }]),
     { "@context": "https://schema.org", "@type": "ItemList", name: h.name[lang], numberOfItems: rs.length,
       itemListElement: rs.slice(0, 100).map((r, i) => ({ "@type": "ListItem", position: i + 1, url: abs(racePath(lang, ctx.slugs.get(r.id)!)), name: raceTitle(r, lang) })) }];
-  return frame({ lang, path, title: `${h.name[lang]} – ${s.hubTail} | Mila`, description: s.hubDesc(h.name[lang], rs.length), css: ctx.css, today, alternates, appId: ctx.appId,
+  return frame({ lang, path, title: `${h.name[lang]} – ${s.hubTail} | Mila`, description: s.hubDesc(h.name[lang], rs.length), css: ctx.css, today, alternates, appId: ctx.appId, motion: ctx.motionJs,
     og: { ...ctx.ogImage(null, lang), alt: h.name[lang] }, ld, body: `${hero}${list}${more}${back}`,
     crumbs: [{ name: t.home, path: L[lang].home }, { name: t.races, path: indexPath(lang) }, { name: h.name[lang] }] });
 }
@@ -1908,7 +1919,7 @@ export function guidePage(g: Guide, lang: Lang, ctx: Ctx): string {
     ...(g.updated && isDay(g.updated) ? { dateModified: g.updated } : {}), image: [ctx.ogImage(null, lang).image],
     author: { "@type": "Organization", name: "Mila", url: `${SITE}/` }, publisher: { "@type": "Organization", name: "Mila", url: `${SITE}/`, logo: { "@type": "ImageObject", url: `${SITE}/logo.png` } } },
     crumbsLd([{ name: t.home, path: L[lang].home }, { name: S[lang].guidesCrumb, path }, { name: doc.title, path }])];
-  return frame({ lang, path, title: `${doc.title} | Mila`, description: doc.description, css: ctx.css, today: ctx.today, alternates, appId: ctx.appId,
+  return frame({ lang, path, title: `${doc.title} | Mila`, description: doc.description, css: ctx.css, today: ctx.today, alternates, appId: ctx.appId, motion: ctx.motionJs,
     og: { ...ctx.ogImage(null, lang), alt: doc.title }, ld, body: `<article class="prose"><h1>${esc(doc.title)}</h1>${body}</article>${cta}`,
     crumbs: [{ name: t.home, path: L[lang].home }, { name: doc.title }] });
 }
@@ -2063,7 +2074,7 @@ export async function generate(o: { out: string; races: Race[]; ids?: Set<string
   const hubs = buildHubs(active, today), titles = new Map<string, string[]>();
   for (const r of active) { const k = pageTitle(r, "sv"); titles.set(k, [...(titles.get(k) ?? []), r.id]); }
   const titleClash = new Set([...titles.values()].filter((ids) => ids.length > 1).flat());
-  const ctx: Ctx = { today, css, appStore, active, slugs, ogImage, sceneJs: await exists("scene.js"), appId: smartBannerMeta(o.appStoreId) ? o.appStoreId : null, hubs, titleClash, guides: o.guides };
+  const ctx: Ctx = { today, css, appStore, active, slugs, ogImage, sceneJs: await exists("scene.js"), motionJs: await exists("motion.js"), appId: smartBannerMeta(o.appStoreId) ? o.appStoreId : null, hubs, titleClash, guides: o.guides };
 
   // 4. the race pages, and the pages of races that left; every indexed page's lastmod moves only when its content does
   const pages: State["pages"] = {};

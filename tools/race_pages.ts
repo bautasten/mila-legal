@@ -7,9 +7,9 @@
 //   German   https://milacoach.app/de/laeufe/<slug>/    index /de/laeufe/   (/de/laeufe/seite/2/)
 //   Norwegian /nb/lop/<slug>/, Danish /da/lob/<slug>/, Finnish /fi/kisat/<slug>/, French /fr/courses/<slug>/, Spanish /es/carreras/<slug>/
 //            (pages 2… /nb/lop/side/2/, /da/lob/side/2/, /fi/kisat/sivu/2/, /fr/courses/page/2/, /es/carreras/pagina/2/)
-//   the share image /lopp/<slug>/og.png (1200×630: the course's profile and shape over the race's scene, rendered with resvg-wasm),
-//   the hero's scene drawn in the browser by /scene.js (scene.ts built by scene_js.sh) when the site has it, one default image per
-//   language (<index>/og.png), sitemap.xml (the site's own pages too) and robots.txt
+//   the share image /lopp/<slug>/og.png (1200×630: the course's profile and shape on the site's dark colour, rendered with resvg-wasm;
+//   no illustrated scene since site-calm 2026-11-02, the hero's scene spec stays as data-scene when the site has /scene.js), one default
+//   image per language (<index>/og.png), sitemap.xml (the site's own pages too) and robots.txt
 //
 // Slugs are lower-case ASCII from the race's name without its sponsors (displayName: a watch, shoe or title sponsor in front, "presented
 // by …" at the end) and distance, and do not change once published: lopp/slugs.json in the output keeps every race's slug (and the
@@ -37,7 +37,8 @@
 // Options: --out <dir> (default marketing-site next to this script), --feed (default the live feed), --today YYYY-MM-DD, --no-png,
 // --allow-mass-removal (accept a run that drops more than a third of the published races).
 
-import { raceSceneSpec, sceneLayers } from "./scene.ts";
+import { raceSceneSpec } from "./scene.ts";
+import { mapHash, type MapRenderer, mapRenderer, routeFrame } from "./race_maps.ts";
 import { securityMeta } from "./site_csp.ts";
 
 export const SITE = "https://milacoach.app";
@@ -105,7 +106,11 @@ export type State = {
   version: 1;
   /** The races on the site: their slug, name, first day, share image's hash, and the slugs they had before (each a page that sends the
    *  reader on). A race that left is not here (`removed` is only read from an older map, and purged). */
-  races: Record<string, { slug: string; name: string; first: string; removed?: string | null; og?: string; old?: string[] }>;
+  races: Record<string, { slug: string; name: string; first: string; removed?: string | null; og?: string; old?: string[];
+    /** site-calm: the course map's hash (race_maps.ts mapHash), set when lopp/<slug>/map.webp and map@2x.webp show this course. */
+    map?: string;
+    /** "<course+style hash>@<day>" when that map could not be drawn that day: tried again the next day, or when the hash changes. */
+    mapFailed?: string }>;
   pages: Record<string, { hash: string; lastmod: string }>;
   og: Record<string, string>;
   /** A hash of every slug a race that left had (slugHash): never given to another race, never a name in the map. */
@@ -115,7 +120,7 @@ export type State = {
   hubMoved?: Record<string, { lang: Lang; kind: HubKind; key: string }>;
 };
 export type PngRenderer = (svg: string) => Uint8Array | Promise<Uint8Array>;
-export type Report = { races: number; active: number; removed: string[]; added: string[]; moved: string[]; written: number; pngs: number;
+export type Report = { races: number; active: number; removed: string[]; added: string[]; moved: string[]; written: number; pngs: number; maps?: number;
   /** seo: the indexed addresses whose content changed in this run (new, edited or gone), for IndexNow; and the hub pages made. */
   changed: string[]; hubs: number };
 
@@ -287,7 +292,7 @@ const T = {
     profileDesc: (km: string, lo: string, hi: string, n: number) => `Höjden längs banans ${km}${n ? `, med ${n} ${n === 1 ? "vätskekontroll" : "vätskekontroller"} utmärkta` : ""}: från ${lo} till ${hi} m ö.h.`,
     dem: "Höjderna kommer från en höjdmodell, inte från banfilen.",
     runners: (n: number) => n === 1 ? "Höjderna är uppmätta av en löpare som sprungit loppet med Mila, inte hämtade ur en höjdmodell." : `Höjderna är uppmätta av ${n} löpare som sprungit loppet med Mila, inte hämtade ur en höjdmodell.`,
-    routeH: "Banan", routeTitle: (n: string) => `Banans sträckning för ${n}`,
+    routeH: "Banan", routeTitle: (n: string) => `Banans sträckning för ${n}`, mapAlt: (n: string) => `Karta över banan för ${n}`, osm: "© OpenStreetMap-bidragsgivare",
     routeDesc: (loop: boolean) => loop ? "Banans form sedd uppifrån, norr uppåt. Start och mål på samma plats." : "Banans form sedd uppifrån, norr uppåt, från start till mål.",
     legend: (loop: boolean, aid: boolean) => `${loop ? "Grön punkt: start och mål." : "Grön punkt: start. Vit punkt: mål."}${aid ? " Små gröna punkter: vätskekontroller." : ""}`,
     official: "Bana från arrangören", organiserPage: "arrangörens sida", upload: "Banan bygger på en banfil uppladdad i Mila och kan avvika från årets officiella bana.",
@@ -336,7 +341,7 @@ const T = {
     profileDesc: (km: string, lo: string, hi: string, n: number) => `Elevation along the ${km} course${n ? `, with ${n} aid ${n === 1 ? "station" : "stations"} marked` : ""}: from ${lo} to ${hi} m above sea level.`,
     dem: "Elevations come from an elevation model, not from the course file.",
     runners: (n: number) => n === 1 ? "Elevations were measured by a runner who ran the race with Mila, not taken from an elevation model." : `Elevations were measured by ${n} runners who ran the race with Mila, not taken from an elevation model.`,
-    routeH: "The course", routeTitle: (n: string) => `Course map of ${n}`,
+    routeH: "The course", routeTitle: (n: string) => `Course map of ${n}`, mapAlt: (n: string) => `Map of the course of ${n}`, osm: "© OpenStreetMap contributors",
     routeDesc: (loop: boolean) => loop ? "The course seen from above, north up. Start and finish in the same place." : "The course seen from above, north up, from start to finish.",
     legend: (loop: boolean, aid: boolean) => `${loop ? "Green dot: start and finish." : "Green dot: start. White dot: finish."}${aid ? " Small green dots: aid stations." : ""}`,
     official: "Course from the organizer", organiserPage: "organizer's website", upload: "The course is based on a course file uploaded in Mila and may differ from this year's official course.",
@@ -385,7 +390,7 @@ const T = {
     profileDesc: (km: string, lo: string, hi: string, n: number) => `Die Höhe entlang der ${km} langen Strecke${n ? `, mit ${n} ${n === 1 ? "markierter Verpflegungsstelle" : "markierten Verpflegungsstellen"}` : ""}: von ${lo} bis ${hi} m ü. M.`,
     dem: "Die Höhen stammen aus einem Höhenmodell, nicht aus der Streckendatei.",
     runners: (n: number) => n === 1 ? "Die Höhen wurden von einer Person gemessen, die den Lauf mit Mila gelaufen ist, nicht aus einem Höhenmodell übernommen." : `Die Höhen wurden von ${n} Läuferinnen und Läufern gemessen, die den Lauf mit Mila gelaufen sind, nicht aus einem Höhenmodell übernommen.`,
-    routeH: "Die Strecke", routeTitle: (n: string) => `Streckenverlauf von ${n}`,
+    routeH: "Die Strecke", routeTitle: (n: string) => `Streckenverlauf von ${n}`, mapAlt: (n: string) => `Karte der Strecke von ${n}`, osm: "© OpenStreetMap-Mitwirkende",
     routeDesc: (loop: boolean) => loop ? "Die Strecke von oben, Norden oben. Start und Ziel am selben Ort." : "Die Strecke von oben, Norden oben, vom Start bis ins Ziel.",
     legend: (loop: boolean, aid: boolean) => `${loop ? "Grüner Punkt: Start und Ziel." : "Grüner Punkt: Start. Weißer Punkt: Ziel."}${aid ? " Kleine grüne Punkte: Verpflegungsstellen." : ""}`,
     official: "Strecke vom Veranstalter", organiserPage: "Website des Veranstalters", upload: "Die Strecke beruht auf einer in Mila hochgeladenen Streckendatei und kann von der diesjährigen offiziellen Strecke abweichen.",
@@ -434,7 +439,7 @@ const T = {
     profileDesc: (km: string, lo: string, hi: string, n: number) => `Høyden langs løypas ${km}${n ? `, med ${n} ${n === 1 ? "drikkestasjon" : "drikkestasjoner"} markert` : ""}: fra ${lo} til ${hi} moh.`,
     dem: "Høydene kommer fra en høydemodell, ikke fra løypefilen.",
     runners: (n: number) => n === 1 ? "Høydene er målt av en løper som har løpt løpet med Mila, ikke hentet fra en høydemodell." : `Høydene er målt av ${n} løpere som har løpt løpet med Mila, ikke hentet fra en høydemodell.`,
-    routeH: "Løypa", routeTitle: (n: string) => `Løypetraseen for ${n}`,
+    routeH: "Løypa", routeTitle: (n: string) => `Løypetraseen for ${n}`, mapAlt: (n: string) => `Kart over løypa for ${n}`, osm: "© OpenStreetMap-bidragsytere",
     routeDesc: (loop: boolean) => loop ? "Løypa sett ovenfra, nord opp. Start og mål på samme sted." : "Løypa sett ovenfra, nord opp, fra start til mål.",
     legend: (loop: boolean, aid: boolean) => `${loop ? "Grønt punkt: start og mål." : "Grønt punkt: start. Hvitt punkt: mål."}${aid ? " Små grønne punkter: drikkestasjoner." : ""}`,
     official: "Løype fra arrangøren", organiserPage: "arrangørens side", upload: "Løypa bygger på en løypefil lastet opp i Mila og kan avvike fra årets offisielle løype.",
@@ -483,7 +488,7 @@ const T = {
     profileDesc: (km: string, lo: string, hi: string, n: number) => `Højden langs rutens ${km}${n ? `, med ${n} ${n === 1 ? "væskedepot" : "væskedepoter"} markeret` : ""}: fra ${lo} til ${hi} m o.h.`,
     dem: "Højderne kommer fra en højdemodel, ikke fra rutefilen.",
     runners: (n: number) => n === 1 ? "Højderne er målt af en løber, der har gennemført løbet med Mila, ikke hentet fra en højdemodel." : `Højderne er målt af ${n} løbere, der har gennemført løbet med Mila, ikke hentet fra en højdemodel.`,
-    routeH: "Ruten", routeTitle: (n: string) => `Rutens forløb for ${n}`,
+    routeH: "Ruten", routeTitle: (n: string) => `Rutens forløb for ${n}`, mapAlt: (n: string) => `Kort over ruten for ${n}`, osm: "© OpenStreetMap-bidragydere",
     routeDesc: (loop: boolean) => loop ? "Ruten set oppefra, nord opad. Start og mål samme sted." : "Ruten set oppefra, nord opad, fra start til mål.",
     legend: (loop: boolean, aid: boolean) => `${loop ? "Grøn prik: start og mål." : "Grøn prik: start. Hvid prik: mål."}${aid ? " Små grønne prikker: væskedepoter." : ""}`,
     official: "Rute fra arrangøren", organiserPage: "arrangørens side", upload: "Ruten bygger på en rutefil uploadet i Mila og kan afvige fra årets officielle rute.",
@@ -532,7 +537,7 @@ const T = {
     profileDesc: (km: string, lo: string, hi: string, n: number) => `Korkeus ${km}:n reitin varrella${n ? `, ${n} ${n === 1 ? "juomapiste" : "juomapistettä"} merkitty` : ""}: ${lo}–${hi} m mpy.`,
     dem: "Korkeudet ovat korkeusmallista, eivät reittitiedostosta.",
     runners: (n: number) => n === 1 ? "Korkeudet on mitannut juoksija, joka on juossut kisan Milan kanssa; niitä ei ole otettu korkeusmallista." : `Korkeudet on mitannut ${n} juoksijaa, jotka ovat juosseet kisan Milan kanssa; niitä ei ole otettu korkeusmallista.`,
-    routeH: "Reitti", routeTitle: (n: string) => `Reitin kulku: ${n}`,
+    routeH: "Reitti", routeTitle: (n: string) => `Reitin kulku: ${n}`, mapAlt: (n: string) => `Reittikartta: ${n}`, osm: "© OpenStreetMapin tekijät",
     routeDesc: (loop: boolean) => loop ? "Reitti ylhäältä nähtynä, pohjoinen ylhäällä. Lähtö ja maali samassa paikassa." : "Reitti ylhäältä nähtynä, pohjoinen ylhäällä, lähdöstä maaliin.",
     legend: (loop: boolean, aid: boolean) => `${loop ? "Vihreä piste: lähtö ja maali." : "Vihreä piste: lähtö. Valkoinen piste: maali."}${aid ? " Pienet vihreät pisteet: juomapisteet." : ""}`,
     official: "Järjestäjän reitti", organiserPage: "järjestäjän sivu", upload: "Reitti perustuu Milaan ladattuun reittitiedostoon ja voi poiketa tämän vuoden virallisesta reitistä.",
@@ -581,7 +586,7 @@ const T = {
     profileDesc: (km: string, lo: string, hi: string, n: number) => `L’altitude le long des ${km} du parcours${n ? `, avec ${n} ${n === 1 ? "ravitaillement indiqué" : "ravitaillements indiqués"}` : ""} : de ${lo} à ${hi} m d’altitude.`,
     dem: "Les altitudes proviennent d’un modèle d’élévation, pas du fichier du parcours.",
     runners: (n: number) => n === 1 ? "Les altitudes ont été mesurées par une personne qui a couru l’épreuve avec Mila, et non tirées d’un modèle d’élévation." : `Les altitudes ont été mesurées par ${n} coureurs qui ont couru l’épreuve avec Mila, et non tirées d’un modèle d’élévation.`,
-    routeH: "Le parcours", routeTitle: (n: string) => `Tracé du parcours : ${n}`,
+    routeH: "Le parcours", routeTitle: (n: string) => `Tracé du parcours : ${n}`, mapAlt: (n: string) => `Carte du parcours : ${n}`, osm: "© les contributeurs d’OpenStreetMap",
     routeDesc: (loop: boolean) => loop ? "Le parcours vu du dessus, nord en haut. Départ et arrivée au même endroit." : "Le parcours vu du dessus, nord en haut, du départ à l’arrivée.",
     legend: (loop: boolean, aid: boolean) => `${loop ? "Point vert : départ et arrivée." : "Point vert : départ. Point blanc : arrivée."}${aid ? " Petits points verts : ravitaillements." : ""}`,
     official: "Parcours fourni par l’organisateur", organiserPage: "site de l’organisateur", upload: "Le parcours s’appuie sur un fichier importé dans Mila et peut différer du parcours officiel de cette année.",
@@ -630,7 +635,7 @@ const T = {
     profileDesc: (km: string, lo: string, hi: string, n: number) => `La altitud a lo largo de los ${km} del recorrido${n ? `, con ${n} ${n === 1 ? "avituallamiento marcado" : "avituallamientos marcados"}` : ""}: de ${lo} a ${hi} m s. n. m.`,
     dem: "Las altitudes proceden de un modelo de elevación, no del archivo del recorrido.",
     runners: (n: number) => n === 1 ? "Las altitudes las ha medido una persona que corrió la carrera con Mila; no proceden de un modelo de elevación." : `Las altitudes las han medido ${n} corredores que corrieron la carrera con Mila; no proceden de un modelo de elevación.`,
-    routeH: "El recorrido", routeTitle: (n: string) => `Trazado del recorrido de ${n}`,
+    routeH: "El recorrido", routeTitle: (n: string) => `Trazado del recorrido de ${n}`, mapAlt: (n: string) => `Mapa del recorrido de ${n}`, osm: "© colaboradores de OpenStreetMap",
     routeDesc: (loop: boolean) => loop ? "El recorrido visto desde arriba, con el norte arriba. Salida y meta en el mismo lugar." : "El recorrido visto desde arriba, con el norte arriba, de la salida a la meta.",
     legend: (loop: boolean, aid: boolean) => `${loop ? "Punto verde: salida y meta." : "Punto verde: salida. Punto blanco: meta."}${aid ? " Puntos verdes pequeños: avituallamientos." : ""}`,
     official: "Recorrido del organizador", organiserPage: "web del organizador", upload: "El recorrido se basa en un archivo subido a Mila y puede diferir del recorrido oficial de este año.",
@@ -876,6 +881,10 @@ export const indexPath = (lang: Lang, page = 1) => (page <= 1 ? `${L[lang].dir}/
 export const abs = (path: string) => `${SITE}/${path}`;
 const rel = (from: string, to: string) => "../".repeat(from.split("/").filter(Boolean).length) + to;
 const ogPath = (slug: string) => `lopp/${slug}/og.png`;
+/** The course maps drawn in one run at most (each takes a few seconds; the hourly job has 30 minutes). */
+export const MAPS_PER_RUN = 40;
+/** A course's map (site-calm): 600 wide at 1x, and the same at 2x. */
+const mapPath = (slug: string, x = 1) => `lopp/${slug}/map${x === 2 ? "@2x" : ""}.webp`;
 const ogDefaultPath = (lang: Lang) => `${L[lang].dir}/og.png`;
 
 // ------------------------------------------------------------------------------------------------------------- drawings
@@ -923,11 +932,8 @@ export function profileSvg(r: Race, lang: Lang): string {
 
 /** The course's shape as inline SVG, seen from above with north up (no map tiles): start, finish, aid stations and a scale bar. */
 export function routeSvg(r: Race, lang: Lang): string {
-  const pts = r.course!.pts, t = T[lang], W = 600, pad = 26, lat0 = (pts[0][0] * Math.PI) / 180;
-  const xs = pts.map((p) => p[1] * Math.cos(lat0)), ys = pts.map((p) => -p[0]);
-  const x0 = Math.min(...xs), y0 = Math.min(...ys), dx = Math.max(Math.max(...xs) - x0, 1e-4), dy = Math.max(Math.max(...ys) - y0, 1e-4);
-  const s = Math.min((W - 2 * pad) / dx, (440 - 2 * pad) / dy), H = Math.max(Math.round(dy * s + 2 * pad + 30), 190);
-  const ox = (W - dx * s) / 2, oy = 14 + (H - 30 - dy * s) / 2;
+  // the frame is shared with the course map (race_maps.ts), so the map lies exactly under this drawing
+  const pts = r.course!.pts, t = T[lang], { W, H, pad, lat0, s, x0, y0, ox, oy } = routeFrame(pts);
   const P = (lat: number, lon: number): [string, string] => [f1(ox + (lon * Math.cos(lat0) - x0) * s), f1(oy + (-lat - y0) * s)];
   const d = pts.map((p, i) => { const [x, y] = P(p[0], p[1]); return `${i ? "L" : "M"}${x} ${y}`; }).join("");
   const loop = isLoop(pts), [sx, sy] = P(pts[0][0], pts[0][1]), last = pts[pts.length - 1], [fx, fy] = P(last[0], last[1]);
@@ -980,14 +986,11 @@ export function ogSvg(r: Race): string {
     + `<text x="64" y="${f1(y + 6)}" font-size="32" fill="#AEB7C6">${esc(sub)}</text>${art}`
     + `<text x="1136" y="620" font-size="19" fill="#7F8A9C" text-anchor="end">milacoach.app</text></svg>`;
 }
-/** The race's scene behind its share image (scene.ts: the same picture as the page's hero), under a scrim heaviest behind the text on
- *  the left and along the bottom (the profile, the address); no grain, which only makes the PNG heavier at this size. */
-export function ogScene(r: Race): string {
-  const s = sceneLayers(raceSceneSpec(r, { startIso: startDate(r) }), { width: 1200, height: 630, idPrefix: "og", grain: false });
-  return `<defs>${s.defs}<linearGradient id="ogScrim" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0D1119" stop-opacity="0.88"/><stop offset="0.55" stop-color="#0D1119" stop-opacity="0.66"/><stop offset="1" stop-color="#0D1119" stop-opacity="0.45"/></linearGradient>`
-    + `<linearGradient id="ogFoot" x1="0" y1="0" x2="0" y2="1"><stop offset="0.55" stop-color="#0D1119" stop-opacity="0"/><stop offset="1" stop-color="#0D1119" stop-opacity="0.7"/></linearGradient></defs>`
-    + `<rect width="1200" height="630" fill="#0D1119"/><g transform="scale(${Math.round((1200 / s.unitsWide) * 1e6) / 1e6})">${s.body}</g>`
-    + `<rect width="1200" height="630" fill="url(#ogScrim)"/><rect width="1200" height="630" fill="url(#ogFoot)"/>`;
+/** The share image's background: the site's dark colour with the same faint warm light as the pages (site-calm, Patrik 2026-11-02:
+ *  no illustrated scene), under a foot that keeps the profile and the address clear. The course's own drawings carry the picture. */
+export function ogScene(_r: Race): string {
+  return `<defs><radialGradient id="ogGlow" cx="0.78" cy="0.12" r="0.62"><stop offset="0" stop-color="#F2B48C" stop-opacity="0.16"/><stop offset="0.55" stop-color="#F2B48C" stop-opacity="0.05"/><stop offset="1" stop-color="#F2B48C" stop-opacity="0"/></radialGradient></defs>`
+    + `<rect width="1200" height="630" fill="#0D1119"/><rect width="1200" height="630" fill="url(#ogGlow)"/>`;
 }
 /** The default share image of a language's race pages (the indexes, and races without their own image). */
 export function ogDefaultSvg(lang: Lang): string {
@@ -1209,15 +1212,15 @@ export function nearby(r: Race, all: Race[], today: string): Race[] {
 const RACE_CSS = `[hidden]{display:none!important}.skip{position:absolute;left:-9999px;top:0}.skip:focus{left:12px;top:12px;z-index:9;background:var(--surface);color:var(--ink);padding:8px 12px;border-radius:8px}
 .crumbs ol{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px;font-size:14px;color:var(--muted)}.crumbs li+li:before{content:"›";margin-right:6px}.crumbs a{color:var(--ink2);text-decoration:none}.crumbs a:hover{color:var(--ink)}
 .race-hero{padding:clamp(28px,5vw,64px) 0 clamp(40px,6vw,72px)}.race-hero h1{margin:16px 0 18px;max-width:14em}.race-hero .lead{margin-bottom:6px}
-.race-hero[data-scene]{position:relative;isolation:isolate;margin:10px calc(50% - 50vw) 0;padding:clamp(56px,9vw,140px) max(clamp(16px,4vw,40px),calc(50vw - 560px)) clamp(36px,5vw,64px);overflow:hidden;--sy:0px}
-.race-hero.scened::before{content:"";position:absolute;inset:-80px 0 0;z-index:-2;background:var(--scene) center 60%/cover no-repeat;transform:translateY(var(--sy))}
-.race-hero.scened::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(13,17,25,.84),rgba(13,17,25,.55) 55%,rgba(13,17,25,.2)),linear-gradient(0deg,var(--bg),rgba(13,17,25,0) 45%)}
+.race-hero,main>article.prose{position:relative;isolation:isolate}.race-hero::before,main>article.prose::before{content:"";position:absolute;z-index:-1;top:-120px;right:-12%;width:min(900px,90vw);height:520px;background:radial-gradient(closest-side,rgba(242,180,140,.11),rgba(242,180,140,.04) 55%,rgba(242,180,140,0));pointer-events:none}
+main>article>.race-hero+section[aria-labelledby="h-profile"]{border-top:0;padding:0 0 clamp(40px,5vw,64px)}
 .meta{font-size:clamp(16px,1.4vw,18px);color:var(--ink2);margin:0 0 6px;max-width:46em}.cd{color:var(--good);font-weight:600}
 .badge{display:inline-block;font-size:13px;border:1px solid var(--line);border-radius:999px;padding:1px 10px;color:var(--ink2);margin-left:8px;vertical-align:2px}
-.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1px;margin:34px 0 0;background:var(--line);border:1px solid var(--line);border-radius:18px;overflow:hidden}.facts div{background:rgba(13,17,25,.82);padding:14px 18px 16px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:0;margin:34px 0 0;border:1px solid var(--line);border-radius:18px;overflow:hidden}.facts div{background:var(--bg);padding:15px 18px 16px 19px;margin:-1px 0 0 -1px;box-shadow:inset 1px 0 0 var(--line),inset 0 1px 0 var(--line)}
 .facts dt{font-family:var(--display);font-weight:600;font-size:13.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;overflow-wrap:anywhere;hyphens:auto}.facts dd{margin:4px 0 0;font-family:var(--display);font-size:30px;font-weight:700;line-height:1.05}
 figure{margin:0}.chart{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:clamp(10px,1.6vw,18px)}.chart svg{display:block;width:100%;height:auto}figcaption{font-size:14px;color:var(--muted);margin-top:10px;max-width:60em}
 .pf{fill:rgba(92,145,255,.16)}.pl{fill:none;stroke:var(--accent);stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round}.gl{stroke:var(--line);stroke-width:1}.ax{fill:var(--muted);font-size:12px}.am{fill:var(--good);stroke:var(--surface);stroke-width:2}.aml{stroke:var(--good);stroke-dasharray:3 4;opacity:.6}.rt{fill:none;stroke:var(--accent);stroke-width:3;stroke-linejoin:round;stroke-linecap:round}.st{fill:var(--good)}.fi{fill:var(--ink)}.sb{stroke:var(--ink2);stroke-width:2}
+.chart.map{padding:6px}.mb{position:relative}.mb img{display:block;width:100%;height:auto;border-radius:12px;background:#151B26}.mb svg{position:absolute;inset:0;width:100%;height:100%}.map .rt{filter:drop-shadow(0 0 1.5px rgba(13,17,25,.95))}.osm{color:var(--muted)}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,64px);align-items:start}.prose p{color:var(--ink2);max-width:42em}main h3{font-size:24px;margin:28px 0 10px}main ul{color:var(--ink2)}
 .tw{overflow-x:auto;margin-bottom:10px}table{width:100%;border-collapse:collapse;font-size:15.5px}caption{text-align:left;color:var(--muted);font-size:14px;padding-bottom:8px}th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top}th{font-family:var(--display);color:var(--muted);font-weight:600;font-size:14px;text-transform:uppercase;letter-spacing:.08em}td{color:var(--ink2)}tbody tr:hover td{background:var(--surface)}.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}td:first-child{white-space:nowrap}
 .ctabox{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:clamp(24px,4vw,48px);margin:0 0 clamp(48px,6vw,80px)}.ctabox h2{font-size:clamp(32px,4vw,44px)}.ctabox .sub{margin-bottom:0}.ctabox .ctas{margin-top:22px}.brandline{font-size:clamp(26px,3vw,34px);line-height:1;margin:22px 0 0;color:var(--ink)}
@@ -1226,7 +1229,7 @@ figure{margin:0}.chart{background:var(--surface);border:1px solid var(--line);bo
 .hubs{display:flex;flex-wrap:wrap;gap:10px;list-style:none;margin:0 0 8px;padding:0}.hubs a{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:7px 15px;color:var(--ink);text-decoration:none;font-size:15px;transition:border-color .2s,background-color .2s}.hubs a:hover{border-color:var(--accent);background:var(--surface)}
 article>section,main>section:not(.grp){padding:clamp(48px,6vw,88px) 0}.faq h3{margin-top:26px}.faq p{color:var(--ink2);max-width:42em;margin:6px 0}
 .pager{display:flex;gap:8px;flex-wrap:wrap;padding:36px 0}.pager a,.pager span{border:1px solid var(--line);border-radius:12px;padding:8px 15px;text-decoration:none;min-width:44px;text-align:center}.pager [aria-current]{background:var(--surface);color:var(--ink)}
-@media (max-width:900px){.two{grid-template-columns:1fr}.race-hero[data-scene]{padding-top:48px}.race-hero.scened::after{background:linear-gradient(0deg,var(--bg),rgba(13,17,25,.82) 40%),rgba(13,17,25,.6)}.facts dd{font-size:26px}}`;
+@media (max-width:900px){.two{grid-template-columns:1fr}.facts dd{font-size:26px}}`;
 /** Used when the output holds no site.css: the site's dark palette and frame. */
 const FALLBACK_CSS = `:root{color-scheme:dark;--bg:#0D1119;--surface:#151B26;--ink:#E8ECF3;--ink2:#AEB7C6;--muted:#7F8A9C;--line:#263041;--accent:#5C91FF;--good:#3CCB7F;--bad:#F2706B}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,system-ui,sans-serif;line-height:1.6}a{color:var(--accent)}.wrap{max-width:1040px;margin:0 auto;padding:0 20px}header{display:flex;align-items:center;justify-content:space-between;padding:22px 0}.brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:22px;color:var(--ink);text-decoration:none}.brand img{width:40px;height:40px;border-radius:10px}.lang{display:flex;gap:8px}.lang a{color:var(--ink2);text-decoration:none;font-size:15px;border:1px solid var(--line);padding:6px 12px;border-radius:999px}h1{font-size:clamp(34px,5.4vw,60px);line-height:1.06;margin:12px 0 18px}h2{font-size:26px;margin:0 0 10px}.eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:13px;color:var(--accent);font-weight:700}.lead{font-size:19px;color:var(--ink2)}.cta{display:inline-block;background:var(--accent);color:#0D1119;padding:14px 22px;border-radius:12px;font-weight:700;text-decoration:none}.ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}.cta.alt{background:transparent;color:var(--ink);border:1px solid var(--line)}.note{font-size:14px;color:var(--muted)}section{padding:56px 0;border-top:1px solid var(--line)}.sub{color:var(--ink2)}select{width:100%;font:inherit;color:var(--ink);background:var(--surface);padding:11px;border:1px solid var(--line);border-radius:10px}footer{padding:34px 0 50px;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}footer a{color:var(--ink2);margin-right:16px}body{overflow-x:clip}.sr{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}`;
 const minCss = (css: string) => css.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\s*\n\s*/g, "").replace(/\s{2,}/g, " ").trim();
@@ -1274,12 +1277,6 @@ const BADGE_LANGS: Lang[] = ["sv", "en", "de"];
 const crumbsLd = (items: { name: string; path: string }[]) => ({ "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: items.map((x, i) => ({ "@type": "ListItem", position: i + 1, name: x.name, item: abs(x.path) })) });
 /** The browser refines the countdown to exact days (the page itself says it in coarse steps). */
 const cdScript = (lang: Lang) => `(()=>{const w=${JSON.stringify(T[lang].cd)};for(const e of document.querySelectorAll(".cd[data-day]")){const n=Math.round((Date.parse(e.dataset.day+"T12:00:00")-Date.now())/864e5),m=Math.round(n/30.44);e.textContent=n<0?w.past:n===0?w.today:n===1?w.tomorrow:n<14?w.days.replace("#",n):n<60?w.weeks.replace("#",Math.floor(n/7)):w.months.replace("#",m)}})();`;
-/** The hero's scene, drawn in the browser by the site's scene.js (scene.ts) from the spec in data-scene, as wide as the hero is; the
- *  class "scened" turns on its picture and scrim (RACE_CSS; the full-width frame is there from the start, so nothing shifts). Without
- *  the script the hero stays as it is. */
-export const sceneScript = (src: string) => "import{sceneSvg}from" + JSON.stringify(src)
-  + ";const e=document.querySelector('.race-hero[data-scene]');if(e){const b=e.getBoundingClientRect(),h=Math.round(Math.min(1600,Math.max(500,1200*b.height/Math.max(1,b.width)))),"
-  + "s=sceneSvg(JSON.parse(e.dataset.scene),{width:1200,height:h,idPrefix:'h'});e.style.setProperty('--scene','url(\"data:image/svg+xml;charset=utf-8,'+encodeURIComponent(s)+'\")');e.classList.add('scened')}";
 const filterScript = `(()=>{const f=document.querySelector("form.filter");if(!f)return;f.hidden=false;const items=[...document.querySelectorAll("li[data-km]")],groups=[...document.querySelectorAll(".grp")],none=document.getElementById("nomatch");const run=()=>{const d=f.elements.d.value,c=f.elements.c.value;let n=0;for(const li of items){const ok=(!c||li.dataset.c===c)&&(!d||li.dataset.b===d);li.hidden=!ok;if(ok)n++}for(const g of groups)g.hidden=!g.querySelector("li[data-km]:not([hidden])");none.hidden=n>0};f.addEventListener("change",run);run()})();`;
 
 // ------------------------------------------------------------------------------------------------------------- the pages
@@ -1287,6 +1284,8 @@ const filterScript = `(()=>{const f=document.querySelector("form.filter");if(!f)
 type Ctx = { today: string; css: string; appStore: string; active: Race[]; slugs: Map<string, string>; ogImage: (r: Race | null, lang: Lang) => { image: string; large: boolean };
   /** The site has scene.js: the hero gets its scene in the browser. */
   sceneJs?: boolean;
+  /** site-calm: the races whose course map is there (lopp/<slug>/map.webp, map@2x.webp) and fits their course. */
+  hasMap?: Set<string>;
   /** The site has motion.js: race pages, indexes, hubs and guides load it. */
   motionJs?: boolean;
   /** seo: the App Store id for the Smart App Banner (none until launch), the hubs, and the races whose title another race shares (their
@@ -1295,6 +1294,13 @@ type Ctx = { today: string; css: string; appStore: string; active: Race[]; slugs
   /** seo round 2, 2026-11-02: the approved guides, linked quietly from the race index in the languages they have. */
   guides?: Guide[] };
 
+/** The course drawing, over its map when the race has one (site-calm): the map as the site's own WebP in the same frame, lazy (it is
+ *  below the first screen), with the drawing on top; without the image the drawing stands as before. */
+function routeFigure(r: Race, lang: Lang, path: string, ctx: Ctx): string {
+  if (!ctx.hasMap?.has(r.id)) return `<div class="chart">${routeSvg(r, lang)}</div>`;
+  const slug = ctx.slugs.get(r.id)!, { W, H } = routeFrame(r.course!.pts), t = T[lang];
+  return `<div class="chart map"><div class="mb"><img src="${esc(rel(path, mapPath(slug)))}" srcset="${esc(rel(path, mapPath(slug, 2)))} 2x" width="${W}" height="${H}" alt="${esc(t.mapAlt(raceTitle(r, lang)))}" loading="lazy" decoding="async">${routeSvg(r, lang)}</div></div>`;
+}
 /** One race's page in one language. */
 export function racePage(r: Race, lang: Lang, ctx: Ctx): string {
   const t = T[lang], slug = ctx.slugs.get(r.id)!, path = racePath(lang, slug), title = raceTitle(r, lang), where = whereText(r, lang);
@@ -1315,7 +1321,8 @@ export function racePage(r: Race, lang: Lang, ctx: Ctx): string {
   facts.push([t.terrain, r.trail ? t.trail : t.road], ...(climbKnown ? [[t.character, cap(t.hilly[hilliness(r)])] as [string, string]] : []));
   if (start && r.next_date && r.next_date >= today) facts.push([t.start, t.clock(start)]);
   if (r.aid_stations?.length) facts.push([t.aid, String(r.aid_stations.length)]);
-  // the scene's spec for the browser (scene.ts): the profile to three decimals is plenty for a horizon
+  // the scene's spec (scene.ts) as data on the hero. Nothing draws it any more (site-calm, Patrik 2026-11-02: no illustrated scenes on the
+  // site); it stays in the HTML so no page's own content, and so its lastmod, moves for the change
   const spec = raceSceneSpec(r, { startIso: startDate(r), today });
   const scene = ctx.sceneJs ? ` data-scene="${esc(JSON.stringify({ ...spec, profile: spec.profile.map((v) => Math.round(v * 1000) / 1000), relief: Math.round(spec.relief) }))}"` : "";
   // the name in the headings is without its sponsors; the official name stays here when it differs
@@ -1334,7 +1341,7 @@ export function racePage(r: Race, lang: Lang, ctx: Ctx): string {
       ? r.course_host ? `${esc(t.published)} <a href="${esc(r.course_page ?? r.url ?? `https://${r.course_host}`)}" rel="noopener nofollow">${esc(r.course_host)}</a>.`
         : `${esc(t.official)}${r.url ? ` (<a href="${esc(r.url)}" rel="noopener nofollow">${esc(t.organiserPage)}</a>)` : ""}.`
       : esc(t.upload);
-    sections.push(`<section aria-labelledby="h-route"><div class="two"><div><h2 id="h-route">${esc(t.routeH)}</h2><figure><div class="chart">${routeSvg(r, lang)}</div><figcaption>${esc(t.legend(isLoop(c.pts), !!r.aid_stations?.length))} ${credit}</figcaption></figure></div>
+    sections.push(`<section aria-labelledby="h-route"><div class="two"><div><h2 id="h-route">${esc(t.routeH)}</h2><figure>${routeFigure(r, lang, path, ctx)}<figcaption>${esc(t.legend(isLoop(c.pts), !!r.aid_stations?.length))} ${credit}${ctx.hasMap?.has(r.id) ? ` <a class="osm" href="https://www.openstreetmap.org/copyright" rel="noopener">${esc(t.osm)}</a>` : ""}</figcaption></figure></div>
 <div class="prose"><h2>${esc(t.aboutH)}</h2>${about}</div></div></section>`);
   } else if (bare) {
     sections.push(`<section aria-labelledby="h-route"><div class="two"><div><h2 id="h-route">${esc(t.routeH)}</h2><p class="sub">${esc(t.noCourse)}</p>${orgLink ? `<p>${orgLink}</p>` : ""}</div>
@@ -1398,8 +1405,8 @@ export function racePage(r: Race, lang: Lang, ctx: Ctx): string {
     });
   }
   return frame({ lang, path, title: pageTitle(r, lang, ctx.titleClash?.has(r.id)), description, css: ctx.css, today, alternates, appId: ctx.appId, motion: ctx.motionJs, og: { ...og, alt: bare ? t.ogAltNoCourse(title) : t.ogAlt(title) }, ld,
-    body: `<article>${hero}${cta}${sections.join("\n")}</article>`, script: r.next_date && r.next_date >= today ? cdScript(lang) : undefined,
-    module: ctx.sceneJs ? sceneScript(rel(path, "scene.js")) : undefined,
+    // site-calm: the profile right under the facts, before the call to action (in the HTML, so the reading order is the visual one)
+    body: `<article>${hero}${sections[0]?.startsWith('<section aria-labelledby="h-profile"') ? sections.shift() + cta : cta}${sections.join("\n")}</article>`, script: r.next_date && r.next_date >= today ? cdScript(lang) : undefined,
     crumbs: [{ name: t.home, path: L[lang].home }, { name: t.races, path: indexPath(lang) }, { name: title }] });
 }
 
@@ -1981,7 +1988,9 @@ const sameBytes = (a: Uint8Array, b: Uint8Array) => a.length === b.length && a.e
 /** Writes the race pages, the indexes, the share images, sitemap.xml, robots.txt and the slug map into `out` (the site's root). */
 export async function generate(o: { out: string; races: Race[]; ids?: Set<string>; today: string; png?: PngRenderer | null; appStore?: string; allowMassRemoval?: boolean; log?: (s: string) => void;
   /** seo: the App Store id (Smart App Banner), the IndexNow key (its file at the root), the guides (only approved ones are rendered). */
-  appStoreId?: string | null; indexNowKey?: string | null; guides?: Guide[] }): Promise<Report> {
+  appStoreId?: string | null; indexNowKey?: string | null; guides?: Guide[];
+  /** site-calm: draws a course's map (race_maps.ts mapRenderer); none: maps already there stay while their course does. */
+  maps?: MapRenderer | null }): Promise<Report> {
   const out = o.out.replace(/\/+$/, ""), today = o.today, log = o.log ?? (() => {});
   const prev = await readText(`${out}/lopp/slugs.json`);
   const state: State = prev ? JSON.parse(prev) : { version: 1, races: {}, pages: {}, og: {} };
@@ -2066,6 +2075,26 @@ export async function generate(o: { out: string; races: Race[]; ids?: Set<string
     }
     if (await exists(p)) hasOg.add(r.id);
   }
+  // 3b. course maps (site-calm): drawn again only when the course or the map style changes; a map that no longer fits its course goes
+  //     At most MAPS_PER_RUN are drawn in one run (the first run and a style change catch up over a few hours, inside the job's time),
+  //     and a course whose map could not be drawn is tried again the next day (or at once when the course or the style changes: mapFailed).
+  const hasMap = new Set<string>();
+  report.maps = 0;
+  let mapTries = 0;   // drawn or failed: both count toward MAPS_PER_RUN, so a slow or stuck source cannot hold the run
+  for (const r of active) {
+    const s = state.races[r.id], m1 = mapPath(s.slug), m2 = mapPath(s.slug, 2);
+    const h = r.course ? await mapHash(r.course.pts) : null;
+    if (r.course && h && o.maps && mapTries < MAPS_PER_RUN && s.mapFailed !== `${h}@${today}` && (s.map !== h || !(await exists(m1)) || !(await exists(m2)))) {
+      mapTries++;
+      try { const m = await o.maps(r.course.pts); await put(m1, m.x1); await put(m2, m.x2); s.map = h; delete s.mapFailed; report.maps++; }
+      catch (e) { log(`map ${s.slug}: ${String(e).slice(0, 100)}`); s.mapFailed = `${h}@${today}`; }
+    }
+    // no course any more, or a map of another course: it goes
+    if (!h || s.map !== h) {
+      for (const p of [m1, m2]) if (await exists(p)) { await Deno.remove(`${out}/${p}`); written++; }
+      delete s.map;
+    } else if (await exists(m1) && await exists(m2)) hasMap.add(r.id);
+  }
   const defaults = new Map<Lang, boolean>();
   for (const l of LANGS) defaults.set(l, await exists(ogDefaultPath(l)));
   const ogImage = (r: Race | null, lang: Lang) => r && hasOg.has(r.id) ? { image: abs(ogPath(slugs.get(r.id)!)), large: true }
@@ -2074,7 +2103,7 @@ export async function generate(o: { out: string; races: Race[]; ids?: Set<string
   const hubs = buildHubs(active, today), titles = new Map<string, string[]>();
   for (const r of active) { const k = pageTitle(r, "sv"); titles.set(k, [...(titles.get(k) ?? []), r.id]); }
   const titleClash = new Set([...titles.values()].filter((ids) => ids.length > 1).flat());
-  const ctx: Ctx = { today, css, appStore, active, slugs, ogImage, sceneJs: await exists("scene.js"), motionJs: await exists("motion.js"), appId: smartBannerMeta(o.appStoreId) ? o.appStoreId : null, hubs, titleClash, guides: o.guides };
+  const ctx: Ctx = { today, css, appStore, active, slugs, ogImage, hasMap, sceneJs: await exists("scene.js"), motionJs: await exists("motion.js"), appId: smartBannerMeta(o.appStoreId) ? o.appStoreId : null, hubs, titleClash, guides: o.guides };
 
   // 4. the race pages, and the pages of races that left; every indexed page's lastmod moves only when its content does
   const pages: State["pages"] = {};
@@ -2093,12 +2122,12 @@ export async function generate(o: { out: string; races: Race[]; ids?: Set<string
       raceEntries.push({ loc: abs(path), lastmod: await track(path, html), alternates: alt });
     }
   }
-  // a race's old addresses send the reader on (their share image goes); the pages of races that left are deleted, every language and
+  // a race's old addresses send the reader on (their share image and course map go); the pages of races that left are deleted, every language and
   // their share images, so the host answers "not found" with no name
   for (const s of Object.values(state.races)) {
     for (const old of s.old ?? []) {
       for (const lang of LANGS) await put(`${racePath(lang, old)}index.html`, movedPage(old, s.slug, lang, ctx));
-      if (await exists(ogPath(old))) { await Deno.remove(`${out}/${ogPath(old)}`); written++; }
+      for (const p of [ogPath(old), mapPath(old), mapPath(old, 2)]) if (await exists(p)) { await Deno.remove(`${out}/${p}`); written++; }
     }
   }
   for (const slug of leaving) {
@@ -2268,12 +2297,14 @@ if (import.meta.main) {
     }
     const feed = await readFeed(opt("--feed") ?? FEED_URL);
     const png = args.includes("--no-png") ? null : await resvgRenderer();
+    // site-calm: the course maps, drawn at build time from OpenStreetMap (race_maps.ts); --no-maps keeps the maps that are there
+    const maps = png && !args.includes("--no-maps") ? await mapRenderer(png, opt("--tmp")) : null;
     const r = await generate({ out, races: feed.races, ids: feed.ids, today, png, appStore: await configuredAppStore(), allowMassRemoval: args.includes("--allow-mass-removal"), log: console.warn,
-      appStoreId: cfg.appStoreId, indexNowKey: cfg.indexNowKey, guides: await configuredGuides() });
+      appStoreId: cfg.appStoreId, indexNowKey: cfg.indexNowKey, guides: await configuredGuides(), maps });
     // the changed addresses for the IndexNow step (--changed <file>: outside what the workflow commits)
     const changed = opt("--changed");
     if (changed) await Deno.writeTextFile(changed, r.changed.join("\n") + (r.changed.length ? "\n" : ""));
-    console.log(`race pages: ${r.active} races (${r.races} in the feed), ${r.added.length} new, ${r.moved.length} moved, ${r.removed.length} removed, ${r.hubs} hubs, ${r.pngs} images, ${r.written} files written, ${r.changed.length} changed`);
+    console.log(`race pages: ${r.active} races (${r.races} in the feed), ${r.added.length} new, ${r.moved.length} moved, ${r.removed.length} removed, ${r.hubs} hubs, ${r.pngs} images, ${r.maps ?? 0} maps, ${r.written} files written, ${r.changed.length} changed`);
   } catch (e) {
     console.error(String(e));
     Deno.exit(1);

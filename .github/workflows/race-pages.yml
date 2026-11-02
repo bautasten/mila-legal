@@ -34,12 +34,20 @@ jobs:
         with:
           deno-version: 2.9.7
 
+      # the course maps' WebP encoder (site-calm, 2026-11-02; tools/race_maps.ts): Ubuntu's own package. Never blocks the pages: without
+      # it the generator draws no new maps and keeps the ones there
+      - name: Install cwebp
+        continue-on-error: true
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq webp > /dev/null
+
+      # the course maps read OpenStreetMap from Protomaps' daily build (build-metadata.protomaps.dev lists it, build.protomaps.com serves
+      # it by range), only for a course that is new or changed; nothing of it is asked for by a visitor's browser
       - name: Generate the race pages
         run: >
-          deno run --no-prompt
-          --allow-net=vfjofaniwtudzvadxpsd.supabase.co,cdn.jsdelivr.net
-          --allow-read=. --allow-write=.,${{ runner.temp }}
-          tools/race_pages.ts --out . --changed ${{ runner.temp }}/indexnow-changed.txt
+          deno run --no-prompt --lock=tools/deno.lock --frozen
+          --allow-net=vfjofaniwtudzvadxpsd.supabase.co,cdn.jsdelivr.net,build-metadata.protomaps.dev,build.protomaps.com
+          --allow-read=.,${{ runner.temp }} --allow-write=.,${{ runner.temp }} --allow-run=cwebp
+          tools/race_pages.ts --out . --tmp ${{ runner.temp }} --changed ${{ runner.temp }}/indexnow-changed.txt
 
       - name: Commit and push when something changed
         id: push

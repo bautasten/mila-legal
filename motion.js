@@ -2,7 +2,7 @@
 // the last thing in every page's body.
 // With reduced motion or Save-Data it loads nothing. Otherwise it brings in the self-hosted GSAP + ScrollTrigger (vendor/, licences in
 // vendor/LICENSES.txt) and, with a fine pointer only, Lenis as the one smooth-scroll engine (touch keeps native scrolling).
-// What moves: the hero's dawn window and phones drift with the scroll; headings below the first screen rise word by word (their words
+// What moves: the hero's phones drift apart a little with the scroll; headings below the first screen rise word by word (their words
 // are aria-hidden, the unsplit text stays for screen readers and comes back when the rise is done); text and cards rise in order; a race
 // page draws its elevation profile and course line as they come into view; hub race lists rise in small batches (never on an index
 // with its filter, where the list changes under the triggers). Nothing loops; printing, keyboard focus and turning reduced motion on
@@ -101,13 +101,12 @@
       if (rt) draw(rt, fig, 0.1);
     }
 
-    // the hero's scroll: the dawn window drifts slower than the page and the phones part a little (wide screens only)
+    // the hero's scroll: the phones part a little (wide screens only)
     const phones = document.querySelector(".phones");
     const mm = gsap.matchMedia();
     if (phones) mm.add("(min-width: 901px)", () => {
       const [a, b] = phones.querySelectorAll("img");
       const tl = gsap.timeline({ scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: 0.6 } });
-      tl.to(phones, { "--py": "90px", ease: "none" }, 0);
       if (a) tl.to(a, { y: -40, ease: "none" }, 0);
       if (b) tl.to(b, { y: 50, ease: "none" }, 0);
       // a fine pointer leans the phones a few pixels; it settles back when the pointer leaves or the window loses focus

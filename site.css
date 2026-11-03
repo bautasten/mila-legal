@@ -1,13 +1,13 @@
 /* Mila's website. design-31 (Patrik 2026-11-03, webb-design-31: the site follows the app's build-31 look): the app's warm Theme
    tokens (Assets.xcassets on design-31: Bg, Surface, Tile, Ink, Ink2, Muted, Line, the navy Accent/AccentStrong, Good, Bad and Mila's
-   orange dot as the dawn line), light by default and dark when the visitor's system is dark (prefers-color-scheme), with the app's
+   orange dot as the dawn line), light only (Patrik 2026-11-03: "för webben räcker det väl med den ljusa": no dark variant, even when
+   the visitor's system is dark), with the app's
    softer corners (Theme.radius 18, innerRadius 12, controlRadius 10). Before design-31 the site was the app's old dark palette only.
-   Every text pair is ≥ 4.5:1 in both schemes; --field (form borders) ≥ 3:1. The app's Barlow Condensed for display type, one faint
+   Every text pair is ≥ 4.5:1; --field (form borders) ≥ 3:1. The app's Barlow Condensed for display type, one faint
    dawn light behind the phones (no picture: site-calm, Patrik 2026-11-02), and motion only as an addition (motion.js); every
    page is complete and readable with this file alone. Also inlined into every race page by race_pages.ts (so urls here are root-absolute,
    and no rule may span a line break inside a value: minCss joins lines). */
-:root{color-scheme:light dark;--bg:#FBF9F5;--surface:#FFFFFF;--tile:#F3EDE7;--ink:#1C1A17;--ink2:#5E5850;--muted:#6E685E;--line:#EAE6DF;--field:#8C8578;--accent:#1F3A52;--accent-fill:#1F3A52;--on-accent:#FFFFFF;--accent-soft:rgba(31,58,82,.1);--good:#0F8A4C;--good-text:#0B7843;--bad:#C53030;--dawn:#C2410C;--orange:#C2410C;--glow:194,65,12;--glow-a:.07;--shadow:rgba(60,44,28,.16);--rim:rgba(28,26,23,.08);--radius:18px;--inner:12px;--control:10px;--serif:ui-serif,"New York","Iowan Old Style",Charter,Georgia,serif;--display:"Barlow Condensed","Avenir Next Condensed","Arial Narrow",system-ui,sans-serif;--ease:cubic-bezier(.2,.7,.1,1)}
-@media (prefers-color-scheme:dark){:root{--bg:#121110;--surface:#1F1E1B;--tile:#2E2B27;--ink:#EDEAE3;--ink2:#BDB6AA;--muted:#A39C90;--line:#2C2A26;--field:#807A6D;--accent:#8FB4D8;--accent-fill:#3B6B94;--on-accent:#FFFFFF;--accent-soft:rgba(143,180,216,.14);--good:#3CCB7F;--good-text:#3CCB7F;--bad:#F2706B;--dawn:#F2884B;--orange:#F2884B;--glow:242,136,75;--glow-a:.1;--shadow:rgba(0,0,0,.6);--rim:rgba(255,255,255,.08)}}
+:root{color-scheme:light;--bg:#FBF9F5;--surface:#FFFFFF;--tile:#F3EDE7;--ink:#1C1A17;--ink2:#5E5850;--muted:#6E685E;--line:#EAE6DF;--field:#8C8578;--accent:#1F3A52;--accent-fill:#1F3A52;--on-accent:#FFFFFF;--accent-soft:rgba(31,58,82,.1);--good:#0F8A4C;--good-text:#0B7843;--bad:#C53030;--dawn:#C2410C;--orange:#C2410C;--glow:194,65,12;--glow-a:.07;--shadow:rgba(60,44,28,.16);--rim:rgba(28,26,23,.08);--radius:18px;--inner:12px;--control:10px;--serif:ui-serif,"New York","Iowan Old Style",Charter,Georgia,serif;--display:"Barlow Condensed","Avenir Next Condensed","Arial Narrow",system-ui,sans-serif;--ease:cubic-bezier(.2,.7,.1,1)}
 /* fonts/*-latin.woff2: Latin subsets (U+0000-017F and punctuation, kerning kept) of the site's own Barlow Condensed files, made with
    fonttools pyftsubset; the OFL (fonts/OFL.txt) allows it and names no reserved font name. Other letters fall back to the system font. */
 @font-face{font-family:"Barlow Condensed";src:url(/fonts/BarlowCondensed-Bold-latin.woff2) format("woff2");font-weight:700;font-display:swap;unicode-range:U+0000-017F,U+2013-2014,U+2018-201E,U+2022,U+2026,U+2039-203A,U+20AC,U+2190-2193}
@@ -149,7 +149,6 @@ footer .provider{margin:16px 0 12px;color:var(--muted);font-size:13px}footer .pr
    transforms over afterwards. */
 @keyframes rise{from{transform:translateY(22px)}}
 @keyframes lift{from{transform:translateY(46px)}}
-@keyframes dawn{from{filter:brightness(.32) saturate(.5)}}
 /* design-31: on the light page the dawn comes up by fading in (darkening a glow on paper would be the opposite of a dawn) */
 @keyframes sunrise{from{opacity:0}}
 @keyframes sweep{to{transform:rotate(360deg)}}
@@ -158,8 +157,7 @@ footer .provider{margin:16px 0 12px;color:var(--muted);font-size:13px}footer .pr
 .hero h1{animation-delay:.08s}.hero .tagline{animation-delay:.22s}.hero .lead{animation-delay:.32s}
 .hero .ctas{animation:lift .9s var(--ease) .4s backwards}
 .phones img{animation:lift 1.2s var(--ease) .15s backwards}.phones picture+picture img{animation-delay:.3s}
-.phones::before{animation:dawn 2.6s ease-out backwards}
-@media (prefers-color-scheme:light){.phones::before{animation-name:sunrise}}
+.phones::before{animation:sunrise 2.6s ease-out backwards}
 .o-sweep{animation:sweep 48s linear infinite}
 }
 

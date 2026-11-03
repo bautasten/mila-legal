@@ -7,7 +7,7 @@
 //   German   https://milacoach.app/de/laeufe/<slug>/    index /de/laeufe/   (/de/laeufe/seite/2/)
 //   Norwegian /nb/lop/<slug>/, Danish /da/lob/<slug>/, Finnish /fi/kisat/<slug>/, French /fr/courses/<slug>/, Spanish /es/carreras/<slug>/
 //            (pages 2… /nb/lop/side/2/, /da/lob/side/2/, /fi/kisat/sivu/2/, /fr/courses/page/2/, /es/carreras/pagina/2/)
-//   the share image /lopp/<slug>/og.png (1200×630: the course's profile and shape on the site's dark colour, rendered with resvg-wasm;
+//   the share image /lopp/<slug>/og.png (1200×630: the course's profile and shape on the site's warm paper since design-31, rendered with resvg-wasm;
 //   no illustrated scene since site-calm 2026-11-02, the hero's scene spec stays as data-scene when the site has /scene.js), one default
 //   image per language (<index>/og.png), sitemap.xml (the site's own pages too) and robots.txt
 //
@@ -968,39 +968,40 @@ export function ogSvg(r: Race): string {
   if (lines.length > 2) { size = 50; lines = wrap(name, 22, 3); }
   const sub = [kmText(r.km, lang), r.ascent ? `↑ ${num(r.ascent, lang)} m` : "", [r.place, r.country_code].filter(Boolean).join(", ")].filter(Boolean).join("  ·  ");
   let y = 186;
-  const text = lines.map((l) => { const s = `<text x="64" y="${f1(y)}" font-size="${size}" font-weight="700" fill="#E8ECF3">${esc(l)}</text>`; y += size * 1.14; return s; }).join("");
+  const text = lines.map((l) => { const s = `<text x="64" y="${f1(y)}" font-size="${size}" font-weight="700" fill="#1C1A17">${esc(l)}</text>`; y += size * 1.14; return s; }).join("");
   let art = "";
   if (r.course) {
     const pts = r.course.pts, [lo, top] = eleRange(pts), hi = Math.max(top, lo + 40), kmMax = Math.max(pts[pts.length - 1][3], 0.1);
     const X = (k: number) => 64 + (k / kmMax) * 1072, Y = (e: number) => 588 - ((e - lo) / (hi - lo)) * 120;
     const line = pts.map((p, i) => `${i ? "L" : "M"}${f1(X(p[3]))} ${f1(Y(p[2]))}`).join("");
-    art += `<path d="${line}L1136 596L64 596Z" fill="#5C91FF" fill-opacity="0.25"/><path d="${line}" fill="none" stroke="#5C91FF" stroke-width="4" stroke-linejoin="round"/>`;
+    art += `<path d="${line}L1136 596L64 596Z" fill="#1F3A52" fill-opacity="0.14"/><path d="${line}" fill="none" stroke="#1F3A52" stroke-width="4" stroke-linejoin="round"/>`;
     const lat0 = (pts[0][0] * Math.PI) / 180, xs = pts.map((p) => p[1] * Math.cos(lat0)), ys = pts.map((p) => -p[0]);
     const x0 = Math.min(...xs), y0 = Math.min(...ys), dx = Math.max(Math.max(...xs) - x0, 1e-4), dy = Math.max(Math.max(...ys) - y0, 1e-4), s = Math.min(290 / dx, 260 / dy);
     const ox = 846 + (290 - dx * s) / 2, oy = 56 + (260 - dy * s) / 2;
     const d = pts.map((p, i) => `${i ? "L" : "M"}${f1(ox + (xs[i] - x0) * s)} ${f1(oy + (ys[i] - y0) * s)}`).join("");
-    art += `<path d="${d}" fill="none" stroke="#E8ECF3" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/><circle cx="${f1(ox + (xs[0] - x0) * s)}" cy="${f1(oy + (ys[0] - y0) * s)}" r="9" fill="#3CCB7F"/>`;
+    art += `<path d="${d}" fill="none" stroke="#1C1A17" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/><circle cx="${f1(ox + (xs[0] - x0) * s)}" cy="${f1(oy + (ys[0] - y0) * s)}" r="9" fill="#0F8A4C"/>`;
   }
   return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">${ogScene(r)}`
-    + `<text x="64" y="92" font-size="30" font-weight="700" letter-spacing="5" fill="#5C91FF">MILA</text>${text}`
-    + `<text x="64" y="${f1(y + 6)}" font-size="32" fill="#AEB7C6">${esc(sub)}</text>${art}`
-    + `<text x="1136" y="620" font-size="19" fill="#7F8A9C" text-anchor="end">milacoach.app</text></svg>`;
+    + `<text x="64" y="92" font-size="30" font-weight="700" letter-spacing="5" fill="#1F3A52">MILA</text>${text}`
+    + `<text x="64" y="${f1(y + 6)}" font-size="32" fill="#5E5850">${esc(sub)}</text>${art}`
+    + `<text x="1136" y="620" font-size="19" fill="#6E685E" text-anchor="end">milacoach.app</text></svg>`;
 }
-/** The share image's background: the site's dark colour with the same faint warm light as the pages (site-calm, Patrik 2026-11-02:
- *  no illustrated scene), under a foot that keeps the profile and the address clear. The course's own drawings carry the picture. */
+/** The share image's background: the site's warm paper (design-31, the app's light Bg; before it the old dark colour) with the same
+ *  faint warm light as the pages (site-calm, Patrik 2026-11-02: no illustrated scene), under a foot that keeps the profile and the
+ *  address clear. The course's own drawings carry the picture. One image for both schemes: shared links show it on any background. */
 export function ogScene(_r: Race): string {
-  return `<defs><radialGradient id="ogGlow" cx="0.78" cy="0.12" r="0.62"><stop offset="0" stop-color="#F2B48C" stop-opacity="0.16"/><stop offset="0.55" stop-color="#F2B48C" stop-opacity="0.05"/><stop offset="1" stop-color="#F2B48C" stop-opacity="0"/></radialGradient></defs>`
-    + `<rect width="1200" height="630" fill="#0D1119"/><rect width="1200" height="630" fill="url(#ogGlow)"/>`;
+  return `<defs><radialGradient id="ogGlow" cx="0.78" cy="0.12" r="0.62"><stop offset="0" stop-color="#C2410C" stop-opacity="0.08"/><stop offset="0.55" stop-color="#C2410C" stop-opacity="0.03"/><stop offset="1" stop-color="#C2410C" stop-opacity="0"/></radialGradient></defs>`
+    + `<rect width="1200" height="630" fill="#FBF9F5"/><rect width="1200" height="630" fill="url(#ogGlow)"/>`;
 }
 /** The default share image of a language's race pages (the indexes, and races without their own image). */
 export function ogDefaultSvg(lang: Lang): string {
   const t = T[lang];
   let y = 220;
-  const text = wrap(t.ogDefault, 24, 3).map((l) => { const s = `<text x="64" y="${y}" font-size="60" font-weight="700" fill="#E8ECF3">${esc(l)}</text>`; y += 70; return s; }).join("");
+  const text = wrap(t.ogDefault, 24, 3).map((l) => { const s = `<text x="64" y="${y}" font-size="60" font-weight="700" fill="#1C1A17">${esc(l)}</text>`; y += 70; return s; }).join("");
   const wave = Array.from({ length: 61 }, (_, i) => `${i ? "L" : "M"}${f1(64 + i * (1072 / 60))} ${f1(540 - (Math.sin(i / 6) * 40 + Math.sin(i / 2.3) * 14))}`).join("");
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630"><rect width="1200" height="630" fill="#0D1119"/>`
-    + `<text x="64" y="110" font-size="34" font-weight="700" letter-spacing="6" fill="#5C91FF">MILA</text>${text}<text x="64" y="${y + 10}" font-size="36" fill="#AEB7C6">${esc(t.brandLine)}</text>`
-    + `<path d="${wave}L1136 600L64 600Z" fill="#5C91FF" fill-opacity="0.25"/><path d="${wave}" fill="none" stroke="#5C91FF" stroke-width="4"/><text x="1136" y="620" font-size="19" fill="#7F8A9C" text-anchor="end">milacoach.app</text></svg>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630"><rect width="1200" height="630" fill="#FBF9F5"/>`
+    + `<text x="64" y="110" font-size="34" font-weight="700" letter-spacing="6" fill="#1F3A52">MILA</text>${text}<text x="64" y="${y + 10}" font-size="36" fill="#5E5850">${esc(t.brandLine)}</text>`
+    + `<path d="${wave}L1136 600L64 600Z" fill="#1F3A52" fill-opacity="0.14"/><path d="${wave}" fill="none" stroke="#1F3A52" stroke-width="4"/><text x="1136" y="620" font-size="19" fill="#6E685E" text-anchor="end">milacoach.app</text></svg>`;
 }
 
 /** resvg (WebAssembly, no native code) with DejaVu Sans, all fetched from pinned CDN addresses and checked against their SHA-256
@@ -1209,35 +1210,41 @@ export function nearby(r: Race, all: Race[], today: string): Race[] {
 
 // ------------------------------------------------------------------------------------------------------------- the page frame
 
+// design-31 (webb-design-31): the course map (race_maps.ts) is a dark picture in both schemes, so the overlay on it (.mb) keeps the dark
+// scheme's colours; the coach's own course text (Swedish pages: the paragraphs before the coach's note) gets the coach serif by selector
+// alone, so <main> and every page's lastmod stay as they were.
 const RACE_CSS = `[hidden]{display:none!important}.skip{position:absolute;left:-9999px;top:0}.skip:focus{left:12px;top:12px;z-index:9;background:var(--surface);color:var(--ink);padding:8px 12px;border-radius:8px}
 .crumbs ol{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px;font-size:14px;color:var(--muted)}.crumbs li+li:before{content:"›";margin-right:6px}.crumbs a{color:var(--ink2);text-decoration:none}.crumbs a:hover{color:var(--ink)}
 .race-hero{padding:clamp(28px,5vw,64px) 0 clamp(40px,6vw,72px)}.race-hero h1{margin:16px 0 18px;max-width:14em}.race-hero .lead{margin-bottom:6px}
-.race-hero,main>article.prose{position:relative;isolation:isolate}.race-hero::before,main>article.prose::before{content:"";position:absolute;z-index:-1;top:-120px;right:-12%;width:min(900px,90vw);height:520px;background:radial-gradient(closest-side,rgba(242,180,140,.11),rgba(242,180,140,.04) 55%,rgba(242,180,140,0));pointer-events:none}
+.race-hero,main>article.prose{position:relative;isolation:isolate}.race-hero::before,main>article.prose::before{content:"";position:absolute;z-index:-1;top:-120px;right:-12%;width:min(900px,90vw);height:520px;background:radial-gradient(closest-side,rgba(var(--glow),var(--glow-a)),rgba(var(--glow),calc(var(--glow-a)*.35)) 55%,rgba(var(--glow),0));pointer-events:none}
 main>article>.race-hero+section[aria-labelledby="h-profile"]{border-top:0;padding:0 0 clamp(40px,5vw,64px)}
-.meta{font-size:clamp(16px,1.4vw,18px);color:var(--ink2);margin:0 0 6px;max-width:46em}.cd{color:var(--good);font-weight:600}
-.badge{display:inline-block;font-size:13px;border:1px solid var(--line);border-radius:999px;padding:1px 10px;color:var(--ink2);margin-left:8px;vertical-align:2px}
-.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:0;margin:34px 0 0;border:1px solid var(--line);border-radius:18px;overflow:hidden}.facts div{background:var(--bg);padding:15px 18px 16px 19px;margin:-1px 0 0 -1px;box-shadow:inset 1px 0 0 var(--line),inset 0 1px 0 var(--line)}
+.meta{font-size:clamp(16px,1.4vw,18px);color:var(--ink2);margin:0 0 6px;max-width:46em}.cd{color:var(--good-text);font-weight:600}
+.badge{display:inline-block;font-size:13px;border:1px solid var(--field);border-radius:999px;padding:1px 10px;color:var(--ink2);margin-left:8px;vertical-align:2px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:0;margin:34px 0 0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}.facts div{background:var(--surface);padding:15px 18px 16px 19px;margin:-1px 0 0 -1px;box-shadow:inset 1px 0 0 var(--line),inset 0 1px 0 var(--line)}
 .facts dt{font-family:var(--display);font-weight:600;font-size:13.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;overflow-wrap:anywhere;hyphens:auto}.facts dd{margin:4px 0 0;font-family:var(--display);font-size:30px;font-weight:700;line-height:1.05}
-figure{margin:0}.chart{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:clamp(10px,1.6vw,18px)}.chart svg{display:block;width:100%;height:auto}figcaption{font-size:14px;color:var(--muted);margin-top:10px;max-width:60em}
-.pf{fill:rgba(92,145,255,.16)}.pl{fill:none;stroke:var(--accent);stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round}.gl{stroke:var(--line);stroke-width:1}.ax{fill:var(--muted);font-size:12px}.am{fill:var(--good);stroke:var(--surface);stroke-width:2}.aml{stroke:var(--good);stroke-dasharray:3 4;opacity:.6}.rt{fill:none;stroke:var(--accent);stroke-width:3;stroke-linejoin:round;stroke-linecap:round}.st{fill:var(--good)}.fi{fill:var(--ink)}.sb{stroke:var(--ink2);stroke-width:2}
-.chart.map{padding:6px}.mb{position:relative}.mb img{display:block;width:100%;height:auto;border-radius:12px;background:#151B26}.mb svg{position:absolute;inset:0;width:100%;height:100%}.map .rt{filter:drop-shadow(0 0 1.5px rgba(13,17,25,.95))}.osm{color:var(--muted)}
+figure{margin:0}.chart{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:clamp(10px,1.6vw,18px)}.chart svg{display:block;width:100%;height:auto}figcaption{font-size:14px;color:var(--muted);margin-top:10px;max-width:60em}
+.pf{fill:var(--accent-soft)}.pl{fill:none;stroke:var(--accent);stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round}.gl{stroke:var(--line);stroke-width:1}.ax{fill:var(--muted);font-size:12px}.am{fill:var(--good);stroke:var(--surface);stroke-width:2}.aml{stroke:var(--good);stroke-dasharray:3 4;opacity:.6}.rt{fill:none;stroke:var(--accent);stroke-width:3;stroke-linejoin:round;stroke-linecap:round}.st{fill:var(--good)}.fi{fill:var(--ink)}.sb{stroke:var(--ink2);stroke-width:2}
+.chart.map{padding:6px}.mb{position:relative;--accent:#8FB4D8;--ink:#EDEAE3;--ink2:#BDB6AA;--muted:#A39C90;--good:#3CCB7F;--surface:#151B26;color:var(--ink)}.mb img{display:block;width:100%;height:auto;border-radius:var(--inner);background:var(--surface)}.mb svg{position:absolute;inset:0;width:100%;height:100%}.map .rt{filter:drop-shadow(0 0 1.5px rgba(13,17,25,.95))}.osm{color:var(--muted)}
+:is(section[aria-labelledby="h-route"],section[aria-labelledby="h-about"]) .prose>p:has(~p.note){font-family:var(--serif);font-style:italic;font-size:1.06em;color:var(--ink)}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,64px);align-items:start}.prose p{color:var(--ink2);max-width:42em}main h3{font-size:24px;margin:28px 0 10px}main ul{color:var(--ink2)}
-.tw{overflow-x:auto;margin-bottom:10px}table{width:100%;border-collapse:collapse;font-size:15.5px}caption{text-align:left;color:var(--muted);font-size:14px;padding-bottom:8px}th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top}th{font-family:var(--display);color:var(--muted);font-weight:600;font-size:14px;text-transform:uppercase;letter-spacing:.08em}td{color:var(--ink2)}tbody tr:hover td{background:var(--surface)}.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}td:first-child{white-space:nowrap}
-.ctabox{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:clamp(24px,4vw,48px);margin:0 0 clamp(48px,6vw,80px)}.ctabox h2{font-size:clamp(32px,4vw,44px)}.ctabox .sub{margin-bottom:0}.ctabox .ctas{margin-top:22px}.brandline{font-size:clamp(26px,3vw,34px);line-height:1;margin:22px 0 0;color:var(--ink)}
+.tw{overflow-x:auto;margin-bottom:10px}table{width:100%;border-collapse:collapse;font-size:15.5px}caption{text-align:left;color:var(--muted);font-size:14px;padding-bottom:8px}th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top}th{font-family:var(--display);color:var(--muted);font-weight:600;font-size:14px;text-transform:uppercase;letter-spacing:.08em}td{color:var(--ink2)}tbody tr:hover td{background:var(--tile)}.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}td:first-child{white-space:nowrap}
+.ctabox{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:clamp(24px,4vw,48px);margin:0 0 clamp(48px,6vw,80px)}.ctabox h2{font-size:clamp(32px,4vw,44px)}.ctabox .sub{margin-bottom:0}.ctabox .ctas{margin-top:22px}.brandline{font-size:clamp(26px,3vw,34px);line-height:1;margin:22px 0 0;color:var(--ink)}
 .list{list-style:none;margin:0;padding:0}.list li{border-bottom:1px solid var(--line);padding:14px 0}.list a{font-family:var(--display);font-weight:600;font-size:23px;line-height:1.15;text-decoration:none;color:var(--ink);transition:color .2s}.list a:hover{color:var(--accent)}.list span{display:block;color:var(--ink2);font-size:15px;margin-top:2px}
 .filter{display:flex;flex-wrap:wrap;gap:14px;margin:0 0 10px;padding:clamp(28px,4vw,40px) 0 0}.filter label{flex:1 1 200px;margin:0;color:var(--ink2)}section.grp{padding:clamp(36px,5vw,56px) 0}div.grp{padding:0}.grp h3{font-family:var(--display);font-size:15px;font-weight:600;text-transform:uppercase;letter-spacing:.16em;color:var(--muted);margin:28px 0 4px}
-.hubs{display:flex;flex-wrap:wrap;gap:10px;list-style:none;margin:0 0 8px;padding:0}.hubs a{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:7px 15px;color:var(--ink);text-decoration:none;font-size:15px;transition:border-color .2s,background-color .2s}.hubs a:hover{border-color:var(--accent);background:var(--surface)}
+.hubs{display:flex;flex-wrap:wrap;gap:10px;list-style:none;margin:0 0 8px;padding:0}.hubs a{display:inline-block;border:1px solid var(--field);border-radius:999px;padding:7px 15px;color:var(--ink);text-decoration:none;font-size:15px;transition:border-color .2s,background-color .2s}.hubs a:hover{border-color:var(--accent);background:var(--tile)}
 article>section,main>section:not(.grp){padding:clamp(48px,6vw,88px) 0}.faq h3{margin-top:26px}.faq p{color:var(--ink2);max-width:42em;margin:6px 0}
-.pager{display:flex;gap:8px;flex-wrap:wrap;padding:36px 0}.pager a,.pager span{border:1px solid var(--line);border-radius:12px;padding:8px 15px;text-decoration:none;min-width:44px;text-align:center}.pager [aria-current]{background:var(--surface);color:var(--ink)}
+.pager{display:flex;gap:8px;flex-wrap:wrap;padding:36px 0}.pager a,.pager span{border:1px solid var(--field);border-radius:var(--inner);padding:8px 15px;text-decoration:none;min-width:44px;text-align:center}.pager [aria-current]{background:var(--tile);color:var(--ink)}
 @media (max-width:900px){.two{grid-template-columns:1fr}.facts dd{font-size:26px}}`;
-/** Used when the output holds no site.css: the site's dark palette and frame. */
-const FALLBACK_CSS = `:root{color-scheme:dark;--bg:#0D1119;--surface:#151B26;--ink:#E8ECF3;--ink2:#AEB7C6;--muted:#7F8A9C;--line:#263041;--accent:#5C91FF;--good:#3CCB7F;--bad:#F2706B}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,system-ui,sans-serif;line-height:1.6}a{color:var(--accent)}.wrap{max-width:1040px;margin:0 auto;padding:0 20px}header{display:flex;align-items:center;justify-content:space-between;padding:22px 0}.brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:22px;color:var(--ink);text-decoration:none}.brand img{width:40px;height:40px;border-radius:10px}.lang{display:flex;gap:8px}.lang a{color:var(--ink2);text-decoration:none;font-size:15px;border:1px solid var(--line);padding:6px 12px;border-radius:999px}h1{font-size:clamp(34px,5.4vw,60px);line-height:1.06;margin:12px 0 18px}h2{font-size:26px;margin:0 0 10px}.eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:13px;color:var(--accent);font-weight:700}.lead{font-size:19px;color:var(--ink2)}.cta{display:inline-block;background:var(--accent);color:#0D1119;padding:14px 22px;border-radius:12px;font-weight:700;text-decoration:none}.ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}.cta.alt{background:transparent;color:var(--ink);border:1px solid var(--line)}.note{font-size:14px;color:var(--muted)}section{padding:56px 0;border-top:1px solid var(--line)}.sub{color:var(--ink2)}select{width:100%;font:inherit;color:var(--ink);background:var(--surface);padding:11px;border:1px solid var(--line);border-radius:10px}footer{padding:34px 0 50px;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}footer a{color:var(--ink2);margin-right:16px}body{overflow-x:clip}.sr{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}`;
+/** Used when the output holds no site.css: the site's palette (design-31: warm, light and dark) and frame. */
+const FALLBACK_CSS = `:root{color-scheme:light dark;--bg:#FBF9F5;--surface:#FFFFFF;--tile:#F3EDE7;--ink:#1C1A17;--ink2:#5E5850;--muted:#6E685E;--line:#EAE6DF;--field:#8C8578;--accent:#1F3A52;--accent-fill:#1F3A52;--on-accent:#FFFFFF;--accent-soft:rgba(31,58,82,.1);--good:#0F8A4C;--good-text:#0B7843;--bad:#C53030;--glow:194,65,12;--glow-a:.07;--radius:18px;--inner:12px;--control:10px;--serif:ui-serif,"New York","Iowan Old Style",Charter,Georgia,serif}@media (prefers-color-scheme:dark){:root{--bg:#121110;--surface:#1F1E1B;--tile:#2E2B27;--ink:#EDEAE3;--ink2:#BDB6AA;--muted:#A39C90;--line:#2C2A26;--field:#807A6D;--accent:#8FB4D8;--accent-fill:#3B6B94;--accent-soft:rgba(143,180,216,.14);--good:#3CCB7F;--good-text:#3CCB7F;--bad:#F2706B;--glow:242,136,75;--glow-a:.1}}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,system-ui,sans-serif;line-height:1.6}a{color:var(--accent)}.wrap{max-width:1040px;margin:0 auto;padding:0 20px}header{display:flex;align-items:center;justify-content:space-between;padding:22px 0}.brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:22px;color:var(--ink);text-decoration:none}.brand img{width:40px;height:40px;border-radius:10px}.lang{display:flex;gap:8px}.lang a{color:var(--ink2);text-decoration:none;font-size:15px;border:1px solid var(--field);padding:6px 12px;border-radius:999px}h1{font-size:clamp(34px,5.4vw,60px);line-height:1.06;margin:12px 0 18px}h2{font-size:26px;margin:0 0 10px}.eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:13px;color:var(--ink2);font-weight:700}.lead{font-size:19px;color:var(--ink2)}.cta{display:inline-block;background:var(--accent-fill);color:var(--on-accent);padding:14px 22px;border-radius:12px;font-weight:700;text-decoration:none}.ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}.cta.alt{background:transparent;color:var(--ink);border:1px solid var(--field)}.note{font-size:14px;color:var(--muted)}section{padding:56px 0;border-top:1px solid var(--line)}.sub{color:var(--ink2)}select{width:100%;font:inherit;color:var(--ink);background:var(--surface);padding:11px;border:1px solid var(--field);border-radius:10px}footer{padding:34px 0 50px;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}footer a{color:var(--ink2);margin-right:16px}body{overflow-x:clip}.sr{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}`;
 const minCss = (css: string) => css.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\s*\n\s*/g, "").replace(/\s{2,}/g, " ").trim();
 
 type Frame = {
   lang: Lang; path: string; title: string; description: string; css: string; body: string; today: string;
   /** The site has motion.js (redesign 2026-11): the page loads it, as the last thing in the body. */
   motion?: boolean;
+  /** design-31 (Patrik 2026-11-03: "gärna med bilder … på ett snyggt och lugnt sätt"): the calm trail band closing the page (trailBand). */
+  band?: BandKind | null;
   /** lang-switch: the site has lang.js: the language switch loads it. */
   langJs?: boolean;
   alternates?: Partial<Record<Lang, string>> | null; noindex?: boolean; og?: { image: string; alt: string; large: boolean }; ld?: object[]; script?: string; module?: string;
@@ -1261,12 +1268,26 @@ function frame(f: Frame): string {
   const security = securityMeta([f.script, f.module].filter((x): x is string => !!x));
   return `<!doctype html><html lang="${f.lang}"><head><meta charset="utf-8">${security}<meta name="viewport" content="width=device-width,initial-scale=1">${smartBannerMeta(f.appId)}
 <title>${esc(f.title)}</title><meta name="description" content="${esc(f.description)}">${f.noindex ? '<meta name="robots" content="noindex,follow">' : `<meta name="robots" content="max-image-preview:large"><link rel="canonical" href="${esc(abs(f.path))}">`}${alt}
-${og}<meta name="theme-color" content="#0D1119"><link rel="icon" href="${root}favicon.ico" sizes="32x32"><link rel="icon" href="${root}apple-touch-icon.png" type="image/png" sizes="180x180"><link rel="apple-touch-icon" href="${root}apple-touch-icon.png"><link rel="preload" href="${root}fonts/BarlowCondensed-Bold-latin.woff2" as="font" type="font/woff2" crossorigin><style>${f.css}</style>${(f.ld ?? []).map(jsonLd).join("")}</head><body>
+${og}<meta name="theme-color" content="#FBF9F5" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#121110" media="(prefers-color-scheme: dark)"><link rel="icon" href="${root}favicon.ico" sizes="32x32"><link rel="icon" href="${root}apple-touch-icon.png" type="image/png" sizes="180x180"><link rel="apple-touch-icon" href="${root}apple-touch-icon.png"><link rel="preload" href="${root}fonts/BarlowCondensed-Bold-latin.woff2" as="font" type="font/woff2" crossorigin><style>${f.css}</style>${(f.ld ?? []).map(jsonLd).join("")}</head><body>
 <a class="skip" href="#main">${esc(t.skip)}</a><div class="wrap"><header><a class="brand" href="${root}${c.home}"><img src="${root}logo-80.png" alt="" width="40" height="40">MILA</a>${switcher}</header>
 ${crumbs}
-<main id="main">${f.body}</main>
+<main id="main">${f.body}</main>${f.band ? trailBand(f.band, root) : ""}
 <footer><a href="${root}${c.support}">${esc(t.support)}</a><a href="${root}${c.privacy}">${esc(t.privacy)}</a><a href="${root}${c.terms}">${esc(t.terms)}</a><a href="${root}${c.support}#provider">${esc(t.contact)}</a><a href="${root}${c.support}?topic=report&amp;ref=${encodeURIComponent(abs(f.path))}#kontakt" rel="nofollow">${esc(t.report)}</a><br><br>${esc(t.notAffiliatedAll)}<br><br>© ${f.today.slice(0, 4)} Mila</footer></div>${f.script ? `<script>${f.script}</script>` : ""}${f.module ? `<script type="module">${f.module}</script>` : ""}${f.motion ? `<script src="${root}motion.js"></script>` : ""}</body></html>
 `;
+}
+/** design-31 (Patrik 2026-11-03): the trail pictures the band can show: hubs and indexes a clear day (dusk in dark mode), guides a cloudy
+ *  day (dusk in dark mode). */
+export type BandKind = "hub" | "guide";
+/** Every file a band can point at: the band is drawn only when the site has them all (a half-copied pictures/ shows no broken picture). */
+export const BAND_FILES = (["hub", "guide"] as const).flatMap((k) => [`pictures/trail-${k}-light-600.jpg`, ...["light", "dark"].flatMap((s) => [360, 600].map((w) => `pictures/trail-${k}-${s}-${w}.webp`))]);
+/** design-31: the calm band closing a hub, an index or a guide: one of the app's own trail pictures (the backdrops, cut and made small in
+ *  pictures/), the dark scheme's own picture by prefers-color-scheme, decorative (alt="", hidden for screen readers), lazy and with its
+ *  size, so it never moves the page or its largest paint. Outside <main>, so no page's content or lastmod moves for it. */
+export function trailBand(kind: BandKind, root: string): string {
+  const set = (scheme: string) => `${root}pictures/trail-${kind}-${scheme}-360.webp 360w, ${root}pictures/trail-${kind}-${scheme}-600.webp 600w`;
+  const sizes = "(max-width:900px) 100vw, 1120px";
+  return `<div class="band" aria-hidden="true"><picture><source media="(prefers-color-scheme: dark)" type="image/webp" srcset="${set("dark")}" sizes="${sizes}">`
+    + `<source type="image/webp" srcset="${set("light")}" sizes="${sizes}"><img src="${root}pictures/trail-${kind}-light-600.jpg" alt="" width="600" height="300" loading="lazy" decoding="async"></picture></div>`;
 }
 /** Apple's App Store badge linking to the app: Apple's own localized artwork (the site's badges/, from Apple's marketing tools), never a
  *  button of our own that reads like it; its alt text is the badge's words (t.store). 50 px high, as on the product page. */
@@ -1287,6 +1308,8 @@ const filterScript = `(()=>{const f=document.querySelector("form.filter");if(!f)
 type Ctx = { today: string; css: string; appStore: string; active: Race[]; slugs: Map<string, string>; ogImage: (r: Race | null, lang: Lang) => { image: string; large: boolean };
   /** The site has scene.js: the hero gets its scene in the browser. */
   sceneJs?: boolean;
+  /** design-31: the site has its trail pictures (pictures/, from the app's own backdrops): hubs, indexes and guides end in a band. */
+  pictures?: boolean;
   /** site-calm: the races whose course map is there (lopp/<slug>/map.webp, map@2x.webp) and fits their course. */
   hasMap?: Set<string>;
   /** The site has motion.js: race pages, indexes, hubs and guides load it. */
@@ -1461,7 +1484,7 @@ export function indexPage(lang: Lang, page: number, pages: number, races: Race[]
   const browse = page === 1 ? hubNav(ctx.hubs ?? [], lang, path, S[lang].browseH) : "";
   const guides = page === 1 ? (ctx.guides ?? []).filter((g) => guideLangs(g).includes(lang)) : [];
   const guideNav = guides.length ? `<section aria-labelledby="h-guides"><h2 id="h-guides">${esc(S[lang].guidesCrumb)}</h2><ul class="hubs">${guides.map((g) => `<li><a href="${esc(rel(path, guidePath(lang, g.slug[lang]!)))}">${esc(g[lang]!.title)}</a></li>`).join("")}</ul></section>` : "";
-  return frame({ lang, path, title: `${t.indexTitle}${page > 1 ? ` – ${t.pageN(page)}` : ""} | Mila`, description: page > 1 ? `${S[lang].indexDesc} (${t.pageN(page)})` : S[lang].indexDesc, css: ctx.css, today, alternates, appId: ctx.appId, motion: ctx.motionJs, langJs: ctx.langJs,
+  return frame({ lang, path, title: `${t.indexTitle}${page > 1 ? ` – ${t.pageN(page)}` : ""} | Mila`, description: page > 1 ? `${S[lang].indexDesc} (${t.pageN(page)})` : S[lang].indexDesc, css: ctx.css, today, alternates, appId: ctx.appId, motion: ctx.motionJs, langJs: ctx.langJs, band: ctx.pictures ? "hub" : null,
     og: { ...ctx.ogImage(null, lang), alt: t.ogDefault }, ld: [crumbsLd([{ name: t.home, path: L[lang].home }, { name: t.races, path: indexPath(lang) }])],
     body: `${hero}${browse}${guideNav}${filter}\n${list}\n${pager}`, script: filterScript, crumbs: [{ name: t.home, path: L[lang].home }, { name: t.races }] });
 }
@@ -1840,7 +1863,7 @@ export function hubPage(h: Hub, lang: Lang, ctx: Ctx): string {
   const ld = [crumbsLd([{ name: t.home, path: L[lang].home }, { name: t.races, path: indexPath(lang) }, { name: h.name[lang], path }]),
     { "@context": "https://schema.org", "@type": "ItemList", name: h.name[lang], numberOfItems: rs.length,
       itemListElement: rs.slice(0, 100).map((r, i) => ({ "@type": "ListItem", position: i + 1, url: abs(racePath(lang, ctx.slugs.get(r.id)!)), name: raceTitle(r, lang) })) }];
-  return frame({ lang, path, title: `${h.name[lang]} – ${s.hubTail} | Mila`, description: s.hubDesc(h.name[lang], rs.length), css: ctx.css, today, alternates, appId: ctx.appId, motion: ctx.motionJs, langJs: ctx.langJs,
+  return frame({ lang, path, title: `${h.name[lang]} – ${s.hubTail} | Mila`, description: s.hubDesc(h.name[lang], rs.length), css: ctx.css, today, alternates, appId: ctx.appId, motion: ctx.motionJs, langJs: ctx.langJs, band: ctx.pictures ? "hub" : null,
     og: { ...ctx.ogImage(null, lang), alt: h.name[lang] }, ld, body: `${hero}${list}${more}${back}`,
     crumbs: [{ name: t.home, path: L[lang].home }, { name: t.races, path: indexPath(lang) }, { name: h.name[lang] }] });
 }
@@ -1931,7 +1954,7 @@ export function guidePage(g: Guide, lang: Lang, ctx: Ctx): string {
     ...(g.updated && isDay(g.updated) ? { dateModified: g.updated } : {}), image: [ctx.ogImage(null, lang).image],
     author: { "@type": "Organization", name: "Mila", url: `${SITE}/` }, publisher: { "@type": "Organization", name: "Mila", url: `${SITE}/`, logo: { "@type": "ImageObject", url: `${SITE}/logo.png` } } },
     crumbsLd([{ name: t.home, path: L[lang].home }, { name: S[lang].guidesCrumb, path }, { name: doc.title, path }])];
-  return frame({ lang, path, title: `${doc.title} | Mila`, description: doc.description, css: ctx.css, today: ctx.today, alternates, appId: ctx.appId, motion: ctx.motionJs, langJs: ctx.langJs,
+  return frame({ lang, path, title: `${doc.title} | Mila`, description: doc.description, css: ctx.css, today: ctx.today, alternates, appId: ctx.appId, motion: ctx.motionJs, langJs: ctx.langJs, band: ctx.pictures ? "guide" : null,
     og: { ...ctx.ogImage(null, lang), alt: doc.title }, ld, body: `<article class="prose"><h1>${esc(doc.title)}</h1>${body}</article>${cta}`,
     crumbs: [{ name: t.home, path: L[lang].home }, { name: doc.title }] });
 }
@@ -2108,7 +2131,7 @@ export async function generate(o: { out: string; races: Race[]; ids?: Set<string
   const hubs = buildHubs(active, today), titles = new Map<string, string[]>();
   for (const r of active) { const k = pageTitle(r, "sv"); titles.set(k, [...(titles.get(k) ?? []), r.id]); }
   const titleClash = new Set([...titles.values()].filter((ids) => ids.length > 1).flat());
-  const ctx: Ctx = { today, css, appStore, active, slugs, ogImage, hasMap, sceneJs: await exists("scene.js"), motionJs: await exists("motion.js"), langJs: await exists("lang.js"), appId: smartBannerMeta(o.appStoreId) ? o.appStoreId : null, hubs, titleClash, guides: o.guides };
+  const ctx: Ctx = { today, css, appStore, active, slugs, ogImage, hasMap, sceneJs: await exists("scene.js"), motionJs: await exists("motion.js"), langJs: await exists("lang.js"), pictures: (await Promise.all(BAND_FILES.map((f) => exists(f)))).every(Boolean), appId: smartBannerMeta(o.appStoreId) ? o.appStoreId : null, hubs, titleClash, guides: o.guides };
 
   // 4. the race pages, and the pages of races that left; every indexed page's lastmod moves only when its content does
   const pages: State["pages"] = {};

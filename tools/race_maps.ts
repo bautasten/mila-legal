@@ -73,7 +73,7 @@ export function tilesFor(b: { s: number; w: number; n: number; e: number }, z: n
 export type MapFeature = { type: 1 | 2 | 3; kind: string; name?: string; rank?: number; geom: [number, number][][] };
 export type MapTile = { z: number; x: number; y: number; extent: number; layers: Record<string, MapFeature[]> };
 
-// the palette: the site's dark surface, everything muted; the course (the page's own SVG) is the only bright line
+// the palette: the old dark site's surface (a dark picture in both of design-31's schemes; the page keeps its overlay dark), everything muted; the course (the page's own SVG) is the only bright line
 const C = { land: "#151B26", water: "#152E47", forest: "#16241E", park: "#172420", urban: "#181E2A", minor: "#283244", major: "#334059",
   highway: "#3B4963", path: "#38475E", label: "#8792A4", halo: "#151B26" };
 const FOREST = new Set(["forest", "wood"]), PARK = new Set(["park", "grass", "grassland", "meadow", "nature_reserve", "golf_course", "recreation_ground", "garden", "village_green", "scrub", "heath", "protected_area", "national_park"]);

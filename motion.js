@@ -77,7 +77,7 @@
     for (const img of document.querySelectorAll("main .feature img")) {
       if (!below(img)) continue;
       mark([img]);
-      gsap.fromTo(img, { clipPath: "inset(18% 10% 18% 10% round 24px)", scale: 1.06 }, { clipPath: "inset(0% 0% 0% 0% round 24px)", scale: 1, duration: 1.3, ease: "power3.inOut",
+      gsap.fromTo(img, { clipPath: "inset(18% 10% 18% 10% round 18px)", scale: 1.06 }, { clipPath: "inset(0% 0% 0% 0% round 18px)", scale: 1, duration: 1.3, ease: "power3.inOut",
         scrollTrigger: { trigger: img, start: "top 85%", once: true }, clearProps: "clipPath,transform" });
     }
 

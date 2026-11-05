@@ -121,3 +121,5 @@ select { appearance: auto; }
 .sheet-box h3 { margin-top: 16px; }
 
 @media (max-width: 420px) { #reload { display: none; } }
+
+.original { width: 100%; height: 60vh; border: 1px solid var(--line); border-radius: 14px; background: #fff; margin-top: 10px; }

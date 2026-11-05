@@ -12,7 +12,7 @@
   var DRIFTPANEL = "https://claude.ai/artifact/4jTsoyZDyTfD7aKRTuxN2t";
   var LOCAL = location.hostname === "localhost" || location.hostname === "127.0.0.1";
   var DEMO = LOCAL && /^#demo\b/.test(location.hash);
-  var MODULES = [["idag", "I dag"], ["mejl", "Mejl"], ["appen", "Appen"], ["pengar", "Pengar"], ["drift", "Drift"], ["kalender", "Kalender"]];
+  var MODULES = [["idag", "I dag"], ["mejl", "Mejl"], ["appen", "Appen"], ["pengar", "Pengar"], ["drift", "Drift"], ["anvandare", "Användare"], ["juridik", "Juridik"], ["marknad", "Marknad"], ["kalender", "Kalender"]];
   var nf = new Intl.NumberFormat("sv-SE"), nf2 = new Intl.NumberFormat("sv-SE", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   var $ = function (id) { return document.getElementById(id); };
   var data = null, mail = "", timer = null, retryT = null, lastLoad = 0, module = "idag", mailBox = "alla", mailCat = "alla";
@@ -61,7 +61,7 @@
   function link(parent, text, href) { var a = el("a", null, text); a.href = href; a.rel = "noopener"; a.target = "_blank"; parent.appendChild(a); return a; }
 
   // ---- words for the server's codes
-  var KIND = { beslut: "Beslut", lopp: "Loppregistret", mejl: "Mejl", gdpr: "GDPR", support: "Support", kostnad: "Kostnad", frist: "Datum", app: "Appen", moderering: "Granskning", agent: "Agenter" };
+  var KIND = { andrat: "Ändrat av tornet", beslut: "Beslut", lopp: "Loppregistret", mejl: "Mejl", gdpr: "GDPR", support: "Support", kostnad: "Kostnad", frist: "Datum", app: "Appen", moderering: "Granskning", agent: "Agenter" };
   var CAT = { support: "Support", bugg: "Bugg", betalning: "Betalning", gdpr: "GDPR-begäran", partner: "Partner", press: "Press", leverantor: "Apple och leverantörer", juridik: "Juridik", skrap: "Skräp", ovrigt: "Övrigt" };
   var BOX = { alla: "Alla", egen: "Din adress", info: "info@", support: "support@", annan: "Annan" };
   var ASC = { READY_FOR_SALE: "Ute i App Store", WAITING_FOR_REVIEW: "Väntar på granskning", IN_REVIEW: "Granskas nu", PENDING_DEVELOPER_RELEASE: "Godkänd, väntar på dig",
@@ -90,7 +90,7 @@
     $("asof").textContent = "Läget " + when(data.at) + ". Inget skickas, publiceras eller godkänns utan ditt klick.";
     drawTabs();
     var b = clear($("board"));
-    ({ idag: drawToday, mejl: drawMail, appen: drawApp, pengar: drawMoney, drift: drawOps, kalender: drawCalendar }[module] || drawToday)(b);
+    ({ idag: drawToday, mejl: drawMail, appen: drawApp, pengar: drawMoney, drift: drawOps, anvandare: drawUsers, juridik: drawLegal, marknad: drawMarket, kalender: drawCalendar }[module] || drawToday)(b);
   }
 
   // ---- I dag – behöver dig
@@ -108,6 +108,7 @@
       if (r.detail) body.appendChild(el("div", "d", r.detail));
       li.appendChild(body);
       var acts = el("div", "acts");
+      if (r.link) { var lk = el("a", null, "Öppna underlaget"); lk.href = r.link; lk.rel = "noopener noreferrer"; lk.target = "_blank"; body.appendChild(lk); }
       if (r.approve && r.approve.action === "decision") {
         button(acts, "Ja", "", function () { answer(r, "ja"); });
         button(acts, "Nej", "soft", function () { answer(r, "nej"); });
@@ -166,6 +167,7 @@
     var se = m.sync_error, ok = m.sync;
     if (se && (!ok || Date.parse(se.at) > Date.parse(ok.at))) c.appendChild(el("p", "age", "Senaste läsningen gick inte (" + ((se.data && se.data.error) || "fel") + ") " + when(se.at) + (ok ? " · senast läst " + when(ok.at) : "")));
     else if (ok) c.appendChild(el("p", "age", "Inkorgen lästes " + when(ok.at)));
+    if (ok && ok.data && ok.data.skipped) c.appendChild(el("p", "sub", ok.data.skipped + " mejl kunde inte sparas vid senaste läsningen (de hoppades över)."));
     var boxes = el("div", "chips");
     ["alla", "support", "info", "egen"].forEach(function (k) {
       var n = k === "alla" ? (m.items || []).length : (m.items || []).filter(function (x) { return x.box === k; }).length;
@@ -212,6 +214,18 @@
         kv(body, [["Från", (x.from_name ? x.from_name + " " : "") + (x.from_addr ? "<" + x.from_addr + ">" : "")], ["Till", BOX[x.box] || x.box], ["Kom", when(x.received_at)], ["Sorterat", CAT[x.category] || x.category]]
           .concat(x.gdpr_due ? [["Svara senast", dayText(x.gdpr_due)]] : []));
         body.appendChild(el("div", "mailtext", x.body || "(ingen text)"));
+        if (x.html) {
+          // the original, sanitised by the browser's sandbox: no scripts, no forms, no navigation, and no image or style from elsewhere
+          // (the frame's own policy allows only inline styles and embedded data images), so a tracking pixel never says it was opened
+          var show = el("button", "quiet", "Visa original"); show.type = "button";
+          show.addEventListener("click", function () {
+            var fr = document.createElement("iframe");
+            fr.setAttribute("sandbox", ""); fr.setAttribute("referrerpolicy", "no-referrer"); fr.className = "original"; fr.title = "Mejlets original";
+            fr.srcdoc = "<meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; style-src 'unsafe-inline'; img-src data:; font-src data:\">" + x.html;
+            show.replaceWith(fr);
+          });
+          body.appendChild(show);
+        }
         mailTools(body, x);
       });
     });
@@ -259,7 +273,7 @@
   var DKIND = { apple: "Apple", doman: "Domän", nyckel: "Nyckel", partner: "Partner", juridik: "Juridik", skatt: "Skatt", release: "Release", ovrigt: "Övrigt" };
   function drawCalendar(b) {
     var g = el("div", "grid two"); b.appendChild(g);
-    var c = card(g, "Datum att hålla koll på", "Du får en påminnelse 30, 7 och 1 dag före.", "span");
+    var c = card(g, "Datum att hålla koll på", "I dag visar dem en månad före (i tre dagar), sedan en vecka före och dagen före; morgonsammanfattningen tar med dem.", "span");
     var list = data.deadlines || [];
     if (!list.length) c.appendChild(el("p", "empty", "Inga datum inlagda."));
     var ul = el("ul", "rows");
@@ -274,6 +288,22 @@
       ul.appendChild(li);
     });
     c.appendChild(ul);
+    var cf = data.calendar, ev = cf && cf.data && cf.data.events;
+    var k = card(g, "Kalendern ”mila coach”", "Tornet lägger in och håller sina datum uppdaterade här. Andra kalendrar rör det aldrig.", "span");
+    if (!ev) k.appendChild(el("p", "empty", "Inte läst än (insamlaren på Macen behöver åtkomst till Kalender)."));
+    else if (!ev.length) k.appendChild(el("p", "empty", "Inga händelser de närmaste fyra månaderna."));
+    else {
+      var ul2 = el("ul", "rows");
+      ev.slice(0, 40).forEach(function (e) {
+        var li = el("li", "row"); li.appendChild(el("span", "mark")); var d = el("div");
+        d.appendChild(el("div", "label eyebrow", e.ours ? "Lagd av tornet" : "Din"));
+        d.appendChild(el("div", "t", e.title || "(utan rubrik)"));
+        d.appendChild(el("div", "d", e.allday ? dayText(e.day || e.start.slice(0, 10)) : when(e.start)));
+        li.appendChild(d); ul2.appendChild(li);
+      });
+      k.appendChild(ul2);
+    }
+    if (cf) age(k, cf.at);
     var f = card(g, "Lägg till ett datum", null), form = el("form", "form");
     var ti = el("input"); ti.placeholder = "Vad"; ti.maxLength = 200; ti.required = true; ti.setAttribute("aria-label", "Vad");
     var du = el("input"); du.type = "date"; du.required = true; du.setAttribute("aria-label", "Datum");
@@ -300,6 +330,77 @@
     var lg = card(g, "Loggen", "Det senaste du gjort härifrån.");
     if (!(data.audit || []).length) lg.appendChild(el("p", "empty", "Inget än."));
     else kv(lg, data.audit.slice(0, 12).map(function (x) { return [x.action + (x.target ? " · " + x.target : ""), when(x.at)]; }));
+  }
+
+  // ---- Användare (bara sammanräknat: inga namn, inga hälsovärden)
+  function drawUsers(b) {
+    var d = (data.money && data.money.dash) || {}, envs = d.envs || {}, g = el("div", "grid two"); b.appendChild(g);
+    [["as", "App Store"], ["tf", "TestFlight"]].forEach(function (e) {
+      var gr = (envs[e[0]] && envs[e[0]].growth) || {}, c = card(g, e[1], null);
+      tiles(c, [{ v: f0(sum(gr.active_1d)), l: "Aktiva i dag" }, { v: f0(sum(gr.active_7d)), l: "Aktiva 7 d" }, { v: f0(sum(gr.active_30d)), l: "Aktiva 30 d", d: f0(sum(gr.accounts)) + " konton" }]);
+      var co = (gr.cohorts || []).slice(-6);
+      if (co.length) kv(c, co.map(function (x) { return ["Vecka " + String(x.w).slice(-2) + " (" + f0(x.n) + " nya)", "dag 1: " + (has(x.d1) ? f0(x.d1) : "–") + " · dag 7: " + (has(x.d7) ? f0(x.d7) : "–") + " · dag 30: " + (has(x.d30) ? f0(x.d30) : "–")]; }));
+      var u = envs[e[0]] && envs[e[0]].usage;
+      if (u) c.appendChild(el("p", "sub", "Kopplingar: " + Object.keys(u.connections || {}).map(function (k) { return k + " " + f0(u.connections[k]); }).join(", ") + (has(u.buddies) ? " · löparkompisar " + f0(u.buddies) : "")));
+    });
+    var us = data.users || {}, w = card(g, "Vad löpare önskar sig", "Öppna önskemål per tema, som coachen sorterade dem. Underlag för support-KB och nästa runda.");
+    if (!(us.wish_themes || []).length) w.appendChild(el("p", "empty", "Inga öppna önskemål."));
+    else kv(w, us.wish_themes.map(function (x) { return [x.k, f0(x.n)]; }));
+    var rp = card(g, "Anmälda coachtexter, 30 d", "Varför löpare anmälde en text, som antal.");
+    if (!(us.report_reasons || []).length) rp.appendChild(el("p", "empty", "Inga anmälningar."));
+    else kv(rp, us.report_reasons.map(function (x) { return [x.k, f0(x.n)]; }));
+    var q = card(g, "Återkommande frågor i mejlen", "Antal öppna mejl per kategori; underlag till support-KB.");
+    var cnt = (data.mail && data.mail.counts) || {}, keys = Object.keys(cnt);
+    if (!keys.length) q.appendChild(el("p", "empty", "Inga öppna mejl."));
+    else kv(q, keys.sort(function (a, c) { return cnt[c] - cnt[a]; }).map(function (k) { var p2 = k.split(":"); return [(CAT[p2[1]] || p2[1]) + " · " + (BOX[p2[0]] || p2[0]), f0(cnt[k])]; }));
+  }
+
+  // ---- Juridik och bolag
+  function drawLegal(b) {
+    var l = data.legal || {}, cv = l.consent_versions || {}, g = el("div", "grid two"); b.appendChild(g);
+    var c = card(g, "Samtycken", "Senaste versionen som någon löpare har godkänt.");
+    kv(c, [["Coachen och AI", cv.ai ? "v" + cv.ai : "–"], ["Hälsodata", cv.health ? "v" + cv.health : "–"], ["Tillsammans", cv.social ? "v" + cv.social : "–"]]);
+    c.appendChild(el("p", "sub", "Version 7 (Suunto, klimakteriestatus och allergier) byggs i bygge 32."));
+    var site = data.ops && data.ops.site && data.ops.site.data, s = card(g, "Juridiska sidor", null);
+    if (!site) s.appendChild(el("p", "empty", "Inte kontrollerade än."));
+    else { kv(s, (site.checks || []).filter(function (x) { return /policy|Villkor|Support/i.test(x.name); }).map(function (x) { return [x.name, x.ok ? "publicerad" : "svarar inte"]; })); age(s, data.ops.site.at); }
+    var pp = el("p", "note"); link(pp, "Integritetspolicy", "../privacy.html"); pp.appendChild(document.createTextNode(" · ")); link(pp, "Villkor", "../terms.html"); s.appendChild(pp);
+    var dpa = card(g, "Personuppgiftsbiträden", "Kontrollera att avtalet (DPA) finns sparat för varje.");
+    kv(dpa, [["Supabase (databas, EU/Irland)", "biträde"], ["Extern AI-tjänst (USA)", "underbiträde, EU:s standardavtalsklausuler"], ["Resend (e-post, USA)", "standardavtalsklausuler"], ["Apple (App Store, köp)", "eget ansvar"], ["GitHub Pages och Cloudflare (webb, DNS)", "ingen persondata utöver loggar"]]);
+    var gd = card(g, "GDPR-loggen", null), items = ((data.mail && data.mail.items) || []).filter(function (m) { return m.category === "gdpr"; });
+    if (!items.length) gd.appendChild(el("p", "empty", "Inga öppna GDPR-begäranden."));
+    else kv(gd, items.map(function (m) { return [(m.subject || "Begäran") + " · kom " + dayText(m.received_at.slice(0, 10)), "svara senast " + dayText(m.gdpr_due)]; }));
+    gd.appendChild(el("p", "sub", "Fristen är en månad. Den får förlängas med högst två månader bara om begäran är komplicerad eller om de är många, och då ska personen få veta det och varför inom den första månaden. Varje åtgärd härifrån står i loggen under Kalender."));
+    var ds = card(g, "App Store: näringsidkare (DSA)", null);
+    ds.appendChild(el("p", "note", "Mila säljs i EU, så App Store Connect ska visa Mila som näringsidkare med kontaktuppgifter (DSA). Kontrollera i App Store Connect att statusen är klar; tornet kan inte läsa den."));
+    var bk = card(g, "Bokföring och skatt", "Inget bokföringssystem är kopplat. Det här är påminnelser, inte råd.", "span");
+    kv(bk, [["Moms", "Lägg in din momsperiods deklarationsdatum under Kalender; Skatteverket visar dem."],
+      ["Köp från utländska tjänster", "Kontrollera varje faktura: när ett utländskt företag fakturerar utan moms redovisar du själv den svenska momsen (omvänd skattskyldighet) i momsdeklarationen. Det gäller till exempel AI-tjänsten, Resend, GitHub, Supabase och Cloudflare, beroende på vilket bolag som fakturerar."],
+      ["Leverantörskvitton", "Spara månadens kvitton från varje tjänst i samma mapp."],
+      ["Apples utbetalningar", "Apples försäljnings- och utbetalningsrapporter är underlaget för intäkterna."],
+      ["F-skatt", "Kontrollera att F-skatten är aktiv innan lanseringen."]]);
+  }
+
+  // ---- Marknad
+  function drawMarket(b) {
+    var cm = (data.money && data.money.dash && data.money.dash.common) || {}, g = el("div", "grid two"); b.appendChild(g);
+    var r = card(g, "Loppregistret", null);
+    tiles(r, [{ v: f0(cm.register), l: "Lopp", d: f0(cm.countries) + " länder" }, { v: f0(cm.with_course), l: "Med arrangörens bana" }, { v: f0(cm.coming), l: "Kommande" }]);
+    var waiting = ((data.idag && data.idag.rows) || []).filter(function (x) { return x.kind === "lopp"; }).length;
+    r.appendChild(el("p", "sub", waiting ? waiting + " väntar på ditt godkännande under I dag." : "Inget väntar på godkännande."));
+    r.appendChild(el("p", "sub", "Upptäckten av nya lopp är pausad tills Mila drar in pengar."));
+    var site = data.ops && data.ops.site && data.ops.site.data, w = card(g, "Webbplatsen", null);
+    kv(w, [["Loppsidor i sitemap", site && has(site.race_pages) ? f0(site.race_pages) : "–"], ["Besöksstatistik", "inte kopplad (kräver en läsnyckel från Cloudflare)"]]);
+    var live = data.app && data.app.asc && data.app.asc.data && data.app.asc.data.state === "READY_FOR_SALE";
+    var l = card(g, "Inför och efter lanseringen", live ? "Mila är ute i App Store." : "Mila är inte ute i App Store än.", "span");
+    var ul = el("ul", "rows");
+    [["Featuring-nominering", "Uppdateras per bygge i gruppen Apple nominering; texten i Featuring-nominering.md."],
+      ["App Store-länken", live ? "Lägg in den riktiga länken på alla loppsidor och på webbplatsen nu." : "Läggs in på loppsidor och webbplatsen när Mila är ute."],
+      ["Egna produktsidor", "Ungefär en vecka efter lanseringen: Lopp och Apple Watch; texterna godkänns av dig först."],
+      ["Partnerutskick", "Efter lanseringen och de första användarna: 2–3 åt gången (Janji m.fl.), bara utkast."]].forEach(function (x) {
+      var li = el("li", "row"); li.appendChild(el("span", "mark")); var d = el("div"); d.appendChild(el("div", "t", x[0])); d.appendChild(el("div", "d", x[1])); li.appendChild(d); ul.appendChild(li);
+    });
+    l.appendChild(ul);
   }
 
   // ---- Appen
@@ -407,7 +508,7 @@
     kv(it, [["Suunto", "godkänd – byggs i bygge 32"], ["Garmin", "ansökt 30 okt, väntar"], ["Polar", "kopplad; fråga om strukturerade pass, följ upp ~15 nov"], ["COROS", "bara via Apple Hälsa"]]);
     var l = card(g, "Fler siffror", null);
     var p = el("p", "note"); p.appendChild(document.createTextNode("Driftpanelen med alla grafer finns kvar: "));
-    link(p, "milacoach.app/dash", "../dash/"); p.appendChild(document.createTextNode(" och ")); link(p, "panelen på claude.ai", DRIFTPANEL); p.appendChild(document.createTextNode("."));
+    link(p, "milacoach.app/dash", "../dash/"); p.appendChild(document.createTextNode(" och ")); link(p, "driftpanelen som artifact", DRIFTPANEL); p.appendChild(document.createTextNode("."));
     l.appendChild(p);
   }
 

@@ -2,8 +2,8 @@
 // account is ever created here); the session stays on this browser while it is used, at most 30 days after the code (session.js: the
 // refresh token kept on this device under one key, the access token in memory, renewed before it runs out; a network error never logs out,
 // it shows "Offline" and retries), then the function `dashboard` answers aggregates only (_shared/dashboard.ts). Everything is drawn with the
-// DOM's own text nodes and hand-made SVG: never markup from strings, no script from anywhere else. Five tabs (dash-flikar): Produktion,
-// TestFlight, Morgonrapport, Övrigt and Grind (grind-flik: the gate followed live, polled on its own while shown); the last one chosen is remembered in this tab only (sessionStorage), the mail's link (#dag=) opens
+// DOM's own text nodes and hand-made SVG: never markup from strings, no script from anywhere else. Four tabs (dash-flikar): Produktion,
+// TestFlight, Morgonrapport and Övrigt; the last one chosen is remembered in this tab only (sessionStorage), the mail's link (#dag=) opens
 // the Morgonrapport.
 (function () {
   "use strict";
@@ -196,12 +196,12 @@
   // ---- the tabs (dash-flikar, Patrik 2026-10-19): Produktion (the App Store's runners), TestFlight (the testers'), Morgonrapport (the
   // daily report, both builds side by side) and Övrigt (App Review's likely accounts and the unknown build). Every per-runner number on a
   // tab is that tab's builds' only (the server asks per build); what has no runner behind it is shown once per tab under "Gemensamt".
-  var TABS = [["as", "Produktion", "App Store"], ["tf", "TestFlight", "TestFlight"], ["rapport", "Morgonrapport", ""], ["ovr", "Övrigt", "Granskning och okänd"], ["gate", "Grind", ""]];
+  var TABS = [["as", "Produktion", "App Store"], ["tf", "TestFlight", "TestFlight"], ["rapport", "Morgonrapport", ""], ["ovr", "Övrigt", "Granskning och okänd"]];
   var TABKEY = "mila-dash-tab";
   function tabColor(t) { return css(t === "tf" ? "--s2" : t === "ovr" ? "--s4" : "--s1"); }
   function savedTab() { try { var t = sessionStorage.getItem(TABKEY); return TABS.some(function (x) { return x[0] === t; }) ? t : null; } catch (e) { return null; } }
   // a link may name the tab (#flik=tf); the mail's #dag= opens the report; else the last one chosen, else Produktion
-  var hashTab = /[#&]flik=(as|tf|rapport|ovr|gate)\b/.exec(location.hash);
+  var hashTab = /[#&]flik=(as|tf|rapport|ovr)\b/.exec(location.hash);
   var tab = hashTab ? hashTab[1] : /#dag=/.test(location.hash) ? "rapport" : savedTab() || "as";
   function setTab(t) {
     tab = t; try { sessionStorage.setItem(TABKEY, t); } catch (e) { /* memory only */ }
@@ -218,10 +218,10 @@
       nav.appendChild(b);
     });
   }
-  // keys 1–5 switch tabs (not while typing)
+  // keys 1–4 switch tabs (not while typing)
   addEventListener("keydown", function (ev) {
     if (ev.metaKey || ev.ctrlKey || ev.altKey || !data || /input|textarea/i.test((ev.target && ev.target.tagName) || "")) return;
-    var i = "12345".indexOf(ev.key); if (i >= 0) setTab(TABS[i][0]);
+    var i = "1234".indexOf(ev.key); if (i >= 0) setTab(TABS[i][0]);
   });
 
   /** A section: its heading, then its own grid (so dense packing never pulls a card above its heading). */
@@ -239,7 +239,6 @@
     $("asof").textContent = d.at ? "Uppdaterad " + new Date(d.at).toLocaleString("sv-SE", { dateStyle: "short", timeStyle: "short" }) : "";
     drawTabs();
     if (tab === "rapport") return reportTab(d.reports);
-    if (tab === "gate") { gateTab(d.gate); return gatePollSoon(); }
     var e = envs[tab] || {}, name = TABS.filter(function (t) { return t[0] === tab; })[0][2];
     if (tab === "ovr") {
       var o = card("Övrigt", "granskning och okänd byggtyp", 2);
@@ -538,172 +537,6 @@
     sy.appendChild(el("p", "note", "Mäts inte (ingen ny insamling): " + (notMeasured || []).map(function (x) { return NOT_MEASURED[x] || x; }).join(", ") + "."));
   }
 
-  // ---- Grind (grind-flik, Patrik 2026-11-04): the gate (backend/ci.sh, also through upload.sh and install.sh) followed live, whoever
-  // started it and however: the runs going on now at the top (commit, branch, mode, host and worktree, the step it is in, how long), each
-  // step of the run in order with its parts and groups (test classes, the Duo's tests, the screenshot checks: green, red, names of what fell),
-  // the build disk's locks as the gate last saw them, then the latest runs and where each fell. ci.sh reports itself (gate_report.sh); a run
-  // whose heartbeat stopped is said to have stopped reporting, never shown as still going. Polled every 10 s while a run goes, 30 s otherwise.
-  var GATE_STEPS = { "Språkregistret": "Språkregistret", "Översättningar": "Översättningar", "Projekt": "Projekt (xcodegen)", "Servertester": "Servertester",
-    "Enhets- och gränssnittstester i simulatorn": "Enhets- och UI-tester", "iPhone Duo, hopvikt och öppen": "iPhone Duo", "Skärmbilder mot godkänd version": "Skärmbilder", "Bygge för iPhone": "Bygge för iPhone" };
-  var GSTATUS = { running: ["Pågår", "run"], passed: ["Grön", "ok"], failed: ["Röd", "bad"], skipped: ["Hoppad", "skip"], aborted: ["Avbruten", "warn"], waiting: ["Väntar", "wait"], lost: ["Tyst", "warn"], notrun: ["Kördes inte", "wait"] };
-  var STALE_S = 180, chosenRun = null, openKeys = {}, gateSkew = 0;
-  function gateNow() { return Date.now() - gateSkew; }
-  function secs(a, b) { var x = Date.parse(a), y = b ? Date.parse(b) : gateNow(); return isFinite(x) && isFinite(y) ? Math.max(0, Math.round((y - x) / 1000)) : null; }
-  function dur(s) {
-    if (s === null || s === undefined) return "–";
-    if (s < 60) return s + " s";
-    var m = Math.floor(s / 60); if (m < 60) return m + " min";
-    return Math.floor(m / 60) + " h " + String(m % 60).padStart(2, "0") + " min";
-  }
-  function clock(t) { var x = Date.parse(t); return isFinite(x) ? new Date(x).toLocaleTimeString("sv-SE", { hour: "2-digit", minute: "2-digit" }) : "–"; }
-  function when(t) { var x = Date.parse(t); if (!isFinite(x)) return "–"; var d = new Date(x), today = new Date(gateNow()).toDateString() === d.toDateString(); return today ? "i dag " + clock(t) : d.toLocaleString("sv-SE", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" }); }
-  function stale(r) { return r.status === "running" && (secs(r.beat_at) || 0) > STALE_S; }
-  function badge(st) { var s = GSTATUS[st] || [st, "wait"]; return el("span", "gs " + s[1], s[0]); }
-  function stepLabel(n) { return GATE_STEPS[n] || n; }
-  function counts(groups) { var p = 0, f = 0, k = 0; (groups || []).forEach(function (g) { p += num(g.passed); f += num(g.failed); k += num(g.skipped); }); return { p: p, f: f, k: k }; }
-  function countText(c) { return [c.p ? f0(c.p) + " gröna" : null, c.f ? f0(c.f) + " röda" : null, c.k ? f0(c.k) + " hoppade" : null].filter(Boolean).join(" · ") || "inga resultat än"; }
-  function ticking(e, from) { e.className = (e.className ? e.className + " " : "") + "tick"; e.setAttribute("data-from", from); return e; }
-  /** The run's steps in the plan's order (a step not in the plan comes where it ran); a planned step that has not begun is waiting. */
-  function stepsOf(r) {
-    var out = [], seen = {};
-    (r.plan || []).forEach(function (name) {
-      var s = (r.steps || []).filter(function (x) { return x.name === name; }).pop();
-      out.push(s || { name: name, status: r.status === "running" && !stale(r) ? "waiting" : "notrun", unrun: true }); seen[name] = 1;
-    });
-    (r.steps || []).forEach(function (s) { if (!seen[s.name]) out.push(s); });
-    return out.map(function (s) { return s.status === "running" && stale(r) ? Object.assign({}, s, { status: "lost" }) : s; });
-  }
-  function runFacts(r) {
-    var bits = [(r.head || "–").slice(0, 7) + (r.dirty ? " + ej incheckat" : ""), r.branch || "–", r.mode === "quick" ? "--quick" : "full",
-      (r.host || "–") + " · " + (r.worktree || "–"), r.launcher === "upload" ? "via upload.sh" : r.launcher === "install" ? "via install.sh" : "ci.sh direkt", r.by_agent ? "startad av en session" : "startad i terminalen"];
-    return bits.join("  ·  ");
-  }
-  function gateCard(r, live) {
-    var quiet = stale(r);
-    var title = quiet ? "Tyst sedan " + when(r.beat_at) : live ? "Pågår: " + (r.step ? stepLabel(r.step) : "startar") : r.status === "passed" ? "Grön" : r.status === "failed" ? "Röd i " + stepLabel(r.failed_step || "?") : "Avbruten";
-    var c = card(title, (r.head || "").slice(0, 7) + " · " + when(r.started_at), 4); c.classList.add("gate", "g-" + (stale(r) ? "lost" : r.status));
-    c.appendChild(el("p", "sub", runFacts(r)));
-    var t = [];
-    t.push({ v: clock(r.started_at), l: "Startad", d: when(r.started_at).replace(/ \d{2}:\d{2}$/, "") });
-    if (quiet) t.push({ v: dur(secs(r.started_at, r.beat_at)), l: "Hördes i" });
-    else if (r.status === "running") t.push({ v: dur(secs(r.started_at)), l: "Förfluten tid" });
-    else t.push({ v: dur(secs(r.started_at, r.ended_at)), l: "Tog" });
-    var all = counts([].concat.apply([], (r.steps || []).map(function (s) { return s.groups || []; })));
-    t.push({ v: f0(all.f), l: "Röda tester/bilder", d: f0(all.p) + " gröna" + (all.k ? ", " + f0(all.k) + " hoppade" : "") });
-    var tl = tiles(c, t);
-    if (r.status === "running" && !quiet) ticking(tl.children[1].querySelector(".v"), r.started_at);
-    if (stale(r)) c.appendChild(el("p", "warnline", "Inget livstecken sedan " + clock(r.beat_at) + " (" + dur(secs(r.beat_at)) + "): grinden har slutat rapportera. Datorn kan ha somnat eller processen dött."));
-    if (r.status === "failed" || r.status === "aborted") c.appendChild(el("p", "warnline", (r.status === "aborted" ? "Avbruten" : "Föll") + (r.failed_step ? " i " + stepLabel(r.failed_step) : "") + (has(r.exit) ? " (slutkod " + r.exit + ")" : "") + "."));
-    var list = el("ol", "gsteps");
-    stepsOf(r).forEach(function (s) {
-      var li = el("li", "gstep " + ((GSTATUS[s.status] || [0, "wait"])[1])), head = el("div", "gh");
-      head.appendChild(badge(s.status)); head.appendChild(el("b", null, stepLabel(s.name)));
-      var d = el("span", "gd", s.status === "running" ? dur(secs(s.s)) : s.s ? dur(secs(s.s, s.e)) : "");
-      if (s.status === "running" && s.s) ticking(d, s.s);
-      head.appendChild(d);
-      if (s.groups && s.groups.length) head.appendChild(el("span", "gc", countText(counts(s.groups))));
-      li.appendChild(head);
-      if (s.parts && s.parts.length) {
-        var ps = el("div", "gparts");
-        s.parts.forEach(function (p) {
-          var st = p.status === "running" && stale(r) ? "lost" : p.status;
-          var x = el("span", "gpart " + ((GSTATUS[st] || [0, "wait"])[1]), p.name + " · ");
-          var pd = el("span", null, st === "running" ? dur(secs(p.s)) : dur(secs(p.s, p.e))); if (st === "running" && p.s) ticking(pd, p.s);
-          x.appendChild(pd); ps.appendChild(x);
-        });
-        li.appendChild(ps);
-      }
-      var bad = (s.groups || []).filter(function (g) { return num(g.failed) > 0; });
-      bad.forEach(function (g) {
-        var f = el("div", "gfail"); f.appendChild(el("b", null, g.name + ": " + f0(g.failed) + " röda"));
-        if (g.failures && g.failures.length) f.appendChild(el("span", null, " " + g.failures.join(", ")));
-        li.appendChild(f);
-      });
-      if (s.note) li.appendChild(el("pre", "gnote", s.note));
-      if (s.groups && s.groups.length > 1) {
-        var key = r.id + ":" + s.seq, det = el("details", "more"); det.open = !!openKeys[key];
-        det.addEventListener("toggle", function () { openKeys[key] = det.open; });
-        det.appendChild(el("summary", null, "Alla grupper (" + s.groups.length + ")"));
-        table(det, ["Grupp", "Gröna", "Röda", "Hoppade"], s.groups.map(function (g) { return [g.name, f0(g.passed), num(g.failed) ? { t: f0(g.failed), cls: "bad" } : "0", f0(g.skipped)]; }));
-        li.appendChild(det);
-      }
-      list.appendChild(li);
-    });
-    c.appendChild(list);
-    return c;
-  }
-  function locksCard(runs) {
-    var r = runs.filter(function (x) { return x.locks; })[0], c = card("Byggdisken", r ? "som grinden såg den " + when(r.beat_at) : "", 1);
-    if (!r) { c.appendChild(el("p", "empty", "Ingen körning har rapporterat låsen än.")); return; }
-    var l = r.locks, slots = l.slots || [];
-    tiles(c, [{ v: l.focus ? "På" : "Av", l: "release.focus", d: l.focus ? "slutgrinden äger datorn" : "" },
-      { v: slots.length ? slots.join(", ") : "Inga", l: "Byggplatser tagna", d: "av 1–4" }, { v: l.ci_wait ? "Ja" : "Nej", l: "ci.wait", d: l.ci_wait ? "grinden väntar på platser" : "" }]);
-    note(c, "Läses av grinden själv vid start och var 30:e sekund medan den kör; mellan körningarna visas det senaste den såg.");
-  }
-  function gateTab(g) {
-    if (!g) return missing(card("Grind", null, 2));
-    var runs = g.runs || [], live = runs.filter(function (r) { return r.status === "running" && !stale(r); }), silent = runs.filter(stale);
-    section("Pågår nu", live.length ? live.length + (live.length === 1 ? " körning" : " körningar") : "ingen körning just nu");
-    if (!live.length) { var e = card("Ingen grind kör", null, 2); e.appendChild(el("p", "empty", silent.length ? "Den senaste har slutat rapportera (se nedan)." : "När ci.sh startar syns den här inom några sekunder.")); }
-    live.forEach(function (r) { gateCard(r, true); });
-    locksCard(runs);
-    var pick = runs.filter(function (r) { return r.id === chosenRun; })[0] || silent[0] || runs.filter(function (r) { return r.status !== "running"; })[0];
-    if (pick && live.indexOf(pick) < 0) { section("Körning", pick.id === chosenRun ? "vald i listan" : "den senaste"); gateCard(pick, false); }
-    section("Senaste körningar", f0(runs.length) + " st");
-    var c = card("Historik", "klicka på en rad för detaljerna", 4);
-    if (!runs.length) { c.appendChild(el("p", "empty", "Inga körningar rapporterade än.")); return; }
-    var t = el("table", "t runs"), tr = el("tr");
-    ["Start", "Resultat", "Läge", "Commit", "Branch", "Värd · mapp", "Tid", "Föll i"].forEach(function (h) { tr.appendChild(el("th", null, h)); }); t.appendChild(tr);
-    runs.forEach(function (r) {
-      var row = el("tr", r === pick ? "on" : null), st = stale(r) ? "lost" : r.status;
-      row.tabIndex = 0; row.setAttribute("role", "button");
-      row.appendChild(el("td", null, when(r.started_at)));
-      var b = el("td"); b.appendChild(badge(st)); row.appendChild(b);
-      row.appendChild(el("td", null, r.mode === "quick" ? "--quick" : "full"));
-      row.appendChild(el("td", "mono", (r.head || "–").slice(0, 7) + (r.dirty ? "+" : "")));
-      row.appendChild(el("td", null, r.branch || "–"));
-      row.appendChild(el("td", null, (r.host || "–") + " · " + (r.worktree || "–")));
-      row.appendChild(el("td", null, r.status === "running" ? dur(secs(r.started_at)) : dur(secs(r.started_at, r.ended_at))));
-      var fell = "";
-      if (r.status !== "passed" && r.status !== "running") {
-        var bad = [].concat.apply([], (r.steps || []).map(function (s) { return (s.groups || []).filter(function (x) { return num(x.failed) > 0; }).map(function (x) { return (x.failures || [x.name]).slice(0, 2).join(", "); }); }));
-        fell = (r.failed_step ? stepLabel(r.failed_step) : "–") + (bad.length ? ": " + bad.slice(0, 2).join("; ") : "");
-      }
-      row.appendChild(el("td", "fell", fell));
-      var go = function () { chosenRun = r.id; render(); };
-      row.addEventListener("click", go); row.addEventListener("keydown", function (ev) { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); go(); } });
-      t.appendChild(row);
-    });
-    var wrap = el("div", "tw"); wrap.appendChild(t); c.appendChild(wrap);
-  }
-  // the running clocks move every second between the polls
-  setInterval(function () {
-    if (tab !== "gate") return;
-    var xs = document.querySelectorAll(".tick");
-    for (var i = 0; i < xs.length; i++) xs[i].textContent = dur(secs(xs[i].getAttribute("data-from")));
-  }, 1000);
-  /** The Grind tab's own poll (dashboard?gate=1: the runs only): 10 s while a run goes, 30 s otherwise; only while the tab is shown. */
-  var gateT = null, gateBusy = false;
-  function gatePollSoon() {
-    clearTimeout(gateT); gateT = null;
-    if (tab !== "gate" || DEMO || $("app").hidden || document.visibilityState === "hidden") return;
-    var runs = ((data || {}).gate || {}).runs || [], going = runs.some(function (r) { return r.status === "running" && !stale(r); });
-    gateT = setTimeout(gatePoll, going ? 10e3 : 30e3);
-  }
-  function gatePoll() {
-    gateT = null;
-    if (gateBusy) return;
-    gateBusy = true;
-    var done = function () { gateBusy = false; };
-    S.fresh(false).then(function (x) {
-      if (!x.ok) { done(); return gatePollSoon(); }
-      return fetch(FN + "?gate=1", { headers: { Authorization: "Bearer " + x.t, apikey: ANON }, credentials: "omit", referrerPolicy: "no-referrer", cache: "no-store" }).then(function (r) {
-        if (!r.ok) { done(); return gatePollSoon(); }
-        return r.json().then(function (j) { done(); if (data && j && j.gate) { data.gate = j.gate; gateSkew = j.gate.now ? Date.now() - Date.parse(j.gate.now) : 0; if (tab === "gate") render(); } gatePollSoon(); });
-      });
-    }).then(done, function () { done(); gatePollSoon(); });
-  }
-
   // ---- sign-in (Supabase Auth's e-mail OTP; no account is created from here) and the session (session.js)
   var S = MilaDashSession({ url: SUPABASE, anon: ANON, fetch: function (u, i) { return fetch(u, i); }, locks: navigator.locks });
   var TICK = 120e3, RETRY = [15e3, 30e3, 60e3, 120e3], fails = 0;
@@ -762,12 +595,7 @@
         if (r.status === 429) { return; }
         // the server could not answer: keep what is drawn (or say so when nothing is), mark offline, try again quietly
         if (!r.ok) { if (!data) { var b = $("board"); while (b.firstChild) b.removeChild(b.firstChild); b.appendChild(el("p", "err", "Siffrorna kunde inte hämtas (" + r.status + "). Försöker igen.")); } offline(true); return retrySoon(); }
-        return r.json().then(function (j) {
-          // the gate's runs from the Grind tab's own poll stay when they are newer than the full answer's (cached up to a minute)
-          var old = data && data.gate, neu = j && j.gate;
-          if (old && (!neu || Date.parse(old.now) > Date.parse(neu.now))) j.gate = old;
-          else if (neu && neu.now) gateSkew = Date.now() - Date.parse(neu.now);
-          data = j; lastLoad = Date.now(); fails = 0; offline(false); clearTimeout(retryT); render(); }, function () { offline(true); retrySoon(); });
+        return r.json().then(function (j) { data = j; lastLoad = Date.now(); fails = 0; offline(false); clearTimeout(retryT); render(); }, function () { offline(true); retrySoon(); });
       }, function () { $("board").style.opacity = "1"; offline(true); retrySoon(); });
     });
   }
@@ -781,7 +609,6 @@
   function wake() {
     if (DEMO || $("app").hidden || document.visibilityState === "hidden") return;
     if (Date.now() - lastLoad > TICK || S.due()) load();
-    else if (tab === "gate" && !gateT) gatePoll();
   }
   document.addEventListener("visibilitychange", wake);
   addEventListener("focus", wake);

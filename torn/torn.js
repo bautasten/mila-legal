@@ -15,7 +15,7 @@
   var MODULES = [["idag", "I dag"], ["mejl", "Mejl"], ["appen", "Appen"], ["pengar", "Pengar"], ["drift", "Drift"], ["anvandare", "Användare"], ["juridik", "Juridik"], ["marknad", "Marknad"], ["kalender", "Kalender"]];
   var nf = new Intl.NumberFormat("sv-SE"), nf2 = new Intl.NumberFormat("sv-SE", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   var $ = function (id) { return document.getElementById(id); };
-  var data = null, mail = "", timer = null, retryT = null, lastLoad = 0, module = "idag", mailBox = "alla", mailCat = "alla";
+  var needOpen = false, changesOpen = false, data = null, mail = "", timer = null, retryT = null, lastLoad = 0, module = "idag", mailBox = "alla", mailCat = "alla";
   try { var saved = sessionStorage.getItem("mila-torn-module"); if (saved) module = saved; } catch (e) { /* none */ }
 
   // ---- helpers (text only through textContent)
@@ -61,7 +61,7 @@
   function link(parent, text, href) { var a = el("a", null, text); a.href = href; a.rel = "noopener"; a.target = "_blank"; parent.appendChild(a); return a; }
 
   // ---- words for the server's codes
-  var KIND = { andrat: "Ändrat av tornet", beslut: "Beslut", lopp: "Loppregistret", mejl: "Mejl", gdpr: "GDPR", support: "Support", kostnad: "Kostnad", frist: "Datum", app: "Appen", moderering: "Granskning", agent: "Agenter" };
+  var KIND = { beslut: "Beslut", lopp: "Loppregistret", mejl: "Mejl", gdpr: "GDPR", support: "Support", kostnad: "Kostnad", frist: "Datum", app: "Appen", moderering: "Granskning", agent: "Agenter" };
   var CAT = { support: "Support", bugg: "Bugg", betalning: "Betalning", gdpr: "GDPR-begäran", partner: "Partner", press: "Press", leverantor: "Apple och leverantörer", juridik: "Juridik", skrap: "Skräp", ovrigt: "Övrigt" };
   var BOX = { alla: "Alla", egen: "Din adress", info: "info@", support: "support@", annan: "Annan" };
   var ASC = { READY_FOR_SALE: "Ute i App Store", WAITING_FOR_REVIEW: "Väntar på granskning", IN_REVIEW: "Granskas nu", PENDING_DEVELOPER_RELEASE: "Godkänd, väntar på dig",
@@ -89,48 +89,148 @@
     $("rhythm").textContent = data.rhythm ? data.rhythm.line : "";
     $("asof").textContent = "Läget " + when(data.at) + ". Inget skickas, publiceras eller godkänns utan ditt klick.";
     drawTabs();
+    document.body.classList.toggle("home-page", module === "idag");
     var b = clear($("board"));
     ({ idag: drawToday, mejl: drawMail, appen: drawApp, pengar: drawMoney, drift: drawOps, anvandare: drawUsers, juridik: drawLegal, marknad: drawMarket, kalender: drawCalendar }[module] || drawToday)(b);
   }
 
-  // ---- I dag – behöver dig
+  // ---- I dag: the start page. A greeting and the day's line over a calm picture, then what needs the owner (at most three, large, with
+  // their buttons), the state of every part in one look, the two weeks ahead, and what happened since yesterday. Everything that matters
+  // fits on a laptop screen without scrolling; on a phone it is one column in the same order.
+  function greeting() {
+    var h = Number(new Intl.DateTimeFormat("sv-SE", { timeZone: "Europe/Stockholm", hour: "numeric" }).format(new Date()));
+    return h < 5 ? "God natt" : h < 10 ? "God morgon" : h < 17 ? "God dag" : "God kväll";
+  }
+  function dayLine() {
+    var r = data.rhythm || {}, wd = r.weekday ? r.weekday[0].toUpperCase() + r.weekday.slice(1) : "";
+    var tag = r.friday ? "aldrig inskick eller släpp" : r.weekday === "torsdag" ? "inskicksdag" : r.weekday === "tisdag" ? "släppdag" : "";
+    return wd + " " + (data.today ? new Date(data.today + "T12:00:00Z").toLocaleDateString("sv-SE", { day: "numeric", month: "long" }) : "") + (tag ? " · " + tag : "");
+  }
   function drawToday(b) {
-    var t = data.idag || { rows: [], snoozed: 0 }, g = el("div", "grid"); b.appendChild(g);
-    var c = card(g, "Behöver dig i dag", t.rows.length ? null : "Inget väntar på dig just nu.");
-    var ul = el("ul", "rows");
-    t.rows.forEach(function (r) {
-      var li = el("li", "row" + (r.urgent ? " urgent" : "")), mark = el("span", "mark");
+    var t = data.idag || { rows: [], snoozed: 0, changed: [] }, rows = t.rows || [];
+    var hero = el("section", "hero"); b.appendChild(hero);
+    hero.appendChild(el("p", "eyebrow", dayLine()));
+    hero.appendChild(el("h2", "hello", greeting() + "."));
+    if (data.rhythm && data.rhythm.line) hero.appendChild(el("p", "hero-rhythm", data.rhythm.line));
+    hero.appendChild(el("p", "hero-line", rows.length ? (rows.length === 1 ? "En sak behöver dig i dag." : rows.length + " saker behöver dig i dag.") + (rows.some(function (r) { return r.urgent; }) ? " Den första är brådskande." : "") : "Inget väntar på dig. Allt rullar."));
+    var g = el("div", "home"); b.appendChild(g);
+    // what needs the owner: the first three large, the rest behind one quiet line
+    var need = el("section", "card need" + (needOpen ? " open" : "")); g.appendChild(need);
+    need.appendChild(el("h2", null, "Behöver dig"));
+    if (!rows.length) need.appendChild(el("p", "empty", "Inget just nu. Ta det lugnt."));
+    var ul = el("ul", "rows big");
+    rows.forEach(function (r, i) {
+      var li = el("li", "row" + (r.urgent ? " urgent" : "") + (i >= 3 ? " later" : "")), mark = el("span", "mark");
+      if (i === 3) li.tabIndex = -1;
       if (r.urgent) mark.appendChild(el("span", "dot"));
       li.appendChild(mark);
       var body = el("div");
       body.appendChild(el("div", "label eyebrow", (r.urgent ? "Brådskande · " : "") + (KIND[r.kind] || r.kind)));
       body.appendChild(el("div", "t", r.title));
       if (r.detail) body.appendChild(el("div", "d", r.detail));
+      if (r.link) { var lk = el("a", null, "Öppna underlaget"); lk.href = r.link; lk.rel = "noopener noreferrer"; lk.target = "_blank"; body.appendChild(lk); }
       li.appendChild(body);
       var acts = el("div", "acts");
-      if (r.link) { var lk = el("a", null, "Öppna underlaget"); lk.href = r.link; lk.rel = "noopener noreferrer"; lk.target = "_blank"; body.appendChild(lk); }
-      if (r.approve && r.approve.action === "decision") {
-        button(acts, "Ja", "", function () { answer(r, "ja"); });
-        button(acts, "Nej", "soft", function () { answer(r, "nej"); });
-      } else if (r.approve) {
-        button(acts, "Godkänn", "", function () { approve(r, true); });
-        button(acts, "Avvisa", "soft", function () { approve(r, false); });
-      }
-      if (r.open && (r.open.module === "mejl" || MODULES.some(function (m) { return m[0] === r.open.module; }))) {
-        button(acts, "Öppna", "soft", function () { if (r.open.module === "mejl" && r.open.id) openMail(r.open.id); else go(r.open.module); });
-      }
+      if (r.approve && r.approve.action === "decision") { button(acts, "Ja", "", function () { answer(r, "ja"); }); button(acts, "Nej", "soft", function () { answer(r, "nej"); }); }
+      else if (r.approve) { button(acts, "Godkänn", "", function () { approve(r, true); }); button(acts, "Avvisa", "soft", function () { approve(r, false); }); }
+      if (r.open && (r.open.module === "mejl" || MODULES.some(function (m) { return m[0] === r.open.module; }))) button(acts, "Öppna", r.approve ? "quiet" : "soft", function () { if (r.open.module === "mejl" && r.open.id) openMail(r.open.id); else go(r.open.module); });
       if (r.kind !== "beslut") button(acts, "Skjut upp en vecka", "quiet", function () { act("snooze", r.key, { until: plusDays(data.today, 7) }, "Uppskjutet till " + dayText(plusDays(data.today, 7)) + "."); });
-      li.appendChild(acts);
-      ul.appendChild(li);
+      li.appendChild(acts); ul.appendChild(li);
     });
-    if (t.rows.length) c.appendChild(ul);
-    if (t.snoozed) c.appendChild(el("p", "sub", t.snoozed === 1 ? "En sak är uppskjuten." : t.snoozed + " saker är uppskjutna."));
-    // the state at a glance, after what needs the owner
-    var s = card(g, "Läget", null), asc = data.app && data.app.asc && data.app.asc.data, est = moneyEst();
-    tiles(s, [{ v: asc ? (ASC[asc.state] || asc.state || "–") : "–", l: asc ? "Version " + (asc.version || "?") : "App Store", d: asc ? "bygge " + (asc.build || "?") : "inte hämtat" },
-      { v: est && est.payers !== null ? f0(est.payers) : "0", l: "Betalande i App Store", d: est && est.mrr_sek ? "≈ " + kr(est.mrr_sek) + "/mån netto" : "inga än" },
-      { v: f0(openMailCount()), l: "Mejl att läsa", d: data.mail && data.mail.configured ? "alla tre adresserna" : "mejl inte kopplat än" }]);
+    if (rows.length) need.appendChild(ul);
+    if (rows.length > 3 && !needOpen) {
+      var more = button(need, "Visa " + (rows.length - 3) + " till", "quiet", function () {
+        needOpen = true; need.classList.add("open"); more.remove();
+        var first = need.querySelector(".row.later"); if (first) first.focus();
+      });
+    }
+    if (t.snoozed) need.appendChild(el("p", "sub", t.snoozed === 1 ? "En sak är uppskjuten." : t.snoozed + " saker är uppskjutna."));
+    // the two weeks ahead: the tower's dates, the calendar "mila coach" and the release rhythm, one line per day
+    var wk = el("section", "card ahead"); g.appendChild(wk);
+    wk.appendChild(el("h2", null, "Veckorna framåt"));
+    var items = {}, add = function (day, title, mine, overdue) {
+      title = String(title || "");
+      if (!day || day > plusDays(data.today, 14) || (day < data.today && !overdue)) return;
+      var k = day + "|" + title.toLowerCase(); if (!items[k]) items[k] = { day: day, title: title, mine: mine };
+    };
+    // an open date that has passed stays on the page until it is marked done
+    (data.deadlines || []).forEach(function (d) { add(d.due, d.title, true, typeof d.id === "number"); });
+    var ev = data.calendar && data.calendar.data && data.calendar.data.events;
+    (ev || []).forEach(function (e) { add(e.day || (e.start || "").slice(0, 10), e.title || "", !!e.ours); });
+    if (data.rhythm) { add(data.rhythm.nextSubmit, "Inskicksdag (torsdag)", true); add(data.rhythm.nextRelease, "Släppdag (tisdag)", true); }
+    var list = Object.keys(items).map(function (k) { return items[k]; }).sort(function (a, c) { return a.day < c.day ? -1 : a.day > c.day ? 1 : a.title.localeCompare(c.title); });
+    if (!list.length) wk.appendChild(el("p", "empty", "Inget inlagt de närmaste två veckorna."));
+    var tl = el("ol", "timeline"), last = null;
+    if (list.length > 10) wk.appendChild(el("p", "sub", "Visar 10 av " + list.length + "."));
+    list.slice(0, 10).forEach(function (x) {
+      var li = el("li", x.day === data.today ? "today" : null);
+      li.appendChild(el("span", "when", x.day === last ? "" : x.day < data.today ? "Passerat" : x.day === data.today ? "I dag" : x.day === plusDays(data.today, 1) ? "I morgon" : dayText(x.day)));
+      li.appendChild(el("span", "what", x.title));
+      tl.appendChild(li); last = x.day;
+    });
+    wk.appendChild(tl);
+    var lk2 = button(wk, "Hela kalendern", "quiet", function () { go("kalender"); });
+    lk2.classList.add("tail");
+    // the state of every part: one sentence, one number, a calm dot when something there waits
+    var st = el("section", "card state"); g.appendChild(st);
+    st.appendChild(el("h2", null, "Läget"));
+    var grid = el("div", "pulse"); st.appendChild(grid);
+    pulse().forEach(function (p) {
+      var bt = el("button", "pulse-tile"); bt.type = "button"; bt.setAttribute("aria-label", p.name + ": " + p.value + ", " + p.line);
+      var top = el("div", "pt-top"); top.appendChild(el("span", "pt-name", p.name)); if (p.dot) top.appendChild(el("span", "dot")); bt.appendChild(top);
+      bt.appendChild(el("div", "pt-v", p.value)); bt.appendChild(el("div", "pt-l", p.line));
+      bt.addEventListener("click", function () { go(p.module); });
+      grid.appendChild(bt);
+    });
+    // since yesterday: mail, subscribers, AI cost, and what the tower itself changed (a calm line, never a decision)
+    var since = el("section", "card since"); g.appendChild(since);
+    since.appendChild(el("h2", null, "Senaste dygnet"));
+    var mails = ((data.mail && data.mail.items) || []).filter(function (m) { return Date.now() - Date.parse(m.received_at) < 86400e3 && m.category !== "skrap"; }).length;
+    var ai = aiToday();
+    var est = moneyEst() || {};
+    var ch = t.changed || [], total = has(t.changed_total) ? t.changed_total : ch.length;
+    kv(since, [["Nya mejl", data.mail && data.mail.configured ? f0(mails) : "inte kopplat"], ["Betalande i App Store", f0(est.payers || 0)], ["AI-kostnad i dag", ai ? usd(ai.usd) : "inget än"], ["Tornet ändrade på Macen", total ? f0(total) : "inget"]]);
+    if (ch.length) {
+      var det = el("details", "changes"); det.open = changesOpen; det.addEventListener("toggle", function () { changesOpen = det.open; });
+      det.appendChild(el("summary", null, "Vad tornet ändrade"));
+      var cl = el("ul", "plain"); ch.forEach(function (x) { cl.appendChild(el("li", null, x)); }); det.appendChild(cl);
+      if (total > ch.length) det.appendChild(el("p", "sub", "De " + ch.length + " senaste av " + total + "; hela loggen finns under Kalender."));
+      since.appendChild(det);
+    }
+    since.appendChild(el("p", "keys", "Tangenter: 1–9 byter flik · g godkänner det översta · s skjuter upp det · u uppdaterar"));
   }
+  /** The AI cost of today (the day's row only when it is today's; a row from yesterday is not today's cost). */
+  function aiToday() {
+    var daily = (data.money && data.money.dash && data.money.dash.common && data.money.dash.common.ai && data.money.dash.common.ai.daily) || [];
+    var last = daily[daily.length - 1];
+    return last && last.d === data.today ? last : null;
+  }
+  /** One tile per part of the tower: a number, one sentence, and a dot only when something there waits for the owner. */
+  function pulse() {
+    var m = (data.mail && data.mail.items) || [], open = openMailCount(), configured = !!(data.mail && data.mail.configured);
+    var gdpr = m.filter(function (x) { return x.category === "gdpr" && x.state !== "klar"; }).length;
+    var a = data.app && data.app.asc && data.app.asc.data, est = moneyEst() || {};
+    var ai = aiToday();
+    var site = data.ops && data.ops.site && data.ops.site.data, down = site ? (site.checks || []).filter(function (c) { return !c.ok; }).length : 0;
+    var ag = data.ops && data.ops.agents && data.ops.agents.data;
+    var envs = (data.money && data.money.dash && data.money.dash.envs) || {}, act7 = sum(((envs.as || {}).growth || {}).active_7d) + sum(((envs.tf || {}).growth || {}).active_7d);
+    var cv = (data.legal && data.legal.consent_versions) || {}, cm = (data.money && data.money.dash && data.money.dash.common) || {};
+    var races = ((data.idag && data.idag.rows) || []).filter(function (r) { return r.kind === "lopp"; }).length;
+    // the first open date, an overdue one first (the list comes sorted by day)
+    var next = (data.deadlines || []).filter(function (d) { return d.due >= data.today || d.level === "passerad"; })[0];
+    var errs = data.errors || {}, sync = data.mail && data.mail.sync_error && (!data.mail.sync || Date.parse(data.mail.sync_error.at) > Date.parse(data.mail.sync.at));
+    return [
+      { module: "mejl", name: "Mejl", value: configured ? f0(open) : "–", line: !configured ? "inte kopplat än" : sync ? "inkorgen gick inte att läsa senast" : open ? "att läsa" + (gdpr ? " · " + gdpr + " GDPR" : "") : "inget nytt", dot: !!gdpr || !!sync },
+      { module: "appen", name: "Appen", value: a ? "v" + (a.version || "?") : "–", line: a ? (ASC[a.state] || a.state || "").toLowerCase() : "inte hämtat", dot: !!(data.app && data.app.attention) },
+      { module: "pengar", name: "Pengar", value: f0(est.payers || 0), line: "betalande · AI i dag " + (ai ? usd(ai.usd) : "inget än"), dot: !!((data.ops && data.ops.alerts_2d) || []).length },
+      { module: "drift", name: "Drift", value: down ? down + " nere" : "allt svarar", line: ag ? (ag.focus ? "slutprov pågår" : "inget slutprov") + (ag.blocked ? " · en agent väntar" : "") : "agenter inte hämtade", dot: down > 0 || !!(ag && ag.blocked) },
+      { module: "anvandare", name: "Användare", value: f0(act7), line: "aktiva senaste veckan", dot: false },
+      { module: "juridik", name: "Juridik", value: cv.ai ? "v" + cv.ai : "–", line: "samtycke · " + (gdpr ? gdpr + " GDPR öppna" : "inga GDPR öppna"), dot: gdpr > 0 },
+      { module: "marknad", name: "Marknad", value: f0(cm.register), line: "lopp i registret" + (races ? " · " + races + " väntar" : ""), dot: races > 0 },
+      { module: "kalender", name: "Kalender", value: next ? (next.due < data.today ? "passerat" : next.due === data.today ? "i dag" : dayText(next.due)) : "–", line: next ? next.title : "inga datum", dot: !!(next && (next.level === "1" || next.level === "passerad")) || !!(errs.kalender && (!data.calendar || Date.parse(errs.kalender.at) > Date.parse(data.calendar.at))) },
+    ];
+  }
+
   function button(parent, text, cls, fn) { var b = el("button", cls || null, text); b.type = "button"; b.addEventListener("click", fn); parent.appendChild(b); return b; }
   function plusDays(d, n) { return new Date(Date.parse(d + "T00:00:00Z") + n * 86400e3).toISOString().slice(0, 10); }
   /** One action: the server does it and logs it; then the page reloads. A refusal is said plainly, never hidden. */
@@ -522,6 +622,18 @@
   $("sheet-close").addEventListener("click", closeSheet);
   $("sheet").addEventListener("click", function (ev) { if (ev.target === $("sheet")) closeSheet(); });
   addEventListener("keydown", function (ev) { if (ev.key === "Escape" && !$("sheet").hidden) closeSheet(); });
+  addEventListener("keydown", function (ev) {
+    if (!data || ev.metaKey || ev.ctrlKey || ev.altKey || !$("sheet").hidden || $("app").hidden) return;
+    var tg = ev.target && ev.target.tagName; if (tg === "INPUT" || tg === "TEXTAREA" || tg === "SELECT") return;
+    if (ev.repeat) return;
+    var n = Number(ev.key), first = ((data.idag && data.idag.rows) || [])[0];
+    if (n >= 1 && n <= MODULES.length) { ev.preventDefault(); go(MODULES[n - 1][0]); return; }
+    if (ev.key === "u") { load(); return; }
+    if (!first || module !== "idag") return;
+    // g: the top row's yes (the same confirm as its button); s: put it off a week
+    if (ev.key === "g") { ev.preventDefault(); if (!first.approve) { toast("Det översta har inget att godkänna."); return; } if (first.approve.action === "decision") answer(first, "ja"); else approve(first, true); }
+    if (ev.key === "s" && first.kind !== "beslut") { ev.preventDefault(); if (confirm("Skjut upp en vecka: " + first.title + "?")) act("snooze", first.key, { until: plusDays(data.today, 7) }, "Uppskjutet till " + dayText(plusDays(data.today, 7)) + "."); }
+  });
 
   // ---- sign-in and the session (the driftpanel's session.js; the same device key, so one sign-in covers both pages)
   var S = MilaDashSession({ url: SUPABASE, anon: ANON, fetch: function (u, i) { return fetch(u, i); }, locks: navigator.locks });

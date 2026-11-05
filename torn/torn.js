@@ -167,6 +167,7 @@
     var se = m.sync_error, ok = m.sync;
     if (se && (!ok || Date.parse(se.at) > Date.parse(ok.at))) c.appendChild(el("p", "age", "Senaste läsningen gick inte (" + ((se.data && se.data.error) || "fel") + ") " + when(se.at) + (ok ? " · senast läst " + when(ok.at) : "")));
     else if (ok) c.appendChild(el("p", "age", "Inkorgen lästes " + when(ok.at)));
+    if (ok && ok.data && ok.data.search > 0) c.appendChild(el("p", "sub", "iCloud tog bara emot en smalare sökning senast" + (ok.data.search === 1 ? " (utan Delivered-To): mejl som bara kom som hemlig kopia eller vidarebefordran kan saknas." : " (bara Till): mejl där Mila stod som kopia kan saknas.")));
     if (ok && ok.data && ok.data.skipped) c.appendChild(el("p", "sub", ok.data.skipped + " mejl kunde inte sparas vid senaste läsningen (de hoppades över)."));
     var boxes = el("div", "chips");
     ["alla", "support", "info", "egen"].forEach(function (k) {

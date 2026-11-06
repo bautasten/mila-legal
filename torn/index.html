@@ -1,0 +1,43 @@
+<!doctype html><html lang="sv"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://vfjofaniwtudzvadxpsd.supabase.co; object-src 'none'; base-uri 'none'; form-action 'self'"><meta name="referrer" content="same-origin"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex, nofollow, noarchive"><meta name="theme-color" content="#fbf9f5" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#121110" media="(prefers-color-scheme: dark)"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="Kontrolltorn"><link rel="manifest" href="manifest.webmanifest">
+<title>Mila kontrolltorn</title><link rel="apple-touch-icon" href="icon-180.png"><link rel="stylesheet" href="torn.css"><style id="antiClickjack">html{display:none!important}</style><script src="../frame.js"></script><script src="../dash/session.js" defer></script><script src="torn.js" defer></script></head>
+<body>
+<main id="login" hidden>
+  <form id="f-mail" autocomplete="on">
+    <p class="eyebrow">Mila</p>
+    <h1>Kontrolltornet</h1>
+    <p>Logga in med en kod via e-post.</p>
+    <input id="mail" type="email" name="email" autocomplete="username" required placeholder="E-post" aria-label="E-post">
+    <button type="submit">Skicka kod</button>
+    <p class="msg" id="msg1" role="alert"></p>
+  </form>
+  <form id="f-code" hidden autocomplete="off">
+    <p class="eyebrow">Mila</p>
+    <h1>Kontrolltornet</h1>
+    <p>Skriv koden från mejlet.</p>
+    <input id="code" inputmode="numeric" pattern="[0-9]{6,10}" maxlength="10" required placeholder="Kod" autocomplete="one-time-code" aria-label="Kod">
+    <button type="submit">Logga in</button>
+    <p class="msg" id="msg2" role="alert"></p>
+  </form>
+</main>
+<div id="app" hidden>
+  <header>
+    <div class="top">
+      <div>
+        <p class="eyebrow" id="day"></p>
+        <h1>Kontrolltornet</h1>
+      </div>
+      <div class="tools">
+        <span class="offline" id="offline" role="status" hidden>Offline · försöker igen</span>
+        <button class="quiet" id="reload" type="button">Uppdatera</button>
+        <button class="quiet" id="logout" type="button">Logga ut</button>
+      </div>
+    </div>
+    <p class="rhythm" id="rhythm"></p>
+    <nav class="tabs" id="tabs" aria-label="Delar"></nav>
+  </header>
+  <main id="board" tabindex="-1"></main>
+  <footer><span id="asof"></span></footer>
+</div>
+<div id="toast" role="status" hidden></div>
+<div id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title" hidden><div class="sheet-box"><div class="sheet-head"><h2 id="sheet-title"></h2><button class="quiet" id="sheet-close" type="button">Stäng</button></div><div id="sheet-body"></div></div></div>
+</body></html>

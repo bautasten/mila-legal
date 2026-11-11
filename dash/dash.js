@@ -399,7 +399,7 @@
     var cap = num(((common || {}).ai || {}).cap);
     tiles(c, [{ v: runner ? usd(runner.total) : "–", l: "Senaste 24 h (USD)", d: runner ? f0(runner.users) + " löpare använde coachen" : "ingen använde coachen" },
       { v: runner ? usd(runner.median) : "–", l: "Median per löpare, 24 h", d: runner ? "p90 " + usd(runner.p90) + " · max " + usd(runner.max) : "" },
-      { v: has(est.ai_usd_per_runner_day) ? usd(est.ai_usd_per_runner_day) : "–", l: "Snitt per löpare och dygn" },
+      { v: has(est.ai_usd_per_runner_day) ? usd(est.ai_usd_per_runner_day) : "–", l: "Snitt per löpare och dygn", d: est.ai_window === "days" ? (num(est.ai_days) === 1 ? "senaste hela dygnet" : "senaste " + f0(est.ai_days) + " hela dygnen") + ", exakt per konto" : est.ai_window === "24h" ? "senaste 24 h" : "" },
       { v: kr(est.ai_sek_per_runner_month), l: "Per löpare och månad", d: "dygnet × 30 · " + f1(est.usd_sek) + " kr/USD" },
       tab === "as" ? { v: kr(est.margin_per_payer_sek), l: "Marginal per betalande/mån", d: "netto " + kr(est.rev_per_payer_sek) + " − AI", dir: num(est.margin_per_payer_sek) < 0 ? "down" : "up" }
         : { v: "–", l: "Marginal", d: "bara i Produktion" },
@@ -519,6 +519,9 @@
     var st = el("p"); st.appendChild(el("span", "status " + (alarms ? "warn" : "ok"), alarms ? f0(alarms) + " larm de senaste 30 dagarna" : "Inga larm de senaste 30 dagarna")); a.appendChild(st);
     a.appendChild(hbars(Object.keys(al).map(function (k) { return { label: nm(k), value: al[k] }; }), { color: css("--s2"), lw: 170 }));
     tiles(a, [{ v: f0(cm.billing_alerts_30d), l: "Betalningslarm, 30 d" }]);
+    // suunto-ops-32: Suunto's answers Mila could not read and passes Suunto did not take (ops_counts), never hidden
+    var so = cm.ops_30d;
+    tiles(a, [{ v: so ? f0(so.suunto_unparsed) : "–", l: "Suunto: svar som inte gick att läsa, 30 d" }, { v: so ? f0(so.suunto_push_failed) : "–", l: "Suunto: pass som inte gick att skicka, 30 d" }]);
     var pend = cm.pending || {}, seeds = cm.seeds || {};
     var r = commonCard("Loppregistret", null, 1);
     tiles(r, [{ v: f0(cm.register), l: "Lopp i registret", d: f0(cm.countries) + " länder" }, { v: f0(cm.with_course), l: "Med arrangörens bana" }, { v: f0(cm.coming), l: "Kommande" },

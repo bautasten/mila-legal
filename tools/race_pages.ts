@@ -88,6 +88,8 @@ export type Result = { year: number; finishers: number; overall: { p10: number; 
 export type Race = {
   id: string; slug: string; name: string; place: string | null; country: string | null; country_code: string | null; organizer: string | null;
   url: string | null; next_date: string | null; prelim: boolean; past_dates: string[]; km: number; ascent: number; descent: number | null; trail: boolean;
+  /** bygge34-lopp-url: the organiser does not state the surface (races.trail_unknown): said so, never guessed. */
+  surface_unknown?: boolean;
   min_ele: number | null; max_ele: number | null; climbs: Climb[]; aid_stations: { km: number; what: string[] }[] | null; info: Info | null;
   /** deadline: the organiser's dates for the coming edition, null when none are known (an older feed has no field). */
   entry: Entry | null;
@@ -168,7 +170,7 @@ export function cleanRace(x: any): Race | null {
     id, slug: typeof x.slug === "string" && SLUG.test(x.slug) && x.slug.length <= 80 ? x.slug : "", name, place: str(x.place, 80), country: str(x.country, 60),
     country_code: code ?? guessed, ...(!code && guessed ? { country_guessed: true } : {}), organizer: str(x.organizer, 120), url: safeUrl(x.url),
     next_date: isDay(x.next_date) ? x.next_date : null, prelim: x.prelim !== false, past_dates: arr(x.past_dates).filter(isDay).sort().slice(-5), km,
-    ascent: isNum(x.ascent) ? Math.max(0, Math.round(x.ascent)) : 0, descent: isNum(x.descent) ? Math.round(x.descent) : null, trail: x.trail !== false,
+    ascent: isNum(x.ascent) ? Math.max(0, Math.round(x.ascent)) : 0, descent: isNum(x.descent) ? Math.round(x.descent) : null, trail: x.trail !== false, surface_unknown: x.surface_unknown === true,
     min_ele: isNum(x.min_ele) ? Math.round(x.min_ele) : null, max_ele: isNum(x.max_ele) ? Math.round(x.max_ele) : null,
     climbs: arr(x.climbs).filter((c) => c && [c.km, c.len, c.gain, c.grade, c.top].every(isNum)).slice(0, 60).map((c) => ({ km: c.km, len: c.len, gain: c.gain, grade: c.grade, top: c.top })),
     aid_stations: Array.isArray(x.aid_stations) ? x.aid_stations.filter((s: any) => s && isNum(s.km)).slice(0, 40)
@@ -286,7 +288,7 @@ const T = {
     indexLead: "Lopp ur Milas loppregister med datum och fakta från arrangören. När arrangören publicerar banan visar sidan också karta, höjdprofil och klättringar. Välj ditt lopp och få en personlig prognos, tempoplan och energiplan i Mila.",
     pageN: (n: number) => `sida ${n}`, count: (n: number) => `${n} lopp`,
     distance: "Distans", climbing: "Höjdmeter", highest: "Högsta punkt", terrain: "Underlag", character: "Karaktär", start: "Start", aid: "Vätskekontroller",
-    trail: "Terräng och stig", road: "Väg", trailRace: "terränglopp", roadRace: "landsvägslopp", masl: "m ö.h.",
+    trail: "Terräng och stig", road: "Väg", trailRace: "terränglopp", roadRace: "landsvägslopp", anyRace: "lopp", noSurface: "Anges inte", masl: "m ö.h.",
     hilly: ["flack", "lätt kuperad", "kuperad", "mycket kuperad", "bergig"], perKm: (x: string) => `${x} m per km`,
     profileH: "Höjdprofil", profileTitle: (n: string) => `Höjdprofil för ${n}`,
     profileDesc: (km: string, lo: string, hi: string, n: number) => `Höjden längs banans ${km}${n ? `, med ${n} ${n === 1 ? "vätskekontroll" : "vätskekontroller"} utmärkta` : ""}: från ${lo} till ${hi} m ö.h.`,
@@ -335,7 +337,7 @@ const T = {
     indexLead: "Races from Mila's race register with the date and the organizer's facts. Where the organizer publishes the course, the page also shows the map, elevation profile and climbs. Pick your race and get a personal forecast, pace plan and fueling plan in Mila.",
     pageN: (n: number) => `page ${n}`, count: (n: number) => `${n} ${n === 1 ? "race" : "races"}`,
     distance: "Distance", climbing: "Elevation gain", highest: "Highest point", terrain: "Surface", character: "Profile", start: "Start", aid: "Aid stations",
-    trail: "Trail", road: "Road", trailRace: "trail race", roadRace: "road race", masl: "m a.s.l.",
+    trail: "Trail", road: "Road", trailRace: "trail race", roadRace: "road race", anyRace: "race", noSurface: "Not stated", masl: "m a.s.l.",
     hilly: ["flat", "gently rolling", "hilly", "very hilly", "mountainous"], perKm: (x: string) => `${x} m per km`,
     profileH: "Elevation profile", profileTitle: (n: string) => `Elevation profile of ${n}`,
     profileDesc: (km: string, lo: string, hi: string, n: number) => `Elevation along the ${km} course${n ? `, with ${n} aid ${n === 1 ? "station" : "stations"} marked` : ""}: from ${lo} to ${hi} m above sea level.`,
@@ -384,7 +386,7 @@ const T = {
     indexLead: "Läufe aus Milas Laufregister mit Termin und Angaben des Veranstalters. Wenn der Veranstalter die Strecke veröffentlicht, zeigt die Seite auch Karte, Höhenprofil und Anstiege. Wähle deinen Lauf und hol dir in Mila deine persönliche Prognose, deinen Pace-Plan und deinen Verpflegungsplan.",
     pageN: (n: number) => `Seite ${n}`, count: (n: number) => `${n} ${n === 1 ? "Lauf" : "Läufe"}`,
     distance: "Distanz", climbing: "Höhenmeter", highest: "Höchster Punkt", terrain: "Untergrund", character: "Profil", start: "Start", aid: "Verpflegungsstellen",
-    trail: "Trail und Gelände", road: "Straße", trailRace: "Traillauf", roadRace: "Straßenlauf", masl: "m ü. M.",
+    trail: "Trail und Gelände", road: "Straße", trailRace: "Traillauf", roadRace: "Straßenlauf", anyRace: "Lauf", noSurface: "Nicht angegeben", masl: "m ü. M.",
     hilly: ["flach", "leicht wellig", "hügelig", "sehr hügelig", "bergig"], perKm: (x: string) => `${x} m pro km`,
     profileH: "Höhenprofil", profileTitle: (n: string) => `Höhenprofil von ${n}`,
     profileDesc: (km: string, lo: string, hi: string, n: number) => `Die Höhe entlang der ${km} langen Strecke${n ? `, mit ${n} ${n === 1 ? "markierter Verpflegungsstelle" : "markierten Verpflegungsstellen"}` : ""}: von ${lo} bis ${hi} m ü. M.`,
@@ -433,7 +435,7 @@ const T = {
     indexLead: "Løp fra Milas løpsregister med dato og fakta fra arrangøren. Når arrangøren publiserer løypa, viser siden også kart, høydeprofil og stigninger. Velg løpet ditt og få en personlig prognose, tempoplan og energiplan i Mila.",
     pageN: (n: number) => `side ${n}`, count: (n: number) => `${n} løp`,
     distance: "Distanse", climbing: "Høydemeter", highest: "Høyeste punkt", terrain: "Underlag", character: "Karakter", start: "Start", aid: "Drikkestasjoner",
-    trail: "Terreng og sti", road: "Vei", trailRace: "terrengløp", roadRace: "gateløp", masl: "moh.",
+    trail: "Terreng og sti", road: "Vei", trailRace: "terrengløp", roadRace: "gateløp", anyRace: "løp", noSurface: "Ikke oppgitt", masl: "moh.",
     hilly: ["flat", "lett kupert", "kupert", "svært kupert", "fjellpreget"], perKm: (x: string) => `${x} m per km`,
     profileH: "Høydeprofil", profileTitle: (n: string) => `Høydeprofil for ${n}`,
     profileDesc: (km: string, lo: string, hi: string, n: number) => `Høyden langs løypas ${km}${n ? `, med ${n} ${n === 1 ? "drikkestasjon" : "drikkestasjoner"} markert` : ""}: fra ${lo} til ${hi} moh.`,
@@ -482,7 +484,7 @@ const T = {
     indexLead: "Løb fra Milas løbskalender med dato og fakta fra arrangøren. Når arrangøren offentliggør ruten, viser siden også kort, højdeprofil og stigninger. Vælg dit løb, og få en personlig prognose, tempoplan og energiplan i Mila.",
     pageN: (n: number) => `side ${n}`, count: (n: number) => `${n} løb`,
     distance: "Distance", climbing: "Højdemeter", highest: "Højeste punkt", terrain: "Underlag", character: "Karakter", start: "Start", aid: "Væskedepoter",
-    trail: "Terræn og sti", road: "Vej", trailRace: "trailløb", roadRace: "vejløb", masl: "m o.h.",
+    trail: "Terræn og sti", road: "Vej", trailRace: "trailløb", roadRace: "vejløb", anyRace: "løb", noSurface: "Ikke oplyst", masl: "m o.h.",
     hilly: ["flad", "let kuperet", "kuperet", "meget kuperet", "bjergrig"], perKm: (x: string) => `${x} m pr. km`,
     profileH: "Højdeprofil", profileTitle: (n: string) => `Højdeprofil for ${n}`,
     profileDesc: (km: string, lo: string, hi: string, n: number) => `Højden langs rutens ${km}${n ? `, med ${n} ${n === 1 ? "væskedepot" : "væskedepoter"} markeret` : ""}: fra ${lo} til ${hi} m o.h.`,
@@ -531,7 +533,7 @@ const T = {
     indexLead: "Kisat Milan kisakalenterista: päivä ja järjestäjän tiedot. Kun järjestäjä julkaisee reitin, sivulla on myös kartta, korkeusprofiili ja nousut. Valitse kisasi, niin saat Milasta henkilökohtaisen ennusteen, vauhtisuunnitelman ja energiasuunnitelman.",
     pageN: (n: number) => `sivu ${n}`, count: (n: number) => `${n} ${n === 1 ? "kisa" : "kisaa"}`,
     distance: "Matka", climbing: "Nousumetrit", highest: "Korkein kohta", terrain: "Alusta", character: "Luonne", start: "Lähtö", aid: "Juomapisteet",
-    trail: "Maasto ja polku", road: "Maantie", trailRace: "polkujuoksu", roadRace: "maantiejuoksu", masl: "m mpy",
+    trail: "Maasto ja polku", road: "Maantie", trailRace: "polkujuoksu", roadRace: "maantiejuoksu", anyRace: "juoksutapahtuma", noSurface: "Ei kerrottu", masl: "m mpy",
     hilly: ["tasainen", "loivasti mäkinen", "mäkinen", "hyvin mäkinen", "vuoristoinen"], perKm: (x: string) => `${x} m/km`,
     profileH: "Korkeusprofiili", profileTitle: (n: string) => `Korkeusprofiili: ${n}`,
     profileDesc: (km: string, lo: string, hi: string, n: number) => `Korkeus ${km}:n reitin varrella${n ? `, ${n} ${n === 1 ? "juomapiste" : "juomapistettä"} merkitty` : ""}: ${lo}–${hi} m mpy.`,
@@ -580,7 +582,7 @@ const T = {
     indexLead: "Les courses du calendrier de Mila, avec la date et les informations de l’organisateur. Quand l’organisateur publie le parcours, la page montre aussi la carte, le profil d’altitude et les montées. Choisis ta course et obtiens dans Mila un pronostic personnel, un plan d’allure et un plan de ravitaillement.",
     pageN: (n: number) => `page ${n}`, count: (n: number) => `${n} ${n === 1 ? "course" : "courses"}`,
     distance: "Distance", climbing: "Dénivelé positif", highest: "Point culminant", terrain: "Terrain", character: "Profil", start: "Départ", aid: "Ravitaillements",
-    trail: "Trail et sentiers", road: "Route", trailRace: "un trail", roadRace: "une course sur route", masl: "m d’altitude",
+    trail: "Trail et sentiers", road: "Route", trailRace: "un trail", roadRace: "une course sur route", anyRace: "une course", noSurface: "Non précisé", masl: "m d’altitude",
     hilly: ["plat", "légèrement vallonné", "vallonné", "très vallonné", "montagneux"], perKm: (x: string) => `${x} m par km`,
     profileH: "Profil d’altitude", profileTitle: (n: string) => `Profil d’altitude : ${n}`,
     profileDesc: (km: string, lo: string, hi: string, n: number) => `L’altitude le long des ${km} du parcours${n ? `, avec ${n} ${n === 1 ? "ravitaillement indiqué" : "ravitaillements indiqués"}` : ""} : de ${lo} à ${hi} m d’altitude.`,
@@ -629,7 +631,7 @@ const T = {
     indexLead: "Carreras del calendario de Mila con la fecha y los datos del organizador. Cuando el organizador publica el recorrido, la página muestra también el mapa, el perfil de altitud y las subidas. Elige tu carrera y consigue en Mila un pronóstico personal, un plan de ritmo y un plan de avituallamiento.",
     pageN: (n: number) => `página ${n}`, count: (n: number) => `${n} ${n === 1 ? "carrera" : "carreras"}`,
     distance: "Distancia", climbing: "Desnivel positivo", highest: "Punto más alto", terrain: "Superficie", character: "Perfil", start: "Salida", aid: "Avituallamientos",
-    trail: "Trail y sendero", road: "Asfalto", trailRace: "una carrera de trail", roadRace: "una carrera en ruta", masl: "m s. n. m.",
+    trail: "Trail y sendero", road: "Asfalto", trailRace: "una carrera de trail", roadRace: "una carrera en ruta", anyRace: "una carrera", noSurface: "No indicado", masl: "m s. n. m.",
     hilly: ["llano", "ligeramente ondulado", "ondulado", "muy ondulado", "montañoso"], perKm: (x: string) => `${x} m por km`,
     profileH: "Perfil de altitud", profileTitle: (n: string) => `Perfil de altitud de ${n}`,
     profileDesc: (km: string, lo: string, hi: string, n: number) => `La altitud a lo largo de los ${km} del recorrido${n ? `, con ${n} ${n === 1 ? "avituallamiento marcado" : "avituallamientos marcados"}` : ""}: de ${lo} a ${hi} m s. n. m.`,
@@ -1031,17 +1033,17 @@ export function aboutText(r: Race, lang: Lang): string[] {
   const climbs = [...r.climbs].sort((a, b) => a.km - b.km), big = [...r.climbs].sort((a, b) => b.gain - a.gain)[0], lastC = climbs[climbs.length - 1];
   const out: string[] = [];
   if (lang === "sv") {
-    out.push(`${title} är ett ${r.trail ? t.trailRace : t.roadRace}${where ? ` i ${where}` : ""} på ${k}. Banan har ${num(r.ascent, lang)} höjdmeter uppför${r.descent !== null ? ` och ${num(r.descent, lang)} nedför` : ""}, ${t.perKm(perKm)}, och räknas därmed som ${h}.${hasEle ? ` Högsta punkten ligger ${num(r.max_ele!, lang)} m ö.h. och den lägsta ${num(r.min_ele!, lang)} m ö.h.` : ""}`);
+    out.push(`${title} är ett ${raceKind(r, t)}${where ? ` i ${where}` : ""} på ${k}. Banan har ${num(r.ascent, lang)} höjdmeter uppför${r.descent !== null ? ` och ${num(r.descent, lang)} nedför` : ""}, ${t.perKm(perKm)}, och räknas därmed som ${h}.${hasEle ? ` Högsta punkten ligger ${num(r.max_ele!, lang)} m ö.h. och den lägsta ${num(r.min_ele!, lang)} m ö.h.` : ""}`);
     out.push(big ? `Den största klättringen börjar vid km ${num(big.km, lang, 1)}: ${num(big.gain, lang)} höjdmeter på ${lenText(big.len, lang)} med ${num(big.grade, lang, 1)} % i snitt, upp till ${num(big.top, lang)} m ö.h.${climbs.length > 1 ? ` Totalt har banan ${climbs.length} klättringar på minst 25 höjdmeter; den sista börjar vid km ${num(lastC.km, lang, 1)}.` : ""}` : t.noClimbs);
   } else if (lang === "en") {
-    out.push(`${title} is a ${r.trail ? t.trailRace : t.roadRace}${where ? ` in ${where}${where.includes(",") ? "," : ""}` : ""} over ${k}. The course climbs ${num(r.ascent, lang)} m${r.descent !== null ? ` and descends ${num(r.descent, lang)} m` : ""} in total, ${t.perKm(perKm)}, which makes it ${h}.${hasEle ? ` The highest point is ${num(r.max_ele!, lang)} m above sea level and the lowest ${num(r.min_ele!, lang)} m.` : ""}`);
+    out.push(`${title} is a ${raceKind(r, t)}${where ? ` in ${where}${where.includes(",") ? "," : ""}` : ""} over ${k}. The course climbs ${num(r.ascent, lang)} m${r.descent !== null ? ` and descends ${num(r.descent, lang)} m` : ""} in total, ${t.perKm(perKm)}, which makes it ${h}.${hasEle ? ` The highest point is ${num(r.max_ele!, lang)} m above sea level and the lowest ${num(r.min_ele!, lang)} m.` : ""}`);
     out.push(big ? `The biggest climb starts at km ${num(big.km, lang, 1)}: ${num(big.gain, lang)} m of ascent over ${lenText(big.len, lang)} at ${num(big.grade, lang, 1)} % on average, up to ${num(big.top, lang)} m.${climbs.length > 1 ? ` In total the course has ${climbs.length} climbs of at least 25 m; the last one starts at km ${num(lastC.km, lang, 1)}.` : ""}` : t.noClimbs);
   } else if (lang !== "de") {
     const p = PROSE[lang]!;
-    out.push(`${p.intro(title, r.trail ? t.trailRace : t.roadRace, where, k)}${p.climb(num(r.ascent, lang), r.descent !== null ? num(r.descent, lang) : null, t.perKm(perKm), h, hasEle ? num(r.max_ele!, lang) : null, hasEle ? num(r.min_ele!, lang) : null)}`);
+    out.push(`${p.intro(title, raceKind(r, t), where, k)}${p.climb(num(r.ascent, lang), r.descent !== null ? num(r.descent, lang) : null, t.perKm(perKm), h, hasEle ? num(r.max_ele!, lang) : null, hasEle ? num(r.min_ele!, lang) : null)}`);
     out.push(big ? p.big(num(big.km, lang, 1), num(big.gain, lang), lenText(big.len, lang), num(big.grade, lang, 1), num(big.top, lang), climbs.length, num(lastC.km, lang, 1)) : t.noClimbs);
   } else {
-    out.push(`${title} ist ein ${r.trail ? t.trailRace : t.roadRace}${where ? ` in ${where}${where.includes(",") ? "," : ""}` : ""} über ${k}. Die Strecke hat insgesamt ${num(r.ascent, lang)} Höhenmeter bergauf${r.descent !== null ? ` und ${num(r.descent, lang)} bergab` : ""}, ${t.perKm(perKm)}, und ist damit ${h}.${hasEle ? ` Der höchste Punkt liegt auf ${num(r.max_ele!, lang)} m ü. M., der tiefste auf ${num(r.min_ele!, lang)} m.` : ""}`);
+    out.push(`${title} ist ein ${raceKind(r, t)}${where ? ` in ${where}${where.includes(",") ? "," : ""}` : ""} über ${k}. Die Strecke hat insgesamt ${num(r.ascent, lang)} Höhenmeter bergauf${r.descent !== null ? ` und ${num(r.descent, lang)} bergab` : ""}, ${t.perKm(perKm)}, und ist damit ${h}.${hasEle ? ` Der höchste Punkt liegt auf ${num(r.max_ele!, lang)} m ü. M., der tiefste auf ${num(r.min_ele!, lang)} m.` : ""}`);
     out.push(big ? `Der größte Anstieg beginnt bei km ${num(big.km, lang, 1)}: ${num(big.gain, lang)} Höhenmeter auf ${lenText(big.len, lang)} mit durchschnittlich ${num(big.grade, lang, 1)} % Steigung, bis auf ${num(big.top, lang)} m.${climbs.length > 1 ? ` Insgesamt hat die Strecke ${climbs.length} Anstiege ab 25 Höhenmetern; der letzte beginnt bei km ${num(lastC.km, lang, 1)}.` : ""}` : t.noClimbs);
   }
   out.push(...aidText(r, lang));
@@ -1051,13 +1053,15 @@ export function aboutText(r: Race, lang: Lang): string[] {
  *  the aid stations and cut-offs; never a word about a profile nobody has. */
 export function aboutNoCourse(r: Race, lang: Lang): string[] {
   const t = T[lang], k = kmText(r.km, lang), where = whereText(r, lang), title = r.name, a = num(r.ascent, lang), out: string[] = [];
-  if (lang === "sv") out.push(`${title} är ett ${r.trail ? t.trailRace : t.roadRace}${where ? ` i ${where}` : ""} på ${k}.${r.ascent ? ` Arrangören anger ${a} höjdmeter.` : ""}`);
-  else if (lang === "en") out.push(`${title} is a ${r.trail ? t.trailRace : t.roadRace}${where ? ` in ${where}${where.includes(",") ? "," : ""}` : ""} over ${k}.${r.ascent ? ` The organizer states ${a} m of climbing.` : ""}`);
-  else if (lang === "de") out.push(`${title} ist ein ${r.trail ? t.trailRace : t.roadRace}${where ? ` in ${where}${where.includes(",") ? "," : ""}` : ""} über ${k}.${r.ascent ? ` Der Veranstalter gibt ${a} Höhenmeter an.` : ""}`);
-  else { const p = PROSE[lang]!; out.push(`${p.intro(title, r.trail ? t.trailRace : t.roadRace, where, k)}${r.ascent ? p.orgClimb(a) : ""}`); }
+  if (lang === "sv") out.push(`${title} är ett ${raceKind(r, t)}${where ? ` i ${where}` : ""} på ${k}.${r.ascent ? ` Arrangören anger ${a} höjdmeter.` : ""}`);
+  else if (lang === "en") out.push(`${title} is a ${raceKind(r, t)}${where ? ` in ${where}${where.includes(",") ? "," : ""}` : ""} over ${k}.${r.ascent ? ` The organizer states ${a} m of climbing.` : ""}`);
+  else if (lang === "de") out.push(`${title} ist ein ${raceKind(r, t)}${where ? ` in ${where}${where.includes(",") ? "," : ""}` : ""} über ${k}.${r.ascent ? ` Der Veranstalter gibt ${a} Höhenmeter an.` : ""}`);
+  else { const p = PROSE[lang]!; out.push(`${p.intro(title, raceKind(r, t), where, k)}${r.ascent ? p.orgClimb(a) : ""}`); }
   out.push(...aidText(r, lang));
   return out;
 }
+/** bygge34-lopp-url: the kind of race in words; a race whose surface the organiser does not state is just a race, never guessed. */
+const raceKind = (r: { trail: boolean; surface_unknown?: boolean }, t: { trailRace: string; roadRace: string; anyRace: string }) => r.surface_unknown ? t.anyRace : r.trail ? t.trailRace : t.roadRace;
 /** The summary's sentences in the languages added in sprak5 (the Swedish, English and German ones are written out above): the race, the
  *  climbing, the biggest climb, the organiser's aid stations and cut-offs, and the app's line. */
 const PROSE: Partial<Record<Lang, {
@@ -1346,7 +1350,7 @@ export function racePage(r: Race, lang: Lang, ctx: Ctx): string {
   const bare = courseless(r), climbKnown = !bare || r.ascent > 0;
   const facts: [string, string][] = [[t.distance, kmText(r.km, lang)], ...(climbKnown ? [[t.climbing, `↑ ${num(r.ascent, lang)} m`] as [string, string]] : [])];
   if (r.max_ele !== null) facts.push([t.highest, `${num(r.max_ele, lang)} ${t.masl}`]);
-  facts.push([t.terrain, r.trail ? t.trail : t.road], ...(climbKnown ? [[t.character, cap(t.hilly[hilliness(r)])] as [string, string]] : []));
+  facts.push([t.terrain, r.surface_unknown ? t.noSurface : r.trail ? t.trail : t.road], ...(climbKnown ? [[t.character, cap(t.hilly[hilliness(r)])] as [string, string]] : []));
   if (start && r.next_date && r.next_date >= today) facts.push([t.start, t.clock(start)]);
   if (r.aid_stations?.length) facts.push([t.aid, String(r.aid_stations.length)]);
   // the scene's spec (scene.ts) as data on the hero. Nothing draws it any more (site-calm, Patrik 2026-11-02: no illustrated scenes on the
@@ -1523,7 +1527,7 @@ const S = {
     aStart: (list: string) => `Enligt arrangören: ${list}.`, clock: (t: string) => `kl. ${t}`,
     aDist: (k: string, up: string | null, down: string | null, hi: string | null) => `Loppet är ${k} långt${up ? ` med ${up} höjdmeter uppför${down ? ` och ${down} nedför` : ""}` : ""}.${hi ? ` Högsta punkten ligger ${hi} m ö.h.` : ""}`,
     aDistNoClimb: (k: string) => `Loppet är ${k} långt. Arrangören anger inga höjdmeter.`, aDistOrg: (k: string, a: string) => `Loppet är ${k} långt. Arrangören anger ${a} höjdmeter.`,
-    aCourse: (h: string, perKm: string, loop: boolean | null, trail: boolean, climbs: string) => `Banan räknas som ${h}, med ${perKm} höjdmeter per km i snitt. ${climbs} ${loop === null ? "" : loop ? "Start och mål ligger på samma plats. " : "Banan går från start till ett mål på en annan plats. "}Underlaget är ${trail ? "terräng och stig" : "väg"}.`,
+    aCourse: (h: string, perKm: string, loop: boolean | null, trail: boolean | null, climbs: string) => `Banan räknas som ${h}, med ${perKm} höjdmeter per km i snitt. ${climbs} ${loop === null ? "" : loop ? "Start och mål ligger på samma plats. " : "Banan går från start till ett mål på en annan plats. "}${trail === null ? "Arrangören anger inte underlaget." : `Underlaget är ${trail ? "terräng och stig" : "väg"}.`}`,
     aClimbs: (n: number, km: string, gain: string, len: string) => n === 1 ? `Den har en klättring på minst 25 höjdmeter, vid km ${km}: ${gain} höjdmeter på ${len}.` : `Den har ${n} klättringar på minst 25 höjdmeter; den största börjar vid km ${km}: ${gain} höjdmeter på ${len}.`,
     aNoClimbs: "Den har inga sammanhängande klättringar på 25 höjdmeter eller mer.",
     aAid: (n: number, list: string) => `Ja. Arrangören har ${n === 1 ? "en vätskekontroll" : `${n} vätskekontroller`}: ${list}.`,
@@ -1554,7 +1558,7 @@ const S = {
     aStart: (list: string) => `According to the organizer: ${list}.`, clock: (t: string) => t,
     aDist: (k: string, up: string | null, down: string | null, hi: string | null) => `The race is ${k}${up ? ` with ${up} m of climbing${down ? ` and ${down} m of descent` : ""}` : ""}.${hi ? ` The highest point is ${hi} m above sea level.` : ""}`,
     aDistNoClimb: (k: string) => `The race is ${k}. The organizer states no climbing.`, aDistOrg: (k: string, a: string) => `The race is ${k}. The organizer states ${a} m of climbing.`,
-    aCourse: (h: string, perKm: string, loop: boolean | null, trail: boolean, climbs: string) => `The course is ${h}, with ${perKm} m of climbing per km on average. ${climbs} ${loop === null ? "" : loop ? "Start and finish are in the same place. " : "It runs from the start to a finish in another place. "}The surface is ${trail ? "trail" : "road"}.`,
+    aCourse: (h: string, perKm: string, loop: boolean | null, trail: boolean | null, climbs: string) => `The course is ${h}, with ${perKm} m of climbing per km on average. ${climbs} ${loop === null ? "" : loop ? "Start and finish are in the same place. " : "It runs from the start to a finish in another place. "}${trail === null ? "The organizer does not state the surface." : `The surface is ${trail ? "trail" : "road"}.`}`,
     aClimbs: (n: number, km: string, gain: string, len: string) => n === 1 ? `It has one climb of at least 25 m, at km ${km}: ${gain} m over ${len}.` : `It has ${n} climbs of at least 25 m; the biggest starts at km ${km}: ${gain} m over ${len}.`,
     aNoClimbs: "It has no sustained climbs of 25 m or more.",
     aAid: (n: number, list: string) => `Yes. The organizer lists ${n === 1 ? "one aid station" : `${n} aid stations`}: ${list}.`,
@@ -1585,7 +1589,7 @@ const S = {
     aStart: (list: string) => `Laut Veranstalter: ${list}.`, clock: (t: string) => `${t} Uhr`,
     aDist: (k: string, up: string | null, down: string | null, hi: string | null) => `Der Lauf ist ${k} lang${up ? ` mit ${up} Höhenmetern bergauf${down ? ` und ${down} bergab` : ""}` : ""}.${hi ? ` Der höchste Punkt liegt auf ${hi} m ü. M.` : ""}`,
     aDistNoClimb: (k: string) => `Der Lauf ist ${k} lang. Der Veranstalter nennt keine Höhenmeter.`, aDistOrg: (k: string, a: string) => `Der Lauf ist ${k} lang. Der Veranstalter gibt ${a} Höhenmeter an.`,
-    aCourse: (h: string, perKm: string, loop: boolean | null, trail: boolean, climbs: string) => `Die Strecke ist ${h}, mit durchschnittlich ${perKm} Höhenmetern pro km. ${climbs} ${loop === null ? "" : loop ? "Start und Ziel liegen am selben Ort. " : "Sie führt vom Start zu einem Ziel an einem anderen Ort. "}Der Untergrund ist ${trail ? "Trail und Gelände" : "Straße"}.`,
+    aCourse: (h: string, perKm: string, loop: boolean | null, trail: boolean | null, climbs: string) => `Die Strecke ist ${h}, mit durchschnittlich ${perKm} Höhenmetern pro km. ${climbs} ${loop === null ? "" : loop ? "Start und Ziel liegen am selben Ort. " : "Sie führt vom Start zu einem Ziel an einem anderen Ort. "}${trail === null ? "Der Veranstalter gibt den Untergrund nicht an." : `Der Untergrund ist ${trail ? "Trail und Gelände" : "Straße"}.`}`,
     aClimbs: (n: number, km: string, gain: string, len: string) => n === 1 ? `Sie hat einen Anstieg ab 25 Höhenmetern, bei km ${km}: ${gain} Höhenmeter auf ${len}.` : `Sie hat ${n} Anstiege ab 25 Höhenmetern; der größte beginnt bei km ${km}: ${gain} Höhenmeter auf ${len}.`,
     aNoClimbs: "Sie hat keine zusammenhängenden Anstiege ab 25 Höhenmetern.",
     aAid: (n: number, list: string) => `Ja. Der Veranstalter nennt ${n === 1 ? "eine Verpflegungsstelle" : `${n} Verpflegungsstellen`}: ${list}.`,
@@ -1616,7 +1620,7 @@ const S = {
     aStart: (list: string) => `Ifølge arrangøren: ${list}.`, clock: (t: string) => `kl. ${t}`,
     aDist: (k: string, up: string | null, down: string | null, hi: string | null) => `Løpet er ${k} langt${up ? ` med ${up} høydemeter oppover${down ? ` og ${down} nedover` : ""}` : ""}.${hi ? ` Høyeste punkt ligger ${hi} moh.` : ""}`,
     aDistNoClimb: (k: string) => `Løpet er ${k} langt. Arrangøren oppgir ingen høydemeter.`, aDistOrg: (k: string, a: string) => `Løpet er ${k} langt. Arrangøren oppgir ${a} høydemeter.`,
-    aCourse: (h: string, perKm: string, loop: boolean | null, trail: boolean, climbs: string) => `Løypa regnes som ${h}, med ${perKm} høydemeter per km i snitt. ${climbs} ${loop === null ? "" : loop ? "Start og mål ligger på samme sted. " : "Løypa går fra start til et mål på et annet sted. "}Underlaget er ${trail ? "terreng og sti" : "vei"}.`,
+    aCourse: (h: string, perKm: string, loop: boolean | null, trail: boolean | null, climbs: string) => `Løypa regnes som ${h}, med ${perKm} høydemeter per km i snitt. ${climbs} ${loop === null ? "" : loop ? "Start og mål ligger på samme sted. " : "Løypa går fra start til et mål på et annet sted. "}${trail === null ? "Arrangøren oppgir ikke underlaget." : `Underlaget er ${trail ? "terreng og sti" : "vei"}.`}`,
     aClimbs: (n: number, km: string, gain: string, len: string) => n === 1 ? `Den har én stigning på minst 25 høydemeter, ved km ${km}: ${gain} høydemeter på ${len}.` : `Den har ${n} stigninger på minst 25 høydemeter; den største starter ved km ${km}: ${gain} høydemeter på ${len}.`,
     aNoClimbs: "Den har ingen sammenhengende stigninger på 25 høydemeter eller mer.",
     aAid: (n: number, list: string) => `Ja. Arrangøren har ${n === 1 ? "én drikkestasjon" : `${n} drikkestasjoner`}: ${list}.`,
@@ -1647,7 +1651,7 @@ const S = {
     aStart: (list: string) => `Ifølge arrangøren: ${list}.`, clock: (t: string) => `kl. ${t}`,
     aDist: (k: string, up: string | null, down: string | null, hi: string | null) => `Løbet er ${k} langt${up ? ` med ${up} højdemeter stigning${down ? ` og ${down} højdemeter fald` : ""}` : ""}.${hi ? ` Det højeste punkt ligger ${hi} m o.h.` : ""}`,
     aDistNoClimb: (k: string) => `Løbet er ${k} langt. Arrangøren oplyser ingen højdemeter.`, aDistOrg: (k: string, a: string) => `Løbet er ${k} langt. Arrangøren oplyser ${a} højdemeter.`,
-    aCourse: (h: string, perKm: string, loop: boolean | null, trail: boolean, climbs: string) => `Ruten regnes som ${h}, med ${perKm} højdemeter pr. km i snit. ${climbs} ${loop === null ? "" : loop ? "Start og mål ligger samme sted. " : "Ruten går fra start til et mål et andet sted. "}Underlaget er ${trail ? "terræn og sti" : "vej"}.`,
+    aCourse: (h: string, perKm: string, loop: boolean | null, trail: boolean | null, climbs: string) => `Ruten regnes som ${h}, med ${perKm} højdemeter pr. km i snit. ${climbs} ${loop === null ? "" : loop ? "Start og mål ligger samme sted. " : "Ruten går fra start til et mål et andet sted. "}${trail === null ? "Arrangøren oplyser ikke underlaget." : `Underlaget er ${trail ? "terræn og sti" : "vej"}.`}`,
     aClimbs: (n: number, km: string, gain: string, len: string) => n === 1 ? `Den har én stigning på mindst 25 højdemeter, ved km ${km}: ${gain} højdemeter på ${len}.` : `Den har ${n} stigninger på mindst 25 højdemeter; den største begynder ved km ${km}: ${gain} højdemeter på ${len}.`,
     aNoClimbs: "Den har ingen sammenhængende stigninger på 25 højdemeter eller mere.",
     aAid: (n: number, list: string) => `Ja. Arrangøren har ${n === 1 ? "ét væskedepot" : `${n} væskedepoter`}: ${list}.`,
@@ -1678,7 +1682,7 @@ const S = {
     aStart: (list: string) => `Järjestäjän mukaan: ${list}.`, clock: (t: string) => `klo ${t}`,
     aDist: (k: string, up: string | null, down: string | null, hi: string | null) => `Matka on ${k}${up ? `, nousua ${up} m${down ? ` ja laskua ${down} m` : ""}` : ""}.${hi ? ` Korkein kohta on ${hi} m mpy.` : ""}`,
     aDistNoClimb: (k: string) => `Matka on ${k}. Järjestäjä ei ilmoita nousumetrejä.`, aDistOrg: (k: string, a: string) => `Matka on ${k}. Järjestäjän mukaan nousua on ${a} m.`,
-    aCourse: (h: string, perKm: string, loop: boolean | null, trail: boolean, climbs: string) => `Reitti on ${h}, nousua keskimäärin ${perKm} m kilometrillä. ${climbs} ${loop === null ? "" : loop ? "Lähtö ja maali ovat samassa paikassa. " : "Reitti kulkee lähdöstä maaliin, joka on eri paikassa. "}Alusta on ${trail ? "maastoa ja polkua" : "maantietä"}.`,
+    aCourse: (h: string, perKm: string, loop: boolean | null, trail: boolean | null, climbs: string) => `Reitti on ${h}, nousua keskimäärin ${perKm} m kilometrillä. ${climbs} ${loop === null ? "" : loop ? "Lähtö ja maali ovat samassa paikassa. " : "Reitti kulkee lähdöstä maaliin, joka on eri paikassa. "}${trail === null ? "Järjestäjä ei kerro alustaa." : `Alusta on ${trail ? "maastoa ja polkua" : "maantietä"}.`}`,
     aClimbs: (n: number, km: string, gain: string, len: string) => n === 1 ? `Reitillä on yksi vähintään 25 nousumetrin nousu, kohdassa km ${km}: ${gain} m ${len}:n matkalla.` : `Reitillä on ${n} vähintään 25 nousumetrin nousua; suurin alkaa kohdassa km ${km}: ${gain} m ${len}:n matkalla.`,
     aNoClimbs: "Reitillä ei ole yhtenäisiä vähintään 25 nousumetrin nousuja.",
     aAid: (n: number, list: string) => `Kyllä. Järjestäjällä on ${n === 1 ? "yksi juomapiste" : `${n} juomapistettä`}: ${list}.`,
@@ -1709,7 +1713,7 @@ const S = {
     aStart: (list: string) => `Selon l’organisateur : ${list}.`, clock: (t: string) => frClock(t),
     aDist: (k: string, up: string | null, down: string | null, hi: string | null) => `La course fait ${k}${up ? `, avec ${up} m de dénivelé positif${down ? ` et ${down} m de dénivelé négatif` : ""}` : ""}.${hi ? ` Le point culminant est à ${hi} m d’altitude.` : ""}`,
     aDistNoClimb: (k: string) => `La course fait ${k}. L’organisateur n’indique pas de dénivelé.`, aDistOrg: (k: string, a: string) => `La course fait ${k}. L’organisateur annonce ${a} m de dénivelé positif.`,
-    aCourse: (h: string, perKm: string, loop: boolean | null, trail: boolean, climbs: string) => `Le parcours est ${h}, avec ${perKm} m de dénivelé par km en moyenne. ${climbs} ${loop === null ? "" : loop ? "Le départ et l’arrivée sont au même endroit. " : "Il va du départ à une arrivée située ailleurs. "}On y court ${trail ? "sur sentiers et en nature" : "sur route"}.`,
+    aCourse: (h: string, perKm: string, loop: boolean | null, trail: boolean | null, climbs: string) => `Le parcours est ${h}, avec ${perKm} m de dénivelé par km en moyenne. ${climbs} ${loop === null ? "" : loop ? "Le départ et l’arrivée sont au même endroit. " : "Il va du départ à une arrivée située ailleurs. "}${trail === null ? "L’organisateur ne précise pas le revêtement." : `On y court ${trail ? "sur sentiers et en nature" : "sur route"}.`}`,
     aClimbs: (n: number, km: string, gain: string, len: string) => n === 1 ? `Il compte une montée d’au moins 25 m, au km ${km} : ${gain} m sur ${len}.` : `Il compte ${n} montées d’au moins 25 m ; la plus grande commence au km ${km} : ${gain} m sur ${len}.`,
     aNoClimbs: "Il ne compte aucune montée continue de 25 m ou plus.",
     aAid: (n: number, list: string) => `Oui. L’organisateur prévoit ${n === 1 ? "un ravitaillement" : `${n} ravitaillements`} : ${list}.`,
@@ -1740,7 +1744,7 @@ const S = {
     aStart: (list: string) => `Según el organizador: ${list}.`, clock: (t: string) => `${t} h`,
     aDist: (k: string, up: string | null, down: string | null, hi: string | null) => `La carrera tiene ${k}${up ? `, con ${up} m de desnivel positivo${down ? ` y ${down} m de desnivel negativo` : ""}` : ""}.${hi ? ` El punto más alto está a ${hi} m sobre el nivel del mar.` : ""}`,
     aDistNoClimb: (k: string) => `La carrera tiene ${k}. El organizador no indica desnivel.`, aDistOrg: (k: string, a: string) => `La carrera tiene ${k}. El organizador indica ${a} m de desnivel positivo.`,
-    aCourse: (h: string, perKm: string, loop: boolean | null, trail: boolean, climbs: string) => `El recorrido es ${h}, con ${perKm} m de desnivel por km de media. ${climbs} ${loop === null ? "" : loop ? "La salida y la meta están en el mismo lugar. " : "Va de la salida a una meta situada en otro lugar. "}Se corre ${trail ? "por senderos y caminos" : "sobre asfalto"}.`,
+    aCourse: (h: string, perKm: string, loop: boolean | null, trail: boolean | null, climbs: string) => `El recorrido es ${h}, con ${perKm} m de desnivel por km de media. ${climbs} ${loop === null ? "" : loop ? "La salida y la meta están en el mismo lugar. " : "Va de la salida a una meta situada en otro lugar. "}${trail === null ? "La organización no indica la superficie." : `Se corre ${trail ? "por senderos y caminos" : "sobre asfalto"}.`}`,
     aClimbs: (n: number, km: string, gain: string, len: string) => n === 1 ? `Tiene una subida de al menos 25 m, en el km ${km}: ${gain} m en ${len}.` : `Tiene ${n} subidas de al menos 25 m; la mayor empieza en el km ${km}: ${gain} m en ${len}.`,
     aNoClimbs: "No tiene subidas continuas de 25 m o más.",
     aAid: (n: number, list: string) => `Sí. El organizador prevé ${n === 1 ? "un avituallamiento" : `${n} avituallamientos`}: ${list}.`,
@@ -1778,13 +1782,13 @@ const HUB_DIR: Record<Lang, Record<HubKind, string>> = {
   es: { city: "ciudad", distance: "distancia", month: "mes", country: "pais" },
 };
 /** The distance classes: the common race distances (within a few hundred metres), every race past a marathon, and every trail race. */
-export const DISTANCES: { key: string; test: (r: Pick<Race, "km" | "trail">) => boolean; slug: Record<Lang, string> }[] = [
+export const DISTANCES: { key: string; test: (r: Pick<Race, "km" | "trail" | "surface_unknown">) => boolean; slug: Record<Lang, string> }[] = [
   { key: "5k", test: (r) => r.km >= 4.5 && r.km <= 5.5, slug: { sv: "5-km", en: "5k", de: "5-km", nb: "5-km", da: "5-km", fi: "5-km", fr: "5-km", es: "5-km" } },
   { key: "10k", test: (r) => r.km >= 9.5 && r.km <= 10.5, slug: { sv: "10-km", en: "10k", de: "10-km", nb: "10-km", da: "10-km", fi: "10-km", fr: "10-km", es: "10-km" } },
   { key: "half", test: (r) => r.km >= 20.6 && r.km <= 21.7, slug: { sv: "halvmaraton", en: "half-marathon", de: "halbmarathon", nb: "halvmaraton", da: "halvmaraton", fi: "puolimaraton", fr: "semi-marathon", es: "media-maraton" } },
   { key: "marathon", test: (r) => r.km >= 41.7 && r.km <= 42.8, slug: { sv: "maraton", en: "marathon", de: "marathon", nb: "maraton", da: "maraton", fi: "maraton", fr: "marathon", es: "maraton" } },
   { key: "ultra", test: (r) => r.km > 42.8, slug: { sv: "ultra", en: "ultra", de: "ultra", nb: "ultra", da: "ultra", fi: "ultra", fr: "ultra", es: "ultra" } },
-  { key: "trail", test: (r) => r.trail, slug: { sv: "trail", en: "trail", de: "trail", nb: "terrenglop", da: "trail", fi: "polkujuoksu", fr: "trail", es: "trail" } },
+  { key: "trail", test: (r) => r.trail && !r.surface_unknown, slug: { sv: "trail", en: "trail", de: "trail", nb: "terrenglop", da: "trail", fi: "polkujuoksu", fr: "trail", es: "trail" } },
 ];
 /** The fewest races a hub needs: fewer is a thin page, never made. */
 export const HUB_MIN = 2;
@@ -1884,7 +1888,7 @@ export function faqItems(r: Race, lang: Lang, today: string): { q: string; a: st
   const climbs = [...r.climbs].sort((a, b) => a.km - b.km);
   if (!bare) {
     const big = [...r.climbs].sort((a, b) => b.gain - a.gain)[0], perKm = num(r.ascent / r.km, lang, r.ascent / r.km < 10 ? 1 : 0);
-    out.push({ q: s.qCourse(n), a: s.aCourse(t.hilly[hilliness(r)], perKm, r.course ? isLoop(r.course.pts) : null, r.trail, big ? s.aClimbs(climbs.length, num(big.km, lang, 1), num(big.gain, lang), lenText(big.len, lang)) : s.aNoClimbs) });
+    out.push({ q: s.qCourse(n), a: s.aCourse(t.hilly[hilliness(r)], perKm, r.course ? isLoop(r.course.pts) : null, r.surface_unknown ? null : r.trail, big ? s.aClimbs(climbs.length, num(big.km, lang, 1), num(big.gain, lang), lenText(big.len, lang)) : s.aNoClimbs) });
   }
   if (r.aid_stations?.length) out.push({ q: s.qAid(n), a: s.aAid(r.aid_stations.length, r.aid_stations.map((x) => `${t.at(num(x.km, lang, 1))}${x.what.length ? ` (${x.what.map((w) => t.aidWords[w] ?? w).join(", ")})` : ""}`).join(sc(lang))) });
   const cuts = r.info?.cutoffs ?? [];

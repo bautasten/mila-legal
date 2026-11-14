@@ -6,7 +6,7 @@
 
 - Runners aged 18 and over, from the first easy runs to marathons, ultras and trail races.
 - iPhone users. Mila has its own Apple Watch app; other watches and rings (for example Garmin, COROS, Suunto and Polar) work when their app syncs to Apple Health. Polar and Suunto can also be connected directly, and Mila works with COROS: runners can connect their COROS account in the app. No watch: runs recorded with the iPhone work too.
-- Mila requires a subscription (with a free trial week in the App Store). It gives general training advice, not medical advice.
+- Mila requires a subscription (with a free trial week on the yearly plan in the App Store). It gives general training advice, not medical advice.
 
 ## What Mila does
 

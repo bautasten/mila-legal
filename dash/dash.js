@@ -171,7 +171,7 @@
   var NAMES = {
     daily: "Dagens pass", review: "Veckogenomgång", plan: "Veckoplan", challenge: "Utmaning", gait: "Löpsteg", support: "Support", raceplan: "Loppplan",
     racereadiness: "Loppberedskap", patterns: "Mönster", year: "Året", shoelife: "Skoliv", racepicks: "Loppförslag", mealplan: "Matplan", recipe: "Recept",
-    recipesaved: "Sparade recept", meal: "Måltid", runpair: "Duo: passpar", dailyprerun: "Duo: före passet", racejourney: "Loppresan", followq: "Följdfrågor",
+    recipesaved: "Sparade recept", cookbook: "Milas kokbok", avoidtags: "Kokboken: allergiorden", meal: "Måltid", runpair: "Duo: passpar", dailyprerun: "Duo: före passet", racejourney: "Loppresan", followq: "Följdfrågor",
     workout: "Pass", race: "Lopp", show: "Visa för någon", moment_shoe: "Sko", moment_milestone: "Milstolpe", moment_record: "Bästa insats", moment_mountain: "VO₂max-berget",
     moment_group: "Gruppmål", moment_journey: "Din resa", shopping: "Inköpslista", invite_buddy: "Kompisinbjudan", invite_group: "Gruppinbjudan", racepage: "Loppsida",
     year_link: "Årslänk", dish: "Rätt", year_food: "Årets favoriter", heatmap: "Värmekarta",

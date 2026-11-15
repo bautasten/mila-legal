@@ -491,8 +491,8 @@
     form.addEventListener("submit", function (ev) { ev.preventDefault(); act("deadline_add", null, { title: ti.value.trim(), due: du.value, kind: kd.value, note: no.value.trim() }, "Datumet är inlagt."); });
     f.appendChild(form);
     var n = card(g, "Notiser", "Högst en sammanfattning på morgonen, och bara när något väntar. Direkt bara när det är akut. Allt går till din egen e-post.");
-    var NAMES = { morgon: "Morgonsammanfattning", nere: "Webbplatsen svarar inte", kostnadsparr: "Kostnadsspärren slår till", avslag: "Avslag i App Review", gdpr_frist: "GDPR-frist inom 3 dagar", sakerhet: "Säkerhetshändelse (ingen källa kopplad än)" };
-    var OFF = { morgon: "Av: du ser läget bara när du öppnar tornet.", nere: "Av: du märker det först när du öppnar tornet.", kostnadsparr: "Av: spärren skyddar ändå, men du får inte veta det direkt.", avslag: "Av: du ser avslaget i tornet och i Apples eget mejl.", gdpr_frist: "Av: fristen syns bara i I dag.", sakerhet: "Av: inget skickas." };
+    var NAMES = { morgon: "Morgonsammanfattning", nere: "Webbplatsen svarar inte", kostnadsparr: "Ett konto eller appen närmar sig kostnadsspärren (80 %)", avslag: "Avslag i App Review", gdpr_frist: "GDPR-frist inom 3 dagar", sakerhet: "Säkerhetshändelse (ingen källa kopplad än)" };
+    var OFF = { morgon: "Av: du ser läget bara när du öppnar tornet.", nere: "Av: du märker det först när du öppnar tornet.", kostnadsparr: "Av: spärren skyddar ändå, men du får inte veta i förväg att den närmar sig.", avslag: "Av: du ser avslaget i tornet och i Apples eget mejl.", gdpr_frist: "Av: fristen syns bara i I dag.", sakerhet: "Av: inget skickas." };
     Object.keys(NAMES).forEach(function (k) {
       var on = (data.notify || {})[k] !== false, row = el("label", "switch");
       var cb = el("input"); cb.type = "checkbox"; cb.checked = on;
@@ -676,7 +676,7 @@
     else { var r0 = runs[0]; kv(gr, [["Senaste", (r0.status || "?") + (r0.step ? " · " + r0.step : "")], ["Gren", r0.branch || "–"], ["Start", r0.started_at ? when(r0.started_at) : "–"]]); }
     var sy = card(g, "Server", null);
     kv(sy, [["Senaste migrering", cm.migration || "–"], ["Morgonrapport mejlad", cm.report_sent ? when(cm.report_sent) : "–"], ["Larm, 30 d", f0(sum(cm.alerts_30d))],
-      ["Kostnadsspärr, 2 d", (o.alerts_2d || []).length ? (o.alerts_2d || []).map(function (x) { return (x.kind === "tokens" ? "dagsspärr för ett konto" : "appens AI-tak 80 %") + " " + dayText(x.day); }).join(", ") : "ingen"],
+      ["Närmar sig spärren, 2 d", (o.alerts_2d || []).length ? (o.alerts_2d || []).map(function (x) { return (x.kind === "tokens" ? "ett konto på 80 % av dagsbudgeten" : "appens AI-tak på 80 %") + " " + dayText(x.day); }).join(", ") : "ingen"],
       ["Anmälningar att granska", has(o.moderation) ? f0(o.moderation) : "–"], ["Önskemål öppna", has(o.wishes) ? f0(o.wishes) : "–"]]);
     var st = card(g, "Webbplatsen", null), site = o.site && o.site.data;
     if (!site) st.appendChild(el("p", "empty", "Inte kontrollerad än."));

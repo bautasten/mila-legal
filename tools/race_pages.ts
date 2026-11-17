@@ -984,7 +984,7 @@ export function ogSvg(r: Race): string {
     art += `<path d="${d}" fill="none" stroke="#1C1A17" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/><circle cx="${f1(ox + (xs[0] - x0) * s)}" cy="${f1(oy + (ys[0] - y0) * s)}" r="9" fill="#0F8A4C"/>`;
   }
   return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">${ogScene(r)}`
-    + `<text x="64" y="92" font-size="30" font-weight="700" letter-spacing="5" fill="#1F3A52">MILA</text>${text}`
+    + `${ogMark(64, 58, 44)}<text x="120" y="92" font-size="30" font-weight="700" letter-spacing="5" fill="#1F3A52">MILA</text>${text}`
     + `<text x="64" y="${f1(y + 6)}" font-size="32" fill="#5E5850">${esc(sub)}</text>${art}`
     + `<text x="1136" y="620" font-size="19" fill="#6E685E" text-anchor="end">milacoach.app</text></svg>`;
 }
@@ -995,6 +995,21 @@ export function ogScene(_r: Race): string {
   return `<defs><radialGradient id="ogGlow" cx="0.78" cy="0.12" r="0.62"><stop offset="0" stop-color="#C2410C" stop-opacity="0.08"/><stop offset="0.55" stop-color="#C2410C" stop-opacity="0.03"/><stop offset="1" stop-color="#C2410C" stop-opacity="0"/></radialGradient></defs>`
     + `<rect width="1200" height="630" fill="#FBF9F5"/><rect width="1200" height="630" fill="url(#ogGlow)"/>`;
 }
+/** b37-logga-pulsen (Patrik 2026-11-15, "Pulsen – en blå"): Mila's mark in the 1024 canvas, as backend/icon_mark.swift draws it (the
+ *  pulse, its stroke, the dot, the light palette, the app's one corner 225 of 1024); tests/race_pages_test.ts holds it to that file. */
+export const MILA_MARK = {
+  line: [[156, 560], [318, 560], [400, 318], [512, 712], [624, 318], [706, 560], [776, 560]] as const,
+  stroke: 70, dot: { x: 864, y: 560, r: 52 }, corner: 225, fill: "#1F3A52", ink: "#F5EFEB", stop: "#E06A3B",
+};
+/** The mark for the share images, as the site's header shows it beside the word: the navy field with the app's rounded corner, the
+ *  cream pulse that forms the M and the orange full stop, at `side` px with its top left at x, y. */
+export function ogMark(x: number, y: number, side: number): string {
+  const k = side / 1024, m = MILA_MARK;
+  const pulse = m.line.map(([a, b], i) => `${i ? "L" : "M"}${f1(a * k)} ${f1(b * k)}`).join("");
+  return `<g transform="translate(${x} ${y})"><rect width="${side}" height="${side}" rx="${f1(m.corner * k)}" fill="${m.fill}"/>`
+    + `<path d="${pulse}" fill="none" stroke="${m.ink}" stroke-width="${f1(m.stroke * k)}" stroke-linecap="round" stroke-linejoin="round"/>`
+    + `<circle cx="${f1(m.dot.x * k)}" cy="${f1(m.dot.y * k)}" r="${f1(m.dot.r * k)}" fill="${m.stop}"/></g>`;
+}
 /** The default share image of a language's race pages (the indexes, and races without their own image). */
 export function ogDefaultSvg(lang: Lang): string {
   const t = T[lang];
@@ -1002,7 +1017,7 @@ export function ogDefaultSvg(lang: Lang): string {
   const text = wrap(t.ogDefault, 24, 3).map((l) => { const s = `<text x="64" y="${y}" font-size="60" font-weight="700" fill="#1C1A17">${esc(l)}</text>`; y += 70; return s; }).join("");
   const wave = Array.from({ length: 61 }, (_, i) => `${i ? "L" : "M"}${f1(64 + i * (1072 / 60))} ${f1(540 - (Math.sin(i / 6) * 40 + Math.sin(i / 2.3) * 14))}`).join("");
   return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630"><rect width="1200" height="630" fill="#FBF9F5"/>`
-    + `<text x="64" y="110" font-size="34" font-weight="700" letter-spacing="6" fill="#1F3A52">MILA</text>${text}<text x="64" y="${y + 10}" font-size="36" fill="#5E5850">${esc(t.brandLine)}</text>`
+    + `${ogMark(64, 72, 50)}<text x="128" y="110" font-size="34" font-weight="700" letter-spacing="6" fill="#1F3A52">MILA</text>${text}<text x="64" y="${y + 10}" font-size="36" fill="#5E5850">${esc(t.brandLine)}</text>`
     + `<path d="${wave}L1136 600L64 600Z" fill="#1F3A52" fill-opacity="0.14"/><path d="${wave}" fill="none" stroke="#1F3A52" stroke-width="4"/><text x="1136" y="620" font-size="19" fill="#6E685E" text-anchor="end">milacoach.app</text></svg>`;
 }
 
@@ -1272,8 +1287,8 @@ function frame(f: Frame): string {
   const security = securityMeta([f.script, f.module].filter((x): x is string => !!x));
   return `<!doctype html><html lang="${f.lang}"><head><meta charset="utf-8">${security}<meta name="viewport" content="width=device-width,initial-scale=1">${smartBannerMeta(f.appId)}
 <title>${esc(f.title)}</title><meta name="description" content="${esc(f.description)}">${f.noindex ? '<meta name="robots" content="noindex,follow">' : `<meta name="robots" content="max-image-preview:large"><link rel="canonical" href="${esc(abs(f.path))}">`}${alt}
-${og}<meta name="theme-color" content="#FBF9F5"><link rel="icon" href="${root}favicon.ico?v=31" sizes="32x32"><link rel="icon" href="${root}apple-touch-icon.png?v=31" type="image/png" sizes="180x180"><link rel="apple-touch-icon" href="${root}apple-touch-icon.png?v=31"><link rel="preload" href="${root}fonts/BarlowCondensed-Bold-latin.woff2" as="font" type="font/woff2" crossorigin><style>${f.css}</style>${(f.ld ?? []).map(jsonLd).join("")}</head><body>
-<a class="skip" href="#main">${esc(t.skip)}</a><div class="wrap"><header><a class="brand" href="${root}${c.home}"><img src="${root}logo-80.png?v=31" alt="" width="40" height="40">MILA</a>${switcher}</header>
+${og}<meta name="theme-color" content="#FBF9F5"><link rel="icon" href="${root}favicon.ico?v=37" sizes="32x32"><link rel="icon" href="${root}apple-touch-icon.png?v=37" type="image/png" sizes="180x180"><link rel="apple-touch-icon" href="${root}apple-touch-icon.png?v=37"><link rel="preload" href="${root}fonts/BarlowCondensed-Bold-latin.woff2" as="font" type="font/woff2" crossorigin><style>${f.css}</style>${(f.ld ?? []).map(jsonLd).join("")}</head><body>
+<a class="skip" href="#main">${esc(t.skip)}</a><div class="wrap"><header><a class="brand" href="${root}${c.home}"><img src="${root}logo-80.png?v=37" alt="" width="40" height="40">MILA</a>${switcher}</header>
 ${crumbs}
 <main id="main">${f.body}</main>${f.band ? trailBand(f.band, root) : ""}
 <footer><a href="${root}${c.support}">${esc(t.support)}</a><a href="${root}${c.privacy}">${esc(t.privacy)}</a><a href="${root}${c.terms}">${esc(t.terms)}</a><a href="${root}${c.support}#provider">${esc(t.contact)}</a><a href="${root}${c.support}?topic=report&amp;ref=${encodeURIComponent(abs(f.path))}#kontakt" rel="nofollow">${esc(t.report)}</a><br><br>${esc(t.notAffiliatedAll)}<br><br>© ${f.today.slice(0, 4)} Mila</footer></div>${f.script ? `<script>${f.script}</script>` : ""}${f.module ? `<script type="module">${f.module}</script>` : ""}${f.motion ? `<script src="${root}motion.js"></script>` : ""}</body></html>
@@ -2130,7 +2145,7 @@ export async function generate(o: { out: string; races: Race[]; ids?: Set<string
   const defaults = new Map<Lang, boolean>();
   for (const l of LANGS) defaults.set(l, await exists(ogDefaultPath(l)));
   const ogImage = (r: Race | null, lang: Lang) => r && hasOg.has(r.id) ? { image: abs(ogPath(slugs.get(r.id)!)), large: true }
-    : defaults.get(lang) ? { image: abs(ogDefaultPath(lang)), large: true } : { image: `${SITE}/logo.png`, large: false };
+    : defaults.get(lang) ? { image: abs(ogDefaultPath(lang)), large: true } : { image: `${SITE}/logo.png?v=37`, large: false };
   // seo: the hubs, and the races whose page title another race's would repeat (their titles add the place)
   const hubs = buildHubs(active, today), titles = new Map<string, string[]>();
   for (const r of active) { const k = pageTitle(r, "sv"); titles.set(k, [...(titles.get(k) ?? []), r.id]); }

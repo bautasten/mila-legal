@@ -27,6 +27,8 @@
   var data = null, mail = "", timer = null, retryT = null, lastLoad = 0, module = "idag", mailId = null;
   var needOpen = false, asleepOpen = false, changesOpen = false, mailBox = "alla", mailCat = "alla", mailState = "gora";
   var mails = {}, drafts = {}, pendingRender = false, forceNext = false, pick = -1;
+  // I dag answers a mail in its own row: which rows are open, and which replies already went to Mail (then: Klar or Väntar)
+  var replyOpen = {}, handedToMail = {}, focusReply = null, keptInline = {};
 
   // ---- helpers (text only through textContent)
   function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text !== undefined && text !== null) e.textContent = String(text); return e; }
@@ -293,8 +295,13 @@
     pendingRender = false;
     // the row chosen with j/k stays chosen when the content is drawn again
     var held = inBoard && act0.closest ? act0.closest("[data-pick]") : null, heldAt = held ? picks().indexOf(held) : -1, heldKey = held && held.rowData ? held.rowData.key : null;
+    keptInline = {};
+    var keptTop = [];
+    if (!force && module === "idag") Array.prototype.forEach.call($("board").querySelectorAll(".inline-mail[data-reply]"), function (n) { keptInline[n.getAttribute("data-reply")] = n; var t0 = n.querySelector(".mailtext"); if (t0) keptTop.push([t0, t0.scrollTop]); });
     var b = clear($("board"));
+    var restoreTop = function () { keptTop.forEach(function (k) { if (k[0].isConnected) k[0].scrollTop = k[1]; }); };
     ({ idag: drawToday, mejl: drawMail, appen: drawApp, pengar: drawMoney, drift: drawOps, anvandare: drawUsers, juridik: drawLegal, marknad: drawMarket, kalender: drawCalendar, laget: drawState, mer: drawMore }[module] || drawToday)(b);
+    restoreTop();
     if (heldAt >= 0) {
       // by its key where the row has one (the same mail or queue row, wherever it now is), else by its place
       var now = picks(), same = heldKey ? now.filter(function (x) { return x.rowData && x.rowData.key === heldKey; })[0] : now[heldAt];
@@ -323,6 +330,8 @@
     var until = plusDays(data.today, days);
     act("snooze", r.key, { until: until }, "Uppskjutet till " + dayText(until) + ".", function () { act("unsnooze", r.key, {}, "Tillbaka i listan."); });
   }
+  function mailItem(id) { return ((data.mail && data.mail.items) || []).filter(function (m) { return String(m.id) === String(id); })[0] || null; }
+  function toggleReply(id) { if (replyOpen[id]) delete replyOpen[id]; else { replyOpen[id] = true; focusReply = id; } forceNext = true; render(true); }
   /** One row of the queue, whole: what it is, what it says, and everything the owner can do with it. */
   function needRow(r, hidden) {
     var li = el("li", "need-row" + (r.urgent ? " urgent" : "") + (hidden ? " later" : "")); li.tabIndex = -1; li.setAttribute("data-pick", "");
@@ -335,8 +344,21 @@
     if (own) button(acts, "Klar", "", function () { ask({ title: "Markera klart?", text: r.title + " tas bort från datumen.", yes: "Klar" }).then(function (ok) { if (ok) act("deadline_done", String(r.open.id), {}, "Markerat klart."); }); });
     if (r.approve && r.approve.action === "decision") { button(acts, "Ja", "", function () { answer(r, "ja"); }); button(acts, "Nej", "soft", function () { answer(r, "nej"); }); }
     else if (r.approve) { button(acts, "Godkänn", "", function () { approve(r, true); }); button(acts, "Avvisa", "soft", function () { approve(r, false); }); }
-    if (r.open && NAME[r.open.module]) button(acts, r.open.module === "mejl" && r.open.id ? "Öppna mejlet" : "Öppna " + NAME[r.open.module], r.approve || own ? "quiet" : "", function () { go(r.open.module, r.open.module === "mejl" ? r.open.id : null); });
+    var mailRow = r.open && r.open.module === "mejl" && /^\d{1,18}$/.test(String(r.open.id || "")) ? mailItem(r.open.id) : null;
+    if (mailRow) {
+      // a mail is read and answered where it stands: the text and the reply open under the row, and the queue stays in view
+      var id = String(mailRow.id), rb = button(acts, replyOpen[id] ? "Stäng" : "Läs och svara", replyOpen[id] ? "soft" : "", function () { toggleReply(id); });
+      rb.setAttribute("aria-expanded", String(!!replyOpen[id]));
+      if (r.kind === "mejl") button(acts, "Klar", "soft", function () { setMailState(mailRow, "klar", "Markerat klart.", false, true); });
+      button(acts, "Hela mejlet", "quiet", function () { go("mejl", id); });
+    } else if (r.open && NAME[r.open.module]) button(acts, r.open.module === "mejl" && r.open.id ? "Öppna mejlet" : "Öppna " + NAME[r.open.module], r.approve || own ? "quiet" : "", function () { go(r.open.module, r.open.module === "mejl" ? r.open.id : null); });
     foot.appendChild(acts); li.appendChild(foot);
+    if (mailRow && replyOpen[String(mailRow.id)]) {
+      // a plain refresh keeps the open mail as it is (where it is read, what is typed, a draft on its way); an action draws it anew
+      var kept = keptInline[String(mailRow.id)];
+      if (kept) li.appendChild(kept);
+      else { var inl = el("div", "inline-mail"); li.appendChild(inl); showMail(inl, String(mailRow.id), true); }
+    }
     if (r.kind !== "beslut") {
       var later = el("div", "later-acts"); later.appendChild(el("span", "sub", "Skjut upp:"));
       button(later, "Till i morgon", "quiet", function () { snooze(r, 1); });
@@ -347,8 +369,11 @@
   }
   function drawToday(b) {
     var t = data.idag || { rows: [], snoozed: 0, changed: [] }, rows = t.rows || [];
+    // a mail that has left the queue (done, put off) comes back closed
+    var inQueue = {}; rows.forEach(function (r) { if (r.open && r.open.module === "mejl" && r.open.id) inQueue[String(r.open.id)] = true; });
+    Object.keys(replyOpen).forEach(function (k) { if (!inQueue[k]) delete replyOpen[k]; });
     var hero = el("section", "hero"); b.appendChild(hero);
-    hero.appendChild(el("p", "hero-day", dayLine()));
+    hero.appendChild(el("p", "eyebrow hero-day", dayLine()));
     var urgent = rows.filter(function (r) { return r.urgent; }).length;
     hero.appendChild(el("h2", "hello", greeting() + ". " + (!rows.length ? "Inget väntar på dig."
       : rows.length === 1 ? (urgent ? "En sak behöver dig, och den är brådskande." : "En sak behöver dig.")
@@ -388,7 +413,7 @@
       }
     }
     if (rows.length < 3) shortQueue(need);
-    need.appendChild(el("p", "keys", "Tangenter: j och k väljer rad · g godkänner (eller ja) · s skjuter upp en vecka · ö öppnar · ? visar alla"));
+    need.appendChild(el("p", "keys", "Tangenter: j och k väljer rad · r läser och svarar · x klar · g godkänner (eller ja) · s skjuter upp en vecka · ö öppnar · ? visar alla"));
 
     // what deviates right now, in one look: a part with a dot, or a source that is old. The calm parts are one line.
     var p = pulse(), loud = p.filter(function (x) { return x.dot || x.old; }), calm = p.filter(function (x) { return !x.dot && !x.old; });
@@ -673,12 +698,26 @@
     if (mails[id]) return Promise.resolve(mails[id]);
     return call("GET", "?mail=" + encodeURIComponent(id)).then(function (x) { if (x && !x.error) mails[id] = x; return x; });
   }
-  function showMail(body, id) {
+  function showMail(body, id, inline) {
     if (!mails[id]) body.appendChild(el("p", "sub", "Hämtar…"));
     fetchMail(id).then(function (x) {
-      if (mailId !== id || !body.isConnected) return;
+      if ((!inline && mailId !== id) || !body.isConnected) return;
       clear(body);
       if (!x || x.error) { body.appendChild(el("p", "err", x && x.status === 404 ? "Mejlet finns inte längre (sparas i 13 månader)." : "Mejlet kunde inte hämtas.")); return; }
+      if (inline) {
+        body.setAttribute("data-reply", id);
+        var from = el("p", "mail-meta"); from.appendChild(el("strong", null, x.from_name || x.from_addr || "okänd")); if (x.from_name && x.from_addr) from.appendChild(document.createTextNode(" <" + x.from_addr + ">")); from.appendChild(document.createTextNode(" · " + when(x.received_at)));
+        body.appendChild(from);
+        body.appendChild(el("div", "mailtext short", x.body || "(ingen text)"));
+        replyBox(body, x, true);
+        if (focusReply === id) {
+          focusReply = null;
+          // only while the owner is still at that row (a mail that took a moment to come never takes the focus from elsewhere)
+          var at = document.activeElement, rowLi = body.closest("li"), ta0 = body.querySelector("textarea, .handed button");
+          if (ta0 && rowLi && (at === document.body || rowLi.contains(at))) ta0.focus({ preventScroll: true });
+        }
+        return;
+      }
       body.appendChild(el("h2", "mail-subject", x.subject || "(utan ämne)"));
       var meta = el("p", "mail-meta"); meta.appendChild(el("strong", null, x.from_name || x.from_addr || "okänd"));
       if (x.from_name && x.from_addr) meta.appendChild(document.createTextNode(" <" + x.from_addr + ">"));
@@ -699,6 +738,7 @@
         body.appendChild(show);
       }
       mailTools(body, x);
+      if (focusReply === id) { focusReply = null; var ta1 = body.querySelector(".mail-pane textarea, textarea"); if (ta1) ta1.focus({ preventScroll: true }); }
     });
   }
   /** The mail after this one in the list as it is filtered now (the owner works down the list). */
@@ -708,11 +748,14 @@
     var nx = i < 0 ? null : th[i + 1] || (i > 0 ? th[i - 1] : null);
     return nx ? String(nx.top.id) : null;
   }
-  function setMailState(x, state, said, move) {
+  function setMailState(x, state, said, move, thread) {
     var before = x.state || "ny", nx = move ? nextMail(x.id) : String(x.id);
     // the list shows one row per thread, so "Klar" and "Väntar" mark the whole thread as it is listed now (older messages with it)
     var me = ((data.mail && data.mail.items) || []).filter(function (m) { return String(m.id) === String(x.id); })[0];
-    var rest = !move || !me || !me.thread ? [] : mailList().filter(function (m) { return m.thread === me.thread && String(m.id) !== String(x.id) && m.state !== state && (state === "klar" || todoMail(m)); }).map(function (m) { return { id: String(m.id), was: m.state || "ny" }; });
+    // from Mejl the thread as it is listed now; from I dag (no list there) the whole thread
+    var pool = move ? mailList() : ((data.mail && data.mail.items) || []);
+    // a GDPR request in the same thread is never closed along with another message: it is marked on its own, after its question
+    var rest = !(move || thread) || !me || !me.thread ? [] : pool.filter(function (m) { return !(state === "klar" && (m.category === "gdpr" || m.gdpr_due)); }).filter(function (m) { return m.thread === me.thread && String(m.id) !== String(x.id) && m.state !== state && (state === "klar" || todoMail(m)); }).map(function (m) { return { id: String(m.id), was: m.state || "ny" }; });
     // the older ones first, all at once, then this one: one refresh and one line with its way back
     // resolves to how many of them the server did not take (said beside the result, never dropped)
     var all = function (to) {
@@ -736,23 +779,45 @@
     Object.keys(CAT).forEach(function (k) { var o = el("option", null, CAT[k]); o.value = k; if (k === x.category) o.selected = true; sel.appendChild(o); });
     sel.addEventListener("change", function () { var was = x.category, now = sel.value; act("mail_category", String(x.id), { category: now }, "Flyttat till " + CAT[now] + ".", function () { act("mail_category", String(x.id), { category: was }, "Ångrat."); }); });
     sortRow.appendChild(sel); body.appendChild(sortRow);
+    replyBox(body, x, false);
+  }
+  /** The reply: a draft that is only ever sent from the owner's own Mail app. Once it is handed to Mail the mail asks what it is now. */
+  function replyBox(body, x, inline) {
     if (x.category === "skrap" || !x.from_addr) return;
-    body.appendChild(el("h3", "reply-title", "Svar"));
-    body.appendChild(el("p", "sub", "Ett utkast. Inget skickas härifrån: Öppna i Mail lägger svaret i din egen e-post, och du skickar det själv."));
-    var key = String(x.id), ta = el("textarea"); ta.rows = 9; ta.value = drafts[key] !== undefined ? drafts[key] : (x.draft || ""); ta.setAttribute("aria-label", "Utkast till svar"); body.appendChild(ta);
+    var key = String(x.id);
+    if (handedToMail[key]) {
+      var done = el("div", "handed"); done.setAttribute("role", "status");
+      done.appendChild(el("p", "note", "Svaret är lämnat till Mail. Skicka det där, och säg sedan här vad mejlet är nu."));
+      var da = el("div", "acts"), gdpr = x.category === "gdpr" || !!x.gdpr_due;
+      var mark = function (state, said) { delete handedToMail[key]; delete replyOpen[key]; setMailState(x, state, said, !inline, true); };
+      // a GDPR request is done only when it is handled, not when it is answered: asked first, never one tap
+      button(da, "Klar", "", function () {
+        if (!gdpr) { mark("klar", "Markerat klart."); return; }
+        ask({ title: "Är begäran hanterad?", text: (x.subject || "GDPR-begäran") + "\n\nMarkera klar först när det som begärdes är gjort. Raden försvinner då ur I dag.", yes: "Ja, hanterad" }).then(function (ok) { if (ok) mark("klar", "Markerat klart."); });
+      });
+      button(da, "Väntar på svar", "soft", function () { mark("vantar", "Markerat väntar."); });
+      button(da, "Mail öppnades inte", "quiet", function () { delete handedToMail[key]; focusReply = key; forceNext = true; render(true); });
+      done.appendChild(da); body.appendChild(done); return;
+    }
+    body.appendChild(el(inline ? "h4" : "h3", "reply-title", "Svar"));
+    body.appendChild(el("p", "sub", "Inget skickas härifrån: Öppna i Mail lägger svaret i din egen e-post, och du skickar det själv."));
+    var ta = el("textarea"); ta.rows = inline ? 6 : 9; ta.value = drafts[key] !== undefined ? drafts[key] : (x.draft || ""); ta.setAttribute("aria-label", "Utkast till svar"); body.appendChild(ta);
     // what is typed is kept while the page refreshes around it (until it is saved or the page is closed)
     ta.addEventListener("input", function () { drafts[key] = ta.value; });
     var note = el("p", "sub"); note.setAttribute("role", "status"); body.appendChild(note);
     var save = function (said) { var text = ta.value; return act("mail_draft", key, { draft: text.slice(0, 8000) }, said).then(function (r) { if (r && drafts[key] === text) delete drafts[key]; return r; }); };
     var a = el("div", "acts");
+    // nothing is sent from here, so opening Mail is one tap; only a reply too long for a mail link is asked about first (it would be cut)
+    var toMail = function () {
+      save(); act("mail_open_in_mail", key, {});
+      handedToMail[key] = true; forceNext = true; render(true);
+      var subj = x.subject && /^re:/i.test(x.subject) ? x.subject : "Re: " + (x.subject || "");
+      location.href = "mailto:" + encodeURIComponent(x.from_addr) + "?subject=" + encodeURIComponent(subj.slice(0, 200)) + "&body=" + encodeURIComponent(ta.value.slice(0, 1800));
+    };
     button(a, "Öppna i Mail", "", function () {
       if (!ta.value.trim()) { note.textContent = "Skriv något först."; return; }
-      ask({ title: "Öppna i Mail?", text: "Svaret till " + x.from_addr + " läggs i din egen e-post. Du skickar det själv därifrån." + (ta.value.length > 1800 ? "\n\nSvaret är långt: bara början följer med. Kopiera hela svaret först och klistra in det i Mail." : ""), yes: "Öppna i Mail" }).then(function (ok) {
-        if (!ok) return;
-        save(); act("mail_open_in_mail", key, {});
-        var subj = x.subject && /^re:/i.test(x.subject) ? x.subject : "Re: " + (x.subject || "");
-        location.href = "mailto:" + encodeURIComponent(x.from_addr) + "?subject=" + encodeURIComponent(subj.slice(0, 200)) + "&body=" + encodeURIComponent(ta.value.slice(0, 1800));
-      });
+      if (ta.value.length <= 1800) { toMail(); return; }
+      ask({ title: "Svaret är långt", text: "Bara början följer med till Mail. Kopiera hela svaret först och klistra in det i Mail.", yes: "Öppna i Mail ändå" }).then(function (ok) { if (ok) toMail(); });
     });
     if (data.ai && data.ai.on) button(a, "Skriv utkast", "soft", function () {
       note.textContent = "Skriver…";
@@ -816,7 +881,7 @@
 
   // ---- Inställningar: the notices' switches, the latest decisions, the log, the keys, the driftpanel, signing out
   var KEYS = [["1–9", "I dag, Mejl, Appen, Pengar, Drift, Användare, Juridik, Marknad, Kalender"], ["0", "Inställningar"], ["l", "Hela läget"], ["j / k", "Nästa / föregående rad (I dag och Mejl)"], ["ö eller o", "Öppna den valda raden"],
-    ["g", "Godkänn eller svara ja på den valda raden (annars den översta)"], ["s", "Skjut upp den en vecka"], ["e", "Mejl: markera klart och gå till nästa"], ["u", "Uppdatera"], ["?", "Visa tangenterna"], ["Esc", "Stäng rutan"]];
+    ["g", "Godkänn eller svara ja på den valda raden (annars den översta)"], ["s", "Skjut upp den en vecka"], ["r", "Läs och svara på mejlet i den valda raden"], ["x", "Markera mejlet i den valda raden klart"], ["e", "Mejl: markera klart och gå till nästa"], ["u", "Uppdatera"], ["?", "Visa tangenterna"], ["Esc", "Stäng rutan"]];
   function drawMore(b) {
     var g = el("div", "grid two"); b.appendChild(g);
     var n = card(g, "Notiser", "Högst en sammanfattning på morgonen, och bara när något väntar. Direkt bara när det är akut. Allt går till din egen e-post.");
@@ -1198,6 +1263,11 @@
     if ((ev.key === "ö" || ev.key === "o") && r.open && NAME[r.open.module]) { ev.preventDefault(); go(r.open.module, r.open.module === "mejl" ? r.open.id : null); return; }
     // g: the row's yes (the same question as its button); s: put it off a week
     if (ev.key === "g") { ev.preventDefault(); if (!r.approve) { toast("Raden har inget att godkänna."); return; } if (r.approve.action === "decision") answer(r, "ja"); else approve(r, true); }
+    var mr = r.open && r.open.module === "mejl" && r.open.id ? mailItem(r.open.id) : null;
+    // r and x act only on a row chosen with j/k (never on the top row by default)
+    if ((ev.key === "r" || ev.key === "x") && !li0) { ev.preventDefault(); toast("Välj en rad med j eller k först."); return; }
+    if (ev.key === "r" && mr) { ev.preventDefault(); toggleReply(String(mr.id)); return; }
+    if (ev.key === "x" && mr && r.kind === "mejl") { ev.preventDefault(); setMailState(mr, "klar", "Markerat klart.", false, true); return; }
     if (ev.key === "s" && r.kind !== "beslut") { ev.preventDefault(); ask({ title: "Skjut upp en vecka?", text: r.title, yes: "Skjut upp" }).then(function (ok) { if (ok) snooze(r, 7); }); }
   });
 
@@ -1210,7 +1280,7 @@
   function offline(on) { $("offline").hidden = !on; }
   function stopTimers() { clearInterval(timer); clearTimeout(retryT); timer = retryT = null; }
   function showLogin(msg) {
-    stopTimers(); offline(false); data = null; mails = {}; drafts = {}; sheetOnClose = null; $("sheet").hidden = true; $("app").inert = false; $("app").hidden = true; $("login").hidden = false; $("f-mail").hidden = false; $("f-code").hidden = true;
+    stopTimers(); offline(false); data = null; mails = {}; drafts = {}; replyOpen = {}; handedToMail = {}; keptInline = {}; focusReply = null; sheetOnClose = null; $("sheet").hidden = true; $("app").inert = false; $("app").hidden = true; $("login").hidden = false; $("f-mail").hidden = false; $("f-code").hidden = true;
     $("msg1").textContent = msg || ""; $("mail").focus();
   }
   function lost(why) {

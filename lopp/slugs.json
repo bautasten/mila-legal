@@ -770,6 +770,18 @@
    "first": "2026-11-16",
    "og": "5c4f6c5c9e6ba5470543a338"
   },
+  "240a98eb-260d-4842-b24d-3e4bcddd534d": {
+   "slug": "hostrusket-halvmaraton-21k",
+   "name": "Höstrusket halvmaraton",
+   "first": "2026-11-19",
+   "og": "5381712e4a26c1ba9c865b0f"
+  },
+  "cab35382-aa7d-43b7-b0d1-ddbd4b2b9b23": {
+   "slug": "hostrusket-maraton-42k",
+   "name": "Höstrusket maraton",
+   "first": "2026-11-19",
+   "og": "6d1eb1617df8ac4850e68f89"
+  },
   "cb16b5bc-569d-4915-aa61-b71961744cba": {
    "slug": "hyundai-mitja-marato-barcelona-by-brooks-21k",
    "name": "Hyundai Mitja Marató Barcelona by Brooks",
@@ -1910,8 +1922,8 @@
  },
  "pages": {
   "/consumer-health-data.html": {
-   "hash": "7a373eb100a27cef0ddc327d",
-   "lastmod": "2026-11-17"
+   "hash": "2088c41ef90eb119b7496193",
+   "lastmod": "2026-11-19"
   },
   "/index-da.html": {
    "hash": "9420ded9ab4920265d39bbd3",
@@ -1922,56 +1934,56 @@
    "lastmod": "2026-11-17"
   },
   "/index-es.html": {
-   "hash": "6ad47430b7b19062925aa9ff",
-   "lastmod": "2026-11-17"
+   "hash": "7375046000c699aa609e965f",
+   "lastmod": "2026-11-19"
   },
   "/index-fi.html": {
-   "hash": "0d0fb13080ecf8e850008fa5",
-   "lastmod": "2026-11-17"
+   "hash": "9a481ea0c4769cde64308d2c",
+   "lastmod": "2026-11-19"
   },
   "/index-fr.html": {
-   "hash": "c3788b437ef5989e438a406a",
-   "lastmod": "2026-11-17"
+   "hash": "529dbdc80d3f30e284903c42",
+   "lastmod": "2026-11-19"
   },
   "/index-nb.html": {
-   "hash": "f89871ab3084b82a1ce8ca90",
-   "lastmod": "2026-11-17"
+   "hash": "b6f9f52baf0b088661e89864",
+   "lastmod": "2026-11-19"
   },
   "/index.html": {
    "hash": "b0d5dd6919650d33441313d2",
    "lastmod": "2026-11-17"
   },
   "/privacy-da.html": {
-   "hash": "46fb4bae693d321c236ff1a1",
-   "lastmod": "2026-11-17"
+   "hash": "ed363aa1dd464c953b4f082c",
+   "lastmod": "2026-11-19"
   },
   "/privacy-de.html": {
-   "hash": "74f392764aaf8409eb8c1bc8",
-   "lastmod": "2026-11-17"
+   "hash": "93d9e2a5428c685a18a62aa1",
+   "lastmod": "2026-11-19"
   },
   "/privacy-en.html": {
-   "hash": "c366f77d914a702d21eb375a",
-   "lastmod": "2026-11-17"
+   "hash": "8d83a4cb821203987760fb9b",
+   "lastmod": "2026-11-19"
   },
   "/privacy-es.html": {
-   "hash": "27d4ea8c0b6b6e8b59a11e6a",
-   "lastmod": "2026-11-17"
+   "hash": "376d2fb592c75cf00f64dae0",
+   "lastmod": "2026-11-19"
   },
   "/privacy-fi.html": {
-   "hash": "1c26dd57aea022d1bf4ba80b",
-   "lastmod": "2026-11-17"
+   "hash": "0871bbaa95fd3b161bdaf22d",
+   "lastmod": "2026-11-19"
   },
   "/privacy-fr.html": {
-   "hash": "826c53dc01a186cff0662c0d",
-   "lastmod": "2026-11-17"
+   "hash": "f3f8f535ba1d6250e870d9dc",
+   "lastmod": "2026-11-19"
   },
   "/privacy-nb.html": {
-   "hash": "558ca41ec1eef511a7b8fa18",
-   "lastmod": "2026-11-17"
+   "hash": "35d8d57c568c067ca188ba91",
+   "lastmod": "2026-11-19"
   },
   "/privacy.html": {
-   "hash": "7f65b419dbd0dc1e10020c59",
-   "lastmod": "2026-11-17"
+   "hash": "1e20ca15cc3cbd87d300be1d",
+   "lastmod": "2026-11-19"
   },
   "/support-da.html": {
    "hash": "010155f1a1f0749ebf600f54",
@@ -1982,20 +1994,20 @@
    "lastmod": "2026-11-14"
   },
   "/support-es.html": {
-   "hash": "591811ed1542edc7837fe9ab",
-   "lastmod": "2026-11-14"
+   "hash": "947dcca05a55b0aa86bf4b9d",
+   "lastmod": "2026-11-19"
   },
   "/support-fi.html": {
-   "hash": "376559d6e2b5caed497ab289",
-   "lastmod": "2026-11-14"
+   "hash": "b6c7f9c346b1c5ef07a5768f",
+   "lastmod": "2026-11-19"
   },
   "/support-fr.html": {
-   "hash": "dc06215323f78170a64478a1",
-   "lastmod": "2026-11-14"
+   "hash": "ef0e4a1946fe7f76ee038572",
+   "lastmod": "2026-11-19"
   },
   "/support-nb.html": {
-   "hash": "4598da1de41b60da35fc9486",
-   "lastmod": "2026-11-14"
+   "hash": "1571963b07ae43f428055653",
+   "lastmod": "2026-11-19"
   },
   "/support-sv.html": {
    "hash": "b509b0b6da71f9bfadafa93c",
@@ -2010,44 +2022,44 @@
    "lastmod": "2026-11-17"
   },
   "/terms-da.html": {
-   "hash": "bfd80da0b68916b5b0208f51",
-   "lastmod": "2026-11-17"
+   "hash": "79ed8b0d0f003af6e45a606e",
+   "lastmod": "2026-11-19"
   },
   "/terms-de.html": {
-   "hash": "cb84a62f8e0a1d9034c0cb24",
-   "lastmod": "2026-11-17"
+   "hash": "09af22588a748866c227e1b8",
+   "lastmod": "2026-11-19"
   },
   "/terms-en.html": {
-   "hash": "0ff3b65ee92415b0b66860a6",
-   "lastmod": "2026-11-17"
+   "hash": "7833be145658b752935005c6",
+   "lastmod": "2026-11-19"
   },
   "/terms-es.html": {
-   "hash": "f21a5c878ecee7c99119ad90",
-   "lastmod": "2026-11-17"
+   "hash": "9a50ef622713063779d46b7b",
+   "lastmod": "2026-11-19"
   },
   "/terms-fi.html": {
-   "hash": "3c2904599d42fde65c4d0edb",
-   "lastmod": "2026-11-17"
+   "hash": "762720f5e89d08dac3828177",
+   "lastmod": "2026-11-19"
   },
   "/terms-fr.html": {
-   "hash": "2ad9ae0abdc5391310d01f4c",
-   "lastmod": "2026-11-17"
+   "hash": "863c4a8fab20ee1d9928a052",
+   "lastmod": "2026-11-19"
   },
   "/terms-nb.html": {
-   "hash": "459ef52a299d925b7a4fe6e8",
-   "lastmod": "2026-11-17"
+   "hash": "d65c716c2ee5ccf48dbd7957",
+   "lastmod": "2026-11-19"
   },
   "/terms.html": {
-   "hash": "a7474553e7dcf8b87df9c044",
-   "lastmod": "2026-11-17"
+   "hash": "0291b65124b45021f4b29a28",
+   "lastmod": "2026-11-19"
   },
   "da/lob/": {
-   "hash": "4270e3374a3dbf5851454f74",
-   "lastmod": "2026-11-18"
+   "hash": "03fc0d8de8f7114b88bf1775",
+   "lastmod": "2026-11-19"
   },
   "da/lob/101a-corrida-internacional-de-sao-silvestre-15k/": {
-   "hash": "500b0cea39555bb054a1c83d",
-   "lastmod": "2026-11-05"
+   "hash": "86c1c7a502cbeda713973d4f",
+   "lastmod": "2026-11-19"
   },
   "da/lob/20-km-de-bruxelles/": {
    "hash": "964c8cb0d80b441c6fcdf120",
@@ -2070,8 +2082,8 @@
    "lastmod": "2026-11-02"
   },
   "da/lob/45-sparkassen-silvesterlauf-werl-soest-15-km/": {
-   "hash": "4d0bffd6cf93f498db145adb",
-   "lastmod": "2026-11-05"
+   "hash": "41c88e667611dd4898537e0c",
+   "lastmod": "2026-11-19"
   },
   "da/lob/49-leipzig-marathon-2027-marathon-42k/": {
    "hash": "e75225f8dafc90297550f4de",
@@ -2242,88 +2254,92 @@
    "lastmod": "2026-11-02"
   },
   "da/lob/by/annecy/": {
-   "hash": "b659bb79f3254dfc99f765d7",
-   "lastmod": "2026-11-16"
+   "hash": "ffec7826011247ac5d9eb476",
+   "lastmod": "2026-11-19"
   },
   "da/lob/by/barcelona/": {
-   "hash": "576e9e084c6a6efcb7126394",
-   "lastmod": "2026-11-16"
+   "hash": "ef804055f908b62993285853",
+   "lastmod": "2026-11-19"
   },
   "da/lob/by/berlin/": {
-   "hash": "cd3aff54ec5d83fa4b85a54c",
-   "lastmod": "2026-11-16"
+   "hash": "990ab3e8142ec0ca80be4716",
+   "lastmod": "2026-11-19"
   },
   "da/lob/by/budapest/": {
-   "hash": "9e37cc4a5dc4eae73e51f20c",
-   "lastmod": "2026-11-16"
+   "hash": "049c0ec1dcf44564e4e67188",
+   "lastmod": "2026-11-19"
   },
   "da/lob/by/courmayeur/": {
-   "hash": "b09c69b1eee5b1ed8d4b81a6",
-   "lastmod": "2026-11-16"
+   "hash": "090f0a759c7e5b6d12ccd2e9",
+   "lastmod": "2026-11-19"
   },
   "da/lob/by/goteborg/": {
-   "hash": "996cb0d408e1d685bf5cf7e8",
-   "lastmod": "2026-11-16"
+   "hash": "da9ff957030537c2c069f561",
+   "lastmod": "2026-11-19"
   },
   "da/lob/by/hamburg/": {
-   "hash": "7595674b7fb998f99b9ebe88",
-   "lastmod": "2026-11-16"
+   "hash": "c6eb5a59510d45ece02fec29",
+   "lastmod": "2026-11-19"
   },
   "da/lob/by/harnosand/": {
-   "hash": "5560c596f0a994c8a4eec8bc",
-   "lastmod": "2026-11-18"
+   "hash": "6bb55a09675b6b478964325e",
+   "lastmod": "2026-11-19"
   },
   "da/lob/by/helsinki/": {
-   "hash": "54a7692a1ea3ec982d5a7750",
-   "lastmod": "2026-11-16"
+   "hash": "76e3888c62e952f6014b547c",
+   "lastmod": "2026-11-19"
   },
   "da/lob/by/katoomba/": {
-   "hash": "9ce97b3ee144689b15c2ba1b",
-   "lastmod": "2026-11-16"
+   "hash": "230b83c2552eac2d1dd58fe1",
+   "lastmod": "2026-11-19"
   },
   "da/lob/by/kobenhavn/": {
-   "hash": "4c3c2719f5e9a29e8bcc3378",
-   "lastmod": "2026-11-16"
+   "hash": "0446bc9877344c72ae9eee0f",
+   "lastmod": "2026-11-19"
   },
   "da/lob/by/london/": {
-   "hash": "598c9728c24d4694a686587c",
-   "lastmod": "2026-11-16"
+   "hash": "b6f22fbffa23bc846240426d",
+   "lastmod": "2026-11-19"
   },
   "da/lob/by/milngavie/": {
-   "hash": "1c76fcc88f1a51027922fb4b",
-   "lastmod": "2026-11-16"
+   "hash": "5d2bc9fc33eedc3e1947f4f1",
+   "lastmod": "2026-11-19"
+  },
+  "da/lob/by/norra-djurgarden-stockholm/": {
+   "hash": "edcda06c45cc15590054a7a9",
+   "lastmod": "2026-11-19"
   },
   "da/lob/by/oslo/": {
-   "hash": "990e3b10b7b979a787614121",
-   "lastmod": "2026-11-16"
+   "hash": "7b7af23da1635e72b58702b8",
+   "lastmod": "2026-11-19"
   },
   "da/lob/by/oxberg/": {
-   "hash": "5da00f72f3af38aa7de602a8",
-   "lastmod": "2026-11-16"
+   "hash": "d178854fe24a996f7dbce02f",
+   "lastmod": "2026-11-19"
   },
   "da/lob/by/paris/": {
-   "hash": "72d24d34fa5f538997089a3e",
-   "lastmod": "2026-11-16"
+   "hash": "0df65f14922aca1941b0c39d",
+   "lastmod": "2026-11-19"
   },
   "da/lob/by/philadelphia/": {
-   "hash": "ca109c0dd9f2b90da08aa53c",
-   "lastmod": "2026-11-16"
+   "hash": "e585b37543c1b473de53bba8",
+   "lastmod": "2026-11-19"
   },
   "da/lob/by/roma/": {
-   "hash": "d9dd0ff913f07473bf8a1490",
-   "lastmod": "2026-11-16"
+   "hash": "425d9c1e7320f5f03bc40fb3",
+   "lastmod": "2026-11-19"
   },
   "da/lob/by/stockholm-norra-djurgarden/": {
-   "hash": "a0736a9c99471c95c6dd1c51",
-   "lastmod": "2026-11-16"
+   "hash": "010a08186823241c4a9ee87d",
+   "lastmod": "2026-11-19"
   },
   "da/lob/by/stockholm/": {
-   "hash": "e1675271633b2916c5887a62",
-   "lastmod": "2026-11-18"
+   "hash": "33f988a311045f85f85324a5",
+   "lastmod": "2026-11-19"
   },
   "da/lob/by/zurich/": {
-   "hash": "0eead8008053e173de0d2840",
-   "lastmod": "2026-11-16"
+   "hash": "c8b55f6d66e9caffa291a640",
+   "lastmod": "2026-11-19"
   },
   "da/lob/california-international-marathon-42k/": {
    "hash": "311cd1da600dd65605dfdfc2",
@@ -2410,28 +2426,28 @@
    "lastmod": "2026-11-02"
   },
   "da/lob/distance/10-km/": {
-   "hash": "df280c00f5185ebe10154da3",
-   "lastmod": "2026-11-16"
+   "hash": "633dc18faf4f594830a3f668",
+   "lastmod": "2026-11-19"
   },
   "da/lob/distance/5-km/": {
-   "hash": "4ff6c82c0748f61c230fa6ea",
-   "lastmod": "2026-11-16"
+   "hash": "cbc9a4052489f577236c5305",
+   "lastmod": "2026-11-19"
   },
   "da/lob/distance/halvmaraton/": {
-   "hash": "7834f41844307fc1466147a8",
-   "lastmod": "2026-11-16"
+   "hash": "2f256c90f4543c822d18251f",
+   "lastmod": "2026-11-19"
   },
   "da/lob/distance/maraton/": {
-   "hash": "33b2095c2ab5c33ab6de7139",
-   "lastmod": "2026-11-18"
+   "hash": "55c0d56656207a047ff833ca",
+   "lastmod": "2026-11-19"
   },
   "da/lob/distance/trail/": {
-   "hash": "2668e352f9c95c1f3bdff5e5",
-   "lastmod": "2026-11-18"
+   "hash": "c8cfb63dabeac95314725834",
+   "lastmod": "2026-11-19"
   },
   "da/lob/distance/ultra/": {
-   "hash": "c919b9f2b66a56c72d23a4d6",
-   "lastmod": "2026-11-18"
+   "hash": "ea93f62ba1f7fd12d4bbff1c",
+   "lastmod": "2026-11-19"
   },
   "da/lob/dnb-oslo-maraton-maraton-43k/": {
    "hash": "64fd9678678587e2e588d7ee",
@@ -2622,8 +2638,16 @@
    "lastmod": "2026-11-02"
   },
   "da/lob/hostrusket-10-km/": {
-   "hash": "47fad428bc3284b8bf1abe44",
-   "lastmod": "2026-11-16"
+   "hash": "3821b1f2b5d48a8b13506c7f",
+   "lastmod": "2026-11-19"
+  },
+  "da/lob/hostrusket-halvmaraton-21k/": {
+   "hash": "b9c3505e76d677697b484821",
+   "lastmod": "2026-11-19"
+  },
+  "da/lob/hostrusket-maraton-42k/": {
+   "hash": "1a008835605b0dfb15ccca47",
+   "lastmod": "2026-11-19"
   },
   "da/lob/hyundai-mitja-marato-barcelona-by-brooks-21k/": {
    "hash": "f438523008e8ce1b2e510f67",
@@ -2710,136 +2734,136 @@
    "lastmod": "2026-10-24"
   },
   "da/lob/land/australien/": {
-   "hash": "d1bfd87e33de8eff25004176",
-   "lastmod": "2026-11-16"
+   "hash": "69bf82a54c39d9a37c2ee15c",
+   "lastmod": "2026-11-19"
   },
   "da/lob/land/belgien/": {
-   "hash": "975e8aa2120c107b4775571b",
-   "lastmod": "2026-11-16"
+   "hash": "063c695dd99502ecfec857af",
+   "lastmod": "2026-11-19"
   },
   "da/lob/land/brasilien/": {
-   "hash": "0c19d9b26d61c32c47a16655",
-   "lastmod": "2026-11-16"
+   "hash": "d72844090e785baeef8c9982",
+   "lastmod": "2026-11-19"
   },
   "da/lob/land/canada/": {
-   "hash": "7abc44537c64bd6950ee2b14",
-   "lastmod": "2026-11-16"
+   "hash": "9f985c787181f0a316da1f3e",
+   "lastmod": "2026-11-19"
   },
   "da/lob/land/danmark/": {
-   "hash": "ec2d7f54bd55282171047759",
-   "lastmod": "2026-11-16"
+   "hash": "c9edd235c5d0a3f4e471d4d5",
+   "lastmod": "2026-11-19"
   },
   "da/lob/land/finland/": {
-   "hash": "84b2bd0484a41c2f8de1c540",
-   "lastmod": "2026-11-16"
+   "hash": "0570c0ff980d3ab5712c2b4c",
+   "lastmod": "2026-11-19"
   },
   "da/lob/land/frankrig/": {
-   "hash": "a1a743117d00150042cc2015",
-   "lastmod": "2026-11-18"
+   "hash": "4a6caec588df0de0c5336704",
+   "lastmod": "2026-11-19"
   },
   "da/lob/land/graekenland/": {
-   "hash": "c4f379f3834d8841194d6836",
-   "lastmod": "2026-11-16"
+   "hash": "737a7bbce47075aff2287f92",
+   "lastmod": "2026-11-19"
   },
   "da/lob/land/hongkong/": {
-   "hash": "fd4a2dca80320063a60b4eae",
-   "lastmod": "2026-11-16"
+   "hash": "400ae53564dfa4cd83e9be09",
+   "lastmod": "2026-11-19"
   },
   "da/lob/land/indien/": {
-   "hash": "732aa5380a7f01efb9622948",
-   "lastmod": "2026-11-16"
+   "hash": "5b1058814ae203a36ab18ddc",
+   "lastmod": "2026-11-19"
   },
   "da/lob/land/irland/": {
-   "hash": "88171a03cf0d4f37d6996ae1",
-   "lastmod": "2026-11-16"
+   "hash": "3d957dcb4034368b18d4e1cb",
+   "lastmod": "2026-11-19"
   },
   "da/lob/land/island/": {
-   "hash": "27385194005b1d3fdfef4335",
-   "lastmod": "2026-11-16"
+   "hash": "0f6e7643cd72122ef0af1660",
+   "lastmod": "2026-11-19"
   },
   "da/lob/land/israel/": {
-   "hash": "893ba9602ccc1682fef19699",
-   "lastmod": "2026-11-16"
+   "hash": "4babdc8113bb429bbe30afb3",
+   "lastmod": "2026-11-19"
   },
   "da/lob/land/italien/": {
-   "hash": "bf11297e768667272bd10e89",
-   "lastmod": "2026-11-16"
+   "hash": "39d62dde61c32da84cf42e7d",
+   "lastmod": "2026-11-19"
   },
   "da/lob/land/japan/": {
-   "hash": "ceed689011fbaec9f740bb73",
-   "lastmod": "2026-11-16"
+   "hash": "26528354625a9387a6f71be6",
+   "lastmod": "2026-11-19"
   },
   "da/lob/land/kina/": {
-   "hash": "6c7340c6db1756b76231a7f4",
-   "lastmod": "2026-11-16"
+   "hash": "1e27ac992c936fd3a9159c06",
+   "lastmod": "2026-11-19"
   },
   "da/lob/land/luxembourg/": {
-   "hash": "afe76cb0034537bc3ca6c240",
-   "lastmod": "2026-11-16"
+   "hash": "2d0bd33fb5d052403cd5262e",
+   "lastmod": "2026-11-19"
   },
   "da/lob/land/marokko/": {
-   "hash": "fe3119977f1b6dc3c16655ba",
-   "lastmod": "2026-11-16"
+   "hash": "8983cb1b3b0d8d09777bfa24",
+   "lastmod": "2026-11-19"
   },
   "da/lob/land/nederlandene/": {
-   "hash": "ec74ee0280d98c3f9dcdbb1b",
-   "lastmod": "2026-11-16"
+   "hash": "50d0d2bd16a80064256248c7",
+   "lastmod": "2026-11-19"
   },
   "da/lob/land/new-zealand/": {
-   "hash": "e005c1ac2b2c20daf0cc1cdd",
-   "lastmod": "2026-11-16"
+   "hash": "146c0e3a1be781949b825776",
+   "lastmod": "2026-11-19"
   },
   "da/lob/land/norge/": {
-   "hash": "ae6bd04a7d8b647b261da9b4",
-   "lastmod": "2026-11-16"
+   "hash": "2cc14d863dee5158ace417ef",
+   "lastmod": "2026-11-19"
   },
   "da/lob/land/ostrig/": {
-   "hash": "74ad138fc875e43f943805c5",
-   "lastmod": "2026-11-16"
+   "hash": "845341a6805fa22d6e951cc2",
+   "lastmod": "2026-11-19"
   },
   "da/lob/land/polen/": {
-   "hash": "690578c0ec4370466802a8b9",
-   "lastmod": "2026-11-16"
+   "hash": "3797f9767accc13abe50bf2f",
+   "lastmod": "2026-11-19"
   },
   "da/lob/land/portugal/": {
-   "hash": "b916fb7c1c5b6d03929aac04",
-   "lastmod": "2026-11-16"
+   "hash": "1aed06a0add2e22ed28cd13d",
+   "lastmod": "2026-11-19"
   },
   "da/lob/land/schweiz/": {
-   "hash": "9cb7b4c977596c57273c6012",
-   "lastmod": "2026-11-16"
+   "hash": "facb3853c1c374820715bbf0",
+   "lastmod": "2026-11-19"
   },
   "da/lob/land/spanien/": {
-   "hash": "abb7ec104dfb308948e5afe1",
-   "lastmod": "2026-11-16"
+   "hash": "edac1098eb99c474e7f2df09",
+   "lastmod": "2026-11-19"
   },
   "da/lob/land/storbritannien/": {
-   "hash": "8aacb2b6dc08887ef3e6504a",
-   "lastmod": "2026-11-16"
+   "hash": "5637ba002b460d581f9b677f",
+   "lastmod": "2026-11-19"
   },
   "da/lob/land/sverige/": {
-   "hash": "7087b61006ecfc8ed3e2b557",
-   "lastmod": "2026-11-18"
+   "hash": "8207cab2f90c18a27efea206",
+   "lastmod": "2026-11-19"
   },
   "da/lob/land/sydafrika/": {
-   "hash": "e396aebd0a02d611bcc0d75e",
-   "lastmod": "2026-11-18"
+   "hash": "f6a73ee7aca58eb4e068fe09",
+   "lastmod": "2026-11-19"
   },
   "da/lob/land/sydkorea/": {
-   "hash": "127ab827b545df12d7c41832",
-   "lastmod": "2026-11-16"
+   "hash": "06c18d42f33506060f84b1c2",
+   "lastmod": "2026-11-19"
   },
   "da/lob/land/tyskland/": {
-   "hash": "12f47aa416dd21be9b794066",
-   "lastmod": "2026-11-16"
+   "hash": "371844a29f3e9857e3087f12",
+   "lastmod": "2026-11-19"
   },
   "da/lob/land/ungarn/": {
-   "hash": "9420f89971daf6b6fcb5eaa8",
-   "lastmod": "2026-11-16"
+   "hash": "6cf511eb121ac39240771f8b",
+   "lastmod": "2026-11-19"
   },
   "da/lob/land/usa/": {
-   "hash": "60bf36c1ce2770ff601cdbc0",
-   "lastmod": "2026-11-16"
+   "hash": "a56d6fc67b9cf897311e62bf",
+   "lastmod": "2026-11-19"
   },
   "da/lob/laugavegur-ultra-marathon-52k/": {
    "hash": "3ae81a7f26252f4a84640817",
@@ -2886,52 +2910,52 @@
    "lastmod": "2026-11-02"
   },
   "da/lob/maaned/2026-11/": {
-   "hash": "519e69ba125cd8174569ecb1",
-   "lastmod": "2026-11-18"
+   "hash": "c1dd79004b7fdad620fe6ec8",
+   "lastmod": "2026-11-19"
   },
   "da/lob/maaned/2026-12/": {
-   "hash": "357b1087b0c9ea8ba040f314",
-   "lastmod": "2026-11-16"
+   "hash": "fa2cdabd92bbc2a3a14d67bd",
+   "lastmod": "2026-11-19"
   },
   "da/lob/maaned/2027-01/": {
-   "hash": "cb368f549d0d143cb77f10f5",
-   "lastmod": "2026-11-16"
+   "hash": "eda4098aa367d093e73d662e",
+   "lastmod": "2026-11-19"
   },
   "da/lob/maaned/2027-02/": {
-   "hash": "16b167b9080a6b18a3f478e4",
-   "lastmod": "2026-11-16"
+   "hash": "460b60bf1b34ae3b3a8fc6cd",
+   "lastmod": "2026-11-19"
   },
   "da/lob/maaned/2027-03/": {
-   "hash": "6de16c3b36c63cb4038118ac",
-   "lastmod": "2026-11-16"
+   "hash": "160347610c9db67944476b86",
+   "lastmod": "2026-11-19"
   },
   "da/lob/maaned/2027-04/": {
-   "hash": "63f92de59fa42b9a18760188",
-   "lastmod": "2026-11-16"
+   "hash": "b1b30d0437905672f8da895a",
+   "lastmod": "2026-11-19"
   },
   "da/lob/maaned/2027-05/": {
-   "hash": "329c05b004a428bb570769f2",
-   "lastmod": "2026-11-18"
+   "hash": "98e02b31ce6b77bf76ef06b4",
+   "lastmod": "2026-11-19"
   },
   "da/lob/maaned/2027-06/": {
-   "hash": "a44b396e3b19881d7f3994e3",
-   "lastmod": "2026-11-16"
+   "hash": "8027b209515af6742b923910",
+   "lastmod": "2026-11-19"
   },
   "da/lob/maaned/2027-07/": {
-   "hash": "d0ba7a1d543df8ea99611160",
-   "lastmod": "2026-11-16"
+   "hash": "ca115d42f51a0360d5cde6e2",
+   "lastmod": "2026-11-19"
   },
   "da/lob/maaned/2027-08/": {
-   "hash": "7eda0b7da2b1c18b0e403fc3",
-   "lastmod": "2026-11-18"
+   "hash": "f7fc0fa62ae623e329289f0c",
+   "lastmod": "2026-11-19"
   },
   "da/lob/maaned/2027-09/": {
-   "hash": "e89a39a3158b0bd570fbf1ac",
-   "lastmod": "2026-11-16"
+   "hash": "3ad80452772c7fea90933380",
+   "lastmod": "2026-11-19"
   },
   "da/lob/maaned/2027-10/": {
-   "hash": "47acaadd0b591f3dd1453f19",
-   "lastmod": "2026-11-18"
+   "hash": "1655dc98e11e75b1c86a0c69",
+   "lastmod": "2026-11-19"
   },
   "da/lob/mainova-frankfurt-marathon-42k/": {
    "hash": "af9710cab119a8b239d2181d",
@@ -3198,8 +3222,8 @@
    "lastmod": "2026-11-02"
   },
   "da/lob/side/2/": {
-   "hash": "9fa4fcbe8dfd36eb54c4bfdb",
-   "lastmod": "2026-11-16"
+   "hash": "b0408b943b3cd177be507c58",
+   "lastmod": "2026-11-19"
   },
   "da/lob/sinister-7-ultra-100-miler-161k/": {
    "hash": "7820cff35d58adbe4f76d955",
@@ -3262,8 +3286,8 @@
    "lastmod": "2026-11-02"
   },
   "da/lob/sylvesterloppet-10k/": {
-   "hash": "e2837d9d362a84b9bda1fda4",
-   "lastmod": "2026-11-18"
+   "hash": "718014d3ffdafbce052674d3",
+   "lastmod": "2026-11-19"
   },
   "da/lob/taipei-marathon-marathon-42-195-km/": {
    "hash": "10660c70d663b3994ed24a52",
@@ -3494,12 +3518,12 @@
    "lastmod": "2026-11-02"
   },
   "de/laeufe/": {
-   "hash": "559cb84686e67cec5d060ebd",
-   "lastmod": "2026-11-18"
+   "hash": "cd49efa7b8100a7ea43b31ad",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/101a-corrida-internacional-de-sao-silvestre-15k/": {
-   "hash": "b722166609e76e51e41b6e47",
-   "lastmod": "2026-11-05"
+   "hash": "890930a4038f80e87a8b1bcc",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/20-km-de-bruxelles/": {
    "hash": "c4fad171bbab3d18835bde84",
@@ -3522,8 +3546,8 @@
    "lastmod": "2026-11-02"
   },
   "de/laeufe/45-sparkassen-silvesterlauf-werl-soest-15-km/": {
-   "hash": "bd4199d988528c248d4ffb45",
-   "lastmod": "2026-11-05"
+   "hash": "3fb469880c79b8eb6086b2db",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/49-leipzig-marathon-2027-marathon-42k/": {
    "hash": "5c1b19da19b8e64fe4b018ca",
@@ -3778,28 +3802,28 @@
    "lastmod": "2026-11-02"
   },
   "de/laeufe/distanz/10-km/": {
-   "hash": "8351971950f1f0f2110467b3",
-   "lastmod": "2026-11-16"
+   "hash": "9f784f3946b54e855f706956",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/distanz/5-km/": {
-   "hash": "d5c8ad9002bcbb8895af7be1",
-   "lastmod": "2026-11-16"
+   "hash": "36be5591433d4540ecffbc5e",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/distanz/halbmarathon/": {
-   "hash": "fc36c274f4214ba559409bc8",
-   "lastmod": "2026-11-16"
+   "hash": "aade1fb253d609e2ddb31d19",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/distanz/marathon/": {
-   "hash": "9580be466570ca49e2bc6467",
-   "lastmod": "2026-11-18"
+   "hash": "0908a59dbcabe84934de392c",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/distanz/trail/": {
-   "hash": "3e43d91f27c5e8895991c67e",
-   "lastmod": "2026-11-18"
+   "hash": "85a1ec9d3a27841227d09fa4",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/distanz/ultra/": {
-   "hash": "532e4b69a7bdeb04909ec330",
-   "lastmod": "2026-11-18"
+   "hash": "ac0d7048880caeb4b782c656",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/dnb-oslo-maraton-maraton-43k/": {
    "hash": "ac23e7142b4119a5e8b83fa4",
@@ -3990,8 +4014,16 @@
    "lastmod": "2026-11-02"
   },
   "de/laeufe/hostrusket-10-km/": {
-   "hash": "c26c3094a9d21b558d7b1335",
-   "lastmod": "2026-11-16"
+   "hash": "42894eec3b470ab4211eaef4",
+   "lastmod": "2026-11-19"
+  },
+  "de/laeufe/hostrusket-halvmaraton-21k/": {
+   "hash": "969dc6fe05b5e68c820de78c",
+   "lastmod": "2026-11-19"
+  },
+  "de/laeufe/hostrusket-maraton-42k/": {
+   "hash": "67cc9c4b98fe578a9a81cbda",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/hyundai-mitja-marato-barcelona-by-brooks-21k/": {
    "hash": "a44fbb5e8f966404149e8100",
@@ -4078,136 +4110,136 @@
    "lastmod": "2026-10-24"
   },
   "de/laeufe/land/australien/": {
-   "hash": "8d19f1b0da8d0b6eca92af54",
-   "lastmod": "2026-11-16"
+   "hash": "ca681a209a30a499956d7cff",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/land/belgien/": {
-   "hash": "f2effcf0995260e660b2ef20",
-   "lastmod": "2026-11-16"
+   "hash": "89d813fc05ed9e7376a2fac0",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/land/brasilien/": {
-   "hash": "fc6de962bd2347230fdb5680",
-   "lastmod": "2026-11-16"
+   "hash": "3832a3620867e5553eebcf0d",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/land/china/": {
-   "hash": "df120e83cacc6ad3f76bd88b",
-   "lastmod": "2026-11-16"
+   "hash": "ff876905826b6b0877037894",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/land/danemark/": {
-   "hash": "e64c5f10851eafc47d4da798",
-   "lastmod": "2026-11-16"
+   "hash": "850fa43a2e96f823e31c8db9",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/land/deutschland/": {
-   "hash": "1528d035a22e87bf3ad94f89",
-   "lastmod": "2026-11-16"
+   "hash": "134f56a5fa99e57355bc6758",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/land/finnland/": {
-   "hash": "985a9f8847ef1d408b3edc52",
-   "lastmod": "2026-11-16"
+   "hash": "1075f0196d48d61a301b537a",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/land/frankreich/": {
-   "hash": "a08a7e2f07a822d78d6809a4",
-   "lastmod": "2026-11-18"
+   "hash": "481e6b91069fe0ffed921803",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/land/griechenland/": {
-   "hash": "a6740de9111023c501ba5686",
-   "lastmod": "2026-11-16"
+   "hash": "afdcf1923f0754c81de05803",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/land/hongkong/": {
-   "hash": "bd54ce1404988bb020b5c366",
-   "lastmod": "2026-11-16"
+   "hash": "5a91b9cab1d68cf94abf4838",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/land/indien/": {
-   "hash": "9d7058e3e6eac49b0dd8a83b",
-   "lastmod": "2026-11-16"
+   "hash": "4c293973da4741059765e2c6",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/land/irland/": {
-   "hash": "b718735414a172c75dc9d6c6",
-   "lastmod": "2026-11-16"
+   "hash": "de9416ebe16442201e2c47e3",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/land/island/": {
-   "hash": "dd4a3b5201f7eaa34e1140eb",
-   "lastmod": "2026-11-16"
+   "hash": "727ce0c2a25f20db82b6f55e",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/land/israel/": {
-   "hash": "acc946517285ceb310ee5f7d",
-   "lastmod": "2026-11-16"
+   "hash": "d7f63bffcf5b6cd2cdb23c4b",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/land/italien/": {
-   "hash": "b23bd7e614e8167de7acf520",
-   "lastmod": "2026-11-16"
+   "hash": "7bd234cc2cbe266d01772d30",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/land/japan/": {
-   "hash": "6be1e7a1d2add5790206660c",
-   "lastmod": "2026-11-16"
+   "hash": "4c708a9e644559a55f64c65a",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/land/kanada/": {
-   "hash": "999864db97e01a07c259a536",
-   "lastmod": "2026-11-16"
+   "hash": "f5149bd0041abbad223b7034",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/land/luxemburg/": {
-   "hash": "6407b6f5431c8cedb4d82915",
-   "lastmod": "2026-11-16"
+   "hash": "37af3c492424862f94217252",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/land/marokko/": {
-   "hash": "83b0ab1072e936bba9edb5b8",
-   "lastmod": "2026-11-16"
+   "hash": "3deae21fd62164b72eb91fca",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/land/neuseeland/": {
-   "hash": "031b96b3c2658f05de5509d6",
-   "lastmod": "2026-11-16"
+   "hash": "9d0f421316218f88696c2b7d",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/land/niederlande/": {
-   "hash": "d2b0db9b17bcc004403501b5",
-   "lastmod": "2026-11-16"
+   "hash": "72c32e74aac00e31a3e57993",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/land/norwegen/": {
-   "hash": "7deb3463869cba662aadae7f",
-   "lastmod": "2026-11-16"
+   "hash": "50adc24aff7fb2044e4bd3be",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/land/osterreich/": {
-   "hash": "d66d7c859359ead634a6de9c",
-   "lastmod": "2026-11-16"
+   "hash": "b8304526b575c92946143dba",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/land/polen/": {
-   "hash": "715d82513ef01255e1d9d358",
-   "lastmod": "2026-11-16"
+   "hash": "c9fc6f1803401d23e5fb62cf",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/land/portugal/": {
-   "hash": "e7640692f20b34a4a33adae1",
-   "lastmod": "2026-11-16"
+   "hash": "1535bdf3d6dc337b45ebe89a",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/land/schweden/": {
-   "hash": "871c18c7d8d7c549c6bc3faa",
-   "lastmod": "2026-11-18"
+   "hash": "aa43c3d040e98130fb6a3783",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/land/schweiz/": {
-   "hash": "c850fdbd8af1827e28e7fc9b",
-   "lastmod": "2026-11-16"
+   "hash": "d6cccb72a496b23b08d2a705",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/land/spanien/": {
-   "hash": "1ed137d024ad4060a96f3fac",
-   "lastmod": "2026-11-16"
+   "hash": "17c83d2ff3c9083172859fd0",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/land/sudafrika/": {
-   "hash": "eb53eb58e4b3f751176db09a",
-   "lastmod": "2026-11-18"
+   "hash": "ee1523732b5ac4a85994112a",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/land/sudkorea/": {
-   "hash": "9e6a5c27527011e1a00f27d9",
-   "lastmod": "2026-11-16"
+   "hash": "9253a89903d8dee97f0d7a0f",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/land/ungarn/": {
-   "hash": "6cbbf95f1faa65301d8799a4",
-   "lastmod": "2026-11-16"
+   "hash": "bab7cf404f38cf54afbd721f",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/land/vereinigte-staaten/": {
-   "hash": "0e26cd5875bd62644c6e41e3",
-   "lastmod": "2026-11-16"
+   "hash": "3604f190de3287145d2347b6",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/land/vereinigtes-konigreich/": {
-   "hash": "37cabfe6a9ba666d84faae31",
-   "lastmod": "2026-11-16"
+   "hash": "e3b71405889da713b1d9e159",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/laugavegur-ultra-marathon-52k/": {
    "hash": "24e91b51c452fac9be147f78",
@@ -4374,52 +4406,52 @@
    "lastmod": "2026-11-16"
   },
   "de/laeufe/monat/2026-11/": {
-   "hash": "85c5efc10bc877382da050d5",
-   "lastmod": "2026-11-18"
+   "hash": "7f91b9644fc325a4e8f57952",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/monat/2026-12/": {
-   "hash": "a0c976fdcc60eaba1069cd2f",
-   "lastmod": "2026-11-16"
+   "hash": "c5cffcb5a6977d3f6e68bf16",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/monat/2027-01/": {
-   "hash": "ab275649a7737de5c6cadd4d",
-   "lastmod": "2026-11-16"
+   "hash": "4ce6ec009c51c13c36ce2dd2",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/monat/2027-02/": {
-   "hash": "a163793ab31604eedd12ae12",
-   "lastmod": "2026-11-16"
+   "hash": "2e1919f1166c268ec8191a9f",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/monat/2027-03/": {
-   "hash": "8f439685c40288e6583d66bb",
-   "lastmod": "2026-11-16"
+   "hash": "0dba98e1659fa8f79a6d9adb",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/monat/2027-04/": {
-   "hash": "a8781d45d503e4433d83f81e",
-   "lastmod": "2026-11-16"
+   "hash": "8a307433fc72073611be457b",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/monat/2027-05/": {
-   "hash": "80ce7602c756108ddc2a8317",
-   "lastmod": "2026-11-18"
+   "hash": "6bc24ae0b050863a5da4cfa4",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/monat/2027-06/": {
-   "hash": "9f8593be8b9d93c02964e074",
-   "lastmod": "2026-11-16"
+   "hash": "eac28c10e6056eb9bc551dd6",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/monat/2027-07/": {
-   "hash": "ab2439fa2d97121df9f3ffdc",
-   "lastmod": "2026-11-16"
+   "hash": "fb8d022277165d993247a149",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/monat/2027-08/": {
-   "hash": "a6059447aa1a3caee9d5344a",
-   "lastmod": "2026-11-18"
+   "hash": "53346b0c67ab1197f2d3e932",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/monat/2027-09/": {
-   "hash": "9c336cf7f47f8860c867ef66",
-   "lastmod": "2026-11-16"
+   "hash": "375d08a620f5fe67760b7df6",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/monat/2027-10/": {
-   "hash": "fec9974b6b493d0949e64120",
-   "lastmod": "2026-11-18"
+   "hash": "d44946464009550b2d180ddf",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/montane-lakeland-100-164k/": {
    "hash": "214fcf922502bf4be03dbfc3",
@@ -4558,8 +4590,8 @@
    "lastmod": "2026-11-02"
   },
   "de/laeufe/seite/2/": {
-   "hash": "b24a3da3c941f29d88cff135",
-   "lastmod": "2026-11-16"
+   "hash": "3b52e93c76d068ed928757a3",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/sentrumslopet-10-km/": {
    "hash": "af0307561ac7f99bfdeadfd3",
@@ -4594,88 +4626,92 @@
    "lastmod": "2026-11-02"
   },
   "de/laeufe/stadt/annecy/": {
-   "hash": "e9a2e5b755fd72df3308e664",
-   "lastmod": "2026-11-16"
+   "hash": "62b829b4bc7eb4403dad1d59",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/stadt/barcelona/": {
-   "hash": "b49e99faa74021fbf6eaf013",
-   "lastmod": "2026-11-16"
+   "hash": "27d238b6a59574003d9530c2",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/stadt/berlin/": {
-   "hash": "55daef3138dd8e0f3c7cb4de",
-   "lastmod": "2026-11-16"
+   "hash": "e9681f6edd794805f193c487",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/stadt/budapest/": {
-   "hash": "9543d1c2d9b20295e9561fe2",
-   "lastmod": "2026-11-16"
+   "hash": "ffbd008be8451ecb81f9f169",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/stadt/courmayeur/": {
-   "hash": "4e45f81f729d9c55dd0b6eed",
-   "lastmod": "2026-11-16"
+   "hash": "ffaf6dc305ce7ef1ec6b3752",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/stadt/goteborg/": {
-   "hash": "bd8cf14082bcb9a8266a09e8",
-   "lastmod": "2026-11-16"
+   "hash": "8d3c640731244fbd9502a326",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/stadt/hamburg/": {
-   "hash": "15cd62b43addb77e323f7965",
-   "lastmod": "2026-11-16"
+   "hash": "d82911404d989095aed54890",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/stadt/harnosand/": {
-   "hash": "674ed9390930a22f4d229c58",
-   "lastmod": "2026-11-18"
+   "hash": "ea8a58d893933a8fcfd87b0a",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/stadt/helsinki/": {
-   "hash": "16fb597b7e25c8bae5cbcdd0",
-   "lastmod": "2026-11-16"
+   "hash": "483c5821cdc9bfbc208e5192",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/stadt/katoomba/": {
-   "hash": "d3dac37e7209e1d3b47cbc96",
-   "lastmod": "2026-11-16"
+   "hash": "d77e23b9179e9f423248febd",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/stadt/kobenhavn/": {
-   "hash": "11ac8e0d1ba6006968ebe1f4",
-   "lastmod": "2026-11-16"
+   "hash": "73f52e8cde99f141a8163a1e",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/stadt/london/": {
-   "hash": "a30ce022ddcd00dd9e763c42",
-   "lastmod": "2026-11-16"
+   "hash": "124f0b8ac266dc650074224f",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/stadt/milngavie/": {
-   "hash": "8b8381400d94232670fd5b6b",
-   "lastmod": "2026-11-16"
+   "hash": "49c6fec680c5bebab1832a64",
+   "lastmod": "2026-11-19"
+  },
+  "de/laeufe/stadt/norra-djurgarden-stockholm/": {
+   "hash": "db83bbc55a8382d41555ca27",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/stadt/oslo/": {
-   "hash": "42115c8287a796583e6af4f2",
-   "lastmod": "2026-11-16"
+   "hash": "de25e74b996adf2babf00406",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/stadt/oxberg/": {
-   "hash": "d4981770106678d97d71c096",
-   "lastmod": "2026-11-16"
+   "hash": "e4586f1ce2671ca165b9b4e2",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/stadt/paris/": {
-   "hash": "2c062e7fc801f947c639c46c",
-   "lastmod": "2026-11-16"
+   "hash": "d38d00c068c618ffa51720c4",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/stadt/philadelphia/": {
-   "hash": "a40bfae0da347a3e558d3361",
-   "lastmod": "2026-11-16"
+   "hash": "6b0348aac30250d1c2a0ffba",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/stadt/roma/": {
-   "hash": "d91fe9ac3fc73770b0c2376f",
-   "lastmod": "2026-11-16"
+   "hash": "4703c19d135799dbf999bee8",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/stadt/stockholm-norra-djurgarden/": {
-   "hash": "379b50c4ed9710de41b13374",
-   "lastmod": "2026-11-16"
+   "hash": "db60b43346e210db8d5e8021",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/stadt/stockholm/": {
-   "hash": "16ee4ea91c8df4c05ae6b221",
-   "lastmod": "2026-11-18"
+   "hash": "32cf0c514aa0115b4951c49e",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/stadt/zurich/": {
-   "hash": "c142dd5851cb188433682a09",
-   "lastmod": "2026-11-16"
+   "hash": "0a1a93fd7bce0d5ad4b034d0",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/standard-chartered-hong-kong-marathon-marathon-42-195-km/": {
    "hash": "6e272ab6e33ca7d803b0d14e",
@@ -4714,8 +4750,8 @@
    "lastmod": "2026-11-02"
   },
   "de/laeufe/sylvesterloppet-10k/": {
-   "hash": "9f4082ea43ce25716fed95ac",
-   "lastmod": "2026-11-18"
+   "hash": "08479c61f9651a34f42087ac",
+   "lastmod": "2026-11-19"
   },
   "de/laeufe/taipei-marathon-marathon-42-195-km/": {
    "hash": "b430f3936f66036716379c0d",
@@ -4994,12 +5030,12 @@
    "lastmod": "2026-10-16"
   },
   "en/races/": {
-   "hash": "a72e98060cc6038b175c737e",
-   "lastmod": "2026-11-18"
+   "hash": "9caa839482b736f76a6692bb",
+   "lastmod": "2026-11-19"
   },
   "en/races/101a-corrida-internacional-de-sao-silvestre-15k/": {
-   "hash": "4e9deb78112d064852a4c1e5",
-   "lastmod": "2026-11-05"
+   "hash": "a037bd302696194906043f4d",
+   "lastmod": "2026-11-19"
   },
   "en/races/20-km-de-bruxelles/": {
    "hash": "a972bc2b615c8853dd250ce6",
@@ -5022,8 +5058,8 @@
    "lastmod": "2026-11-02"
   },
   "en/races/45-sparkassen-silvesterlauf-werl-soest-15-km/": {
-   "hash": "fa4d53c9dc9ab11ac1aa7324",
-   "lastmod": "2026-11-05"
+   "hash": "99b7d7486130958f32fb5a65",
+   "lastmod": "2026-11-19"
   },
   "en/races/49-leipzig-marathon-2027-marathon-42k/": {
    "hash": "f1dc14dbba18e4150921b51b",
@@ -5226,88 +5262,92 @@
    "lastmod": "2026-11-16"
   },
   "en/races/city/annecy/": {
-   "hash": "b7ba948e58809ef35c69aaef",
-   "lastmod": "2026-11-16"
+   "hash": "34da0c54675959d514bcee67",
+   "lastmod": "2026-11-19"
   },
   "en/races/city/barcelona/": {
-   "hash": "c1d2e7f127b44a51f7a5dcbb",
-   "lastmod": "2026-11-16"
+   "hash": "aaff7a9341f00e96d9d3df17",
+   "lastmod": "2026-11-19"
   },
   "en/races/city/berlin/": {
-   "hash": "ca3e7f26991075482b3ddffe",
-   "lastmod": "2026-11-16"
+   "hash": "2b84d2017906ca107ef912ad",
+   "lastmod": "2026-11-19"
   },
   "en/races/city/budapest/": {
-   "hash": "b6d62c4e5c38f47b3deaa0a2",
-   "lastmod": "2026-11-16"
+   "hash": "fdc5359a4941aa64db8d657f",
+   "lastmod": "2026-11-19"
   },
   "en/races/city/courmayeur/": {
-   "hash": "3f64feb9f3d0bfc013a335f5",
-   "lastmod": "2026-11-16"
+   "hash": "255a53cb0b7793d6b420d1cf",
+   "lastmod": "2026-11-19"
   },
   "en/races/city/goteborg/": {
-   "hash": "32046ffe4c596755f5d1926a",
-   "lastmod": "2026-11-16"
+   "hash": "1c5aecbed0809bbeff297581",
+   "lastmod": "2026-11-19"
   },
   "en/races/city/hamburg/": {
-   "hash": "aeb0c5e24af26a85184ca7b8",
-   "lastmod": "2026-11-16"
+   "hash": "87163c9e72ef9d47162f92ac",
+   "lastmod": "2026-11-19"
   },
   "en/races/city/harnosand/": {
-   "hash": "15b1bb26bb6c09b824876b0b",
-   "lastmod": "2026-11-18"
+   "hash": "64fa26e1f72fb09d83ecd9b3",
+   "lastmod": "2026-11-19"
   },
   "en/races/city/helsinki/": {
-   "hash": "48b4bea9db9bda46f0ac10be",
-   "lastmod": "2026-11-16"
+   "hash": "805ffef6a5976b35c897d4f6",
+   "lastmod": "2026-11-19"
   },
   "en/races/city/katoomba/": {
-   "hash": "923ec024c68aab2534deb382",
-   "lastmod": "2026-11-16"
+   "hash": "4dfee2d251b85de86055b377",
+   "lastmod": "2026-11-19"
   },
   "en/races/city/kobenhavn/": {
-   "hash": "7fb6ccec5910a540c0708a83",
-   "lastmod": "2026-11-16"
+   "hash": "725e085604760ad95833ed87",
+   "lastmod": "2026-11-19"
   },
   "en/races/city/london/": {
-   "hash": "7567d45e60390975eb8781e1",
-   "lastmod": "2026-11-16"
+   "hash": "b2a4a1db2c231a337cbb4a88",
+   "lastmod": "2026-11-19"
   },
   "en/races/city/milngavie/": {
-   "hash": "200a905d59d06aa6c52a75d1",
-   "lastmod": "2026-11-16"
+   "hash": "eccdf37b90f542cad0a5ca84",
+   "lastmod": "2026-11-19"
+  },
+  "en/races/city/norra-djurgarden-stockholm/": {
+   "hash": "ddbbaea966e576148b4385d5",
+   "lastmod": "2026-11-19"
   },
   "en/races/city/oslo/": {
-   "hash": "56aeaf01f699360d8623be93",
-   "lastmod": "2026-11-16"
+   "hash": "de19b98c32ae6441459f1a20",
+   "lastmod": "2026-11-19"
   },
   "en/races/city/oxberg/": {
-   "hash": "09d63bc272aafc6e8fccb74e",
-   "lastmod": "2026-11-16"
+   "hash": "ae2960bb28d288e6849ea21e",
+   "lastmod": "2026-11-19"
   },
   "en/races/city/paris/": {
-   "hash": "69996cc08bd0e9daf2feeaa8",
-   "lastmod": "2026-11-16"
+   "hash": "aecfb3abe654dc2037dc9aae",
+   "lastmod": "2026-11-19"
   },
   "en/races/city/philadelphia/": {
-   "hash": "f50d7ab9a1fbb4a94d2c2e47",
-   "lastmod": "2026-11-16"
+   "hash": "68bf981612e8503d0e6c6183",
+   "lastmod": "2026-11-19"
   },
   "en/races/city/roma/": {
-   "hash": "95f43fb4723bb06913ebcd5c",
-   "lastmod": "2026-11-16"
+   "hash": "336804d050df84da557030c3",
+   "lastmod": "2026-11-19"
   },
   "en/races/city/stockholm-norra-djurgarden/": {
-   "hash": "5e24ac7f7cdd4ad2542cd48c",
-   "lastmod": "2026-11-16"
+   "hash": "a7c4a46336700466a126b29d",
+   "lastmod": "2026-11-19"
   },
   "en/races/city/stockholm/": {
-   "hash": "8d329c8d87019a2382819738",
-   "lastmod": "2026-11-18"
+   "hash": "863cd2f89fa92809e19bd047",
+   "lastmod": "2026-11-19"
   },
   "en/races/city/zurich/": {
-   "hash": "34805f6563175510bde92e2a",
-   "lastmod": "2026-11-16"
+   "hash": "92047f4dc51e3c43a5639a09",
+   "lastmod": "2026-11-19"
   },
   "en/races/comrades-marathon-90k/": {
    "hash": "30f8976d852a5ada1e3e1138",
@@ -5334,136 +5374,136 @@
    "lastmod": "2026-11-16"
   },
   "en/races/country/australia/": {
-   "hash": "c97c8b6b3b73262fcce9c095",
-   "lastmod": "2026-11-16"
+   "hash": "52ff8326decd7395ab1a0688",
+   "lastmod": "2026-11-19"
   },
   "en/races/country/austria/": {
-   "hash": "97af1a8823c39a298b24cd30",
-   "lastmod": "2026-11-16"
+   "hash": "e8fef7435309d9549f79b777",
+   "lastmod": "2026-11-19"
   },
   "en/races/country/belgium/": {
-   "hash": "37f83b07e57c5b8648e06b50",
-   "lastmod": "2026-11-16"
+   "hash": "5620ba3c41b2b04ec9102d71",
+   "lastmod": "2026-11-19"
   },
   "en/races/country/brazil/": {
-   "hash": "9c927412ba92a7f2e4d84ce7",
-   "lastmod": "2026-11-16"
+   "hash": "3f68fb87cac3d9ece5183f45",
+   "lastmod": "2026-11-19"
   },
   "en/races/country/canada/": {
-   "hash": "29bee8beb3052b3951e42bc3",
-   "lastmod": "2026-11-16"
+   "hash": "cfae0d83839347998fd69301",
+   "lastmod": "2026-11-19"
   },
   "en/races/country/china/": {
-   "hash": "bb4c527626184d9bbe28e7ea",
-   "lastmod": "2026-11-16"
+   "hash": "b8a2f32655dd5533a6afdf2f",
+   "lastmod": "2026-11-19"
   },
   "en/races/country/denmark/": {
-   "hash": "af7d6f11092c7b73785aa7ac",
-   "lastmod": "2026-11-16"
+   "hash": "7ee8923a8847b63439c636ef",
+   "lastmod": "2026-11-19"
   },
   "en/races/country/finland/": {
-   "hash": "0afda5d3700620b1a3abde29",
-   "lastmod": "2026-11-16"
+   "hash": "fc020b542fcb48e13c94ba9d",
+   "lastmod": "2026-11-19"
   },
   "en/races/country/france/": {
-   "hash": "398145fb32ff9ec1f0ee5010",
-   "lastmod": "2026-11-18"
+   "hash": "07707860fcac384d61831bdb",
+   "lastmod": "2026-11-19"
   },
   "en/races/country/germany/": {
-   "hash": "efe2251becc7958a6a2789ec",
-   "lastmod": "2026-11-16"
+   "hash": "470a8faf1705876d4f4d3fae",
+   "lastmod": "2026-11-19"
   },
   "en/races/country/greece/": {
-   "hash": "987767362460cfd5920fd124",
-   "lastmod": "2026-11-16"
+   "hash": "0d75ac5789b9a5107b41b08f",
+   "lastmod": "2026-11-19"
   },
   "en/races/country/hong-kong/": {
-   "hash": "fc17f7364d2a474f9096e4aa",
-   "lastmod": "2026-11-16"
+   "hash": "5fa50d54e61329c6a5cdc2e5",
+   "lastmod": "2026-11-19"
   },
   "en/races/country/hungary/": {
-   "hash": "3225ea0d943a6beac9714df5",
-   "lastmod": "2026-11-16"
+   "hash": "48eda22981a4fe649f466081",
+   "lastmod": "2026-11-19"
   },
   "en/races/country/iceland/": {
-   "hash": "0f52d85c93e5c21cf53a039a",
-   "lastmod": "2026-11-16"
+   "hash": "eca30fd3f9599744e9dde411",
+   "lastmod": "2026-11-19"
   },
   "en/races/country/india/": {
-   "hash": "15d74000e7d2bd471a872106",
-   "lastmod": "2026-11-16"
+   "hash": "7e358fe7209518fa62b25bf6",
+   "lastmod": "2026-11-19"
   },
   "en/races/country/ireland/": {
-   "hash": "cf7778562caa53d0891198c6",
-   "lastmod": "2026-11-16"
+   "hash": "b7d6e62ff5865b2be9f59e09",
+   "lastmod": "2026-11-19"
   },
   "en/races/country/israel/": {
-   "hash": "af5adf480d19097d0f742ca7",
-   "lastmod": "2026-11-16"
+   "hash": "f42815d0835e0f0380cf3712",
+   "lastmod": "2026-11-19"
   },
   "en/races/country/italy/": {
-   "hash": "8400cb6335ef579fdc54b754",
-   "lastmod": "2026-11-16"
+   "hash": "4d505da52e7b10c0dcb0b26f",
+   "lastmod": "2026-11-19"
   },
   "en/races/country/japan/": {
-   "hash": "b9c430cc5833c8d0af36c6a8",
-   "lastmod": "2026-11-16"
+   "hash": "d78f28bf3f865c9eef3c15f8",
+   "lastmod": "2026-11-19"
   },
   "en/races/country/luxembourg/": {
-   "hash": "4c508e470eac12b7f871a768",
-   "lastmod": "2026-11-16"
+   "hash": "7e1352a9cf38b463dd0e0556",
+   "lastmod": "2026-11-19"
   },
   "en/races/country/morocco/": {
-   "hash": "7a4dc90aa3b090ef903a8446",
-   "lastmod": "2026-11-16"
+   "hash": "40cd0664b367d0021e2c073d",
+   "lastmod": "2026-11-19"
   },
   "en/races/country/netherlands/": {
-   "hash": "f458276c6bcec3f770949e43",
-   "lastmod": "2026-11-16"
+   "hash": "1934e8f9b83736ba160c57ce",
+   "lastmod": "2026-11-19"
   },
   "en/races/country/new-zealand/": {
-   "hash": "8525d3eca81a4b4dbc5a83fa",
-   "lastmod": "2026-11-16"
+   "hash": "09a2b7d9bfe6e7ab255a6dac",
+   "lastmod": "2026-11-19"
   },
   "en/races/country/norway/": {
-   "hash": "39d1de508016c6a8851ae1e0",
-   "lastmod": "2026-11-16"
+   "hash": "d550c864e67aad1b63b69b54",
+   "lastmod": "2026-11-19"
   },
   "en/races/country/poland/": {
-   "hash": "c5dcd024d8ce234a7a37a48c",
-   "lastmod": "2026-11-16"
+   "hash": "f603b7dd43a7032756d0d169",
+   "lastmod": "2026-11-19"
   },
   "en/races/country/portugal/": {
-   "hash": "dc9863a400ccf5db069f9362",
-   "lastmod": "2026-11-16"
+   "hash": "f7c9f0bedabdd2ae7ae6fd9e",
+   "lastmod": "2026-11-19"
   },
   "en/races/country/south-africa/": {
-   "hash": "eae0582bb70c9f95afe1756b",
-   "lastmod": "2026-11-18"
+   "hash": "68d16506fd393b27e3ef75a4",
+   "lastmod": "2026-11-19"
   },
   "en/races/country/south-korea/": {
-   "hash": "ab35d0aa57db2bec694314d6",
-   "lastmod": "2026-11-16"
+   "hash": "3572c074f9cbed8d9b83f657",
+   "lastmod": "2026-11-19"
   },
   "en/races/country/spain/": {
-   "hash": "d3feb923e99116d8e96eee5c",
-   "lastmod": "2026-11-16"
+   "hash": "e9a9f49ff0bab7e6b5f95ab0",
+   "lastmod": "2026-11-19"
   },
   "en/races/country/sweden/": {
-   "hash": "d1f9506799f6f7ab73fd5367",
-   "lastmod": "2026-11-18"
+   "hash": "bda2d67555cfedba0faff367",
+   "lastmod": "2026-11-19"
   },
   "en/races/country/switzerland/": {
-   "hash": "a6afef651205f66dc236ece5",
-   "lastmod": "2026-11-16"
+   "hash": "73d90bf638523bd2d1bf9e6b",
+   "lastmod": "2026-11-19"
   },
   "en/races/country/united-kingdom/": {
-   "hash": "05639dfbe007b604b9042dab",
-   "lastmod": "2026-11-16"
+   "hash": "5bf43a91c5cc20dc91d9bded",
+   "lastmod": "2026-11-19"
   },
   "en/races/country/united-states/": {
-   "hash": "dbba571832faea3c14fa1d43",
-   "lastmod": "2026-11-16"
+   "hash": "b60651a571c31755deb072a7",
+   "lastmod": "2026-11-19"
   },
   "en/races/cracovia-maraton-42k/": {
    "hash": "fc167589542814a140e5cd60",
@@ -5494,28 +5534,28 @@
    "lastmod": "2026-11-02"
   },
   "en/races/distance/10k/": {
-   "hash": "c59b4d2c32c284e6b8f731d1",
-   "lastmod": "2026-11-16"
+   "hash": "1dcb02406fe5e25fec46e386",
+   "lastmod": "2026-11-19"
   },
   "en/races/distance/5k/": {
-   "hash": "90823cf144d83699e4f108eb",
-   "lastmod": "2026-11-16"
+   "hash": "f8734bd6fdf22f7c8abc337f",
+   "lastmod": "2026-11-19"
   },
   "en/races/distance/half-marathon/": {
-   "hash": "83aeccbd7fa22a6427f4c057",
-   "lastmod": "2026-11-16"
+   "hash": "0c9ab499cee4d56482c61e87",
+   "lastmod": "2026-11-19"
   },
   "en/races/distance/marathon/": {
-   "hash": "d23f2a278710f4dc9283ce28",
-   "lastmod": "2026-11-18"
+   "hash": "5095144f410abb1947bcfedf",
+   "lastmod": "2026-11-19"
   },
   "en/races/distance/trail/": {
-   "hash": "3d97e7f72483f9da05158e5e",
-   "lastmod": "2026-11-18"
+   "hash": "597a43c190e1d1c23a014157",
+   "lastmod": "2026-11-19"
   },
   "en/races/distance/ultra/": {
-   "hash": "13752c5c4741bf98ae08a832",
-   "lastmod": "2026-11-18"
+   "hash": "4df0405de43a18be754e3b1c",
+   "lastmod": "2026-11-19"
   },
   "en/races/dnb-oslo-maraton-maraton-43k/": {
    "hash": "69d86a86fe23926ec99065c6",
@@ -5706,8 +5746,16 @@
    "lastmod": "2026-11-02"
   },
   "en/races/hostrusket-10-km/": {
-   "hash": "0958d1fd863e48a2c81477b3",
-   "lastmod": "2026-11-16"
+   "hash": "effc52a7a693b7bdbddf0684",
+   "lastmod": "2026-11-19"
+  },
+  "en/races/hostrusket-halvmaraton-21k/": {
+   "hash": "e2f7b1aec847fbf42f716852",
+   "lastmod": "2026-11-19"
+  },
+  "en/races/hostrusket-maraton-42k/": {
+   "hash": "b95b00ccda671e6794c8e9fa",
+   "lastmod": "2026-11-19"
   },
   "en/races/hyundai-mitja-marato-barcelona-by-brooks-21k/": {
    "hash": "2dffda71f0a73b262d786a1e",
@@ -5962,52 +6010,52 @@
    "lastmod": "2026-11-02"
   },
   "en/races/month/2026-11/": {
-   "hash": "7331e6fa3333c0f33e851304",
-   "lastmod": "2026-11-18"
+   "hash": "d96f3fd6ef57ac87efd913cf",
+   "lastmod": "2026-11-19"
   },
   "en/races/month/2026-12/": {
-   "hash": "8cb0992aaa20fbffcb56f26d",
-   "lastmod": "2026-11-16"
+   "hash": "309dcebe1175425ffeef9ad4",
+   "lastmod": "2026-11-19"
   },
   "en/races/month/2027-01/": {
-   "hash": "558a23de43e37db8af5c3119",
-   "lastmod": "2026-11-16"
+   "hash": "19d715171641782f3f49e2bf",
+   "lastmod": "2026-11-19"
   },
   "en/races/month/2027-02/": {
-   "hash": "c087d811e831ca0d78d357a3",
-   "lastmod": "2026-11-16"
+   "hash": "7ca17872150a4e2441c17e44",
+   "lastmod": "2026-11-19"
   },
   "en/races/month/2027-03/": {
-   "hash": "284e8ed030eaf378be1e91b0",
-   "lastmod": "2026-11-16"
+   "hash": "581c44604429542c0c3ca87b",
+   "lastmod": "2026-11-19"
   },
   "en/races/month/2027-04/": {
-   "hash": "cca096be4f4c3b1458a33775",
-   "lastmod": "2026-11-16"
+   "hash": "ea6305db23b6333f015d26ee",
+   "lastmod": "2026-11-19"
   },
   "en/races/month/2027-05/": {
-   "hash": "abce79853c64390129eff741",
-   "lastmod": "2026-11-18"
+   "hash": "1e4d3f7d8d3a9938e6e27d14",
+   "lastmod": "2026-11-19"
   },
   "en/races/month/2027-06/": {
-   "hash": "5d9e5c31c48d9c8b745a8fa2",
-   "lastmod": "2026-11-16"
+   "hash": "7bd6d5014be4798a986fe97b",
+   "lastmod": "2026-11-19"
   },
   "en/races/month/2027-07/": {
-   "hash": "0581992e17874456115c7e6a",
-   "lastmod": "2026-11-16"
+   "hash": "cc35e5201a6ef3b5a8eef154",
+   "lastmod": "2026-11-19"
   },
   "en/races/month/2027-08/": {
-   "hash": "f45cdac890c3a0db46676c86",
-   "lastmod": "2026-11-18"
+   "hash": "6591f4cdcbe2137aee475e8f",
+   "lastmod": "2026-11-19"
   },
   "en/races/month/2027-09/": {
-   "hash": "4bf6e58d4c49cb8ca8d410a7",
-   "lastmod": "2026-11-16"
+   "hash": "ce20a4122abd6536127ffd3b",
+   "lastmod": "2026-11-19"
   },
   "en/races/month/2027-10/": {
-   "hash": "ba212e2f6bdbbaefde9d05a6",
-   "lastmod": "2026-11-18"
+   "hash": "24653be01812fe3994b2f4da",
+   "lastmod": "2026-11-19"
   },
   "en/races/montreux-trail-festival-mxtreme-100-102-km/": {
    "hash": "ac0ff35adc1f928c2ed53af4",
@@ -6074,8 +6122,8 @@
    "lastmod": "2026-11-02"
   },
   "en/races/page/2/": {
-   "hash": "f5aab66ccdf5249f89650e85",
-   "lastmod": "2026-11-16"
+   "hash": "80086f47edf56cb89bd6b0fb",
+   "lastmod": "2026-11-19"
   },
   "en/races/pikes-peak-marathon-42k/": {
    "hash": "79317c3df559cb492bdf66bc",
@@ -6214,8 +6262,8 @@
    "lastmod": "2026-11-02"
   },
   "en/races/sylvesterloppet-10k/": {
-   "hash": "d350513daa923c530c09a1c6",
-   "lastmod": "2026-11-18"
+   "hash": "c8207c19240ece27ee5d2026",
+   "lastmod": "2026-11-19"
   },
   "en/races/taipei-marathon-marathon-42-195-km/": {
    "hash": "392563359743299fc5fee3ac",
@@ -6446,12 +6494,12 @@
    "lastmod": "2026-11-02"
   },
   "es/carreras/": {
-   "hash": "4d32869a6ba636568411f119",
-   "lastmod": "2026-11-18"
+   "hash": "20071ff4f8f1665ec0830bfe",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/101a-corrida-internacional-de-sao-silvestre-15k/": {
-   "hash": "e1e6894ec42c4e6fb9533286",
-   "lastmod": "2026-11-05"
+   "hash": "5d6f6bac1e8864812d8333a1",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/20-km-de-bruxelles/": {
    "hash": "1d14ca9ac25de0399a89a3a6",
@@ -6474,8 +6522,8 @@
    "lastmod": "2026-11-02"
   },
   "es/carreras/45-sparkassen-silvesterlauf-werl-soest-15-km/": {
-   "hash": "1d2e2ee220e094d6fd08e491",
-   "lastmod": "2026-11-05"
+   "hash": "e78e23265c6d21814416bb34",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/49-leipzig-marathon-2027-marathon-42k/": {
    "hash": "d54f4a92087107238628b0b2",
@@ -6678,88 +6726,92 @@
    "lastmod": "2026-11-16"
   },
   "es/carreras/ciudad/annecy/": {
-   "hash": "dc5832f48b66e6a7816e7cb0",
-   "lastmod": "2026-11-16"
+   "hash": "a08d27867c15c1ec062aecbb",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/ciudad/barcelona/": {
-   "hash": "9c36e03dbbf0ada148294b32",
-   "lastmod": "2026-11-16"
+   "hash": "fa711154e2591801e17b74d7",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/ciudad/berlin/": {
-   "hash": "f2c7a64550c3369d3f4df20f",
-   "lastmod": "2026-11-16"
+   "hash": "e15a303f36e21d95aa1c5b83",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/ciudad/budapest/": {
-   "hash": "014111fe192009fd53c6ad32",
-   "lastmod": "2026-11-16"
+   "hash": "c232650c0bd573d2da0d5c3b",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/ciudad/courmayeur/": {
-   "hash": "6f2969d3fc323b56a70f456e",
-   "lastmod": "2026-11-16"
+   "hash": "b088c857ecc393a0c4535a85",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/ciudad/goteborg/": {
-   "hash": "c26edc44d006c53f25808ee1",
-   "lastmod": "2026-11-16"
+   "hash": "d7f1bf3c399454415b1fd8db",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/ciudad/hamburg/": {
-   "hash": "c1f911dd731f427906efc0fe",
-   "lastmod": "2026-11-16"
+   "hash": "680e32299d689fc0a760c3fd",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/ciudad/harnosand/": {
-   "hash": "56add430ed0e9e0f8d4d9e4a",
-   "lastmod": "2026-11-18"
+   "hash": "3b206f43477ef9dab113d130",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/ciudad/helsinki/": {
-   "hash": "1833d642ef01bb1654416a8b",
-   "lastmod": "2026-11-16"
+   "hash": "4e257877341bb9ca6c57a58c",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/ciudad/katoomba/": {
-   "hash": "09a6ee3ca475ff17320ff3c6",
-   "lastmod": "2026-11-16"
+   "hash": "02c547a9bbc059e465b6661c",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/ciudad/kobenhavn/": {
-   "hash": "48b8437e5e44f50a3b6c1787",
-   "lastmod": "2026-11-16"
+   "hash": "7f2fbea20515cc30741f9ee6",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/ciudad/london/": {
-   "hash": "a085226ceab6090bc2c3e109",
-   "lastmod": "2026-11-16"
+   "hash": "ebc6a8c92865d09ecdd79a2a",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/ciudad/milngavie/": {
-   "hash": "6193f61fb3d761dc09713601",
-   "lastmod": "2026-11-16"
+   "hash": "dfbd66d15b6dfed8b0ce6e6f",
+   "lastmod": "2026-11-19"
+  },
+  "es/carreras/ciudad/norra-djurgarden-stockholm/": {
+   "hash": "c862b29a43e22a254ce03e54",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/ciudad/oslo/": {
-   "hash": "055510a8be7f34dbfdbf8952",
-   "lastmod": "2026-11-16"
+   "hash": "5c3ccecbf8a470c4b6d4d017",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/ciudad/oxberg/": {
-   "hash": "91e726599e303f19065a3a88",
-   "lastmod": "2026-11-16"
+   "hash": "d06491a45c8e50f01d99821e",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/ciudad/paris/": {
-   "hash": "b178d73578d44b56097db5d1",
-   "lastmod": "2026-11-16"
+   "hash": "73d72a99ddee48447a7d7ef1",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/ciudad/philadelphia/": {
-   "hash": "8c97b53b08330db83462d37f",
-   "lastmod": "2026-11-16"
+   "hash": "5b370eb5ecb3bd85ea3dbdb8",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/ciudad/roma/": {
-   "hash": "9a7581c0b8c33f375a51902a",
-   "lastmod": "2026-11-16"
+   "hash": "d1601d151699aa01111e9089",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/ciudad/stockholm-norra-djurgarden/": {
-   "hash": "256f921a896188a551f86be6",
-   "lastmod": "2026-11-16"
+   "hash": "55fd46f2af7d7f20463493cb",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/ciudad/stockholm/": {
-   "hash": "9ee4f12a15ede9c45be29130",
-   "lastmod": "2026-11-18"
+   "hash": "efd9fc069f85c4831ff24ce8",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/ciudad/zurich/": {
-   "hash": "3cf8c2f1ae0031d36f689a28",
-   "lastmod": "2026-11-16"
+   "hash": "06abef975cbbf2683d9a3b66",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/comrades-marathon-90k/": {
    "hash": "90544a28fd861bc6abb898d1",
@@ -6814,28 +6866,28 @@
    "lastmod": "2026-11-02"
   },
   "es/carreras/distancia/10-km/": {
-   "hash": "271548bccba94873caa2435d",
-   "lastmod": "2026-11-16"
+   "hash": "85956e9621134ace58d46213",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/distancia/5-km/": {
-   "hash": "39081db720ddba5c2f0ae59e",
-   "lastmod": "2026-11-16"
+   "hash": "0b8863d9420fce0ad5ff8af0",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/distancia/maraton/": {
-   "hash": "da44704840f55f72c6a5e316",
-   "lastmod": "2026-11-18"
+   "hash": "0d09dd6d55eec2ba49a3b20a",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/distancia/media-maraton/": {
-   "hash": "916813663fa1355fd6259364",
-   "lastmod": "2026-11-16"
+   "hash": "54285145f0ca27591bf79d0a",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/distancia/trail/": {
-   "hash": "508e70dd6fc791e3c4f36eac",
-   "lastmod": "2026-11-18"
+   "hash": "95af2f3e381b10f971c352f0",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/distancia/ultra/": {
-   "hash": "9197053fbc2208d710411aea",
-   "lastmod": "2026-11-18"
+   "hash": "2dda3ed81095e243607c13e3",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/dnb-oslo-maraton-maraton-43k/": {
    "hash": "1eb329e763d1dee63f03bfdf",
@@ -7026,8 +7078,16 @@
    "lastmod": "2026-11-02"
   },
   "es/carreras/hostrusket-10-km/": {
-   "hash": "c181be326677b0257e714fba",
-   "lastmod": "2026-11-16"
+   "hash": "720b336c00acd69983ef97ef",
+   "lastmod": "2026-11-19"
+  },
+  "es/carreras/hostrusket-halvmaraton-21k/": {
+   "hash": "3d7a0fccf468770ba3422dad",
+   "lastmod": "2026-11-19"
+  },
+  "es/carreras/hostrusket-maraton-42k/": {
+   "hash": "37d9650d5c7ce4384840b184",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/hyundai-mitja-marato-barcelona-by-brooks-21k/": {
    "hash": "7acf7f9fe5e684ef5ebbbf57",
@@ -7258,52 +7318,52 @@
    "lastmod": "2026-11-02"
   },
   "es/carreras/mes/2026-11/": {
-   "hash": "2b454c2c44fba8510e609768",
-   "lastmod": "2026-11-18"
+   "hash": "d4194f397476f35644bd462b",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/mes/2026-12/": {
-   "hash": "51aab3f524490bbbdee291be",
-   "lastmod": "2026-11-16"
+   "hash": "917f7c922c336a23b05c60d0",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/mes/2027-01/": {
-   "hash": "a8f359cc1384270692404ded",
-   "lastmod": "2026-11-16"
+   "hash": "fff6d4efc3a1494a94baac7e",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/mes/2027-02/": {
-   "hash": "11a61312617477652fbe82d0",
-   "lastmod": "2026-11-16"
+   "hash": "77efc713c58f1a8654685a32",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/mes/2027-03/": {
-   "hash": "98f31f31204966907e1f2b10",
-   "lastmod": "2026-11-16"
+   "hash": "502442f8d88e5125f733e466",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/mes/2027-04/": {
-   "hash": "e864adeac2de43a7d965b9bf",
-   "lastmod": "2026-11-16"
+   "hash": "30dead5e8d51b9d6093b36e4",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/mes/2027-05/": {
-   "hash": "d30805be5cb30eacfd310e77",
-   "lastmod": "2026-11-18"
+   "hash": "02a07b43a0f3afc064d5879c",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/mes/2027-06/": {
-   "hash": "ed96d27eceaad1cd2cd5143d",
-   "lastmod": "2026-11-16"
+   "hash": "147eceb9288c36646e1c8b05",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/mes/2027-07/": {
-   "hash": "132f3d5804c02eb964215d99",
-   "lastmod": "2026-11-16"
+   "hash": "8856146d4c901072f22e75a3",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/mes/2027-08/": {
-   "hash": "5143f7a9039f269af1f9ed9b",
-   "lastmod": "2026-11-18"
+   "hash": "48533cbf98cad06af7a42270",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/mes/2027-09/": {
-   "hash": "2b0287f901b40cb55889361c",
-   "lastmod": "2026-11-16"
+   "hash": "0f87f50d9af47af004777fdc",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/mes/2027-10/": {
-   "hash": "4510d4a871cb386791b36283",
-   "lastmod": "2026-11-18"
+   "hash": "b132314fb31e734b4a03dd2e",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/midnattsloppet-goteborg-10-km/": {
    "hash": "2ef4b47db5a8755e3c25c453",
@@ -7394,140 +7454,140 @@
    "lastmod": "2026-11-02"
   },
   "es/carreras/pagina/2/": {
-   "hash": "fa49ac8174645e4dfeaf9222",
-   "lastmod": "2026-11-16"
+   "hash": "59f03fceec8719ee8d0d0a5c",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/pais/alemania/": {
-   "hash": "78c152a72beba7be9fe27f99",
-   "lastmod": "2026-11-16"
+   "hash": "120cae36bc1372d14b6fac3f",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/pais/australia/": {
-   "hash": "f888006c7d0afe7df97df658",
-   "lastmod": "2026-11-16"
+   "hash": "2f0b8cce862d0cd611e8ea86",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/pais/austria/": {
-   "hash": "10ba4eee8f6dabbfa39ae8e9",
-   "lastmod": "2026-11-16"
+   "hash": "eb06ffbb6952a2c98de0e1ad",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/pais/belgica/": {
-   "hash": "bba50338821c8718a6ae787f",
-   "lastmod": "2026-11-16"
+   "hash": "f6e20160ca5a0ef412581573",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/pais/brasil/": {
-   "hash": "d95b5d8073c4be93fdb95ea4",
-   "lastmod": "2026-11-16"
+   "hash": "aa5b29f677c27e98a6005285",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/pais/canada/": {
-   "hash": "d527b5786f911bec54d70c76",
-   "lastmod": "2026-11-16"
+   "hash": "91db357ca92e58ebb6ecdc05",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/pais/china/": {
-   "hash": "676876c2376ea583021ca336",
-   "lastmod": "2026-11-16"
+   "hash": "60fa655657ffd8ca2b3c89de",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/pais/corea-del-sur/": {
-   "hash": "4a3eb82351864cb741e6df48",
-   "lastmod": "2026-11-16"
+   "hash": "f7788361fbfbf1fbab069311",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/pais/dinamarca/": {
-   "hash": "edac245797fb55cfa08d5bc3",
-   "lastmod": "2026-11-16"
+   "hash": "5a7cf5ad25957e98ad7f66a7",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/pais/espana/": {
-   "hash": "aeb19c0e8f3c7eaf197fed95",
-   "lastmod": "2026-11-16"
+   "hash": "2bb43ecdb83593853be06e4f",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/pais/estados-unidos/": {
-   "hash": "baab58208ee78c233676ac15",
-   "lastmod": "2026-11-16"
+   "hash": "0f237485a04341d1bcbc3a96",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/pais/finlandia/": {
-   "hash": "ed1c222fba00f7551f25ed27",
-   "lastmod": "2026-11-16"
+   "hash": "23933a3ef6f08d05bdc7df5b",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/pais/francia/": {
-   "hash": "aa80fdd171091878cbd49d57",
-   "lastmod": "2026-11-18"
+   "hash": "43fed6c67aceabfd764df1ce",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/pais/grecia/": {
-   "hash": "9c8b5aa35901a74ff958f53b",
-   "lastmod": "2026-11-16"
+   "hash": "ecd7f841fa31d47a7a145fa0",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/pais/hong-kong/": {
-   "hash": "0c3f9d3159bc10bbf114da77",
-   "lastmod": "2026-11-16"
+   "hash": "93bc5fd53c7d1b6d2a7844d2",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/pais/hungria/": {
-   "hash": "30c2f1b3ca5c97553884431d",
-   "lastmod": "2026-11-16"
+   "hash": "586f2dbfe18604418748d40a",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/pais/india/": {
-   "hash": "24bf8f1e3360a5dca88520ea",
-   "lastmod": "2026-11-16"
+   "hash": "ca5257bb227053468e62dfd7",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/pais/irlanda/": {
-   "hash": "0bc1fd5b0d00ddc4fd857f39",
-   "lastmod": "2026-11-16"
+   "hash": "b019200d4b10c36986fd406c",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/pais/islandia/": {
-   "hash": "89c66acaa06330e4d2c86f0f",
-   "lastmod": "2026-11-16"
+   "hash": "ab414973c3344515e36c9506",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/pais/israel/": {
-   "hash": "9fb1e65f9176aa2256fa7df9",
-   "lastmod": "2026-11-16"
+   "hash": "192e24132542470968af63be",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/pais/italia/": {
-   "hash": "5fa6b8ce87719590fb86cf53",
-   "lastmod": "2026-11-16"
+   "hash": "54e47717e5d96529aa31ed23",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/pais/japon/": {
-   "hash": "fc80ff1143354f40feb4dff6",
-   "lastmod": "2026-11-16"
+   "hash": "8295c4c9e0b186e0540203de",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/pais/luxemburgo/": {
-   "hash": "5100d5fc34420efa35170903",
-   "lastmod": "2026-11-16"
+   "hash": "e0d88b5590d153c553331730",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/pais/marruecos/": {
-   "hash": "4913835b2504191146f17041",
-   "lastmod": "2026-11-16"
+   "hash": "5a99097024e295507fb2f752",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/pais/noruega/": {
-   "hash": "4fea41b6969f68a54990f1af",
-   "lastmod": "2026-11-16"
+   "hash": "33764e7955645dda5058a8db",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/pais/nueva-zelanda/": {
-   "hash": "03dad4b27c1fc14d418a7431",
-   "lastmod": "2026-11-16"
+   "hash": "a77ad50b4aafc262ef4b5948",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/pais/paises-bajos/": {
-   "hash": "7d285e96656564838015d5fa",
-   "lastmod": "2026-11-16"
+   "hash": "2ea71c49a2e4633634a0de96",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/pais/polonia/": {
-   "hash": "a79c3bfdeda55a548907a816",
-   "lastmod": "2026-11-16"
+   "hash": "c7a7dc0771c204554691ebf6",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/pais/portugal/": {
-   "hash": "e8ab7cbb17f4345e976c303f",
-   "lastmod": "2026-11-16"
+   "hash": "fce59cc1036c8e0229d9634c",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/pais/reino-unido/": {
-   "hash": "92f3d317d34de494c8a9b17b",
-   "lastmod": "2026-11-16"
+   "hash": "3d8749b4abbae9aa2e55f9dc",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/pais/sudafrica/": {
-   "hash": "4e3f3b8a515c52ba171cadb1",
-   "lastmod": "2026-11-18"
+   "hash": "5e05a6d5f97adcbcd56018db",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/pais/suecia/": {
-   "hash": "202abbb7026c2fb7a16ea29d",
-   "lastmod": "2026-11-18"
+   "hash": "7cf700bd32789b11dd166b8a",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/pais/suiza/": {
-   "hash": "565677d91453bace1654ed15",
-   "lastmod": "2026-11-16"
+   "hash": "57500291ffc707efd6751659",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/pikes-peak-marathon-42k/": {
    "hash": "7f239111f7927559a6b29b6f",
@@ -7666,8 +7726,8 @@
    "lastmod": "2026-11-02"
   },
   "es/carreras/sylvesterloppet-10k/": {
-   "hash": "df3c43f9ad4aac33371be63f",
-   "lastmod": "2026-11-18"
+   "hash": "d675939a120446b662abe48e",
+   "lastmod": "2026-11-19"
   },
   "es/carreras/taipei-marathon-marathon-42-195-km/": {
    "hash": "b7447c45934e853bc9e33821",
@@ -7898,12 +7958,12 @@
    "lastmod": "2026-11-02"
   },
   "fi/kisat/": {
-   "hash": "af12db080da36f1485be839e",
-   "lastmod": "2026-11-18"
+   "hash": "0667137c85cf0afba6783c14",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/101a-corrida-internacional-de-sao-silvestre-15k/": {
-   "hash": "c64c7d487d8d1edfce5c018c",
-   "lastmod": "2026-11-05"
+   "hash": "45b415394b525d90a2d8c743",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/20-km-de-bruxelles/": {
    "hash": "10e47232a66af1eada7f28e2",
@@ -7926,8 +7986,8 @@
    "lastmod": "2026-11-02"
   },
   "fi/kisat/45-sparkassen-silvesterlauf-werl-soest-15-km/": {
-   "hash": "e20c36fc011921dd6ed09a3d",
-   "lastmod": "2026-11-05"
+   "hash": "1c9686d77caba0b0595a8542",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/49-leipzig-marathon-2027-marathon-42k/": {
    "hash": "a63ce7e3fc5db2cc27e56ae0",
@@ -8370,8 +8430,16 @@
    "lastmod": "2026-11-02"
   },
   "fi/kisat/hostrusket-10-km/": {
-   "hash": "109a70821abc77f58a577f6e",
-   "lastmod": "2026-11-16"
+   "hash": "f52d0a03129f050aa7ae2e81",
+   "lastmod": "2026-11-19"
+  },
+  "fi/kisat/hostrusket-halvmaraton-21k/": {
+   "hash": "7f20d6e846e699e735e15b4f",
+   "lastmod": "2026-11-19"
+  },
+  "fi/kisat/hostrusket-maraton-42k/": {
+   "hash": "42882ccf446c9a4bf892e979",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/hyundai-mitja-marato-barcelona-by-brooks-21k/": {
    "hash": "55b46b58f0cb3bc551e54e40",
@@ -8418,88 +8486,92 @@
    "lastmod": "2026-11-02"
   },
   "fi/kisat/kaupunki/annecy/": {
-   "hash": "d9cd1d8a71c8b87d3864dbef",
-   "lastmod": "2026-11-16"
+   "hash": "629536273421d77f3a2880e6",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/kaupunki/barcelona/": {
-   "hash": "b6bf3c03b5e691e777806922",
-   "lastmod": "2026-11-16"
+   "hash": "1da3f882202c557504ecdfd6",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/kaupunki/berlin/": {
-   "hash": "e3d495211d008bb4b2fbc120",
-   "lastmod": "2026-11-16"
+   "hash": "a2a964645855a435c467cffe",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/kaupunki/budapest/": {
-   "hash": "b7368bbd4ead64e6f5b97ec0",
-   "lastmod": "2026-11-16"
+   "hash": "2e4479a9e6dee46c1d5c193a",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/kaupunki/courmayeur/": {
-   "hash": "0b5efaf4677822ad3a8d4663",
-   "lastmod": "2026-11-16"
+   "hash": "655d47d07d418ccb8f9f7163",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/kaupunki/goteborg/": {
-   "hash": "19520bb8f5d35bee685dac2a",
-   "lastmod": "2026-11-16"
+   "hash": "f9e26d886bd03c747f2d9f43",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/kaupunki/hamburg/": {
-   "hash": "1d0b93230820df8c45807269",
-   "lastmod": "2026-11-16"
+   "hash": "85ef37eec3703281463407bd",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/kaupunki/harnosand/": {
-   "hash": "43f5261351cfcf0ddb5deae8",
-   "lastmod": "2026-11-18"
+   "hash": "5aabb77c464ecd5f989204d4",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/kaupunki/helsinki/": {
-   "hash": "49ab15083d9977b3ff8cf004",
-   "lastmod": "2026-11-16"
+   "hash": "172afa7cdf7b30cd57e90cb5",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/kaupunki/katoomba/": {
-   "hash": "82377c5aa5abd6aa0915ea12",
-   "lastmod": "2026-11-16"
+   "hash": "629c7d73ca815656acecb2b3",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/kaupunki/kobenhavn/": {
-   "hash": "fbac9a55236556e5fc6ee4a0",
-   "lastmod": "2026-11-16"
+   "hash": "86813a7876c148a57ee27ab0",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/kaupunki/london/": {
-   "hash": "733601b6ff563483f2d087e8",
-   "lastmod": "2026-11-16"
+   "hash": "344ae8e005ee0c84dc11cde9",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/kaupunki/milngavie/": {
-   "hash": "85f4f1d3c46c29b963aad4b4",
-   "lastmod": "2026-11-16"
+   "hash": "e382349abdf843bf000c4def",
+   "lastmod": "2026-11-19"
+  },
+  "fi/kisat/kaupunki/norra-djurgarden-stockholm/": {
+   "hash": "1f951f7d027f0bd822daf668",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/kaupunki/oslo/": {
-   "hash": "6fec23abec1952d02baa5ebd",
-   "lastmod": "2026-11-16"
+   "hash": "6f4927d78494c82689dcdf26",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/kaupunki/oxberg/": {
-   "hash": "3ba3c7c167e89096ae0b488a",
-   "lastmod": "2026-11-16"
+   "hash": "84a5ef42cc1a4581a738b9ec",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/kaupunki/paris/": {
-   "hash": "d002dd06c3cf500b604afb2e",
-   "lastmod": "2026-11-16"
+   "hash": "91570c57c6f12a81209c56cc",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/kaupunki/philadelphia/": {
-   "hash": "02c7c8c6af7dffd037904d4d",
-   "lastmod": "2026-11-16"
+   "hash": "b7276d1f3e718d7dfd0b534e",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/kaupunki/roma/": {
-   "hash": "96b50e365bd23bda9e6dcc47",
-   "lastmod": "2026-11-16"
+   "hash": "8ba97f7cc9ca6c64bb2873c4",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/kaupunki/stockholm-norra-djurgarden/": {
-   "hash": "a7ab951b2b3a1d7171239133",
-   "lastmod": "2026-11-16"
+   "hash": "2299ec90fbb1803a63f4983c",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/kaupunki/stockholm/": {
-   "hash": "de15a2b882375e3d8b972d9b",
-   "lastmod": "2026-11-18"
+   "hash": "f975137069d32dcd4a3b67df",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/kaupunki/zurich/": {
-   "hash": "1c550ad0c71a7cab68b85e8f",
-   "lastmod": "2026-11-16"
+   "hash": "9b54862db3002bac61205518",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/kepler-challenge-60k/": {
    "hash": "c085ab68aae96378df9630e2",
@@ -8526,52 +8598,52 @@
    "lastmod": "2026-11-18"
   },
   "fi/kisat/kuukausi/2026-11/": {
-   "hash": "46fc80ccebaf477c8ae010ab",
-   "lastmod": "2026-11-18"
+   "hash": "598a4d3d1e6f70ab0cfdf0a4",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/kuukausi/2026-12/": {
-   "hash": "530b34f7889d08d8090113ed",
-   "lastmod": "2026-11-16"
+   "hash": "fe625c63c497611ef55b5931",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/kuukausi/2027-01/": {
-   "hash": "7f61fbb6515c5dc8fa6d31ff",
-   "lastmod": "2026-11-16"
+   "hash": "b05b45fb5c7f00efa387c158",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/kuukausi/2027-02/": {
-   "hash": "4b6a05717335aea942eab169",
-   "lastmod": "2026-11-16"
+   "hash": "44c4f0c7f1ce14fe0be38884",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/kuukausi/2027-03/": {
-   "hash": "52688da1900a2a48da857645",
-   "lastmod": "2026-11-16"
+   "hash": "902af3ebcfab4af9157bb0b6",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/kuukausi/2027-04/": {
-   "hash": "95da0fca8722865a498ab287",
-   "lastmod": "2026-11-16"
+   "hash": "9a585e3827687b68a5e05eaf",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/kuukausi/2027-05/": {
-   "hash": "55046615386c0965a8c5b0db",
-   "lastmod": "2026-11-18"
+   "hash": "9cb3161aaed4d7bbb90775f9",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/kuukausi/2027-06/": {
-   "hash": "bc7332a55ade1d417aaa6d62",
-   "lastmod": "2026-11-16"
+   "hash": "32161cad54c5e1231fa5f953",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/kuukausi/2027-07/": {
-   "hash": "841e628f82be15993110cc7c",
-   "lastmod": "2026-11-16"
+   "hash": "29b6270564227709a5796e41",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/kuukausi/2027-08/": {
-   "hash": "6cff704a47651589a10657af",
-   "lastmod": "2026-11-18"
+   "hash": "14b280572655c0225ce25856",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/kuukausi/2027-09/": {
-   "hash": "913320a8d809a4c1e6056624",
-   "lastmod": "2026-11-16"
+   "hash": "73282aa5363035f9534a2f68",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/kuukausi/2027-10/": {
-   "hash": "9ad84d1af823ec5df80dae72",
-   "lastmod": "2026-11-18"
+   "hash": "a100ef6ab351ce6a52620956",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/kyoto-marathon-2027-42k/": {
    "hash": "2c0c1017058401673942c35c",
@@ -8634,136 +8706,136 @@
    "lastmod": "2026-11-02"
   },
   "fi/kisat/maa/alankomaat/": {
-   "hash": "428e2c7f6cda73181954f530",
-   "lastmod": "2026-11-16"
+   "hash": "18f9398d53231a70c1dad779",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/maa/australia/": {
-   "hash": "6c42206f1d7f1e68e1ae15f5",
-   "lastmod": "2026-11-16"
+   "hash": "c0884cf49e22a7049bacae84",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/maa/belgia/": {
-   "hash": "c6d966d13ad0af5a691220e0",
-   "lastmod": "2026-11-16"
+   "hash": "2a488b2adf299d2a6bc40f56",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/maa/brasilia/": {
-   "hash": "c4148d5e72b105515d11e8e7",
-   "lastmod": "2026-11-16"
+   "hash": "a2333de679e8bf3246259a32",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/maa/espanja/": {
-   "hash": "f4bcd8817bc806cf9b3ec56c",
-   "lastmod": "2026-11-16"
+   "hash": "c0239aca643ef40f26ef9759",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/maa/etela-afrikka/": {
-   "hash": "5d5685845f0c10d4e81d2aa4",
-   "lastmod": "2026-11-18"
+   "hash": "3122ddb30736b7c5b9c19f44",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/maa/etela-korea/": {
-   "hash": "15cf1c8e7e6c0af8d011d870",
-   "lastmod": "2026-11-16"
+   "hash": "27f1f9fc979c35acd3ef538d",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/maa/hongkong/": {
-   "hash": "d594beb522dcd2281347fcb5",
-   "lastmod": "2026-11-16"
+   "hash": "6f408049e6f104263db2edc7",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/maa/intia/": {
-   "hash": "478d128b787c533eecd22d64",
-   "lastmod": "2026-11-16"
+   "hash": "c68e59e861d7a5a625b9d148",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/maa/irlanti/": {
-   "hash": "586e0c0785c3c1b4bc03db31",
-   "lastmod": "2026-11-16"
+   "hash": "79d9582941308c82d9a068f1",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/maa/islanti/": {
-   "hash": "28875b01caac9c8bc67fd93d",
-   "lastmod": "2026-11-16"
+   "hash": "8dc63edb2e4d06301cff3bed",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/maa/iso-britannia/": {
-   "hash": "b7fd9b7c61c720e6eb477ecb",
-   "lastmod": "2026-11-16"
+   "hash": "743de1969c8e02aafcb6494d",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/maa/israel/": {
-   "hash": "1053b2633aa35cdabf11b188",
-   "lastmod": "2026-11-16"
+   "hash": "37d4500335e3afc38cff3eba",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/maa/italia/": {
-   "hash": "80587150cb104d9551fa7606",
-   "lastmod": "2026-11-16"
+   "hash": "99d6e3c4843522cf38c0acbc",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/maa/itavalta/": {
-   "hash": "6d34b579e552d1c5217575a2",
-   "lastmod": "2026-11-16"
+   "hash": "86c7c37b0a3dbea905bbfb57",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/maa/japani/": {
-   "hash": "f18ff60d6bb2533ba8114de8",
-   "lastmod": "2026-11-16"
+   "hash": "ded104972eb624975faff9b4",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/maa/kanada/": {
-   "hash": "0ed94284dced661afa6c29b0",
-   "lastmod": "2026-11-16"
+   "hash": "b3d653a91ca9c03d024bfa91",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/maa/kiina/": {
-   "hash": "412eaec85ef0242ba7b6bd4e",
-   "lastmod": "2026-11-16"
+   "hash": "13e0ff2d51f4e21e59b6fbb9",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/maa/kreikka/": {
-   "hash": "2184ca3b6b89838079b93fec",
-   "lastmod": "2026-11-16"
+   "hash": "7b7fcffda267b1275e36f403",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/maa/luxemburg/": {
-   "hash": "242a28645808b379421e3c08",
-   "lastmod": "2026-11-16"
+   "hash": "b792a2f37dc868745a3ba49a",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/maa/marokko/": {
-   "hash": "a2df5299329f60ead76d7af7",
-   "lastmod": "2026-11-16"
+   "hash": "5ec58eda42a54504321a40d9",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/maa/norja/": {
-   "hash": "627b35adc30b4fbcc36646f1",
-   "lastmod": "2026-11-16"
+   "hash": "e1b93a80c7ffab361a11e4e6",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/maa/portugali/": {
-   "hash": "0a63963572b3e4d856ea1a0e",
-   "lastmod": "2026-11-16"
+   "hash": "b416b08da8fe8130aa07b3f2",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/maa/puola/": {
-   "hash": "65a95a041b99c870aca0cd3a",
-   "lastmod": "2026-11-16"
+   "hash": "17310379d6342fd0f169ddfc",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/maa/ranska/": {
-   "hash": "3a8e37047e4bc64ca0e95b6f",
-   "lastmod": "2026-11-18"
+   "hash": "9ef287b0fd81f2883845de25",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/maa/ruotsi/": {
-   "hash": "2ceed44dcda1701945393efa",
-   "lastmod": "2026-11-18"
+   "hash": "6eb3d290f61373e093a08632",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/maa/saksa/": {
-   "hash": "b2f5dfc17bf9b4d4a92e7423",
-   "lastmod": "2026-11-16"
+   "hash": "f89d97bf0168d696ffa9ed4d",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/maa/suomi/": {
-   "hash": "efc8916732be1846ea996b88",
-   "lastmod": "2026-11-16"
+   "hash": "546999f87bae71cc8b8c9796",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/maa/sveitsi/": {
-   "hash": "2d05d03872a8dec0ecfa0cb6",
-   "lastmod": "2026-11-16"
+   "hash": "a376991a4a99becac6ade4fb",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/maa/tanska/": {
-   "hash": "0baa2547ba5c4088b7f1fc02",
-   "lastmod": "2026-11-16"
+   "hash": "356b452d4c2e876105a42fa8",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/maa/unkari/": {
-   "hash": "a10600d8fa9a6f2ce41eebae",
-   "lastmod": "2026-11-16"
+   "hash": "9b50e1dc8cfb91dfef95f249",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/maa/uusi-seelanti/": {
-   "hash": "dc4feecb9954129b4a4a5a8d",
-   "lastmod": "2026-11-16"
+   "hash": "699cd1b6fa84af7a95a4ca1f",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/maa/yhdysvallat/": {
-   "hash": "db009d36f3d895301a56584c",
-   "lastmod": "2026-11-16"
+   "hash": "6efe35ea450e26d846f96094",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/mainova-frankfurt-marathon-42k/": {
    "hash": "b9155932951ba91947bb640f",
@@ -8834,28 +8906,28 @@
    "lastmod": "2026-11-09"
   },
   "fi/kisat/matka/10-km/": {
-   "hash": "30dba31bf2b63d25baff7bb5",
-   "lastmod": "2026-11-16"
+   "hash": "98ca3c84215549d55fcc8bfc",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/matka/5-km/": {
-   "hash": "100528d036826e18fe9aec8c",
-   "lastmod": "2026-11-16"
+   "hash": "37a3d4d60c2de7ec0cef890f",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/matka/maraton/": {
-   "hash": "251a7b216fc483065144ff40",
-   "lastmod": "2026-11-18"
+   "hash": "17effe2b7e46edf2b8e19e9f",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/matka/polkujuoksu/": {
-   "hash": "7e456c5b6c407da0cc0bdf1f",
-   "lastmod": "2026-11-18"
+   "hash": "c48b805a6bb3c7aad2575a6b",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/matka/puolimaraton/": {
-   "hash": "473611a60813ebefaeebd324",
-   "lastmod": "2026-11-16"
+   "hash": "e80115b643e1f052cfb58336",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/matka/ultra/": {
-   "hash": "7d82f4dcdf3968fbd033f800",
-   "lastmod": "2026-11-18"
+   "hash": "9eaee01257ccc272463b6b41",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/maxi-race-tour-du-lac-en-solo-1-jour-100k/": {
    "hash": "5b0c7a3a36ae98d70ee37f50",
@@ -9058,8 +9130,8 @@
    "lastmod": "2026-11-02"
   },
   "fi/kisat/sivu/2/": {
-   "hash": "154f43ee4be08971b614b1aa",
-   "lastmod": "2026-11-16"
+   "hash": "496e91b8bcec11de33381d78",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/six-foot-track-marathon-45k/": {
    "hash": "14daeef9e83eeae007afcb6a",
@@ -9118,8 +9190,8 @@
    "lastmod": "2026-11-02"
   },
   "fi/kisat/sylvesterloppet-10k/": {
-   "hash": "509088abe3d4562cd38f9ced",
-   "lastmod": "2026-11-18"
+   "hash": "b37be21810a8a7d55b77d3b5",
+   "lastmod": "2026-11-19"
   },
   "fi/kisat/taipei-marathon-marathon-42-195-km/": {
    "hash": "5f66bc8be46285d96002e132",
@@ -9350,12 +9422,12 @@
    "lastmod": "2026-11-02"
   },
   "fr/courses/": {
-   "hash": "0ed4a0eaad2fc767d8575040",
-   "lastmod": "2026-11-18"
+   "hash": "6eaad77dbdbb6792948a3c5a",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/101a-corrida-internacional-de-sao-silvestre-15k/": {
-   "hash": "23b0cd2d9bbd95063eba4ecd",
-   "lastmod": "2026-11-05"
+   "hash": "40993503695693c36208fa3d",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/20-km-de-bruxelles/": {
    "hash": "86beb223a75b1e66b15e1f7b",
@@ -9378,8 +9450,8 @@
    "lastmod": "2026-11-02"
   },
   "fr/courses/45-sparkassen-silvesterlauf-werl-soest-15-km/": {
-   "hash": "ee318c0caa85e2508bf132be",
-   "lastmod": "2026-11-05"
+   "hash": "d2971ad8c8ad09fc7ae04d95",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/49-leipzig-marathon-2027-marathon-42k/": {
    "hash": "e9fc34c7852d9fcd02b0e114",
@@ -9634,28 +9706,28 @@
    "lastmod": "2026-11-02"
   },
   "fr/courses/distance/10-km/": {
-   "hash": "8837818bd2551fbe5c3cd04e",
-   "lastmod": "2026-11-16"
+   "hash": "78c92f4f3a2ffd2fa8f3a9bb",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/distance/5-km/": {
-   "hash": "d1cd70971154a2b5550ef119",
-   "lastmod": "2026-11-16"
+   "hash": "1d20c616b8d7a9fe61192317",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/distance/marathon/": {
-   "hash": "437a42a1261732ea69615bdc",
-   "lastmod": "2026-11-18"
+   "hash": "10d2ef6bd43a9e28d49b48a0",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/distance/semi-marathon/": {
-   "hash": "cdc7adb7ee069eb0e01ecf9b",
-   "lastmod": "2026-11-16"
+   "hash": "8bcdf3242e1941ce04258f4a",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/distance/trail/": {
-   "hash": "79a2722c320ea2626d656adf",
-   "lastmod": "2026-11-18"
+   "hash": "b84e8c0ac6c123caad4c5571",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/distance/ultra/": {
-   "hash": "96f2315aaf4dec999eb1714a",
-   "lastmod": "2026-11-18"
+   "hash": "dbfb8867c1aa6d8da01416ea",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/dnb-oslo-maraton-maraton-43k/": {
    "hash": "6c381d1b66ba68011a27d463",
@@ -9846,8 +9918,16 @@
    "lastmod": "2026-11-02"
   },
   "fr/courses/hostrusket-10-km/": {
-   "hash": "80a78cb20bdb1ef5e778f052",
-   "lastmod": "2026-11-16"
+   "hash": "303b88330f422aa0cf42b309",
+   "lastmod": "2026-11-19"
+  },
+  "fr/courses/hostrusket-halvmaraton-21k/": {
+   "hash": "4a34df30dfc311cc7b4d2551",
+   "lastmod": "2026-11-19"
+  },
+  "fr/courses/hostrusket-maraton-42k/": {
+   "hash": "9bfb1e9d4167dc85b8991cc6",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/hyundai-mitja-marato-barcelona-by-brooks-21k/": {
    "hash": "1621f871c97a5e26e3ed8694",
@@ -10098,52 +10178,52 @@
    "lastmod": "2026-11-16"
   },
   "fr/courses/mois/2026-11/": {
-   "hash": "4acd2c7b3d3b1fc5f1939163",
-   "lastmod": "2026-11-18"
+   "hash": "65df86c0294ef755d69cdc55",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/mois/2026-12/": {
-   "hash": "08a94993c9633691075b6f8f",
-   "lastmod": "2026-11-16"
+   "hash": "df224fc65444439dfe5b3259",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/mois/2027-01/": {
-   "hash": "b3bea8e9ff5d71f946ef1d88",
-   "lastmod": "2026-11-16"
+   "hash": "d6d7c52b1b3920f90ddb7930",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/mois/2027-02/": {
-   "hash": "ba04c97af1f4469ad84c5f1c",
-   "lastmod": "2026-11-16"
+   "hash": "e79ea4193778995687b388fe",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/mois/2027-03/": {
-   "hash": "059ca1f5539fc174dc103f41",
-   "lastmod": "2026-11-16"
+   "hash": "e774ddf2e965d485dff32583",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/mois/2027-04/": {
-   "hash": "4094b44edc13cb04d41ee601",
-   "lastmod": "2026-11-16"
+   "hash": "9162dc1eefb3d8b865eeec4d",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/mois/2027-05/": {
-   "hash": "ffdcded279d3f95c24b93635",
-   "lastmod": "2026-11-18"
+   "hash": "5fa2a693c08f4332601d658e",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/mois/2027-06/": {
-   "hash": "32e34c10b07b83d86904b4c5",
-   "lastmod": "2026-11-16"
+   "hash": "7f5d87ee77180d66229abf11",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/mois/2027-07/": {
-   "hash": "8c0652114e6fc788955d31f6",
-   "lastmod": "2026-11-16"
+   "hash": "96a7a13afce67fa178612989",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/mois/2027-08/": {
-   "hash": "64d3467bdf8a06ec09e15450",
-   "lastmod": "2026-11-18"
+   "hash": "200400efa3461b3e7a6bfbcf",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/mois/2027-09/": {
-   "hash": "ea9352a9ac2dff07a0de4639",
-   "lastmod": "2026-11-16"
+   "hash": "f039990eb4ac876767e5aa16",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/mois/2027-10/": {
-   "hash": "02b7337a4a3ef0ce8698ac13",
-   "lastmod": "2026-11-18"
+   "hash": "6505eb625ac54ce9cd729e68",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/montane-lakeland-100-164k/": {
    "hash": "fa7e29d4a1498100fedf57f6",
@@ -10214,140 +10294,140 @@
    "lastmod": "2026-11-02"
   },
   "fr/courses/page/2/": {
-   "hash": "fb5904efc9b105e466060e50",
-   "lastmod": "2026-11-16"
+   "hash": "279a7cc2f7a482822a1a5e96",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/pays/afrique-du-sud/": {
-   "hash": "a106679b9f80ea8f7c15c946",
-   "lastmod": "2026-11-18"
+   "hash": "4c65976cbb048dc0604b2116",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/pays/allemagne/": {
-   "hash": "35a3df1e9135c1c61cc5afd1",
-   "lastmod": "2026-11-16"
+   "hash": "c73485bc028910d139ff0c6d",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/pays/australie/": {
-   "hash": "1dc8cea1c8f24bb28cac458b",
-   "lastmod": "2026-11-16"
+   "hash": "2d9c00bf4e626473273c2ede",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/pays/autriche/": {
-   "hash": "aaf61d7090b28c1787614c4e",
-   "lastmod": "2026-11-16"
+   "hash": "a89dfca31f1ece483d3453da",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/pays/belgique/": {
-   "hash": "8c3cb6521c900f4d68b8611f",
-   "lastmod": "2026-11-16"
+   "hash": "4d4dabc74cd8f0c982edaf54",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/pays/bresil/": {
-   "hash": "a8b3d8e76504e9535018b999",
-   "lastmod": "2026-11-16"
+   "hash": "e39fa624c293dbb68557d82f",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/pays/canada/": {
-   "hash": "83e66a2360cfcb038a7494a8",
-   "lastmod": "2026-11-16"
+   "hash": "54cfe21dee8b4e4802271018",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/pays/chine/": {
-   "hash": "2adb835df2472478b1cd9fa0",
-   "lastmod": "2026-11-16"
+   "hash": "39be1a2c75acf2fc2793c1bc",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/pays/coree-du-sud/": {
-   "hash": "78370b1f1a21dba04eccbc7c",
-   "lastmod": "2026-11-16"
+   "hash": "9c8c9e2e6cbca443a216c7bc",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/pays/danemark/": {
-   "hash": "f05f72a4e9f41e4484891e03",
-   "lastmod": "2026-11-16"
+   "hash": "a256e4ac2f140536dceadd62",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/pays/espagne/": {
-   "hash": "3a541fa93f97a46ac3b6c9e8",
-   "lastmod": "2026-11-16"
+   "hash": "9fce440eb61220db1fb45805",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/pays/etats-unis/": {
-   "hash": "329a7b698fb53fd5a3377d91",
-   "lastmod": "2026-11-16"
+   "hash": "58cd9eb4a4080d8da5f2b697",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/pays/finlande/": {
-   "hash": "2bfeb567926a9ea775bed34b",
-   "lastmod": "2026-11-16"
+   "hash": "170a0956640968596ee041bb",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/pays/france/": {
-   "hash": "e831deff1741c0ce35f04206",
-   "lastmod": "2026-11-18"
+   "hash": "33ff3749197e7cc54bbd1621",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/pays/grece/": {
-   "hash": "84358b8db0fb70d7f50d9a76",
-   "lastmod": "2026-11-16"
+   "hash": "4ee5c31d9986612d71389915",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/pays/hong-kong/": {
-   "hash": "6b32cdb74b0a01336f5a7935",
-   "lastmod": "2026-11-16"
+   "hash": "9060c768b19d178b7561bec5",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/pays/hongrie/": {
-   "hash": "e34a4e02e9b6b886e633371b",
-   "lastmod": "2026-11-16"
+   "hash": "d5a0ee16ed6ab52fb590b435",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/pays/inde/": {
-   "hash": "561bd6742b05ad44fc82df28",
-   "lastmod": "2026-11-16"
+   "hash": "30e8e6667d9cf11d7111bc3e",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/pays/irlande/": {
-   "hash": "55dc325ed181c695a53c2b74",
-   "lastmod": "2026-11-16"
+   "hash": "94708c17ddef4022d690cd19",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/pays/islande/": {
-   "hash": "dfd5cac565ac69209e122e6c",
-   "lastmod": "2026-11-16"
+   "hash": "745505e4fd11e72062523176",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/pays/israel/": {
-   "hash": "ecb31eb89866be6c7945fc51",
-   "lastmod": "2026-11-16"
+   "hash": "3fbcc669f332f41175c227c2",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/pays/italie/": {
-   "hash": "551852d1ac939c590ad6da0c",
-   "lastmod": "2026-11-16"
+   "hash": "cf6ca2debd8c6a619fc79ff7",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/pays/japon/": {
-   "hash": "e90a19c4f26d2cfc99eae37b",
-   "lastmod": "2026-11-16"
+   "hash": "c76169308a7f8c65839f9045",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/pays/luxembourg/": {
-   "hash": "abe9a26af1ee78869a65ed10",
-   "lastmod": "2026-11-16"
+   "hash": "46271125419386a0a51029a5",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/pays/maroc/": {
-   "hash": "4602c40448c7ee5846d4c70a",
-   "lastmod": "2026-11-16"
+   "hash": "110b38064652d0c42a311623",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/pays/norvege/": {
-   "hash": "fadde34fc9541b7067e708ef",
-   "lastmod": "2026-11-16"
+   "hash": "6e888e6baec8e92fe81ebb45",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/pays/nouvelle-zelande/": {
-   "hash": "565adbc261f99c83bcf818f5",
-   "lastmod": "2026-11-16"
+   "hash": "7e4bc4bd1ce96ea02f3781e4",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/pays/pays-bas/": {
-   "hash": "01d35617256fa138ac0b9e52",
-   "lastmod": "2026-11-16"
+   "hash": "a6489bc979523c32c786e9d1",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/pays/pologne/": {
-   "hash": "87212aab06b14c5702a6a1d0",
-   "lastmod": "2026-11-16"
+   "hash": "5775e1899c59d447f2612064",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/pays/portugal/": {
-   "hash": "9130600b3643deb835b8969d",
-   "lastmod": "2026-11-16"
+   "hash": "11829bc201bfadbf22c260f1",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/pays/royaume-uni/": {
-   "hash": "9610fa8de2ac04ab8bdcaae4",
-   "lastmod": "2026-11-16"
+   "hash": "ad2c4fd774486cc0d91f8b68",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/pays/suede/": {
-   "hash": "25ec58e161dc236e52168de6",
-   "lastmod": "2026-11-18"
+   "hash": "55e5e2b9973ae7fe64ca77c4",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/pays/suisse/": {
-   "hash": "cffb0023a2f9caeaf5861361",
-   "lastmod": "2026-11-16"
+   "hash": "122114487443b0d5bcdd63b2",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/pikes-peak-marathon-42k/": {
    "hash": "6bd4c032bbf2363ca308f4f6",
@@ -10486,8 +10566,8 @@
    "lastmod": "2026-11-02"
   },
   "fr/courses/sylvesterloppet-10k/": {
-   "hash": "018d3069aa58885beecc54ae",
-   "lastmod": "2026-11-18"
+   "hash": "6d3798cbc53d0143de19a381",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/taipei-marathon-marathon-42-195-km/": {
    "hash": "f91ecc8295afab8d701956c3",
@@ -10646,88 +10726,92 @@
    "lastmod": "2026-11-02"
   },
   "fr/courses/ville/annecy/": {
-   "hash": "b110d48034567b03cf402737",
-   "lastmod": "2026-11-16"
+   "hash": "4c5f0d27eff420310a80d231",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/ville/barcelona/": {
-   "hash": "04d7700f78c3966c377df605",
-   "lastmod": "2026-11-16"
+   "hash": "8fe85af6a334657c6b49b9f5",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/ville/berlin/": {
-   "hash": "6c726edf5d4a9361a766339a",
-   "lastmod": "2026-11-16"
+   "hash": "249289e6a93b783dd0717c13",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/ville/budapest/": {
-   "hash": "a5e460c6e13b6de3356c11b4",
-   "lastmod": "2026-11-16"
+   "hash": "c815211cc5e85519fb4f4647",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/ville/courmayeur/": {
-   "hash": "8047191e4062d46e80fb9336",
-   "lastmod": "2026-11-16"
+   "hash": "88c077bf4bf8c8052c08a8be",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/ville/goteborg/": {
-   "hash": "041c61b17f01bfe94ed4cb00",
-   "lastmod": "2026-11-16"
+   "hash": "2afcd56a8186233bd9339a7c",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/ville/hamburg/": {
-   "hash": "43ac7931523f9db277ecd162",
-   "lastmod": "2026-11-16"
+   "hash": "72e8bb015e96ce6c1c93afbe",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/ville/harnosand/": {
-   "hash": "503db9e47bba2689c0a2438f",
-   "lastmod": "2026-11-18"
+   "hash": "ebf6a63ff7399cf904710d28",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/ville/helsinki/": {
-   "hash": "ac6727e39795c2f6a509b34e",
-   "lastmod": "2026-11-16"
+   "hash": "8d9edf3b703d3e67166c3465",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/ville/katoomba/": {
-   "hash": "3d928b28647e01e4f16c033b",
-   "lastmod": "2026-11-16"
+   "hash": "85b255f7efd13780c01051ef",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/ville/kobenhavn/": {
-   "hash": "70bf2e78a183b3f64f5e28c7",
-   "lastmod": "2026-11-16"
+   "hash": "2818fed923e5353e40cf4491",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/ville/london/": {
-   "hash": "5aaf1e48d1fc53ac9900cbd9",
-   "lastmod": "2026-11-16"
+   "hash": "d52e25bbc1ca38cdeda0f52c",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/ville/milngavie/": {
-   "hash": "0b9da6b2f717ff8fce9b5bf6",
-   "lastmod": "2026-11-16"
+   "hash": "80ab254a6cc76a4741f15ac4",
+   "lastmod": "2026-11-19"
+  },
+  "fr/courses/ville/norra-djurgarden-stockholm/": {
+   "hash": "ce466e7e795d8f3ccb9f179a",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/ville/oslo/": {
-   "hash": "48d21310dbb6047f3d55b7e9",
-   "lastmod": "2026-11-16"
+   "hash": "335667ac420b672f37222933",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/ville/oxberg/": {
-   "hash": "184751687f1f5e02b3e98d1b",
-   "lastmod": "2026-11-16"
+   "hash": "adc1e309dcccb6c7ae823bfa",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/ville/paris/": {
-   "hash": "fa23072e1a47ce266915a60d",
-   "lastmod": "2026-11-16"
+   "hash": "2dea4d414fb923b9351d5cb3",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/ville/philadelphia/": {
-   "hash": "6e9ae97c800a8df942dd6541",
-   "lastmod": "2026-11-16"
+   "hash": "4193c7982d0ee292ecfeee49",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/ville/roma/": {
-   "hash": "c3a4d045f2cbcfbe5f05b145",
-   "lastmod": "2026-11-16"
+   "hash": "d08493ff1c20e269f17bcc24",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/ville/stockholm-norra-djurgarden/": {
-   "hash": "e4d452a879110135172b2bf7",
-   "lastmod": "2026-11-16"
+   "hash": "939dc29d982f95a7c45445b9",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/ville/stockholm/": {
-   "hash": "cfc11513fe9b5a4e216ce63e",
-   "lastmod": "2026-11-18"
+   "hash": "2dffd5e0ce88fc77330f296a",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/ville/zurich/": {
-   "hash": "8d89d61dc9114d6496cda23c",
-   "lastmod": "2026-11-16"
+   "hash": "3390d011ecbae8e03d842331",
+   "lastmod": "2026-11-19"
   },
   "fr/courses/vodafone-prague-marathon-42k/": {
    "hash": "15db7e0fe59c4de9edc09c37",
@@ -10826,12 +10910,12 @@
    "lastmod": "2026-10-16"
   },
   "lopp/": {
-   "hash": "6247af0a1d67e3d086e14232",
-   "lastmod": "2026-11-18"
+   "hash": "be52e3b33b834dce147b55ec",
+   "lastmod": "2026-11-19"
   },
   "lopp/101a-corrida-internacional-de-sao-silvestre-15k/": {
-   "hash": "8929ce3d6b589dfb3367266a",
-   "lastmod": "2026-11-05"
+   "hash": "6ba805572cdd95b16e1cbb54",
+   "lastmod": "2026-11-19"
   },
   "lopp/20-km-de-bruxelles/": {
    "hash": "d6efcab9b5ab24b657e910c9",
@@ -10854,8 +10938,8 @@
    "lastmod": "2026-11-02"
   },
   "lopp/45-sparkassen-silvesterlauf-werl-soest-15-km/": {
-   "hash": "016a407d7d00db7de62ba3bc",
-   "lastmod": "2026-11-05"
+   "hash": "61d453f7d7241157c307d2b0",
+   "lastmod": "2026-11-19"
   },
   "lopp/49-leipzig-marathon-2027-marathon-42k/": {
    "hash": "a065e817249d07f2a1c455fc",
@@ -11110,28 +11194,28 @@
    "lastmod": "2026-11-02"
   },
   "lopp/distans/10-km/": {
-   "hash": "fd05a0664800e8ab3cad47a2",
-   "lastmod": "2026-11-16"
+   "hash": "08791544cc71cdebd307518e",
+   "lastmod": "2026-11-19"
   },
   "lopp/distans/5-km/": {
-   "hash": "43c2b0da08e6dea3aeb0f0b5",
-   "lastmod": "2026-11-16"
+   "hash": "d964b761bdc244384ad69947",
+   "lastmod": "2026-11-19"
   },
   "lopp/distans/halvmaraton/": {
-   "hash": "94cce1e7a5734b084fef02db",
-   "lastmod": "2026-11-16"
+   "hash": "2991a339ba29311dc5f65311",
+   "lastmod": "2026-11-19"
   },
   "lopp/distans/maraton/": {
-   "hash": "ffc6b58dba463142ec0b6697",
-   "lastmod": "2026-11-18"
+   "hash": "6fd7e7d32a6a1e44ebf193b3",
+   "lastmod": "2026-11-19"
   },
   "lopp/distans/trail/": {
-   "hash": "1522e3b9fb5732b1a341cc4b",
-   "lastmod": "2026-11-18"
+   "hash": "fc3bb208dfa7399aeedc5386",
+   "lastmod": "2026-11-19"
   },
   "lopp/distans/ultra/": {
-   "hash": "44b433d550845512a59c9aa2",
-   "lastmod": "2026-11-18"
+   "hash": "e29e49728ecf0db002ea24ac",
+   "lastmod": "2026-11-19"
   },
   "lopp/dnb-oslo-maraton-maraton-43k/": {
    "hash": "661e804918233f608cc8d131",
@@ -11322,8 +11406,16 @@
    "lastmod": "2026-11-02"
   },
   "lopp/hostrusket-10-km/": {
-   "hash": "65a3cc8bb4f4a48e893825a7",
-   "lastmod": "2026-11-16"
+   "hash": "b74755952e5cf0f887daa98b",
+   "lastmod": "2026-11-19"
+  },
+  "lopp/hostrusket-halvmaraton-21k/": {
+   "hash": "68bdbf7a677b0f6b904599fc",
+   "lastmod": "2026-11-19"
+  },
+  "lopp/hostrusket-maraton-42k/": {
+   "hash": "d3ae312c4b35d77ede66fda0",
+   "lastmod": "2026-11-19"
   },
   "lopp/hyundai-mitja-marato-barcelona-by-brooks-21k/": {
    "hash": "08ae7304cd1de8284cb9a6a3",
@@ -11410,136 +11502,136 @@
    "lastmod": "2026-10-24"
   },
   "lopp/land/australien/": {
-   "hash": "77a9b3acb3acb05ff24d23c8",
-   "lastmod": "2026-11-16"
+   "hash": "2b916bec600c38cd69be5300",
+   "lastmod": "2026-11-19"
   },
   "lopp/land/belgien/": {
-   "hash": "992f3e12c31fd40300afc64c",
-   "lastmod": "2026-11-16"
+   "hash": "4215c72b51959dc85d279894",
+   "lastmod": "2026-11-19"
   },
   "lopp/land/brasilien/": {
-   "hash": "d7348daf9c83546050676ddd",
-   "lastmod": "2026-11-16"
+   "hash": "a043f27549b5ba5fadf9d7f0",
+   "lastmod": "2026-11-19"
   },
   "lopp/land/danmark/": {
-   "hash": "ee2c08f960abd4b97fdc3850",
-   "lastmod": "2026-11-16"
+   "hash": "6723bcde3c286759e1b84db2",
+   "lastmod": "2026-11-19"
   },
   "lopp/land/finland/": {
-   "hash": "8543acfd43365b1e95762279",
-   "lastmod": "2026-11-16"
+   "hash": "a4b5a59d5b90b8f566884f2b",
+   "lastmod": "2026-11-19"
   },
   "lopp/land/frankrike/": {
-   "hash": "9bd091d6c03266774b6b46f6",
-   "lastmod": "2026-11-18"
+   "hash": "8946907d965912f1863a60b1",
+   "lastmod": "2026-11-19"
   },
   "lopp/land/grekland/": {
-   "hash": "38ef99105b08a66452155a67",
-   "lastmod": "2026-11-16"
+   "hash": "211f4a825e70b562043ca288",
+   "lastmod": "2026-11-19"
   },
   "lopp/land/hongkong/": {
-   "hash": "9274182e4f34cb727830384b",
-   "lastmod": "2026-11-16"
+   "hash": "378266312bf5d87d2fcccab9",
+   "lastmod": "2026-11-19"
   },
   "lopp/land/indien/": {
-   "hash": "528dc9b78659608712a21f84",
-   "lastmod": "2026-11-16"
+   "hash": "387a9e44c1738905b807d919",
+   "lastmod": "2026-11-19"
   },
   "lopp/land/irland/": {
-   "hash": "2e401431adf27a154b5aca73",
-   "lastmod": "2026-11-16"
+   "hash": "0fe0f55413c5c54526030975",
+   "lastmod": "2026-11-19"
   },
   "lopp/land/island/": {
-   "hash": "ebe4971b68a83bc9a7938c1f",
-   "lastmod": "2026-11-16"
+   "hash": "a5921bdf01af73aad712704a",
+   "lastmod": "2026-11-19"
   },
   "lopp/land/israel/": {
-   "hash": "c25310ca5a6e14ac4d399ef2",
-   "lastmod": "2026-11-16"
+   "hash": "8d9273d4ae3b3b9889d5927f",
+   "lastmod": "2026-11-19"
   },
   "lopp/land/italien/": {
-   "hash": "2235cbb45ece9a8acd26f9b3",
-   "lastmod": "2026-11-16"
+   "hash": "e8c041ab1498912f565ac38c",
+   "lastmod": "2026-11-19"
   },
   "lopp/land/japan/": {
-   "hash": "61fe7dd607adb3267113a2f9",
-   "lastmod": "2026-11-16"
+   "hash": "a9fa47d80774c0a18af4a8c8",
+   "lastmod": "2026-11-19"
   },
   "lopp/land/kanada/": {
-   "hash": "db6a2320ce0c2ce9a03a2efd",
-   "lastmod": "2026-11-16"
+   "hash": "867e5c9144b1c210c776dece",
+   "lastmod": "2026-11-19"
   },
   "lopp/land/kina/": {
-   "hash": "a53633aff1d938915340151d",
-   "lastmod": "2026-11-16"
+   "hash": "957ec7a86e464d860801565c",
+   "lastmod": "2026-11-19"
   },
   "lopp/land/luxemburg/": {
-   "hash": "7f70138f78f53ff31a16f1ae",
-   "lastmod": "2026-11-16"
+   "hash": "220d17fc1d0c554cd28ac237",
+   "lastmod": "2026-11-19"
   },
   "lopp/land/marocko/": {
-   "hash": "cb02259a323e2b0747d1cf32",
-   "lastmod": "2026-11-16"
+   "hash": "d5cc9f661337ecb327603bf2",
+   "lastmod": "2026-11-19"
   },
   "lopp/land/nederlanderna/": {
-   "hash": "0d2fe230553bcafbcde67a71",
-   "lastmod": "2026-11-16"
+   "hash": "5b489bc9ac62b75e7c0242f6",
+   "lastmod": "2026-11-19"
   },
   "lopp/land/norge/": {
-   "hash": "47cb56ede0b3367c61356565",
-   "lastmod": "2026-11-16"
+   "hash": "77373d344fb23d9418e286f5",
+   "lastmod": "2026-11-19"
   },
   "lopp/land/nya-zeeland/": {
-   "hash": "0f3d810eae3c90cca97cd757",
-   "lastmod": "2026-11-16"
+   "hash": "2eedf54c9f203160d54ec06d",
+   "lastmod": "2026-11-19"
   },
   "lopp/land/osterrike/": {
-   "hash": "91a78149c85697fa0e58f49f",
-   "lastmod": "2026-11-16"
+   "hash": "d25fa64c1b6ff5251e852176",
+   "lastmod": "2026-11-19"
   },
   "lopp/land/polen/": {
-   "hash": "441e947930a60ce927f5189e",
-   "lastmod": "2026-11-16"
+   "hash": "15c6b9e462edc82474760bfd",
+   "lastmod": "2026-11-19"
   },
   "lopp/land/portugal/": {
-   "hash": "8fb60377aba9144d39fdad58",
-   "lastmod": "2026-11-16"
+   "hash": "1790b82bb66b6089466c84a1",
+   "lastmod": "2026-11-19"
   },
   "lopp/land/schweiz/": {
-   "hash": "0f9761c5e2e7cae05c3e61bc",
-   "lastmod": "2026-11-16"
+   "hash": "766455df8f691054f33cfc92",
+   "lastmod": "2026-11-19"
   },
   "lopp/land/spanien/": {
-   "hash": "670bb616571ae2b965376dfb",
-   "lastmod": "2026-11-16"
+   "hash": "2d14ca47a8e57b1ed9039a07",
+   "lastmod": "2026-11-19"
   },
   "lopp/land/storbritannien/": {
-   "hash": "0a39a4622fae900c8836da8e",
-   "lastmod": "2026-11-16"
+   "hash": "76f6d088db492284df896144",
+   "lastmod": "2026-11-19"
   },
   "lopp/land/sverige/": {
-   "hash": "de95aa32fc5309e41866053b",
-   "lastmod": "2026-11-18"
+   "hash": "1a73e0a924ba3a32f12e7766",
+   "lastmod": "2026-11-19"
   },
   "lopp/land/sydafrika/": {
-   "hash": "193f2c0eefb49b05fb9e1ed4",
-   "lastmod": "2026-11-18"
+   "hash": "3f62f8186d70393691e5b1e3",
+   "lastmod": "2026-11-19"
   },
   "lopp/land/sydkorea/": {
-   "hash": "ff17878c62caedef0aa7e306",
-   "lastmod": "2026-11-16"
+   "hash": "80d2ac24fb740d0d31d0658d",
+   "lastmod": "2026-11-19"
   },
   "lopp/land/tyskland/": {
-   "hash": "fbf808c922736215f4c9a517",
-   "lastmod": "2026-11-16"
+   "hash": "f8a3347fae22fbc99f392842",
+   "lastmod": "2026-11-19"
   },
   "lopp/land/ungern/": {
-   "hash": "1161a8ec5e7fb0d17c5771eb",
-   "lastmod": "2026-11-16"
+   "hash": "b07cfd37e454f610e72839d3",
+   "lastmod": "2026-11-19"
   },
   "lopp/land/usa/": {
-   "hash": "8259ecc4de523fc15efd0760",
-   "lastmod": "2026-11-16"
+   "hash": "a8613194e1c04dbdda0b3e5d",
+   "lastmod": "2026-11-19"
   },
   "lopp/laugavegur-ultra-marathon-52k/": {
    "hash": "22e98e40920355e6673957e4",
@@ -11590,52 +11682,52 @@
    "lastmod": "2026-11-02"
   },
   "lopp/manad/2026-11/": {
-   "hash": "5a1acb576b8617ed43c50850",
-   "lastmod": "2026-11-18"
+   "hash": "e91c3be8178b08c07b2f4de7",
+   "lastmod": "2026-11-19"
   },
   "lopp/manad/2026-12/": {
-   "hash": "1ede9e7709673017b65f90e6",
-   "lastmod": "2026-11-16"
+   "hash": "3a5212ef3e1fd4a746f40fb5",
+   "lastmod": "2026-11-19"
   },
   "lopp/manad/2027-01/": {
-   "hash": "780bf0c4ab2dff6356860b34",
-   "lastmod": "2026-11-16"
+   "hash": "46fe0a95e411de7f4e0596ca",
+   "lastmod": "2026-11-19"
   },
   "lopp/manad/2027-02/": {
-   "hash": "3306e974ae853e6bb81232fa",
-   "lastmod": "2026-11-16"
+   "hash": "0094a92d880243e9ff0c81ec",
+   "lastmod": "2026-11-19"
   },
   "lopp/manad/2027-03/": {
-   "hash": "074d7544ff97e8a7801eff1b",
-   "lastmod": "2026-11-16"
+   "hash": "55821adf05d317f467db6537",
+   "lastmod": "2026-11-19"
   },
   "lopp/manad/2027-04/": {
-   "hash": "27982f94e312fdf9f992c1de",
-   "lastmod": "2026-11-16"
+   "hash": "4ac21457768cee3ce37c7836",
+   "lastmod": "2026-11-19"
   },
   "lopp/manad/2027-05/": {
-   "hash": "2580da33a74a723cf2942b3d",
-   "lastmod": "2026-11-18"
+   "hash": "b8e77ce42ff90fdf58913db8",
+   "lastmod": "2026-11-19"
   },
   "lopp/manad/2027-06/": {
-   "hash": "9e0b1a2bea8e42cab7fee7ac",
-   "lastmod": "2026-11-16"
+   "hash": "b3d9e01f970f1e800b7cda7b",
+   "lastmod": "2026-11-19"
   },
   "lopp/manad/2027-07/": {
-   "hash": "862aa925e7dee913455008a3",
-   "lastmod": "2026-11-16"
+   "hash": "756fec67629d84b0818e51e5",
+   "lastmod": "2026-11-19"
   },
   "lopp/manad/2027-08/": {
-   "hash": "ee7f9a3a1a361c961c0aac41",
-   "lastmod": "2026-11-18"
+   "hash": "2e7caedc1e1d537097104942",
+   "lastmod": "2026-11-19"
   },
   "lopp/manad/2027-09/": {
-   "hash": "3b5e496ee0c679dcf14a9aff",
-   "lastmod": "2026-11-16"
+   "hash": "dcf9ee25426e12c11a95f0bd",
+   "lastmod": "2026-11-19"
   },
   "lopp/manad/2027-10/": {
-   "hash": "866964e94c7b81e6c82f9e33",
-   "lastmod": "2026-11-18"
+   "hash": "5bcf825648dda93327663099",
+   "lastmod": "2026-11-19"
   },
   "lopp/manchester-marathon-42k/": {
    "hash": "65064cf27db1545eeeebb229",
@@ -11898,8 +11990,8 @@
    "lastmod": "2026-11-02"
   },
   "lopp/sida/2/": {
-   "hash": "f0058dede459e3b160afb3dd",
-   "lastmod": "2026-11-16"
+   "hash": "1a908cd751d07bc6953fc38c",
+   "lastmod": "2026-11-19"
   },
   "lopp/sinister-7-ultra-100-miler-161k/": {
    "hash": "f8ff8615f5e2ec5c72452305",
@@ -11926,88 +12018,92 @@
    "lastmod": "2026-11-02"
   },
   "lopp/stad/annecy/": {
-   "hash": "faaa635bd8d3c1fc5007ea94",
-   "lastmod": "2026-11-16"
+   "hash": "fb45802a07162872bb42cf37",
+   "lastmod": "2026-11-19"
   },
   "lopp/stad/barcelona/": {
-   "hash": "59d5ce88e1634e24ec40bb08",
-   "lastmod": "2026-11-16"
+   "hash": "574e3ee1b2eec0aa040cfc49",
+   "lastmod": "2026-11-19"
   },
   "lopp/stad/berlin/": {
-   "hash": "8a535c2ba16437be151ffc42",
-   "lastmod": "2026-11-16"
+   "hash": "778d8e9d405d21958ef41847",
+   "lastmod": "2026-11-19"
   },
   "lopp/stad/budapest/": {
-   "hash": "ae4345a6f1749f0605243789",
-   "lastmod": "2026-11-16"
+   "hash": "05b239c32f8c78310bebd7d8",
+   "lastmod": "2026-11-19"
   },
   "lopp/stad/courmayeur/": {
-   "hash": "4ea909de17b3e343ce2aba7d",
-   "lastmod": "2026-11-16"
+   "hash": "4e7712753bab0b4dcfa8d23a",
+   "lastmod": "2026-11-19"
   },
   "lopp/stad/goteborg/": {
-   "hash": "b9af19d7a773007f4cd6213e",
-   "lastmod": "2026-11-16"
+   "hash": "84ec3be3acaca3847a96922b",
+   "lastmod": "2026-11-19"
   },
   "lopp/stad/hamburg/": {
-   "hash": "7b5fce2d658c73f0bc754889",
-   "lastmod": "2026-11-16"
+   "hash": "75561969279389a20f4f944c",
+   "lastmod": "2026-11-19"
   },
   "lopp/stad/harnosand/": {
-   "hash": "04c32472102305ce3fea240f",
-   "lastmod": "2026-11-18"
+   "hash": "f380ee2906e67adef2e6dd49",
+   "lastmod": "2026-11-19"
   },
   "lopp/stad/helsinki/": {
-   "hash": "019953f7785dec91e85871b8",
-   "lastmod": "2026-11-16"
+   "hash": "eba6c5e71d15ad0269002296",
+   "lastmod": "2026-11-19"
   },
   "lopp/stad/katoomba/": {
-   "hash": "ce220b1478f2a45f67e526c3",
-   "lastmod": "2026-11-16"
+   "hash": "2e78d42502ab72e47080fdc9",
+   "lastmod": "2026-11-19"
   },
   "lopp/stad/kobenhavn/": {
-   "hash": "02c0f906ce71c09dce4bc5a0",
-   "lastmod": "2026-11-16"
+   "hash": "e2bd59770789ed4c3a0b5d06",
+   "lastmod": "2026-11-19"
   },
   "lopp/stad/london/": {
-   "hash": "111c3f43d072414dedb6a5c4",
-   "lastmod": "2026-11-16"
+   "hash": "5f89c180e230e94b7657412d",
+   "lastmod": "2026-11-19"
   },
   "lopp/stad/milngavie/": {
-   "hash": "140fddd50554b124afe29a9e",
-   "lastmod": "2026-11-16"
+   "hash": "aca7fff1536f8577637a71ea",
+   "lastmod": "2026-11-19"
+  },
+  "lopp/stad/norra-djurgarden-stockholm/": {
+   "hash": "bc465aa3dd09965258c076ed",
+   "lastmod": "2026-11-19"
   },
   "lopp/stad/oslo/": {
-   "hash": "a2b3e6813c463eb5c1cfef48",
-   "lastmod": "2026-11-16"
+   "hash": "e6b1e3d8c020535ee26e7fc1",
+   "lastmod": "2026-11-19"
   },
   "lopp/stad/oxberg/": {
-   "hash": "81bac1467c3a8cdb879cb4ee",
-   "lastmod": "2026-11-16"
+   "hash": "278ca447d8592ad55e0269eb",
+   "lastmod": "2026-11-19"
   },
   "lopp/stad/paris/": {
-   "hash": "172379e071640af09f4bfc25",
-   "lastmod": "2026-11-16"
+   "hash": "dde629363ff7058e39cbf168",
+   "lastmod": "2026-11-19"
   },
   "lopp/stad/philadelphia/": {
-   "hash": "438b8ad771444531454f4912",
-   "lastmod": "2026-11-16"
+   "hash": "4eb88e2125965a5c39592148",
+   "lastmod": "2026-11-19"
   },
   "lopp/stad/roma/": {
-   "hash": "c2c696f40c3d1742e36e6b06",
-   "lastmod": "2026-11-16"
+   "hash": "d1c6087460255569c3f3842f",
+   "lastmod": "2026-11-19"
   },
   "lopp/stad/stockholm-norra-djurgarden/": {
-   "hash": "28cbaccacbadadc8f4811e60",
-   "lastmod": "2026-11-16"
+   "hash": "fd4736d8b486d26ca41c4bff",
+   "lastmod": "2026-11-19"
   },
   "lopp/stad/stockholm/": {
-   "hash": "c11083083e2775a1889c3eb5",
-   "lastmod": "2026-11-18"
+   "hash": "62a1d5eff4c89c78f6bf5942",
+   "lastmod": "2026-11-19"
   },
   "lopp/stad/zurich/": {
-   "hash": "3ca8dbecd4063104fa4de2db",
-   "lastmod": "2026-11-16"
+   "hash": "ff2c8a8985893ab2fc8742db",
+   "lastmod": "2026-11-19"
   },
   "lopp/standard-chartered-hong-kong-marathon-marathon-42-195-km/": {
    "hash": "335e761f6d93431419f88561",
@@ -12046,8 +12142,8 @@
    "lastmod": "2026-11-02"
   },
   "lopp/sylvesterloppet-10k/": {
-   "hash": "dcfb3c00f23f517e2145a415",
-   "lastmod": "2026-11-18"
+   "hash": "7a7e947043801c70c38948b0",
+   "lastmod": "2026-11-19"
   },
   "lopp/taipei-marathon-marathon-42-195-km/": {
    "hash": "f09532bb5ffb368e0bcee032",
@@ -12278,12 +12374,12 @@
    "lastmod": "2026-11-02"
   },
   "nb/lop/": {
-   "hash": "d26336f0b5b0485916a9e865",
-   "lastmod": "2026-11-18"
+   "hash": "772389670db85f717862eb95",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/101a-corrida-internacional-de-sao-silvestre-15k/": {
-   "hash": "64cdc70ad44f3c5fb84c11fd",
-   "lastmod": "2026-11-05"
+   "hash": "d287dd7e1f93568d34366ecd",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/20-km-de-bruxelles/": {
    "hash": "a2befe0682cad3485588ee4d",
@@ -12306,8 +12402,8 @@
    "lastmod": "2026-11-02"
   },
   "nb/lop/45-sparkassen-silvesterlauf-werl-soest-15-km/": {
-   "hash": "8aabf40ff9d49dd5c1a9247e",
-   "lastmod": "2026-11-05"
+   "hash": "3b16ec91fcd1333c83995069",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/49-leipzig-marathon-2027-marathon-42k/": {
    "hash": "46220a334d1fe1600e8d519c",
@@ -12478,88 +12574,92 @@
    "lastmod": "2026-11-02"
   },
   "nb/lop/by/annecy/": {
-   "hash": "405b40fc331ca1e83933e3ff",
-   "lastmod": "2026-11-16"
+   "hash": "9f67288ebd4401427224d003",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/by/barcelona/": {
-   "hash": "2873f16befeb368f89a27307",
-   "lastmod": "2026-11-16"
+   "hash": "40a39c522e0e32374c82448d",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/by/berlin/": {
-   "hash": "8c214061e99cff720533cc85",
-   "lastmod": "2026-11-16"
+   "hash": "3772a6f501f1e8097ac85119",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/by/budapest/": {
-   "hash": "96d6f3dd80b20faf42e670c9",
-   "lastmod": "2026-11-16"
+   "hash": "c6e1f961d3e32c23d9e37aa3",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/by/courmayeur/": {
-   "hash": "00d88abf236a5b473c48a715",
-   "lastmod": "2026-11-16"
+   "hash": "171d3bdd38c8dcf2b3550c4e",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/by/goteborg/": {
-   "hash": "2a8c3a05e59fd8d57f1bddb0",
-   "lastmod": "2026-11-16"
+   "hash": "128f18ae01eaed188c789ed7",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/by/hamburg/": {
-   "hash": "3b4130b69517abe74c5dcb46",
-   "lastmod": "2026-11-16"
+   "hash": "3ebb9c3687337747468f0bd3",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/by/harnosand/": {
-   "hash": "f507b02e0d0a90c7899fd1b7",
-   "lastmod": "2026-11-18"
+   "hash": "6ec63e7b0b4fcf02605c2a60",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/by/helsinki/": {
-   "hash": "1ac48819c858c77a5cd54d59",
-   "lastmod": "2026-11-16"
+   "hash": "ff6605e8d83b63f6c365d80b",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/by/katoomba/": {
-   "hash": "15b047224da2f3d9a4700898",
-   "lastmod": "2026-11-16"
+   "hash": "f7d0e169046d6d295e180472",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/by/kobenhavn/": {
-   "hash": "aa0bef40b24b44fc55d30bd4",
-   "lastmod": "2026-11-16"
+   "hash": "76c357e487068baf800ad75a",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/by/london/": {
-   "hash": "090bc7e1b89304d956f9f862",
-   "lastmod": "2026-11-16"
+   "hash": "70d2d22b398cf6335e21cc48",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/by/milngavie/": {
-   "hash": "0e65a04be22e9f91e69b9407",
-   "lastmod": "2026-11-16"
+   "hash": "3b244fd620a410f695d510b4",
+   "lastmod": "2026-11-19"
+  },
+  "nb/lop/by/norra-djurgarden-stockholm/": {
+   "hash": "49375ed7284318d818651002",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/by/oslo/": {
-   "hash": "79a0a9bec886316595a5ff51",
-   "lastmod": "2026-11-16"
+   "hash": "1c256cab91da53aed18fc67a",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/by/oxberg/": {
-   "hash": "5ccc17acca0506ff1bb6d68c",
-   "lastmod": "2026-11-16"
+   "hash": "c0c37737ffbe6053ae4b5be1",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/by/paris/": {
-   "hash": "73385ea7502afa599cccf331",
-   "lastmod": "2026-11-16"
+   "hash": "56828807ce2f28c34c47d873",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/by/philadelphia/": {
-   "hash": "1cf98e61eb654364357f815d",
-   "lastmod": "2026-11-16"
+   "hash": "b18b7a7150c5943215741a67",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/by/roma/": {
-   "hash": "599cbef84789a25ec34decfe",
-   "lastmod": "2026-11-16"
+   "hash": "e07bb84412d4a01153d7ae16",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/by/stockholm-norra-djurgarden/": {
-   "hash": "64ba0b9beb5b4bcc7a7f932a",
-   "lastmod": "2026-11-16"
+   "hash": "5bd6878679e07c919a70e4ce",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/by/stockholm/": {
-   "hash": "b20b92acb971dd9e680392c7",
-   "lastmod": "2026-11-18"
+   "hash": "038743eb5371124c5f879224",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/by/zurich/": {
-   "hash": "b5db3369e684d00f77b66deb",
-   "lastmod": "2026-11-16"
+   "hash": "aa1ec8325a4a63650433ac54",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/california-international-marathon-42k/": {
    "hash": "aeab21a68586fcb65155412f",
@@ -12646,28 +12746,28 @@
    "lastmod": "2026-11-02"
   },
   "nb/lop/distanse/10-km/": {
-   "hash": "abc8d99b270cada80a0091c8",
-   "lastmod": "2026-11-16"
+   "hash": "8a15f86ff6ddc9f8fdf19b8a",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/distanse/5-km/": {
-   "hash": "a6d40d67dc0c78dbfcf1f2aa",
-   "lastmod": "2026-11-16"
+   "hash": "f839181a50af869343eaf4cf",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/distanse/halvmaraton/": {
-   "hash": "9561598fb632e981c6b67304",
-   "lastmod": "2026-11-16"
+   "hash": "75ac422fe96bfd69f443eb70",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/distanse/maraton/": {
-   "hash": "55007498abee720ef11989f4",
-   "lastmod": "2026-11-18"
+   "hash": "8c161699835147edfdd250b3",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/distanse/terrenglop/": {
-   "hash": "ed34843a6772277a3c888fcb",
-   "lastmod": "2026-11-18"
+   "hash": "74741df6f27ac63153b72359",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/distanse/ultra/": {
-   "hash": "8744dacd6c1fef8c9710b762",
-   "lastmod": "2026-11-18"
+   "hash": "4a80fe891f461ea149988ba2",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/dnb-oslo-maraton-maraton-43k/": {
    "hash": "a0c6e3a6685e03bccfc220a0",
@@ -12858,8 +12958,16 @@
    "lastmod": "2026-11-02"
   },
   "nb/lop/hostrusket-10-km/": {
-   "hash": "c1f3c391e0c46d00ad2b9b5e",
-   "lastmod": "2026-11-16"
+   "hash": "cc2c7b4eae9aa055a46f0d74",
+   "lastmod": "2026-11-19"
+  },
+  "nb/lop/hostrusket-halvmaraton-21k/": {
+   "hash": "8d5e045b2230b0bf7f5c7497",
+   "lastmod": "2026-11-19"
+  },
+  "nb/lop/hostrusket-maraton-42k/": {
+   "hash": "0d806191bfc745b7f8deba8a",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/hyundai-mitja-marato-barcelona-by-brooks-21k/": {
    "hash": "2be1fbb58624e8b1d7599b45",
@@ -12946,136 +13054,136 @@
    "lastmod": "2026-10-24"
   },
   "nb/lop/land/australia/": {
-   "hash": "1014c853f7afbc5da8debb12",
-   "lastmod": "2026-11-16"
+   "hash": "cc3704889f1e4bed5442e3aa",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/land/belgia/": {
-   "hash": "9e81ed1413acc317c2bcf6cb",
-   "lastmod": "2026-11-16"
+   "hash": "0abe22ba59c255f6f8130a2e",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/land/brasil/": {
-   "hash": "e0b716a04f6cc4979025f68e",
-   "lastmod": "2026-11-16"
+   "hash": "a1cc3cd145784c6d428a9d81",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/land/canada/": {
-   "hash": "9985e3a741bbf1c425fd6359",
-   "lastmod": "2026-11-16"
+   "hash": "97e9b04aefc49dcfa63b9761",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/land/danmark/": {
-   "hash": "1a0c2cc24e61c14cfb78cb8a",
-   "lastmod": "2026-11-16"
+   "hash": "033a3c6b5e0ea2ed9d91e86a",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/land/finland/": {
-   "hash": "893f5553f95bbb10c5cea79d",
-   "lastmod": "2026-11-16"
+   "hash": "7869f2c1aeaddf50b1aecfad",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/land/frankrike/": {
-   "hash": "199de181d16035e36fb4d439",
-   "lastmod": "2026-11-18"
+   "hash": "359b878d4e1e93941c2b4e09",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/land/hellas/": {
-   "hash": "48b94ed8fdccf8dda3f7b055",
-   "lastmod": "2026-11-16"
+   "hash": "57119c8afc969668e987360a",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/land/hongkong/": {
-   "hash": "e6b0d073344be125b766a0ec",
-   "lastmod": "2026-11-16"
+   "hash": "ad2271f027dd1a1efcc1f6c8",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/land/india/": {
-   "hash": "576de7dc2a426113607a62e0",
-   "lastmod": "2026-11-16"
+   "hash": "85df2fbe35cce01c9ffeb766",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/land/irland/": {
-   "hash": "a5a189c571e9392e65d4dd71",
-   "lastmod": "2026-11-16"
+   "hash": "e9afcf852a7d6745082b82bd",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/land/island/": {
-   "hash": "5a6498e55e87e84444aa96c7",
-   "lastmod": "2026-11-16"
+   "hash": "c0eb8c35468b3f7b22ec7089",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/land/israel/": {
-   "hash": "1e8a5e3e7aa4783341bd2102",
-   "lastmod": "2026-11-16"
+   "hash": "75d159d602359cd4a609c8f3",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/land/italia/": {
-   "hash": "85fe5dd034f42e805ce9c7ca",
-   "lastmod": "2026-11-16"
+   "hash": "a404219b1099d9636948849c",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/land/japan/": {
-   "hash": "d4b0ec1921fd0b1c4e60294f",
-   "lastmod": "2026-11-16"
+   "hash": "906e206f5af63134fc1a6656",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/land/kina/": {
-   "hash": "863da596541d18f82d50e481",
-   "lastmod": "2026-11-16"
+   "hash": "a6bb9437afa3e6e485e141bc",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/land/luxemburg/": {
-   "hash": "65e8dd59c22a364ee12ae860",
-   "lastmod": "2026-11-16"
+   "hash": "e07c3a75491a9fb794d84432",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/land/marokko/": {
-   "hash": "782abc04994ad793986ba52c",
-   "lastmod": "2026-11-16"
+   "hash": "710f70ad0ba5b96d0fe782cd",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/land/nederland/": {
-   "hash": "e4abd905993d65ec59b27af2",
-   "lastmod": "2026-11-16"
+   "hash": "1e32ba0bdfad8370c0b44a1a",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/land/new-zealand/": {
-   "hash": "c5389f95529c0ec56107705e",
-   "lastmod": "2026-11-16"
+   "hash": "0cb187f80f7fef2eadddf782",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/land/norge/": {
-   "hash": "e0dfed433ef3894a29b27113",
-   "lastmod": "2026-11-16"
+   "hash": "a3589dec573dfa40c78cce57",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/land/osterrike/": {
-   "hash": "754af05dc531680d9177d4d1",
-   "lastmod": "2026-11-16"
+   "hash": "ce559c7b02c2325458ff4c93",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/land/polen/": {
-   "hash": "d339c7cd94aa700c5516790f",
-   "lastmod": "2026-11-16"
+   "hash": "d9094d549917b80b3a48a249",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/land/portugal/": {
-   "hash": "767c5b75974b4cd60876b022",
-   "lastmod": "2026-11-16"
+   "hash": "ce458a728f7e34dbfa585b36",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/land/sor-afrika/": {
-   "hash": "e5619ddb132ebc0217ded897",
-   "lastmod": "2026-11-18"
+   "hash": "f89f210c54a60926e54c3857",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/land/sor-korea/": {
-   "hash": "3793156ffd37f2ab188751c0",
-   "lastmod": "2026-11-16"
+   "hash": "68448bea6db5a4ba734f469a",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/land/spania/": {
-   "hash": "0fe00ca1a87d2e2a2cecd67c",
-   "lastmod": "2026-11-16"
+   "hash": "b5746add8dc315c3f06e48c4",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/land/storbritannia/": {
-   "hash": "289f14521f20fb7e687214ac",
-   "lastmod": "2026-11-16"
+   "hash": "bdbfb550364c991a4bf0582c",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/land/sveits/": {
-   "hash": "e18ef5c17dcae7ff9216fd77",
-   "lastmod": "2026-11-16"
+   "hash": "f66b9920922aad02c47aba54",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/land/sverige/": {
-   "hash": "ecb1f95e67e4a1c62c805008",
-   "lastmod": "2026-11-18"
+   "hash": "fa32c64735a5a4db02771294",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/land/tyskland/": {
-   "hash": "0aa75d33c5298623024407d4",
-   "lastmod": "2026-11-16"
+   "hash": "d3b05b5fce43bc36174e9893",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/land/ungarn/": {
-   "hash": "626b4a1cf560d83ccd226cba",
-   "lastmod": "2026-11-16"
+   "hash": "fd2b0ad67e3bbaf7b7a6df06",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/land/usa/": {
-   "hash": "98c6879ceeed6de52069fd98",
-   "lastmod": "2026-11-16"
+   "hash": "1456d0ec2551e8e02f1f2445",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/laugavegur-ultra-marathon-52k/": {
    "hash": "aa1b80a6a901c26f0826c9e6",
@@ -13130,52 +13238,52 @@
    "lastmod": "2026-11-02"
   },
   "nb/lop/maned/2026-11/": {
-   "hash": "8cbe034a3256b9b1052cb777",
-   "lastmod": "2026-11-18"
+   "hash": "d27a6a62789c1d254c5ad450",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/maned/2026-12/": {
-   "hash": "a55cf9234f89484ed381cb52",
-   "lastmod": "2026-11-16"
+   "hash": "37ce41b0692d74b13985e4a3",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/maned/2027-01/": {
-   "hash": "4db42d8efb779f63c436c430",
-   "lastmod": "2026-11-16"
+   "hash": "68b0bbcf0a3681822bd2d828",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/maned/2027-02/": {
-   "hash": "702d7c2fa23fd3396ed3705d",
-   "lastmod": "2026-11-16"
+   "hash": "9859db87d2d03826598b2e33",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/maned/2027-03/": {
-   "hash": "28c4a8ac98ea1e9921221897",
-   "lastmod": "2026-11-16"
+   "hash": "818b2ff350925ec25b307888",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/maned/2027-04/": {
-   "hash": "08c227d320c370e2a6f7e102",
-   "lastmod": "2026-11-16"
+   "hash": "adc4982f70f8ca6b8f802dc5",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/maned/2027-05/": {
-   "hash": "c3a308d675317b04aa3c78b7",
-   "lastmod": "2026-11-18"
+   "hash": "fdc1d602853043dfdbf71186",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/maned/2027-06/": {
-   "hash": "be8b2470fa618c1b3f2f067b",
-   "lastmod": "2026-11-16"
+   "hash": "c4993a7239f5e6fd55364a44",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/maned/2027-07/": {
-   "hash": "0baa2bef72c1a8ed4a562613",
-   "lastmod": "2026-11-16"
+   "hash": "ee1a15256e6e177df7ca12f3",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/maned/2027-08/": {
-   "hash": "3c2c745f8a5fb7257c677a5d",
-   "lastmod": "2026-11-18"
+   "hash": "e7f6a27813f9c4a72eb31c21",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/maned/2027-09/": {
-   "hash": "d7aa989d2fa3eb9d296f1d5a",
-   "lastmod": "2026-11-16"
+   "hash": "99bb36999a38db69cfa609e4",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/maned/2027-10/": {
-   "hash": "e5bfc056c90ed1bee5df1721",
-   "lastmod": "2026-11-18"
+   "hash": "90b7e828d18e2e6666650b8c",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/marathon-beneva-de-montreal-marathon-42-2-km/": {
    "hash": "81ecd2e88e3abfe33c266317",
@@ -13434,8 +13542,8 @@
    "lastmod": "2026-11-02"
   },
   "nb/lop/side/2/": {
-   "hash": "7ed93dbb4f5aa0a581c1190b",
-   "lastmod": "2026-11-16"
+   "hash": "49fe137167784fd01b3ba116",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/sinister-7-ultra-100-miler-161k/": {
    "hash": "1fd223b15f12b3996ab57ad5",
@@ -13498,8 +13606,8 @@
    "lastmod": "2026-11-02"
   },
   "nb/lop/sylvesterloppet-10k/": {
-   "hash": "32bb1158933ce410ebed9fa3",
-   "lastmod": "2026-11-18"
+   "hash": "319da2870572ed5433cc099d",
+   "lastmod": "2026-11-19"
   },
   "nb/lop/taipei-marathon-marathon-42-195-km/": {
    "hash": "f38b1d3859091e3684f9a937",

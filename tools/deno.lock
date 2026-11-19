@@ -2,6 +2,7 @@
   "version": "5",
   "specifiers": {
     "jsr:@std/assert@1": "1.0.19",
+    "jsr:@std/crypto@1.0.3": "1.0.3",
     "jsr:@std/dotenv@0.225": "0.225.8",
     "jsr:@std/internal@^1.0.12": "1.0.14",
     "npm:@anthropic-ai/sdk@0.80": "0.80.0",
@@ -19,6 +20,9 @@
       "dependencies": [
         "jsr:@std/internal"
       ]
+    },
+    "@std/crypto@1.0.3": {
+      "integrity": "a2a32f51ddef632d299e3879cd027c630dcd4d1d9a5285d6e6788072f4e51e7f"
     },
     "@std/dotenv@0.225.8": {
       "integrity": "27b8c1a9d00cbf938345a5924487c04d9b27bdd7e7bd1983f54bcf76d0a0174a"

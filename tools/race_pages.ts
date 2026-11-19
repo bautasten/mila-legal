@@ -1262,6 +1262,8 @@ type Frame = {
   lang: Lang; path: string; title: string; description: string; css: string; body: string; today: string;
   /** The site has motion.js (redesign 2026-11): the page loads it, as the last thing in the body. */
   motion?: boolean;
+  /** The site has besok.js (round besok-statistik): the page loads it, deferred, before the motion. */
+  besok?: boolean;
   /** design-31 (Patrik 2026-11-03: "gärna med bilder … på ett snyggt och lugnt sätt"): the calm trail band closing the page (trailBand). */
   band?: BandKind | null;
   /** lang-switch: the site has lang.js: the language switch loads it. */
@@ -1291,7 +1293,7 @@ ${og}<meta name="theme-color" content="#FBF9F5"><link rel="icon" href="${root}fa
 <a class="skip" href="#main">${esc(t.skip)}</a><div class="wrap"><header><a class="brand" href="${root}${c.home}"><img src="${root}logo-80.png?v=37" alt="" width="40" height="40">MILA</a>${switcher}</header>
 ${crumbs}
 <main id="main">${f.body}</main>${f.band ? trailBand(f.band, root) : ""}
-<footer><a href="${root}${c.support}">${esc(t.support)}</a><a href="${root}${c.privacy}">${esc(t.privacy)}</a><a href="${root}${c.terms}">${esc(t.terms)}</a><a href="${root}${c.support}#provider">${esc(t.contact)}</a><a href="${root}${c.support}?topic=report&amp;ref=${encodeURIComponent(abs(f.path))}#kontakt" rel="nofollow">${esc(t.report)}</a><br><br>${esc(t.notAffiliatedAll)}<br><br>© ${f.today.slice(0, 4)} Mila</footer></div>${f.script ? `<script>${f.script}</script>` : ""}${f.module ? `<script type="module">${f.module}</script>` : ""}${f.motion ? `<script src="${root}motion.js"></script>` : ""}</body></html>
+<footer><a href="${root}${c.support}">${esc(t.support)}</a><a href="${root}${c.privacy}">${esc(t.privacy)}</a><a href="${root}${c.terms}">${esc(t.terms)}</a><a href="${root}${c.support}#provider">${esc(t.contact)}</a><a href="${root}${c.support}?topic=report&amp;ref=${encodeURIComponent(abs(f.path))}#kontakt" rel="nofollow">${esc(t.report)}</a><br><br>${esc(t.notAffiliatedAll)}<br><br>© ${f.today.slice(0, 4)} Mila</footer></div>${f.script ? `<script>${f.script}</script>` : ""}${f.module ? `<script type="module">${f.module}</script>` : ""}${f.besok ? `<script src="${root}besok.js" defer></script>` : ""}${f.motion ? `<script src="${root}motion.js"></script>` : ""}</body></html>
 `;
 }
 /** design-31 (Patrik 2026-11-03): the trail pictures the band can show: hubs and indexes a clear day, guides a cloudy day (the site is
@@ -1333,6 +1335,8 @@ type Ctx = { today: string; css: string; appStore: string; active: Race[]; slugs
   hasMap?: Set<string>;
   /** The site has motion.js: race pages, indexes, hubs and guides load it. */
   motionJs?: boolean;
+  /** The site has besok.js, the visit counter: race pages, indexes, hubs and guides load it. */
+  besokJs?: boolean;
   /** lang-switch: the site has lang.js (the language menu closes on a tap outside or Escape): the switch loads it. */
   langJs?: boolean;
   /** seo: the App Store id for the Smart App Banner (none until launch), the hubs, and the races whose title another race shares (their
@@ -1451,7 +1455,7 @@ export function racePage(r: Race, lang: Lang, ctx: Ctx): string {
       ...(r.organizer ? { organizer: { "@type": "Organization", name: r.organizer, ...(r.url ? { url: r.url } : {}) } } : {}),
     });
   }
-  return frame({ lang, path, title: pageTitle(r, lang, ctx.titleClash?.has(r.id)), description, css: ctx.css, today, alternates, appId: ctx.appId, motion: ctx.motionJs, langJs: ctx.langJs, og: { ...og, alt: bare ? t.ogAltNoCourse(title) : t.ogAlt(title) }, ld,
+  return frame({ lang, path, title: pageTitle(r, lang, ctx.titleClash?.has(r.id)), description, css: ctx.css, today, alternates, appId: ctx.appId, motion: ctx.motionJs, besok: ctx.besokJs, langJs: ctx.langJs, og: { ...og, alt: bare ? t.ogAltNoCourse(title) : t.ogAlt(title) }, ld,
     // site-calm: the profile right under the facts, before the call to action (in the HTML, so the reading order is the visual one)
     body: `<article>${hero}${sections[0]?.startsWith('<section aria-labelledby="h-profile"') ? sections.shift() + cta : cta}${sections.join("\n")}</article>`, script: r.next_date && r.next_date >= today ? cdScript(lang) : undefined,
     crumbs: [{ name: t.home, path: L[lang].home }, { name: t.races, path: indexPath(lang) }, { name: title }] });
@@ -1503,7 +1507,7 @@ export function indexPage(lang: Lang, page: number, pages: number, races: Race[]
   const browse = page === 1 ? hubNav(ctx.hubs ?? [], lang, path, S[lang].browseH) : "";
   const guides = page === 1 ? (ctx.guides ?? []).filter((g) => guideLangs(g).includes(lang)) : [];
   const guideNav = guides.length ? `<section aria-labelledby="h-guides"><h2 id="h-guides">${esc(S[lang].guidesCrumb)}</h2><ul class="hubs">${guides.map((g) => `<li><a href="${esc(rel(path, guidePath(lang, g.slug[lang]!)))}">${esc(g[lang]!.title)}</a></li>`).join("")}</ul></section>` : "";
-  return frame({ lang, path, title: `${t.indexTitle}${page > 1 ? ` – ${t.pageN(page)}` : ""} | Mila`, description: page > 1 ? `${S[lang].indexDesc} (${t.pageN(page)})` : S[lang].indexDesc, css: ctx.css, today, alternates, appId: ctx.appId, motion: ctx.motionJs, langJs: ctx.langJs, band: ctx.pictures ? "hub" : null,
+  return frame({ lang, path, title: `${t.indexTitle}${page > 1 ? ` – ${t.pageN(page)}` : ""} | Mila`, description: page > 1 ? `${S[lang].indexDesc} (${t.pageN(page)})` : S[lang].indexDesc, css: ctx.css, today, alternates, appId: ctx.appId, motion: ctx.motionJs, besok: ctx.besokJs, langJs: ctx.langJs, band: ctx.pictures ? "hub" : null,
     og: { ...ctx.ogImage(null, lang), alt: t.ogDefault }, ld: [crumbsLd([{ name: t.home, path: L[lang].home }, { name: t.races, path: indexPath(lang) }])],
     body: `${hero}${browse}${guideNav}${filter}\n${list}\n${pager}`, script: filterScript, crumbs: [{ name: t.home, path: L[lang].home }, { name: t.races }] });
 }
@@ -1882,7 +1886,7 @@ export function hubPage(h: Hub, lang: Lang, ctx: Ctx): string {
   const ld = [crumbsLd([{ name: t.home, path: L[lang].home }, { name: t.races, path: indexPath(lang) }, { name: h.name[lang], path }]),
     { "@context": "https://schema.org", "@type": "ItemList", name: h.name[lang], numberOfItems: rs.length,
       itemListElement: rs.slice(0, 100).map((r, i) => ({ "@type": "ListItem", position: i + 1, url: abs(racePath(lang, ctx.slugs.get(r.id)!)), name: raceTitle(r, lang) })) }];
-  return frame({ lang, path, title: `${h.name[lang]} – ${s.hubTail} | Mila`, description: s.hubDesc(h.name[lang], rs.length), css: ctx.css, today, alternates, appId: ctx.appId, motion: ctx.motionJs, langJs: ctx.langJs, band: ctx.pictures ? "hub" : null,
+  return frame({ lang, path, title: `${h.name[lang]} – ${s.hubTail} | Mila`, description: s.hubDesc(h.name[lang], rs.length), css: ctx.css, today, alternates, appId: ctx.appId, motion: ctx.motionJs, besok: ctx.besokJs, langJs: ctx.langJs, band: ctx.pictures ? "hub" : null,
     og: { ...ctx.ogImage(null, lang), alt: h.name[lang] }, ld, body: `${hero}${list}${more}${back}`,
     crumbs: [{ name: t.home, path: L[lang].home }, { name: t.races, path: indexPath(lang) }, { name: h.name[lang] }] });
 }
@@ -1973,7 +1977,7 @@ export function guidePage(g: Guide, lang: Lang, ctx: Ctx): string {
     ...(g.updated && isDay(g.updated) ? { dateModified: g.updated } : {}), image: [ctx.ogImage(null, lang).image],
     author: { "@type": "Organization", name: "Mila", url: `${SITE}/` }, publisher: { "@type": "Organization", name: "Mila", url: `${SITE}/`, logo: { "@type": "ImageObject", url: `${SITE}/logo.png` } } },
     crumbsLd([{ name: t.home, path: L[lang].home }, { name: S[lang].guidesCrumb, path }, { name: doc.title, path }])];
-  return frame({ lang, path, title: `${doc.title} | Mila`, description: doc.description, css: ctx.css, today: ctx.today, alternates, appId: ctx.appId, motion: ctx.motionJs, langJs: ctx.langJs, band: ctx.pictures ? "guide" : null,
+  return frame({ lang, path, title: `${doc.title} | Mila`, description: doc.description, css: ctx.css, today: ctx.today, alternates, appId: ctx.appId, motion: ctx.motionJs, besok: ctx.besokJs, langJs: ctx.langJs, band: ctx.pictures ? "guide" : null,
     og: { ...ctx.ogImage(null, lang), alt: doc.title }, ld, body: `<article class="prose"><h1>${esc(doc.title)}</h1>${body}</article>${cta}`,
     crumbs: [{ name: t.home, path: L[lang].home }, { name: doc.title }] });
 }
@@ -2150,7 +2154,7 @@ export async function generate(o: { out: string; races: Race[]; ids?: Set<string
   const hubs = buildHubs(active, today), titles = new Map<string, string[]>();
   for (const r of active) { const k = pageTitle(r, "sv"); titles.set(k, [...(titles.get(k) ?? []), r.id]); }
   const titleClash = new Set([...titles.values()].filter((ids) => ids.length > 1).flat());
-  const ctx: Ctx = { today, css, appStore, active, slugs, ogImage, hasMap, sceneJs: await exists("scene.js"), motionJs: await exists("motion.js"), langJs: await exists("lang.js"), pictures: (await Promise.all(BAND_FILES.map((f) => exists(f)))).every(Boolean), appId: smartBannerMeta(o.appStoreId) ? o.appStoreId : null, hubs, titleClash, guides: o.guides };
+  const ctx: Ctx = { today, css, appStore, active, slugs, ogImage, hasMap, sceneJs: await exists("scene.js"), motionJs: await exists("motion.js"), besokJs: await exists("besok.js"), langJs: await exists("lang.js"), pictures: (await Promise.all(BAND_FILES.map((f) => exists(f)))).every(Boolean), appId: smartBannerMeta(o.appStoreId) ? o.appStoreId : null, hubs, titleClash, guides: o.guides };
 
   // 4. the race pages, and the pages of races that left; every indexed page's lastmod moves only when its content does
   const pages: State["pages"] = {};

@@ -20,23 +20,28 @@
   </form>
 </main>
 <div id="app" hidden>
-  <header>
-    <div class="top">
-      <div>
+  <a class="skip" id="skip" href="#board">Hoppa till innehållet</a>
+  <aside id="rail">
+    <p class="brand"><span class="eyebrow">Mila</span>Kontrolltornet</p>
+    <nav id="side" aria-label="Delar"></nav>
+    <div class="rail-foot"><button class="quiet" id="logout" type="button">Logga ut</button></div>
+  </aside>
+  <div id="stage">
+    <header>
+      <div class="head-text">
         <p class="eyebrow" id="day"></p>
-        <h1>Kontrolltornet</h1>
+        <h1 id="view-title">Kontrolltornet</h1>
       </div>
       <div class="tools">
         <span class="offline" id="offline" role="status" hidden>Offline · försöker igen</span>
-        <button class="quiet" id="reload" type="button">Uppdatera</button>
-        <button class="quiet" id="logout" type="button">Logga ut</button>
+        <button class="fresh" id="fresh" type="button"></button>
+        <button class="soft" id="reload" type="button">Uppdatera</button>
       </div>
-    </div>
-    <p class="rhythm" id="rhythm"></p>
-    <nav class="tabs" id="tabs" aria-label="Delar"></nav>
-  </header>
-  <main id="board" tabindex="-1"></main>
-  <footer><span id="asof"></span></footer>
+    </header>
+    <main id="board" tabindex="-1"></main>
+    <footer><span id="asof"></span></footer>
+  </div>
+  <nav id="bar" aria-label="Delar"></nav>
 </div>
 <div id="toast" role="status" hidden></div>
 <div id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title" hidden><div class="sheet-box"><div class="sheet-head"><h2 id="sheet-title"></h2><button class="quiet" id="sheet-close" type="button">Stäng</button></div><div id="sheet-body"></div></div></div>

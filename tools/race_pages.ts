@@ -29,8 +29,10 @@
 // once (a broken feed) stops without writing.
 // Files are only written when their content changes (the countdown is coarse and refined in the browser), so the hourly job seldom commits.
 //
-// The course description: Swedish pages show the coach's own description (races.comment, Mila's text); the other languages' pages show
-// a short summary built here from the course's numbers (no AI at build time: no key in CI, no cost), never the Swedish text.
+// The course description (b40-lopptext, 2026-11-21): every page shows the coach's own text in its language (races.page_texts, written in
+// batch on the server from the register's facts: _shared/race_pagetext.ts; the feed gives a language only while its text was written from
+// the race's current facts). A Swedish page without one shows the shared description from the app (races.comment); a page with neither, a
+// short summary built here from the course's numbers, until the coach has written it (no AI at build time: no key in CI, no cost here).
 //
 // Run here (a local preview in marketing-site/, git-ignored; serve it with `deno run -A jsr:@std/http/file-server marketing-site`):
 //   cd backend && deno run --allow-net --allow-read=. --allow-write=marketing-site race_pages.ts [--feed <url or file.json>] [--no-png]
@@ -43,10 +45,10 @@ import { securityMeta, langSwitch } from "./site_csp.ts";
 
 export const SITE = "https://milacoach.app";
 export const FEED_URL = "https://vfjofaniwtudzvadxpsd.supabase.co/functions/v1/race-feed";
-/** The App Store link of every generated page's call to action. Appens riktiga App Store-länk (live sedan 2026-11-23): set "appStoreUrl"
+/** The App Store link of every generated page's call to action. Byt till appens riktiga App Store-länk vid lansering: set "appStoreUrl"
  *  in race_pages.json next to this script (backend/race_pages.json, published as tools/race_pages.json in the Pages repo by
  *  backend/publish_legal.sh), which wins over this constant; the next run regenerates every page with it. */
-export const APP_STORE_URL = "https://apps.apple.com/app/id6821681201";
+export const APP_STORE_URL = "https://apps.apple.com/search?term=Mila%20Coach";
 /** The renderer's downloads, each with the SHA-256 of the file at that pinned address (review round 24): a file that is not exactly that
  *  one is never run or used, whatever the CDN serves. The wasm's hash is the npm package's own index_bg.wasm, the fonts' those jsDelivr
  *  lists for the package version. */
@@ -98,6 +100,9 @@ export type Race = {
   course_host: string | null; course_page: string | null;
   /** How many Mila runners' measurements the heights rest on (ele_source "runners"). */
   ele_runners: number | null;
+  /** b40-lopptext: the coach's own course text per language, written from the register's current facts (race_pagetext.ts); an older
+   *  feed has no field, and a language without a current text has no entry (the page's own summary then). */
+  page_text?: Partial<Record<Lang, string>>;
   /** False: an official race whose organiser publishes no course file (no course; ascent is the organiser's stated climb, 0 unknown). */
   has_course: boolean;
   start: [number, number] | null; course: { pts: Point[] } | null;
@@ -180,6 +185,8 @@ export function cleanRace(x: any): Race | null {
     results: arr(x.results).filter((e) => e && Number.isInteger(e.year) && isNum(e.finishers) && e.overall && ["p10", "p25", "p50", "p75", "p90"].every((k) => isNum(e.overall[k]))).slice(0, 5)
       .map((e) => ({ year: e.year, finishers: e.finishers, overall: { p10: e.overall.p10, p25: e.overall.p25, p50: e.overall.p50, p75: e.overall.p75, p90: e.overall.p90 }, source: safeUrl(e.source, true) })),
     comment: typeof x.comment === "string" && x.comment.trim() ? x.comment.trim().slice(0, 6000) : null,
+    // b40-lopptext: the coach's text per language, only the page languages and only text (an older feed has none)
+    page_text: Object.fromEntries(LANGS.map((l) => [l, x.page_text && typeof x.page_text === "object" && typeof x.page_text[l] === "string" && x.page_text[l].trim() ? x.page_text[l].trim().slice(0, 6000) : null]).filter(([, t]) => t)) as Partial<Record<Lang, string>>,
     course_source: x.course_source === "official_gpx" || x.course_source === "upload" ? x.course_source : null, ele_source: x.ele_source === "dem" || x.ele_source === "runners" ? x.ele_source : null,
     course_host: x.course_source === "official_gpx" && typeof x.course_host === "string" && /^[a-z0-9-]+(\.[a-z0-9-]+)+$/.test(x.course_host) && x.course_host.length <= 120 ? x.course_host : null,
     course_page: x.course_source === "official_gpx" ? safeUrl(x.course_page, true) : null,
@@ -298,7 +305,7 @@ const T = {
     routeDesc: (loop: boolean) => loop ? "Banans form sedd uppifrån, norr uppåt. Start och mål på samma plats." : "Banans form sedd uppifrån, norr uppåt, från start till mål.",
     legend: (loop: boolean, aid: boolean) => `${loop ? "Grön punkt: start och mål." : "Grön punkt: start. Vit punkt: mål."}${aid ? " Små gröna punkter: vätskekontroller." : ""}`,
     official: "Bana från arrangören", organiserPage: "arrangörens sida", upload: "Banan bygger på en banfil uppladdad i Mila och kan avvika från årets officiella bana.",
-    aboutH: "Om banan", coachNote: "Beskrivningen är skriven av Milas coach utifrån banans data.",
+    aboutH: "Om banan", coachNote: "Beskrivningen är skriven av Milas coach med hjälp av AI, utifrån uppgifterna i Milas loppregister.",
     climbsH: "Klättringar", climbsCaption: "Klättringar på minst 25 höjdmeter. Lutningen är snittet från botten till toppen.",
     climbCols: ["Börjar vid", "Längd", "Höjdmeter", "Lutning", "Topp (m ö.h.)"], noClimbs: "Banan har inga sammanhängande klättringar på 25 höjdmeter eller mer.",
     aidH: "Vätskekontroller", aidOne: "Vätskekontroll", aidCaption: "Vätskekontroller enligt arrangören.", aidCols: ["Vid", "Här finns"], aidNone: "ej angivet",
@@ -347,7 +354,7 @@ const T = {
     routeDesc: (loop: boolean) => loop ? "The course seen from above, north up. Start and finish in the same place." : "The course seen from above, north up, from start to finish.",
     legend: (loop: boolean, aid: boolean) => `${loop ? "Green dot: start and finish." : "Green dot: start. White dot: finish."}${aid ? " Small green dots: aid stations." : ""}`,
     official: "Course from the organizer", organiserPage: "organizer's website", upload: "The course is based on a course file uploaded in Mila and may differ from this year's official course.",
-    aboutH: "About the course", coachNote: "",
+    aboutH: "About the course", coachNote: "This description is written by Mila’s coach with the help of AI, from the facts in Mila’s race register.",
     climbsH: "Climbs", climbsCaption: "Climbs of at least 25 m elevation gain. The gradient is the average from bottom to top.",
     climbCols: ["Starts at", "Length", "Gain", "Gradient", "Top (m above sea level)"], noClimbs: "The course has no sustained climbs of 25 m or more.",
     aidH: "Aid stations", aidOne: "Aid station", aidCaption: "Aid stations per the organizer.", aidCols: ["At", "What's there"], aidNone: "not specified",
@@ -396,7 +403,7 @@ const T = {
     routeDesc: (loop: boolean) => loop ? "Die Strecke von oben, Norden oben. Start und Ziel am selben Ort." : "Die Strecke von oben, Norden oben, vom Start bis ins Ziel.",
     legend: (loop: boolean, aid: boolean) => `${loop ? "Grüner Punkt: Start und Ziel." : "Grüner Punkt: Start. Weißer Punkt: Ziel."}${aid ? " Kleine grüne Punkte: Verpflegungsstellen." : ""}`,
     official: "Strecke vom Veranstalter", organiserPage: "Website des Veranstalters", upload: "Die Strecke beruht auf einer in Mila hochgeladenen Streckendatei und kann von der diesjährigen offiziellen Strecke abweichen.",
-    aboutH: "Über die Strecke", coachNote: "",
+    aboutH: "Über die Strecke", coachNote: "Die Beschreibung hat Milas Coach mithilfe von KI anhand der Angaben in Milas Laufregister geschrieben.",
     climbsH: "Anstiege", climbsCaption: "Anstiege ab 25 Höhenmetern. Die Steigung ist der Schnitt vom Fuß bis zum Gipfel.",
     climbCols: ["Beginnt bei", "Länge", "Höhenmeter", "Steigung", "Gipfel (m ü. M.)"], noClimbs: "Die Strecke hat keine zusammenhängenden Anstiege ab 25 Höhenmetern.",
     aidH: "Verpflegungsstellen", aidOne: "Verpflegungsstelle", aidCaption: "Verpflegungsstellen laut Veranstalter.", aidCols: ["Bei", "Angebot"], aidNone: "keine Angabe",
@@ -445,7 +452,7 @@ const T = {
     routeDesc: (loop: boolean) => loop ? "Løypa sett ovenfra, nord opp. Start og mål på samme sted." : "Løypa sett ovenfra, nord opp, fra start til mål.",
     legend: (loop: boolean, aid: boolean) => `${loop ? "Grønt punkt: start og mål." : "Grønt punkt: start. Hvitt punkt: mål."}${aid ? " Små grønne punkter: drikkestasjoner." : ""}`,
     official: "Løype fra arrangøren", organiserPage: "arrangørens side", upload: "Løypa bygger på en løypefil lastet opp i Mila og kan avvike fra årets offisielle løype.",
-    aboutH: "Om løypa", coachNote: "",
+    aboutH: "Om løypa", coachNote: "Beskrivelsen er skrevet av Milas coach med hjelp av KI, ut fra opplysningene i Milas løpsregister.",
     climbsH: "Stigninger", climbsCaption: "Stigninger på minst 25 høydemeter. Stigningsgraden er snittet fra bunn til topp.",
     climbCols: ["Starter ved", "Lengde", "Høydemeter", "Stigning", "Topp (moh.)"], noClimbs: "Løypa har ingen sammenhengende stigninger på 25 høydemeter eller mer.",
     aidH: "Drikkestasjoner", aidOne: "Drikkestasjon", aidCaption: "Drikkestasjoner ifølge arrangøren.", aidCols: ["Ved", "Her finnes"], aidNone: "ikke oppgitt",
@@ -494,7 +501,7 @@ const T = {
     routeDesc: (loop: boolean) => loop ? "Ruten set oppefra, nord opad. Start og mål samme sted." : "Ruten set oppefra, nord opad, fra start til mål.",
     legend: (loop: boolean, aid: boolean) => `${loop ? "Grøn prik: start og mål." : "Grøn prik: start. Hvid prik: mål."}${aid ? " Små grønne prikker: væskedepoter." : ""}`,
     official: "Rute fra arrangøren", organiserPage: "arrangørens side", upload: "Ruten bygger på en rutefil uploadet i Mila og kan afvige fra årets officielle rute.",
-    aboutH: "Om ruten", coachNote: "",
+    aboutH: "Om ruten", coachNote: "Beskrivelsen er skrevet af Milas coach ved hjælp af AI ud fra oplysningerne i Milas løbsregister.",
     climbsH: "Stigninger", climbsCaption: "Stigninger på mindst 25 højdemeter. Hældningen er gennemsnittet fra bund til top.",
     climbCols: ["Begynder ved", "Længde", "Højdemeter", "Hældning", "Top (m o.h.)"], noClimbs: "Ruten har ingen sammenhængende stigninger på 25 højdemeter eller mere.",
     aidH: "Væskedepoter", aidOne: "Væskedepot", aidCaption: "Væskedepoter ifølge arrangøren.", aidCols: ["Ved", "Her er"], aidNone: "ikke oplyst",
@@ -543,7 +550,7 @@ const T = {
     routeDesc: (loop: boolean) => loop ? "Reitti ylhäältä nähtynä, pohjoinen ylhäällä. Lähtö ja maali samassa paikassa." : "Reitti ylhäältä nähtynä, pohjoinen ylhäällä, lähdöstä maaliin.",
     legend: (loop: boolean, aid: boolean) => `${loop ? "Vihreä piste: lähtö ja maali." : "Vihreä piste: lähtö. Valkoinen piste: maali."}${aid ? " Pienet vihreät pisteet: juomapisteet." : ""}`,
     official: "Järjestäjän reitti", organiserPage: "järjestäjän sivu", upload: "Reitti perustuu Milaan ladattuun reittitiedostoon ja voi poiketa tämän vuoden virallisesta reitistä.",
-    aboutH: "Tietoa reitistä", coachNote: "",
+    aboutH: "Tietoa reitistä", coachNote: "Kuvauksen on kirjoittanut Milan valmentaja tekoälyn avulla Milan kisarekisterin tietojen pohjalta.",
     climbsH: "Nousut", climbsCaption: "Vähintään 25 nousumetrin nousut. Jyrkkyys on keskiarvo alhaalta huipulle.",
     climbCols: ["Alkaa kohdassa", "Pituus", "Nousumetrit", "Jyrkkyys", "Huippu (m mpy)"], noClimbs: "Reitillä ei ole yhtenäisiä vähintään 25 nousumetrin nousuja.",
     aidH: "Juomapisteet", aidOne: "Juomapiste", aidCaption: "Juomapisteet järjestäjän mukaan.", aidCols: ["Kohta", "Tarjolla"], aidNone: "ei ilmoitettu",
@@ -592,7 +599,7 @@ const T = {
     routeDesc: (loop: boolean) => loop ? "Le parcours vu du dessus, nord en haut. Départ et arrivée au même endroit." : "Le parcours vu du dessus, nord en haut, du départ à l’arrivée.",
     legend: (loop: boolean, aid: boolean) => `${loop ? "Point vert : départ et arrivée." : "Point vert : départ. Point blanc : arrivée."}${aid ? " Petits points verts : ravitaillements." : ""}`,
     official: "Parcours fourni par l’organisateur", organiserPage: "site de l’organisateur", upload: "Le parcours s’appuie sur un fichier importé dans Mila et peut différer du parcours officiel de cette année.",
-    aboutH: "À propos du parcours", coachNote: "",
+    aboutH: "À propos du parcours", coachNote: "Cette description est écrite par le coach de Mila avec l’aide de l’IA, à partir des informations du registre des courses de Mila.",
     climbsH: "Montées", climbsCaption: "Montées d’au moins 25 m de dénivelé. La pente est la moyenne du bas jusqu’au sommet.",
     climbCols: ["Début", "Longueur", "Dénivelé", "Pente", "Sommet (m d’altitude)"], noClimbs: "Le parcours ne compte aucune montée continue de 25 m ou plus.",
     aidH: "Ravitaillements", aidOne: "Ravitaillement", aidCaption: "Ravitaillements selon l’organisateur.", aidCols: ["Au", "Ce qu’on y trouve"], aidNone: "non précisé",
@@ -641,7 +648,7 @@ const T = {
     routeDesc: (loop: boolean) => loop ? "El recorrido visto desde arriba, con el norte arriba. Salida y meta en el mismo lugar." : "El recorrido visto desde arriba, con el norte arriba, de la salida a la meta.",
     legend: (loop: boolean, aid: boolean) => `${loop ? "Punto verde: salida y meta." : "Punto verde: salida. Punto blanco: meta."}${aid ? " Puntos verdes pequeños: avituallamientos." : ""}`,
     official: "Recorrido del organizador", organiserPage: "web del organizador", upload: "El recorrido se basa en un archivo subido a Mila y puede diferir del recorrido oficial de este año.",
-    aboutH: "Sobre el recorrido", coachNote: "",
+    aboutH: "Sobre el recorrido", coachNote: "Esta descripción la ha escrito el coach de Mila con ayuda de IA, a partir de los datos del registro de carreras de Mila.",
     climbsH: "Subidas", climbsCaption: "Subidas de al menos 25 m de desnivel. La pendiente es la media de abajo arriba.",
     climbCols: ["Empieza en", "Longitud", "Desnivel", "Pendiente", "Cima (m s. n. m.)"], noClimbs: "El recorrido no tiene subidas continuas de 25 m o más.",
     aidH: "Avituallamientos", aidOne: "Avituallamiento", aidCaption: "Avituallamientos según el organizador.", aidCols: ["En", "Qué hay"], aidNone: "sin especificar",
@@ -1161,24 +1168,27 @@ function aidText(r: Race, lang: Lang): string[] {
   return out;
 }
 
-function metaDescription(r: Race, lang: Lang): string {
-  const t = T[lang], where = r.place ?? countryName(r, lang);
+function metaDescription(r: Race, lang: Lang, today: string): string {
+  const t = T[lang], where = r.place ?? countryName(r, lang), coming = comingDate(r, today);
   const facts = [r.ascent ? t.metaClimb(num(r.ascent, lang)) : "", r.max_ele !== null ? t.metaHigh(num(r.max_ele, lang)) : "", r.aid_stations?.length ? t.metaAid(r.aid_stations.length) : ""].filter(Boolean).join(", ");
-  const head = [raceTitle(r, lang), where, r.next_date ? dateShort(r.next_date, lang) : ""].filter(Boolean).join(", ");
-  const s = `${head}${facts ? `: ${facts}` : ""}.`, tail = courseless(r) ? t.metaTailNoCourse : t.metaTail;
+  // b40-seo-fixar: a date that has passed is not said as if it were the next one
+  const head = [raceTitle(r, lang), where, coming ? dateShort(coming, lang) : ""].filter(Boolean).join(", ");
+  const s = `${head}${facts ? `: ${facts}` : ""}.`, tail = !courseless(r) ? t.metaTail : coming ? t.metaTailNoCourse : TAIL_BARE[lang].meta;
   if (s.length + tail.length < 160) return `${s} ${tail}`;
   return s.length <= 160 ? s : s.slice(0, 157).replace(/\s+\S*$/, "") + " …";
 }
 /** "Härnö Trail 21 km 2027 – bana, höjdprofil och tempoplan | Mila" */
-export function pageTitle(r: Race, lang: Lang, withPlace = false): string {
-  const y = r.next_date?.slice(0, 4), name = raceTitle(r, lang), where = withPlace && r.place && !name.includes(r.place) ? r.place : "";
-  const year = y && !name.includes(y) ? ` ${y}` : "", place = where ? `, ${where}` : "";
-  const full = `${name}${place}${year} – ${courseless(r) ? T[lang].titleTailNoCourse : T[lang].titleTail} | Mila`;
+export function pageTitle(r: Race, lang: Lang, withPlace: boolean, today: string): string {
+  // b40-seo-fixar: the title says what the page has. The course ("bana") only with a course file, the date and its year only while the
+  // date is ahead on `today` (required, so no caller can forget it); a passed race with no next date says neither
+  const coming = comingDate(r, today), y = coming?.slice(0, 4), name = raceTitle(r, lang), where = withPlace && r.place && !name.includes(r.place) ? r.place : "";
+  const year = y && !name.includes(y) ? ` ${y}` : "", place = where ? `, ${where}` : "", kind = !courseless(r) ? 0 : coming ? 1 : 2;
+  const full = `${name}${place}${year} – ${kind === 0 ? T[lang].titleTail : kind === 1 ? T[lang].titleTailNoCourse : TAIL_BARE[lang].title} | Mila`;
   // seo round 2, 2026-11-02: at most TITLE_MAX characters (what a search result shows): first shorter tails in the page's language
   // (a tail keeps the languages' titles apart), then the name is cut at a word with "…"; the distance, the place and the year stay, so
   // two distances of one race never share a title
   if (full.length <= TITLE_MAX) return full;
-  const tails = SHORT_TAIL[lang][courseless(r) ? 1 : 0];
+  const tails = kind === 2 ? TAIL_BARE[lang].short : SHORT_TAIL[lang][kind];
   for (const t of tails) { const x = `${name}${place}${year} – ${t} | Mila`; if (x.length <= TITLE_MAX) return x; }
   const tail = ` – ${tails[tails.length - 1]} | Mila`, km = ` ${kmShort(r.km, lang)}`, bare = displayName(r.name);
   // a place so long that little of the name would be left is cut too (it is only there to tell two races of one name apart)
@@ -1206,10 +1216,26 @@ function cutAt(s: string, room: number): string {
 }
 /** The shorter tails of a long title, longest first: with a course, and (no course file) without. */
 const SHORT_TAIL: Record<Lang, [string[], string[]]> = {
-  sv: [["bana och höjdprofil", "bana"], ["datum och tempoplan", "lopp"]], en: [["course and profile", "course"], ["date and pace plan", "race"]],
-  de: [["Strecke und Profil", "Strecke"], ["Termin und Pace-Plan", "Lauf"]], nb: [["løype og høydeprofil", "løype"], ["distanse og tempoplan", "løp"]],
-  da: [["rute og højdeprofil", "rute"], ["distance og tempoplan", "løb"]], fi: [["reitti ja profiili", "reitti"], ["päivä ja vauhtisuunnitelma", "kisa"]],
-  fr: [["parcours et profil", "parcours"], ["date et plan d’allure", "course"]], es: [["recorrido y perfil", "recorrido"], ["fecha y plan de ritmo", "carrera"]] };
+  // b40-seo-fixar: a race with a coming date but no course keeps the date word ("datum") before the bare word for a race
+  sv: [["bana och höjdprofil", "bana"], ["datum och tempoplan", "datum", "lopp"]], en: [["course and profile", "course"], ["date and pace plan", "race date", "race"]],
+  de: [["Strecke und Profil", "Strecke"], ["Termin und Pace-Plan", "Termin", "Lauf"]], nb: [["løype og høydeprofil", "løype"], ["distanse og tempoplan", "løpsdato", "løp"]],
+  da: [["rute og højdeprofil", "rute"], ["distance og tempoplan", "løbsdato", "løb"]], fi: [["reitti ja profiili", "reitti"], ["päivä ja vauhtisuunnitelma", "päivä", "kisa"]],
+  fr: [["parcours et profil", "parcours"], ["date et plan d’allure", "date", "course"]], es: [["recorrido y perfil", "recorrido"], ["fecha y plan de ritmo", "fecha", "carrera"]] };
+
+/** b40-seo-fixar (2026-11-21): the race's date while it is ahead (race day itself counts as ahead), else null. The one rule for
+ *  "coming" on the site: titles, descriptions, the event markup, the hubs and the nearby list all ask it. */
+export const comingDate = (r: Pick<Race, "next_date">, today: string) => r.next_date && r.next_date >= today ? r.next_date : null;
+/** b40-seo-fixar: the title and description tails of a race with no course file and no coming date (a passed one, or none yet): the
+ *  distance and the organiser's facts, never a date or a course the page does not have. */
+const TAIL_BARE: Record<Lang, { title: string; short: string[]; meta: string }> = {
+  sv: { title: "distans, fakta och tempoplan", short: ["fakta och tempoplan", "lopp"], meta: "Se distans och arrangörens fakta och få din tempoplan i Mila." },
+  en: { title: "distance, facts and pace plan", short: ["facts and pace plan", "race"], meta: "See the distance and the organizer's facts and get your pace plan in Mila." },
+  de: { title: "Distanz, Fakten und Pace-Plan", short: ["Fakten und Pace-Plan", "Lauf"], meta: "Distanz und Angaben des Veranstalters ansehen und deinen Pace-Plan in Mila holen." },
+  nb: { title: "distanse, fakta og tempoplan", short: ["fakta og tempoplan", "løp"], meta: "Se distanse og arrangørens fakta, og få tempoplanen din i Mila." },
+  da: { title: "distance, fakta og tempoplan", short: ["fakta og tempoplan", "løb"], meta: "Se distance og arrangørens fakta, og få din tempoplan i Mila." },
+  fi: { title: "matka, tiedot ja vauhtisuunnitelma", short: ["tiedot ja vauhtisuunnitelma", "kisa"], meta: "Katso matka ja järjestäjän tiedot ja hae vauhtisuunnitelmasi Milasta." },
+  fr: { title: "distance, infos et plan d’allure", short: ["infos et plan d’allure", "course"], meta: "Consulte la distance et les infos de l’organisateur, et obtiens ton plan d’allure dans Mila." },
+  es: { title: "distancia, datos y plan de ritmo", short: ["datos y plan de ritmo", "carrera"], meta: "Consulta la distancia y los datos del organizador y consigue tu plan de ritmo en Mila." } };
 
 function table(caption: string, cols: string[], rows: string[][], numeric: number[]): string {
   return `<div class="tw"><table><caption>${esc(caption)}</caption><thead><tr>${cols.map((c, i) => `<th scope="col"${numeric.includes(i) ? ' class="n"' : ""}>${esc(c)}</th>`).join("")}</tr></thead><tbody>`
@@ -1339,7 +1365,7 @@ type Ctx = { today: string; css: string; appStore: string; active: Race[]; slugs
   besokJs?: boolean;
   /** lang-switch: the site has lang.js (the language menu closes on a tap outside or Escape): the switch loads it. */
   langJs?: boolean;
-  /** seo: the App Store id for the Smart App Banner (none = off), the hubs, and the races whose title another race shares (their
+  /** seo: the App Store id for the Smart App Banner (none until launch), the hubs, and the races whose title another race shares (their
    *  titles say the place too, so every title on the site is its own). */
   appId?: string | null; hubs?: Hub[]; titleClash?: Set<string>;
   /** seo round 2, 2026-11-02: the approved guides, linked quietly from the race index in the languages they have. */
@@ -1383,7 +1409,10 @@ export function racePage(r: Race, lang: Lang, ctx: Ctx): string {
   const button = `<div class="ctas">${storeBadge(path, lang, ctx.appStore)}</div><p class="brandline">${esc(t.brandLine)}</p>`;
   const cta = `<div class="ctabox"><h2>${esc(t.ctaH)}</h2><p class="sub">${esc(t.ctaText)}</p>${button}</div>`;
   const sections: string[] = [];
-  const about = (lang === "sv" && r.comment ? r.comment.split(/\n{2,}/).map((p) => `<p>${esc(p)}</p>`).join("") + `<p class="note">${esc(t.coachNote)}</p>` : aboutText(r, lang).map((p) => `<p>${esc(p)}</p>`).join(""));
+  // b40-lopptext: the coach's own text in the page's language when the register has one written from the race's current facts; then
+  // (Swedish only) the shared description from the app; the summary from the numbers only until the coach has written it
+  const coachText = r.page_text?.[lang] ?? (lang === "sv" ? r.comment : null);
+  const about = coachText ? coachText.split(/\n{2,}/).map((p) => `<p>${esc(p)}</p>`).join("") + `<p class="note">${esc(t.coachNote)}</p>` : aboutText(r, lang).map((p) => `<p>${esc(p)}</p>`).join("");
   if (c) {
     const [eMin, eMax] = eleRange(c.pts);
     sections.push(`<section aria-labelledby="h-profile"><h2 id="h-profile">${esc(t.profileH)}</h2><figure><div class="chart">${profileSvg(r, lang)}</div><figcaption>${esc(t.profileDesc(kmText(r.km, lang), num(r.min_ele ?? eMin, lang), num(r.max_ele ?? eMax, lang), (r.aid_stations ?? []).length))}${r.ele_source === "dem" ? ` ${esc(t.dem)} ${esc(t.elevAttribution)}` : r.ele_source === "runners" ? ` ${esc(t.runners(r.ele_runners ?? 1))}` : ""}</figcaption></figure></section>`);
@@ -1430,16 +1459,18 @@ export function racePage(r: Race, lang: Lang, ctx: Ctx): string {
   const mine = (ctx.hubs ?? []).filter((h) => h.races.some((x) => x.id === r.id));
   if (mine.length) sections.push(`<section aria-labelledby="h-hubs"><h2 id="h-hubs">${esc(S[lang].seeAlso)}</h2><ul class="hubs">${mine.map((h) => `<li><a href="${esc(rel(path, hubPath(lang, h)))}">${esc(h.name[lang])}</a></li>`).join("")}</ul></section>`);
   const near = nearby(r, ctx.active, today);
-  if (near.length) sections.push(`<section aria-labelledby="h-nearby"><h2 id="h-nearby">${esc(t.nearbyH)}</h2><ul class="list">${near.map((x) => `<li><a href="${esc(rel(path, racePath(lang, ctx.slugs.get(x.id)!)))}">${esc(raceTitle(x, lang))}</a><span>${esc([x.next_date ? dateShort(x.next_date, lang) : t.noDateGroup, whereText(x, lang)].filter(Boolean).join(" · "))}</span></li>`).join("")}</ul></section>`);
+  if (near.length) sections.push(`<section aria-labelledby="h-nearby"><h2 id="h-nearby">${esc(t.nearbyH)}</h2><ul class="list">${near.map((x) => `<li><a href="${esc(rel(path, racePath(lang, ctx.slugs.get(x.id)!)))}">${esc(raceTitle(x, lang))}</a><span>${esc([comingDate(x, today) ? dateShort(x.next_date!, lang) : t.noDateGroup, whereText(x, lang)].filter(Boolean).join(" · "))}</span></li>`).join("")}</ul></section>`);
   const rights = `${L[lang].support}?topic=rights&ref=${encodeURIComponent(abs(path))}#kontakt`;
   sections.push(`<section><p class="sub">${esc(t.ctaH)}</p>${button}<p class="note">${esc(bare ? t.disclaimerNoCourse : t.disclaimer)}</p><p class="note">${esc(t.notAffiliated)} <a href="${esc(rel(path, rights))}" rel="nofollow">${esc(t.rights)}</a></p></section>`);
 
-  const og = ctx.ogImage(r, lang), description = metaDescription(r, lang);
+  const og = ctx.ogImage(r, lang), description = metaDescription(r, lang, today);
   const ld: object[] = [crumbsLd([{ name: t.home, path: L[lang].home }, { name: t.races, path: indexPath(lang) }, { name: title, path }]), faq.ld];
   const sd = startDate(r);
   // the event only with a real date from the register (a preliminary one says so in the description and as a property); the page is
-  // its url, the organiser's site its organizer's; the distance and the climbing as properties
-  if (sd) {
+  // its url, the organiser's site its organizer's; the distance and the climbing as properties. b40-seo-fixar: and only while the date
+  // is ahead. A race that has gone, with no next date yet, is no coming event: the page says "Loppet gick …" and the markup says nothing
+  // else (the page stays indexed, with its breadcrumbs and questions)
+  if (sd && comingDate(r, today)) {
     const sp = info?.start_place, geo = sp?.lat !== undefined && sp?.lon !== undefined ? [sp.lat, sp.lon] : r.start;
     ld.unshift({
       "@context": "https://schema.org", "@type": "SportsEvent", name: title, sport: "Running", startDate: sd, inLanguage: lang, url: abs(path),
@@ -1455,7 +1486,7 @@ export function racePage(r: Race, lang: Lang, ctx: Ctx): string {
       ...(r.organizer ? { organizer: { "@type": "Organization", name: r.organizer, ...(r.url ? { url: r.url } : {}) } } : {}),
     });
   }
-  return frame({ lang, path, title: pageTitle(r, lang, ctx.titleClash?.has(r.id)), description, css: ctx.css, today, alternates, appId: ctx.appId, motion: ctx.motionJs, besok: ctx.besokJs, langJs: ctx.langJs, og: { ...og, alt: bare ? t.ogAltNoCourse(title) : t.ogAlt(title) }, ld,
+  return frame({ lang, path, title: pageTitle(r, lang, !!ctx.titleClash?.has(r.id), today), description, css: ctx.css, today, alternates, appId: ctx.appId, motion: ctx.motionJs, besok: ctx.besokJs, langJs: ctx.langJs, og: { ...og, alt: bare ? t.ogAltNoCourse(title) : t.ogAlt(title) }, ld,
     // site-calm: the profile right under the facts, before the call to action (in the HTML, so the reading order is the visual one)
     body: `<article>${hero}${sections[0]?.startsWith('<section aria-labelledby="h-profile"') ? sections.shift() + cta : cta}${sections.join("\n")}</article>`, script: r.next_date && r.next_date >= today ? cdScript(lang) : undefined,
     crumbs: [{ name: t.home, path: L[lang].home }, { name: t.races, path: indexPath(lang) }, { name: title }] });
@@ -1523,7 +1554,7 @@ export function indexPage(lang: Lang, page: number, pages: number, races: Race[]
 //               how to pace it: even effort, the climbs named), with FAQPage markup holding exactly the page's text
 //   pace table  a few common target times at even pace: time per km and splits, labelled as arithmetic, never a forecast
 //   guides      pages from a data file (race_pages_guides.json next to this script), only entries marked approved: none yet
-//   banner      Apple's Smart App Banner once race_pages.json has the app's App Store id ("appStoreId"; empty = off)
+//   banner      Apple's Smart App Banner once race_pages.json has the app's App Store id ("appStoreId"; empty until launch)
 //   IndexNow    the key file at the root, and the addresses that changed in a run, pinged to api.indexnow.org by the workflow
 
 /** The brand as each language writes it (og:site_name, the product's name in markup). */
@@ -1812,8 +1843,21 @@ export const DISTANCES: { key: string; test: (r: Pick<Race, "km" | "trail" | "su
 /** The fewest races a hub needs: fewer is a thin page, never made. */
 export const HUB_MIN = 2;
 export type Hub = { kind: HubKind; key: string; slug: Record<Lang, string>; name: Record<Lang, string>; races: Race[]; about?: string;
-  /** seo round, 2026-11-02: the slugs this hub had before (a guessed country: the register's own name in every language). */
-  old?: Partial<Record<Lang, string[]>> };
+  /** seo round, 2026-11-02: the slugs this hub had before (a guessed country: the register's own name in every language; b40-seo-fixar:
+   *  a place's own text, before its town was found). */
+  old?: Partial<Record<Lang, string[]>>;
+  /** b40-seo-fixar: a month's races already run (this month's so far, or all of a month gone by): the day each was run, by race id. */
+  held?: Record<string, string>;
+  /** b40-seo-fixar: the whole month has gone by (its hub stays as an archive). */
+  past?: boolean };
+/** b40-seo-fixar: the first month the site had month hubs (seo round, 2026-10-16). A month since then stays as an archive of the races
+ *  run in it, so its address never goes; months before it never had a page and get none. */
+export const MONTH_HUBS_SINCE = "2026-10";
+/** b40-seo-fixar: the months gone by that the hub lists link (the newest ones). */
+export const NAV_PAST_MONTHS = 3;
+/** b40-seo-fixar: a place text's parts, without what is in brackets: "Stockholm (Norra Djurgården)" → ["Stockholm"],
+ *  "Norra Djurgården, Stockholm" → ["Norra Djurgården", "Stockholm"]. */
+const placeParts = (p: string) => p.replace(/\([^)]*\)/g, " ").split(",").map((x) => x.replace(/\s+/g, " ").trim()).filter((x) => slugify(x));
 export const hubPath = (lang: Lang, h: Pick<Hub, "kind" | "slug">) => `${L[lang].dir}/${HUB_DIR[lang][h.kind]}/${h.slug[lang]}/`;
 /** Country names that read better with an article after "in" (en) or "in"/"im" (de); in French the whole "au/aux/à …" where "en …" is wrong. */
 const COUNTRY_IN: Partial<Record<Lang, Record<string, string>>> = {
@@ -1846,26 +1890,71 @@ export function buildHubs(active: Race[], today: string): Hub[] {
     out.push({ kind: "country", key: k, slug, name: Object.fromEntries(LANGS.map((l) => [l, S[l].hubName.country(COUNTRY_IN[l]?.[k] ?? nm(l))])) as Record<Lang, string>, races: order(rs),
       ...(Object.keys(old).length ? { old } : {}) });
   }
-  // places: the place's name within its country; the same name in two countries gets the country's code in its address
-  const byCity = new Map<string, Race[]>();
-  for (const r of active) { const p = r.place ? slugify(r.place) : ""; if (p) { const k = `${r.country_code ?? r.country ?? ""}|${p}`; byCity.set(k, [...(byCity.get(k) ?? []), r]); } }
-  const cities = [...byCity].filter(([, rs]) => rs.length >= HUB_MIN).sort(([a], [b]) => a.localeCompare(b));
-  const seen = new Map<string, number>();
-  for (const [k] of cities) { const p = k.split("|")[1]; seen.set(p, (seen.get(p) ?? 0) + 1); }
-  for (const [k, rs] of cities) {
-    const [cc, p] = k.split("|"), slug = seen.get(p)! > 1 && cc ? `${p}-${slugify(cc)}` : p, place = rs[0].place!;
-    out.push({ kind: "city", key: k, slug: Object.fromEntries(LANGS.map((l) => [l, slug])) as Record<Lang, string>, name: Object.fromEntries(LANGS.map((l) => [l, S[l].hubName.city(place)])) as Record<Lang, string>, races: order(rs) });
+  // places: the town within its country; the same name in two countries gets the country's code in its address. b40-seo-fixar: the
+  // town is the place text's first part, or a later part that is another race's first part in the same country, so "Stockholm",
+  // "Stockholm (Norra Djurgården)" and "Norra Djurgården, Stockholm" make one hub; the addresses the place texts had stay (`old`)
+  // (review): a town is a part that some race's place names alone ("Stockholm", "Stockholm (Norra Djurgården)"); the first part wins
+  // when it is one, so "Lidingö, Stockholm" stays in Lidingö beside a plain "Lidingö", and a district never takes a town's races
+  const cc = (r: Race) => r.country_code ?? r.country ?? "", towns0 = new Set<string>();
+  for (const r of active) { const ps = r.place ? placeParts(r.place) : []; if (ps.length === 1) towns0.add(`${cc(r)}|${slugify(ps[0])}`); }
+  const town = (r: Race): { slug: string; text: string } | null => {
+    if (!r.place) return null;
+    const ps = placeParts(r.place), isTown = (x: string) => towns0.has(`${cc(r)}|${slugify(x)}`);
+    const x = ps.length && !isTown(ps[0]) ? ps.slice(1).find(isTown) ?? ps[0] : ps[0];
+    if (x) return { slug: slugify(x), text: x };
+    const bare = r.place.replace(/[()]/g, " ").replace(/\s+/g, " ").trim();   // a place that is only a bracket
+    return slugify(bare) ? { slug: slugify(bare), text: bare } : null;
+  };
+  const cityHubs = (key: (r: Race) => string) => {
+    const by = new Map<string, Race[]>();
+    for (const r of active) { const p = key(r); if (p) { const k = `${cc(r)}|${p}`; by.set(k, [...(by.get(k) ?? []), r]); } }
+    const list = [...by].filter(([, rs]) => rs.length >= HUB_MIN).sort(([a], [b]) => a.localeCompare(b)), seen = new Map<string, number>();
+    for (const [k] of list) { const p = k.split("|")[1]; seen.set(p, (seen.get(p) ?? 0) + 1); }
+    return list.map(([k, rs]) => { const [c, p] = k.split("|"); return { k, rs, slug: seen.get(p)! > 1 && c ? `${p}-${slugify(c)}` : p }; });
+  };
+  const townHubs = cityHubs((r) => town(r)?.slug ?? ""), before = cityHubs((r) => (r.place ? slugify(r.place) : ""));
+  for (const { k, rs, slug } of townHubs) {
+    const place = town(rs[0])!.text, ids = new Set(rs.map((r) => r.id));
+    const was = [...new Set(before.filter((b) => b.slug !== slug && b.rs.every((r) => ids.has(r.id))).map((b) => b.slug))];
+    out.push({ kind: "city", key: k, slug: Object.fromEntries(LANGS.map((l) => [l, slug])) as Record<Lang, string>, name: Object.fromEntries(LANGS.map((l) => [l, S[l].hubName.city(place)])) as Record<Lang, string>, races: order(rs),
+      ...(was.length ? { old: Object.fromEntries(LANGS.map((l) => [l, was])) as Partial<Record<Lang, string[]>> } : {}) });
   }
-  // the coming twelve months, this one first
-  for (let i = 0; i < 12; i++) {
-    const ym = addMonths(today.slice(0, 7), i), rs = active.filter((r) => r.next_date && r.next_date >= today && r.next_date.startsWith(ym));
-    if (rs.length >= HUB_MIN) out.push({ kind: "month", key: ym, slug: Object.fromEntries(LANGS.map((l) => [l, ym])) as Record<Lang, string>, name: Object.fromEntries(LANGS.map((l) => [l, S[l].hubName.month(monthName(ym, l))])) as Record<Lang, string>, races: order(rs) });
+  // b40-seo-fixar: every month from the first month hubs to twelve months ahead, from `today` alone (the hourly build keeps them right):
+  // a month gone by is an archive of the races run in it; this month has its races still to come and those already run (so its hub
+  // never drops out mid-month); a coming month its coming races. The day each one was run, from the race's dates
+  const thisMonth = today.slice(0, 7), last = addMonths(thisMonth, 11);
+  for (let ym = MONTH_HUBS_SINCE < thisMonth ? MONTH_HUBS_SINCE : thisMonth; ym <= last; ym = addMonths(ym, 1)) {
+    const held: Record<string, string> = {}, when = new Map<string, string>();
+    for (const r of active) {
+      const run = ym <= thisMonth ? [r.next_date, ...r.past_dates].filter((x): x is string => !!x && x < today && x.startsWith(ym)).sort()[0] : undefined;
+      if (run) { held[r.id] = run; when.set(r.id, run); }
+      else if (comingDate(r, today)?.startsWith(ym)) when.set(r.id, r.next_date!);
+    }
+    const rs = active.filter((r) => when.has(r.id)).sort((a, b) => when.get(a.id)!.localeCompare(when.get(b.id)!) || raceTitle(a, "sv").localeCompare(raceTitle(b, "sv")));
+    if (rs.length >= HUB_MIN) out.push({ kind: "month", key: ym, slug: Object.fromEntries(LANGS.map((l) => [l, ym])) as Record<Lang, string>, name: Object.fromEntries(LANGS.map((l) => [l, S[l].hubName.month(monthName(ym, l))])) as Record<Lang, string>, races: rs,
+      ...(Object.keys(held).length ? { held } : {}), ...(ym < thisMonth ? { past: true } : {}) });
   }
   return out;
 }
 
+/** b40-seo-fixar: the line on a month gone by. */
+const HUB_HELD: Record<Lang, (m: string) => string> = {
+  sv: (m) => `Loppen här gick i ${m}. Varje loppsida visar nästa upplaga när arrangören har satt datum.`,
+  en: (m) => `These races were run in ${m}. Each race page shows the next edition once the organizer has set the date.`,
+  de: (m) => `Diese Läufe fanden im ${m} statt. Jede Laufseite zeigt die nächste Ausgabe, sobald der Veranstalter den Termin festgelegt hat.`,
+  nb: (m) => `Disse løpene gikk i ${m}. Hver løpsside viser neste utgave når arrangøren har satt dato.`,
+  da: (m) => `Disse løb blev holdt i ${m}. Hver løbsside viser næste udgave, når arrangøren har sat dato.`,
+  fi: (m) => `Nämä kisat on jo juostu (${m}). Kunkin kisan sivu näyttää seuraavan kisan, kun järjestäjä on päättänyt päivän.`,
+  fr: (m) => `Ces courses ont eu lieu en ${m}. Chaque page de course indique la prochaine édition dès que l’organisateur en a fixé la date.`,
+  es: (m) => `Estas carreras se celebraron en ${m}. Cada página de carrera muestra la próxima edición cuando el organizador fija la fecha.`,
+};
+
 /** The hubs as links, grouped by kind (the index's "Hitta lopp", a hub's "Fler sätt att hitta lopp"); `skip` leaves one hub out. */
 function hubNav(hubs: Hub[], lang: Lang, from: string, title: string, skip?: Hub): string {
+  // b40-seo-fixar (review): of the months gone by only the latest NAV_PAST_MONTHS are listed; the older archives keep their pages (the
+  // sitemap and their races' pages link them), so the list does not grow a link every month
+  const past = hubs.filter((h) => h.past).map((h) => h.key).sort().slice(-NAV_PAST_MONTHS);
+  hubs = hubs.filter((h) => !h.past || past.includes(h.key));
   const s = S[lang], groups = HUB_KINDS.map((k) => [k, hubs.filter((h) => h.kind === k && h !== skip)] as const).filter(([, hs]) => hs.length);
   if (!groups.length) return "";
   return `<section aria-labelledby="h-browse"><h2 id="h-browse">${esc(title)}</h2>${groups.map(([k, hs]) => `<h3>${esc(s.browseKinds[k])}</h3><ul class="hubs">${hs.map((h) => `<li><a href="${esc(rel(from, hubPath(lang, h)))}">${esc(h.name[lang])}</a> <span class="note">(${h.races.length})</span></li>`).join("")}</ul>`).join("")}</section>`;
@@ -1875,10 +1964,11 @@ function hubNav(hubs: Hub[], lang: Lang, from: string, title: string, skip?: Hub
 export function hubPage(h: Hub, lang: Lang, ctx: Ctx): string {
   const t = T[lang], s = S[lang], path = hubPath(lang, h), today = ctx.today, rs = h.races;
   const alternates = Object.fromEntries(LANGS.map((l) => [l, hubPath(l, h)])) as Record<Lang, string>;
-  const next = rs.find((r) => r.next_date && r.next_date >= today), climbs = rs.filter((r) => !courseless(r) || r.ascent > 0).map((r) => r.ascent);
-  const intro = [s.hubIntro(rs.length), h.about ? s.distAbout[h.about] : "", next ? s.hubNext(dateShort(next.next_date!, lang), raceTitle(next, lang)) : "",
+  // b40-seo-fixar: a month gone by says so, and lists the day each race was run then
+  const held = h.held, next = h.past ? undefined : rs.find((r) => comingDate(r, today) && !held?.[r.id]), climbs = rs.filter((r) => !courseless(r) || r.ascent > 0).map((r) => r.ascent);
+  const intro = [s.hubIntro(rs.length), h.past ? HUB_HELD[lang](monthName(h.key, lang)) : "", h.about ? s.distAbout[h.about] : "", next ? s.hubNext(dateShort(next.next_date!, lang), raceTitle(next, lang)) : "",
     climbs.length >= 2 ? s.hubClimb(num(Math.min(...climbs), lang), num(Math.max(...climbs), lang)) : ""].filter(Boolean).join(" ");
-  const item = (r: Race) => `<li><a href="${esc(rel(path, racePath(lang, ctx.slugs.get(r.id)!)))}">${esc(raceTitle(r, lang))}</a><span>${esc([r.next_date && r.next_date >= today ? cap(dateLong(r.next_date, lang)) : t.noDateGroup, whereText(r, lang), kmText(r.km, lang), courseless(r) && !r.ascent ? null : `↑ ${num(r.ascent, lang)} m`].filter(Boolean).join(" · "))}</span></li>`;
+  const item = (r: Race) => `<li><a href="${esc(rel(path, racePath(lang, ctx.slugs.get(r.id)!)))}">${esc(raceTitle(r, lang))}</a><span>${esc([held?.[r.id] ? cap(dateLong(held[r.id], lang)) : comingDate(r, today) ? cap(dateLong(r.next_date!, lang)) : t.noDateGroup, whereText(r, lang), kmText(r.km, lang), courseless(r) && !r.ascent ? null : `↑ ${num(r.ascent, lang)} m`].filter(Boolean).join(" · "))}</span></li>`;
   const hero = `<div class="race-hero"><div class="eyebrow">${esc(t.races)}</div><h1>${esc(h.name[lang])}</h1><p class="lead">${esc(intro)}</p><div class="ctas">${storeBadge(path, lang, ctx.appStore)}</div><p class="brandline">${esc(t.brandLine)}</p></div>`;
   const list = `<section aria-labelledby="h-list"><h2 id="h-list">${esc(t.count(rs.length))}</h2><ul class="list">${rs.map(item).join("")}</ul></section>`;
   const more = hubNav((ctx.hubs ?? []).filter((x) => x.kind !== "city" || x.races[0].country_code === rs[0].country_code), lang, path, s.hubMore, h);
@@ -2002,7 +2092,7 @@ export async function indexNowPing(urls: string[], key: string, fetchFn: typeof 
 // ------------------------------------------------------------------------------------------------------------- sitemap and robots
 
 /** The site's own pages in each language (alternates in the sitemap); any other page at the root is listed on its own. */
-const STATIC_GROUPS: Record<Lang, string>[] = [
+export const STATIC_GROUPS: Record<Lang, string>[] = [
   { sv: "sv.html", en: "index.html", de: "index-de.html", nb: "index-nb.html", da: "index-da.html", fi: "index-fi.html", fr: "index-fr.html", es: "index-es.html" },
   { sv: "support-sv.html", en: "support.html", de: "support-de.html", nb: "support-nb.html", da: "support-da.html", fi: "support-fi.html", fr: "support-fr.html", es: "support-es.html" },
   { sv: "privacy.html", en: "privacy-en.html", de: "privacy-de.html", nb: "privacy-nb.html", da: "privacy-da.html", fi: "privacy-fi.html", fr: "privacy-fr.html", es: "privacy-es.html" },
@@ -2152,7 +2242,7 @@ export async function generate(o: { out: string; races: Race[]; ids?: Set<string
     : defaults.get(lang) ? { image: abs(ogDefaultPath(lang)), large: true } : { image: `${SITE}/logo.png?v=37`, large: false };
   // seo: the hubs, and the races whose page title another race's would repeat (their titles add the place)
   const hubs = buildHubs(active, today), titles = new Map<string, string[]>();
-  for (const r of active) { const k = pageTitle(r, "sv"); titles.set(k, [...(titles.get(k) ?? []), r.id]); }
+  for (const r of active) { const k = pageTitle(r, "sv", false, today); titles.set(k, [...(titles.get(k) ?? []), r.id]); }
   const titleClash = new Set([...titles.values()].filter((ids) => ids.length > 1).flat());
   const ctx: Ctx = { today, css, appStore, active, slugs, ogImage, hasMap, sceneJs: await exists("scene.js"), motionJs: await exists("motion.js"), besokJs: await exists("besok.js"), langJs: await exists("lang.js"), pictures: (await Promise.all(BAND_FILES.map((f) => exists(f)))).every(Boolean), appId: smartBannerMeta(o.appStoreId) ? o.appStoreId : null, hubs, titleClash, guides: o.guides };
 
@@ -2187,7 +2277,8 @@ export async function generate(o: { out: string; races: Race[]; ids?: Set<string
       try { await Deno.remove(dir, { recursive: true }); written++; report.changed.push(abs(racePath(lang, slug))); } catch (e) { if (!(e instanceof Deno.errors.NotFound)) throw e; }
     }
   }
-  // seo: the hubs, every language; a hub folder that is no longer a hub (below two races, a month gone by) is deleted
+  // seo: the hubs, every language. b40-seo-fixar: a month gone by stays a hub (an archive); a folder that is no longer a hub (below two
+  // races) is never deleted: it sends the reader on (below)
   const hubEntries: SitemapEntry[] = [], keepHub = new Set<string>();
   for (const h of hubs) {
     const alt = Object.fromEntries([...LANGS.map((l) => [l, abs(hubPath(l, h))]), ["x-default", abs(hubPath("en", h))]]);
@@ -2212,7 +2303,8 @@ export async function generate(o: { out: string; races: Race[]; ids?: Set<string
     try {
       for await (const e of Deno.readDir(`${out}/${base}`)) {
         const from = `${base}/${e.name}/`;
-        if (!e.isDirectory || keepHub.has(from) || state.hubMoved[from]) continue;
+        // an address sent to the index (key "") is looked at again every run: its races may have a hub again under another address
+        if (!e.isDirectory || keepHub.has(from) || state.hubMoved[from]?.key) continue;
         if (kind === "country") {
           const code = countryCodeOf(e.name), own = code ? slugify(countryName({ country_code: code, country: null }, lang) ?? "") : "";
           if (code && own && own !== e.name) state.hubMoved[from] = { lang, kind, key: code };
@@ -2224,6 +2316,9 @@ export async function generate(o: { out: string; races: Race[]; ids?: Set<string
             const code = countryCodeOf(parts.slice(i).join("-")), key = code ? `${code}|${parts.slice(0, i).join("-")}` : "";
             if (key && hubs.some((h) => h.kind === "city" && h.key === key)) { state.hubMoved[from] = { lang, kind, key }; break; }
           }
+          // b40-seo-fixar (review): a place's old address (its own text, or a part of it) goes to the town hub that now holds its races
+          const home = !state.hubMoved[from]?.key && hubs.find((h) => h.kind === "city" && h.races.some((r) => r.place && (slugify(r.place) === e.name || placeParts(r.place).some((x) => slugify(x) === e.name))));
+          if (home) state.hubMoved[from] = { lang, kind, key: home.key };
         }
       }
     } catch (err) { if (!(err instanceof Deno.errors.NotFound)) throw err; }
@@ -2234,12 +2329,16 @@ export async function generate(o: { out: string; races: Race[]; ids?: Set<string
     await put(`${from}index.html`, movedTo(from, h ? hubPath(to.lang, h) : indexPath(to.lang), to.lang, ctx));
     keepHub.add(from);
   }
+  // b40-seo-fixar: a hub folder that is no longer a hub (below two races) is not deleted: its address stays for good as a noindex page
+  // that sends the reader on to the language's race index (out of the sitemap); should the hub come back, the hub wins
   for (const lang of LANGS) for (const kind of HUB_KINDS) {
     const base = `${L[lang].dir}/${HUB_DIR[lang][kind]}`;
     try {
       for await (const e of Deno.readDir(`${out}/${base}`)) {
-        if (!e.isDirectory || keepHub.has(`${base}/${e.name}/`)) continue;
-        await Deno.remove(`${out}/${base}/${e.name}`, { recursive: true }); written++; report.changed.push(abs(`${base}/${e.name}/`));
+        const from = `${base}/${e.name}/`;
+        if (!e.isDirectory || keepHub.has(from)) continue;
+        state.hubMoved[from] = { lang, kind, key: "" };
+        await put(`${from}index.html`, movedTo(from, indexPath(lang), lang, ctx)); keepHub.add(from); report.changed.push(abs(from));
       }
     } catch (e) { if (!(e instanceof Deno.errors.NotFound)) throw e; }
   }

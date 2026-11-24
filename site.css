@@ -13,10 +13,7 @@
 @font-face{font-family:"Barlow Condensed";src:url(/fonts/BarlowCondensed-Bold-latin.woff2) format("woff2");font-weight:700;font-display:swap;unicode-range:U+0000-017F,U+2013-2014,U+2018-201E,U+2022,U+2026,U+2039-203A,U+20AC,U+2190-2193}
 @font-face{font-family:"Barlow Condensed";src:url(/fonts/BarlowCondensed-SemiBold-latin.woff2) format("woff2");font-weight:600;font-display:swap;unicode-range:U+0000-017F,U+2013-2014,U+2018-201E,U+2022,U+2026,U+2039-203A,U+20AC,U+2190-2193}
 *{box-sizing:border-box}
-/* webb-oversyn 2026-11-20: the page itself never pans sideways on a phone: a picture's glow or the coach ring's turning sweep reaching past
-   the edge widened the whole page (376 px of a 320 px screen on the product page, 339 on race pages); clip, not hidden, so nothing scrolls */
-html{-webkit-text-size-adjust:100%;overflow-x:clip}
-:target,[id]{scroll-margin-top:16px}
+html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,sans-serif;font-size:17px;line-height:1.6;overflow-x:clip;-webkit-font-smoothing:antialiased}
 a{color:var(--accent);text-underline-offset:.18em;text-decoration-thickness:1px}
 a:hover{text-decoration-thickness:2px}
@@ -136,32 +133,14 @@ section>.eyebrow{margin-bottom:18px}
 @media (max-width:700px){.o-things{grid-template-columns:1fr 1fr;gap:10px}}
 @media (max-width:330px){.o-things{grid-template-columns:1fr}}
 /* documents, forms and the footer */
-.doc{padding:10px 0 60px;overflow-wrap:break-word}.doc p,.doc li{color:var(--ink2)}.doc strong{color:var(--ink)}.doc a{overflow-wrap:anywhere}
-/* webb-oversyn 2026-11-20: the policies' contents (legal_site.ts): one quiet list of the headings, closed until asked for */
-.toc{margin:22px 0 8px;border:1px solid var(--line);border-radius:var(--inner);background:var(--surface)}
-.toc summary,details.faq summary{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:48px;cursor:pointer;list-style:none}
-.toc summary::-webkit-details-marker,details.faq summary::-webkit-details-marker{display:none}
-.toc summary{padding:0 16px;font-weight:600;color:var(--ink)}
-.toc summary::after,details.faq summary::after{content:"";flex:none;width:9px;height:9px;margin-right:4px;border-right:1.5px solid var(--ink2);border-bottom:1.5px solid var(--ink2);transform:translateY(-3px) rotate(45deg);transition:transform .2s var(--ease)}
-.toc[open] summary::after,details.faq[open] summary::after{transform:translateY(2px) rotate(-135deg)}
-.toc ol{margin:0;padding:4px 16px 14px 40px;columns:2 16em;column-gap:32px}
-.toc li{break-inside:avoid}.toc li a{display:block;padding:10px 0;color:var(--ink2);text-decoration:none;overflow-wrap:normal}.toc li a:hover{color:var(--ink);text-decoration:underline}
-/* webb-oversyn 2026-11-20: the support page's questions (details.faq only: race pages have a section.faq of their own): each question a row to open, so the form is near on a phone and every answer
-   is one tap away (the whole answer stays in the page; Chrome opens it on find in page) */
-.faqs{border-top:1px solid var(--line);margin-bottom:8px}
-details.faq{border-bottom:1px solid var(--line)}
-details.faq summary{padding:12px 0;font-weight:600;color:var(--ink);line-height:1.4}
-details.faq summary:hover{color:var(--accent)}
-details.faq p{margin:0 0 18px}
-/* the 404's links: room for a finger between them */
-.notfound p a{display:inline-block;padding:10px 4px}
+.doc{padding:10px 0 60px}.doc p,.doc li{color:var(--ink2)}.doc strong{color:var(--ink)}
 form label{display:block;margin:14px 0;color:var(--ink2)}
 select,input,textarea{width:100%;font:inherit;color:var(--ink);background:var(--surface);padding:12px;border:1px solid var(--field);border-radius:var(--control)}
 select:focus-visible,input:focus-visible,textarea:focus-visible{border-color:var(--accent)}
 button{font:inherit;font-weight:700;background:var(--accent-fill);color:var(--on-accent);border:0;border-radius:var(--inner);padding:12px 22px;cursor:pointer}button:disabled{opacity:.5;cursor:default}
 .msg{min-height:1.5em;color:var(--ink2)}
 footer{padding:48px 0 64px;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}
-footer a{color:var(--ink2);margin-right:18px;text-decoration:none;display:inline-flex;align-items:center;min-height:44px}footer a:hover{color:var(--ink);text-decoration:underline}
+footer a{color:var(--ink2);margin-right:18px;text-decoration:none;display:inline-block;padding:4px 0}footer a:hover{color:var(--ink);text-decoration:underline}
 footer .provider{margin:16px 0 12px;color:var(--muted);font-size:13px}footer .provider a{margin-right:0;display:inline;text-decoration:underline}
 
 /* the hero's first frame (CSS only, no script needed): the dawn comes up while the words rise in order (on the light page the glow fades in: opacity on the decorative ::before only,
@@ -174,7 +153,6 @@ footer .provider{margin:16px 0 12px;color:var(--muted);font-size:13px}footer .pr
 @keyframes sunrise{from{opacity:0}}
 @keyframes sweep{to{transform:rotate(360deg)}}
 @media (prefers-reduced-motion:no-preference){
-html{scroll-behavior:smooth}
 .hero .eyebrow,.hero h1,.hero .tagline,.hero .lead{animation:rise .9s var(--ease) backwards}
 .hero h1{animation-delay:.08s}.hero .tagline{animation-delay:.22s}.hero .lead{animation-delay:.32s}
 .hero .ctas{animation:lift .9s var(--ease) .4s backwards}

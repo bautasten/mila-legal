@@ -43,10 +43,10 @@ import { securityMeta, langSwitch } from "./site_csp.ts";
 
 export const SITE = "https://milacoach.app";
 export const FEED_URL = "https://vfjofaniwtudzvadxpsd.supabase.co/functions/v1/race-feed";
-/** The App Store link of every generated page's call to action. Byt till appens riktiga App Store-länk vid lansering: set "appStoreUrl"
+/** The App Store link of every generated page's call to action. Appens riktiga App Store-länk (live sedan 2026-11-23): set "appStoreUrl"
  *  in race_pages.json next to this script (backend/race_pages.json, published as tools/race_pages.json in the Pages repo by
  *  backend/publish_legal.sh), which wins over this constant; the next run regenerates every page with it. */
-export const APP_STORE_URL = "https://apps.apple.com/search?term=Mila%20Coach";
+export const APP_STORE_URL = "https://apps.apple.com/app/id6821681201";
 /** The renderer's downloads, each with the SHA-256 of the file at that pinned address (review round 24): a file that is not exactly that
  *  one is never run or used, whatever the CDN serves. The wasm's hash is the npm package's own index_bg.wasm, the fonts' those jsDelivr
  *  lists for the package version. */
@@ -1339,7 +1339,7 @@ type Ctx = { today: string; css: string; appStore: string; active: Race[]; slugs
   besokJs?: boolean;
   /** lang-switch: the site has lang.js (the language menu closes on a tap outside or Escape): the switch loads it. */
   langJs?: boolean;
-  /** seo: the App Store id for the Smart App Banner (none until launch), the hubs, and the races whose title another race shares (their
+  /** seo: the App Store id for the Smart App Banner (none = off), the hubs, and the races whose title another race shares (their
    *  titles say the place too, so every title on the site is its own). */
   appId?: string | null; hubs?: Hub[]; titleClash?: Set<string>;
   /** seo round 2, 2026-11-02: the approved guides, linked quietly from the race index in the languages they have. */
@@ -1523,7 +1523,7 @@ export function indexPage(lang: Lang, page: number, pages: number, races: Race[]
 //               how to pace it: even effort, the climbs named), with FAQPage markup holding exactly the page's text
 //   pace table  a few common target times at even pace: time per km and splits, labelled as arithmetic, never a forecast
 //   guides      pages from a data file (race_pages_guides.json next to this script), only entries marked approved: none yet
-//   banner      Apple's Smart App Banner once race_pages.json has the app's App Store id ("appStoreId"; empty until launch)
+//   banner      Apple's Smart App Banner once race_pages.json has the app's App Store id ("appStoreId"; empty = off)
 //   IndexNow    the key file at the root, and the addresses that changed in a run, pinged to api.indexnow.org by the workflow
 
 /** The brand as each language writes it (og:site_name, the product's name in markup). */

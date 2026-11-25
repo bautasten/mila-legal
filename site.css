@@ -96,6 +96,15 @@ section>.eyebrow{margin-bottom:18px}
 .feature{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,72px);align-items:center}
 .feature img{width:100%;height:auto;border-radius:var(--radius);border:1px solid var(--line);box-shadow:0 30px 80px -20px var(--shadow)}
 .feature .sub{margin-bottom:0}
+/* site-film (2026-11-25, #131): the race-day film, served from the site (film/), on the product page after the hero and closing every
+   race page (race_pages.ts filmSection). One calm column: the heading, the 9:16 player at most 360 px wide with the browser's own
+   controls, and its caption; the poster sits on the tile colour until it loads. Light only, like the rest of the site. */
+.film-sec{border-top:1px solid var(--line);padding:clamp(56px,8vw,104px) 0;text-align:center}
+.film-sec h2{max-width:18em;margin-inline:auto;text-wrap:balance}
+.film{max-width:360px;margin:clamp(20px,3vw,32px) auto 0}
+.film video{display:block;width:100%;height:auto;aspect-ratio:9/16;background:var(--tile);border:1px solid var(--rim);border-radius:var(--radius);box-shadow:0 24px 48px -12px var(--shadow),0 4px 12px var(--rim)}
+.film figcaption{margin-top:18px;color:var(--ink2);font-size:16px;line-height:1.55;text-align:left}
+.film figcaption .note{display:block}
 .guides{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,1fr);column-gap:clamp(24px,4vw,56px);border-top:1px solid var(--line)}
 .guides li{border-bottom:1px solid var(--line)}
 .guides a{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:20px 0;color:var(--ink);text-decoration:none;font-family:var(--display);font-weight:600;font-size:23px;line-height:1.15}

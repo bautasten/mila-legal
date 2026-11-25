@@ -1318,6 +1318,8 @@ type Frame = {
   band?: BandKind | null;
   /** lang-switch: the site has lang.js: the language switch loads it. */
   langJs?: boolean;
+  /** site-film: the site has this language's race-day film (FILM_FILES): the page closes with it (filmSection, outside <main>). */
+  film?: boolean;
   alternates?: Partial<Record<Lang, string>> | null; noindex?: boolean; og?: { image: string; alt: string; large: boolean }; ld?: object[]; script?: string; module?: string;
   crumbs: { name: string; path?: string }[];
   /** The app's App Store id: Apple's Smart App Banner on the page (seo; off while it is not set). */
@@ -1342,7 +1344,7 @@ function frame(f: Frame): string {
 ${og}<meta name="theme-color" content="#FBF9F5"><link rel="icon" href="${root}favicon.ico?v=37" sizes="32x32"><link rel="icon" href="${root}apple-touch-icon.png?v=37" type="image/png" sizes="180x180"><link rel="apple-touch-icon" href="${root}apple-touch-icon.png?v=37"><link rel="preload" href="${root}fonts/BarlowCondensed-Bold-latin.woff2" as="font" type="font/woff2" crossorigin><style>${f.css}</style>${(f.ld ?? []).map(jsonLd).join("")}</head><body>
 <a class="skip" href="#main">${esc(t.skip)}</a><div class="wrap"><header><a class="brand" href="${root}${c.home}"><img src="${root}logo-80.png?v=37" alt="" width="40" height="40">MILA</a>${switcher}</header>
 ${crumbs}
-<main id="main">${f.body}</main>${f.band ? trailBand(f.band, root) : ""}
+<main id="main">${f.body}</main>${f.film ? filmSection(f.lang, root, "aside") : ""}${f.band ? trailBand(f.band, root) : ""}
 <footer><a href="${root}${c.support}">${esc(t.support)}</a><a href="${root}${c.privacy}">${esc(t.privacy)}</a><a href="${root}${c.terms}">${esc(t.terms)}</a><a href="${root}${c.support}#provider">${esc(t.contact)}</a><a href="${root}${c.support}?topic=report&amp;ref=${encodeURIComponent(abs(f.path))}#kontakt" rel="nofollow">${esc(t.report)}</a><br><br>${esc(t.notAffiliatedAll)}<br><br>© ${f.today.slice(0, 4)} Mila</footer></div>${f.script ? `<script>${f.script}</script>` : ""}${f.module ? `<script type="module">${f.module}</script>` : ""}${f.besok ? `<script src="${root}besok.js" defer></script>` : ""}${f.motion ? `<script src="${root}motion.js"></script>` : ""}</body></html>
 `;
 }
@@ -1359,6 +1361,33 @@ export function trailBand(kind: BandKind, root: string): string {
   const sizes = "(max-width:900px) 100vw, 1120px";
   return `<div class="band" aria-hidden="true"><picture>`
     + `<source type="image/webp" srcset="${set}" sizes="${sizes}"><img src="${root}pictures/trail-${kind}-light-600.jpg" alt="" width="600" height="300" loading="lazy" decoding="async"></picture></div>`;
+}
+/** site-film (2026-11-25, issue #131; Patrik: "B, kör på det"): Mila's race-day Short (01) in the page's language, served from the site
+ *  itself (film/, next to the pages): no video service, no embed, no cookie and no new recipient, so the policy (site_csp.ts: media falls
+ *  under default-src 'self') and the privacy texts stay as they are. The words are the film's own approved ones (its title, the first
+ *  paragraph of its description, and the line that the screens are illustrations), never new copy (French with its no-break space
+ *  before ? and :, as the site writes French). A plain <video> with the browser's
+ *  controls: nothing plays, loads or makes a sound until the visitor starts it (preload none, no autoplay, the poster only). */
+export const FILM: Record<Lang, { title: string; caption: string; note: string }> = {
+  sv: { title: "Loppdag om 3 dagar? Planen är redan klar", caption: "Loppdag med Mila: en plan för banan, del för del. En lugn röst på klockan när backen börjar. Och ett ärligt ord från coachen efter mållinjen.", note: "Skärmarna i filmen är illustrationer av appen." },
+  en: { title: "Race day in 3 days? Your plan is ready", caption: "Race day with Mila: a plan for the course, part by part. A calm cue on your Apple Watch when the climb starts. And an honest word from your coach after the finish.", note: "Screens in this video are illustrations of the app." },
+  de: { title: "Wettkampf in 3 Tagen? Dein Plan steht schon", caption: "Wettkampftag mit Mila: ein Plan für die Strecke, Abschnitt für Abschnitt. Ein ruhiger Hinweis auf deiner Apple Watch, wenn der Anstieg beginnt. Und nach dem Ziel ein ehrliches Wort von deinem Coach.", note: "Die Bildschirme in diesem Video sind Illustrationen der App." },
+  nb: { title: "Løp om 3 dager? Planen er allerede klar", caption: "Løpsdag med Mila: en plan for løypa, del for del. Et rolig ord på Apple Watch når bakken begynner. Og et ærlig ord fra coachen etter målgang.", note: "Skjermbildene i videoen er illustrasjoner av appen." },
+  da: { title: "Løb om 3 dage? Planen er allerede klar", caption: "Løbsdag med Mila: en plan for ruten, del for del. Et roligt ord på Apple Watch, når stigningen begynder. Og et ærligt ord fra coachen efter målstregen.", note: "Skærmbillederne i videoen er illustrationer af appen." },
+  fi: { title: "Kisa 3 päivän päästä? Suunnitelma on jo valmis", caption: "Kisapäivä Milan kanssa: suunnitelma reitille osa kerrallaan. Rauhallinen vihje Apple Watchissa, kun ylämäki alkaa. Ja maalin jälkeen rehellinen sana valmentajalta.", note: "Videon näkymät ovat havainnekuvia sovelluksesta." },
+  fr: { title: "Course dans 3 jours ? Ton plan est déjà prêt", caption: "Le jour de course avec Mila : un plan pour le parcours, étape par étape. Un mot calme sur ton Apple Watch quand la côte commence. Et après l’arrivée, un mot honnête de ton coach.", note: "Les écrans de cette vidéo sont des illustrations de l’app." },
+  es: { title: "¿Carrera en 3 días? Tu plan ya está listo", caption: "El día de carrera con Mila: un plan para el recorrido, tramo a tramo. Un aviso tranquilo en tu Apple Watch cuando empieza la subida. Y después de meta, una palabra sincera de tu coach.", note: "Las pantallas de este vídeo son ilustraciones de la app." },
+};
+/** Every file a language's film needs: the section is drawn only when the site has both (a half-copied film/ shows no broken player). */
+export const FILM_FILES = (lang: Lang) => [`film/race-day-${lang}.mp4`, `film/race-day-${lang}.jpg`];
+/** The film's block: on the product pages a <section> after the hero (written by hand, checked against this by tests/site_film_test.ts),
+ *  on race pages an <aside> after <main>, so no race page's content, and so its lastmod, moves for it. 1080×1920 (9:16), shown at most
+ *  360 px wide (site.css .film). */
+export function filmSection(lang: Lang, root: string, tag: "section" | "aside"): string {
+  const f = FILM[lang], src = `${root}film/race-day-${lang}`;
+  return `<${tag} id="film" class="film-sec" aria-labelledby="h-film"><h2 id="h-film">${esc(f.title)}</h2><figure class="film">`
+    + `<video controls playsinline preload="none" poster="${esc(src)}.jpg" width="1080" height="1920" aria-label="${esc(f.title)}" aria-describedby="film-cap" src="${esc(src)}.mp4"></video>`
+    + `<figcaption id="film-cap">${esc(f.caption)}<span class="note">${esc(f.note)}</span></figcaption></figure></${tag}>`;
 }
 /** Apple's App Store badge linking to the app: Apple's own localized artwork (the site's badges/, from Apple's marketing tools), never a
  *  button of our own that reads like it; its alt text is the badge's words (t.store). 50 px high, as on the product page. */
@@ -1389,6 +1418,8 @@ type Ctx = { today: string; css: string; appStore: string; active: Race[]; slugs
   besokJs?: boolean;
   /** lang-switch: the site has lang.js (the language menu closes on a tap outside or Escape): the switch loads it. */
   langJs?: boolean;
+  /** site-film: the languages whose race-day film the site has (FILM_FILES): their race pages close with it. */
+  film?: Set<Lang>;
   /** seo: the App Store id for the Smart App Banner (none = off), the hubs, and the races whose title another race shares (their
    *  titles say the place too, so every title on the site is its own). */
   appId?: string | null; hubs?: Hub[]; titleClash?: Set<string>;
@@ -1512,7 +1543,7 @@ export function racePage(r: Race, lang: Lang, ctx: Ctx): string {
       ...(eventOffer(r, today) ? { offers: eventOffer(r, today) } : {}),
     });
   }
-  return frame({ lang, path, title: pageTitle(r, lang, !!ctx.titleClash?.has(r.id), today), description, css: ctx.css, today, alternates, appId: ctx.appId, motion: ctx.motionJs, besok: ctx.besokJs, langJs: ctx.langJs, og: { ...og, alt: bare ? t.ogAltNoCourse(title) : t.ogAlt(title) }, ld,
+  return frame({ lang, path, title: pageTitle(r, lang, !!ctx.titleClash?.has(r.id), today), description, css: ctx.css, today, alternates, appId: ctx.appId, motion: ctx.motionJs, besok: ctx.besokJs, langJs: ctx.langJs, film: ctx.film?.has(lang), og: { ...og, alt: bare ? t.ogAltNoCourse(title) : t.ogAlt(title) }, ld,
     // site-calm: the profile right under the facts, before the call to action (in the HTML, so the reading order is the visual one)
     body: `<article>${hero}${sections[0]?.startsWith('<section aria-labelledby="h-profile"') ? sections.shift() + cta : cta}${sections.join("\n")}</article>`, script: r.next_date && r.next_date >= today ? cdScript(lang) : undefined,
     crumbs: [{ name: t.home, path: L[lang].home }, { name: t.races, path: indexPath(lang) }, { name: title }] });
@@ -2282,7 +2313,8 @@ export async function generate(o: { out: string; races: Race[]; ids?: Set<string
   const hubs = buildHubs(active, today), titles = new Map<string, string[]>();
   for (const r of active) { const k = pageTitle(r, "sv", false, today); titles.set(k, [...(titles.get(k) ?? []), r.id]); }
   const titleClash = new Set([...titles.values()].filter((ids) => ids.length > 1).flat());
-  const ctx: Ctx = { today, css, appStore, active, slugs, ogImage, hasMap, sceneJs: await exists("scene.js"), motionJs: await exists("motion.js"), besokJs: await exists("besok.js"), langJs: await exists("lang.js"), pictures: (await Promise.all(BAND_FILES.map((f) => exists(f)))).every(Boolean), appId: smartBannerMeta(o.appStoreId) ? o.appStoreId : null, hubs, titleClash, guides: o.guides };
+  const ctx: Ctx = { today, css, appStore, active, slugs, ogImage, hasMap, sceneJs: await exists("scene.js"), motionJs: await exists("motion.js"), besokJs: await exists("besok.js"), langJs: await exists("lang.js"), pictures: (await Promise.all(BAND_FILES.map((f) => exists(f)))).every(Boolean),
+    film: new Set((await Promise.all(LANGS.map(async (l) => (await Promise.all(FILM_FILES(l).map((f) => exists(f)))).every(Boolean) ? [l] : []))).flat()), appId: smartBannerMeta(o.appStoreId) ? o.appStoreId : null, hubs, titleClash, guides: o.guides };
 
   // 4. the race pages, and the pages of races that left; every indexed page's lastmod moves only when its content does
   const pages: State["pages"] = {};

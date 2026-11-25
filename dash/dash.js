@@ -3,7 +3,7 @@
 // refresh token kept on this device under one key, the access token in memory, renewed before it runs out; a network error never logs out,
 // it shows "Offline" and retries), then the function `dashboard` answers aggregates only (_shared/dashboard.ts). Everything is drawn with the
 // DOM's own text nodes and hand-made SVG: never markup from strings, no script from anywhere else. Five tabs (dash-flikar): Produktion,
-// TestFlight, Morgonrapport, Övrigt and Grind (grind-flik: the gate followed live, polled on its own while shown); the last one chosen is remembered in this tab only (sessionStorage), the mail's link (#dag=) opens
+// TestFlight, Morgonrapport, Övrigt and Grind, and Kod (b41-kod-dash) right after Produktion when the server sends it (grind-flik: the gate followed live, polled on its own while shown); the last one chosen is remembered in this tab only (sessionStorage), the mail's link (#dag=) opens
 // the Morgonrapport.
 (function () {
   "use strict";
@@ -196,12 +196,14 @@
   // ---- the tabs (dash-flikar, Patrik 2026-10-19): Produktion (the App Store's runners), TestFlight (the testers'), Morgonrapport (the
   // daily report, both builds side by side) and Övrigt (App Review's likely accounts and the unknown build). Every per-runner number on a
   // tab is that tab's builds' only (the server asks per build); what has no runner behind it is shown once per tab under "Gemensamt".
-  var TABS = [["as", "Produktion", "App Store"], ["tf", "TestFlight", "TestFlight"], ["rapport", "Morgonrapport", ""], ["ovr", "Övrigt", "Granskning och okänd"], ["gate", "Grind", ""]];
+  var TABS = [["as", "Produktion", "App Store"], ["kod", "Kod", "Kod"], ["tf", "TestFlight", "TestFlight"], ["rapport", "Morgonrapport", ""], ["ovr", "Övrigt", "Granskning och okänd"], ["gate", "Grind", ""]];
   var TABKEY = "mila-dash-tab";
-  function tabColor(t) { return css(t === "tf" ? "--s2" : t === "ovr" ? "--s4" : "--s1"); }
+  function tabColor(t) { return css(t === "tf" ? "--s2" : t === "ovr" || t === "kod" ? "--s4" : "--s1"); }
+  // the Kod tab exists only when the server sends envs.kod
+  function shownTabs() { var k = !!(data && data.envs && data.envs.kod); return TABS.filter(function (x) { return x[0] !== "kod" || k; }); }
   function savedTab() { try { var t = sessionStorage.getItem(TABKEY); return TABS.some(function (x) { return x[0] === t; }) ? t : null; } catch (e) { return null; } }
   // a link may name the tab (#flik=tf); the mail's #dag= opens the report; else the last one chosen, else Produktion
-  var hashTab = /[#&]flik=(as|tf|rapport|ovr|gate)\b/.exec(location.hash);
+  var hashTab = /[#&]flik=(as|kod|tf|rapport|ovr|gate)\b/.exec(location.hash);
   var tab = hashTab ? hashTab[1] : /#dag=/.test(location.hash) ? "rapport" : savedTab() || "as";
   function setTab(t) {
     tab = t; try { sessionStorage.setItem(TABKEY, t); } catch (e) { /* memory only */ }
@@ -210,7 +212,7 @@
   }
   function drawTabs() {
     var nav = $("tabs"); while (nav.firstChild) nav.removeChild(nav.firstChild);
-    TABS.forEach(function (t) {
+    shownTabs().forEach(function (t) {
       var b = el("button", t[0] === tab ? "on" : null); b.type = "button"; b.setAttribute("role", "tab"); b.setAttribute("aria-selected", t[0] === tab ? "true" : "false");
       if (t[0] === "as" || t[0] === "tf") { var sw = el("span", "sw"); sw.style.background = tabColor(t[0]); b.appendChild(sw); }
       b.appendChild(document.createTextNode(t[1]));
@@ -218,10 +220,10 @@
       nav.appendChild(b);
     });
   }
-  // keys 1–5 switch tabs (not while typing)
+  // keys 1–6 switch tabs (not while typing)
   addEventListener("keydown", function (ev) {
     if (ev.metaKey || ev.ctrlKey || ev.altKey || !data || /input|textarea/i.test((ev.target && ev.target.tagName) || "")) return;
-    var i = "12345".indexOf(ev.key); if (i >= 0) setTab(TABS[i][0]);
+    var st = shownTabs(), i = "12345".indexOf(ev.key); if (i < 0 && ev.key === "6") i = 5; if (i >= 0 && i < st.length) setTab(st[i][0]);
   });
 
   /** A section: its heading, then its own grid (so dense packing never pulls a card above its heading). */
@@ -237,6 +239,7 @@
     board = el("div", "grid"); root.appendChild(board);
     var d = data || {}, envs = d.envs || {};
     $("asof").textContent = d.at ? "Uppdaterad " + new Date(d.at).toLocaleString("sv-SE", { dateStyle: "short", timeStyle: "short" }) : "";
+    if (tab === "kod" && !envs.kod) tab = "as";
     drawTabs();
     if (tab === "rapport") return reportTab(d.reports);
     if (tab === "gate") { gateTab(d.gate); return gatePollSoon(); }
@@ -245,6 +248,7 @@
       var o = card("Övrigt", "granskning och okänd byggtyp", 2);
       note(o, "Granskning = troliga konton från Apples granskning (bara sandlådeköp, versioner som inte släppts). Okänd = kontot har inte rapporterat någon byggtyp än. Ingen av dem räknas i Produktion eller TestFlight; här finns allt om dem, så inget försvinner.");
     }
+    if (tab === "kod") return kodTab(e);
     section(name, tab === "ovr" ? "bara dessa konton" : "bara " + name + "s löpare");
     growthPanels(e.growth);
     moneyPanels(e.money, e.est);
@@ -256,6 +260,26 @@
     systemPanels(e.system);
     section("Gemensamt", "samma för alla byggen: utan löpare bakom");
     commonPanels(d.common || null, d.not_measured);
+  }
+
+  // the Kod tab: accounts in an offer-code period that do not pay after it; the small form (fewer than 5 accounts) is only the count
+  function kodTab(e) {
+    var o = e.outcome || {}, pay = num(o.paying), left = num(o.left), end = num(o.ended);
+    section("Kod", "konton vars senaste transaktion fortfarande är en erbjudandekod");
+    var c = card("Koder", "", 2);
+    tiles(c, [{ v: f0(e.in_code), l: "I kodperiod nu" }, { v: f0(end), l: "Koden slut, inget betalt efter" },
+      { v: f0(pay), l: "Betalar efter koden", d: "räknas i Produktion" }, { v: f0(left), l: "Gick vidare efter koden, betalar inte nu", d: "räknas i Produktion" },
+      { v: pay + left + end > 0 ? pct((pay + left) / (pay + left + end)) : "–", l: "Andel som gick vidare efter koden" }]);
+    if (e.small) { note(c, "Kod = konton som löst in en erbjudandekod i App Store och inte har betalat efter den. Färre än 5 konton: bara antal visas, och de räknas fortfarande i Produktion."); return; }
+    note(c, "Kod = konton som löst in en erbjudandekod i App Store och inte har betalat efter den. De räknas inte i Produktion.");
+    growthPanels(e.growth);
+    moneyPanels(e.money, e.est);
+    aiPanels(e.ai, e.est, e.cost_runner, (data || {}).common, (data || {}).reports);
+    coachPanels(e.coach);
+    usagePanels(e.usage);
+    racesPanel(e.races);
+    supportPanels(e.support);
+    systemPanels(e.system);
   }
 
   // the report's counts: a cell per build ({tf, as, okand, gr, na}); "na" has no account and is common
@@ -284,6 +308,14 @@
     c.appendChild(days);
     c.appendChild(el("p", "analysis big", r.analysis || "Ingen analys den dagen (coachen kunde inte tillfrågas)."));
     note(c, "Dygnet " + r.day + " i svensk tid. Coachen skrev slutsatserna från siffrorna för båda byggena; de gäller hela rapporten (gemensamt). Admin- och granskarkonton är inte med. Önskemålens citat och korrläsningens exempel står bara i mejlet.");
+    // b41-kod-dash: the day's Kod as kept with the report (from 5 accounts not in App Store's numbers below; fewer: counts only)
+    var kd = (r.numbers || {}).kod;
+    if (kd) {
+      var kn = num(kd.in_code) + num(kd.ended), kc = card("Kod", kn >= 5 ? "erbjudandekoder: inte med i App Store nedan" : "erbjudandekoder: färre än 5, räknas i App Store nedan", 4);
+      kc.appendChild(el("p", "sub", "I kodperiod nu " + f0(kd.in_code) + " · koden slut, inget betalt efter " + f0(kd.ended) + " · betalar efter koden " + f0(kd.paying) + " · gick vidare efter koden, betalar inte nu " + f0(kd.left)));
+      if (kd.today) kc.appendChild(el("p", "sub", "Under dygnet: " + Object.keys(kd.today).map(function (k) { var l = KEYS.filter(function (x) { return x[0] === k; })[0]; return (l ? l[1] : k) + " " + f0(kd.today[k]); }).join(", ")));
+      else if (kd.failed) kc.appendChild(el("p", "sub", "Kods dygn kunde inte räknas (App Store är ändå utan dem)."));
+    }
     // the key numbers, App Store and TestFlight side by side
     [["as", "App Store", "Produktion"], ["tf", "TestFlight", "testare, inte marknaden"]].forEach(function (b) {
       var k = card(b[1], b[2], 2); k.classList.add("env-" + b[0]);
@@ -369,13 +401,14 @@
   }
 
   function moneyPanels(m, est) {
-    var sandbox = tab !== "as";
-    var c = card("Pengar", sandbox ? "sandlådeköp, inga riktiga pengar" : "prenumerationer", 2);
+    var sandbox = tab !== "as" && tab !== "kod", code = tab === "kod";
+    var c = card("Pengar", sandbox ? "sandlådeköp, inga riktiga pengar" : code ? "kodperiod, ingen betalning" : "prenumerationer", 2);
     if (!m) return missing(c);
     est = est || {};
+    var via = ((((data || {}).envs || {}).as) || {}).via_code;
     var conv = ratio(m.cohort_converted, m.cohort_trials);
-    tiles(c, [{ v: f0(sum(m.active)), l: sandbox ? "Betalande (sandlåda)" : "Betalande nu" }, { v: f0(sum(m.trial)), l: "I gratisveckan" },
-      { v: sandbox ? "–" : kr(est.mrr_sek), l: "MRR (uppsk., netto)", d: sandbox ? "sandlådan ger inga pengar" : "ARR " + kr(est.arr_sek) }, { v: pct(conv), l: "Gratisvecka → betalt", d: f0(m.cohort_converted) + " av " + f0(m.cohort_trials) },
+    tiles(c, [{ v: f0(sum(m.active)), l: sandbox ? "Betalande (sandlåda)" : code ? "Kod med pris" : "Betalande nu", d: tab === "as" && num(via) > 0 ? "varav via kod " + f0(via) : "" }, { v: f0(sum(m.trial)), l: code ? "Gratis kod" : "I gratisveckan" },
+      { v: sandbox || code ? "–" : kr(est.mrr_sek), l: "MRR (uppsk., netto)", d: sandbox ? "sandlådan ger inga pengar" : code ? "kodens pris sparas inte" : "ARR " + kr(est.arr_sek) }, { v: code ? "–" : pct(conv), l: "Gratisvecka → betalt", d: f0(m.cohort_converted) + " av " + f0(m.cohort_trials) },
       { v: f0(m.ended_30d), l: "Avslutade, 30 d" }, { v: f0(m.refunded_30d), l: "Återbetalda, 30 d" }, { v: f0(m.retry), l: "Betalningsproblem nu", d: "grace eller nytt försök" }]);
     var plans = m.by_plan || {}, pl = [["monthly", "Månad"], ["yearly", "År (och år betalt per månad)"], ["other", "Annan"]].map(function (p) {
       return { label: p[1], value: ENVS.reduce(function (a, e) { return a + num(plans[e[0] + ":" + p[0]]); }, 0) };
@@ -383,6 +416,7 @@
     c.appendChild(el("p", "sub", "Betalande per plan"));
     c.appendChild(hbars(pl, { label: "Betalande per plan", lw: 190, color: tabColor(tab) }));
     note(c, sandbox ? "TestFlight och granskning köper i sandlådan: siffrorna visar att köpflödet fungerar, inte intäkter."
+      : code ? "Koden ger inget listpris här: MRR och marginal visas inte."
       : "Uppskattning: listpris " + f0(est.price_monthly) + " kr/mån och " + f0(est.price_yearly) + " kr/år, minus moms 25 % och Apples 15 %. År betalt per månad kan inte skiljas från år. Betalningslarmen ligger under Gemensamt.");
     var w = m.weekly || [], xs = w.map(function (x) { return x.w; }), xf = function (x) { return String(x).replace(/^\d{4}-/, ""); };
     var s = card("Prenumerationer per vecka", "12 veckor", 1);
@@ -402,12 +436,14 @@
       { v: has(est.ai_usd_per_runner_day) ? usd(est.ai_usd_per_runner_day) : "–", l: "Snitt per löpare och dygn", d: est.ai_window === "days" ? (num(est.ai_days) === 1 ? "senaste hela dygnet" : "senaste " + f0(est.ai_days) + " hela dygnen") + ", exakt per konto" : est.ai_window === "24h" ? "senaste 24 h" : "" },
       { v: kr(est.ai_sek_per_runner_month), l: "Per löpare och månad", d: "dygnet × 30 · " + f1(est.usd_sek) + " kr/USD" },
       tab === "as" ? { v: kr(est.margin_per_payer_sek), l: "Marginal per betalande/mån", d: "netto " + kr(est.rev_per_payer_sek) + " − AI", dir: num(est.margin_per_payer_sek) < 0 ? "down" : "up" }
-        : { v: "–", l: "Marginal", d: "bara i Produktion" },
+        : { v: "–", l: "Marginal", d: tab === "kod" ? "kodens pris sparas inte" : "bara i Produktion" },
       { v: f0(ai.calls_24h), l: "AI-anrop, 24 h", d: "liggaren" }, { v: cap ? pct(ratio(ai.cap_used_24h, cap)) : "–", l: "Andel av AI-taket, 24 h", d: f0(ai.cap_used_24h) + " av " + f0(cap) + " (taket är gemensamt)" }]);
     var days = ai.daily || [], xs = days.map(function (x) { return x.d; });
     c.appendChild(el("p", "sub", "AI-anrop per dag (liggaren sparas 9 dagar)"));
     c.appendChild(chart(xs, [{ label: "Anrop", color: tabColor(tab), values: days.map(function (x) { return x.calls; }) }], { h: 110, label: "AI-anrop per dag" }));
     var key = tab === "ovr" ? "okand" : tab, hist = (reports || []).slice(0, 60).slice().reverse();
+    // b41-kod-dash: the stored reports keep no cost for Kod (its cost is in the tiles above)
+    if (tab === "kod") return;
     var k = card("AI-kostnad per dygn", "enligt morgonrapporten", 1);
     if (hist.length) {
       k.appendChild(chart(hist.map(function (x) { return x.day; }), [{ label: "USD", color: tabColor(tab), values: hist.map(function (x) { return num((((x.numbers || {}).aiCost || {})[key] || {}).total); }) }],

@@ -210,7 +210,8 @@
   }
   function newWeek() {
     var envs = (data.money && data.money.dash && data.money.dash.envs) || {}, n = 0, b = 0, ok = false;
-    ["as", "tf"].forEach(function (e) { ((envs[e] && envs[e].growth && envs[e].growth.daily) || []).forEach(function (x) { ok = true; var v = sum(x.new); if (x.d >= plusDays(data.today, -7) && x.d <= plusDays(data.today, -1)) n += v; else if (x.d >= plusDays(data.today, -14) && x.d <= plusDays(data.today, -8)) b += v; }); });
+    // b41-kod-dash: Kod (offer codes, from 5 accounts its own tab) counts with them; a small Kod is still inside App Store
+    ["as", "kod", "tf"].forEach(function (e) { ((envs[e] && envs[e].growth && envs[e].growth.daily) || []).forEach(function (x) { ok = true; var v = sum(x.new); if (x.d >= plusDays(data.today, -7) && x.d <= plusDays(data.today, -1)) n += v; else if (x.d >= plusDays(data.today, -14) && x.d <= plusDays(data.today, -8)) b += v; }); });
     return ok ? { now: n, before: b } : null;
   }
   function todoMail(m) { return m.category !== "skrap" && (m.state === "ny" || m.state === "last"); }
@@ -224,7 +225,7 @@
     var ai = aiToday();
     var site = data.ops && data.ops.site && data.ops.site.data, down = site ? (site.checks || []).filter(function (c) { return !c.ok; }).length : 0;
     var ag = data.ops && data.ops.agents && data.ops.agents.data;
-    var envs = (data.money && data.money.dash && data.money.dash.envs) || {}, act7 = sum(((envs.as || {}).growth || {}).active_7d) + sum(((envs.tf || {}).growth || {}).active_7d);
+    var envs = (data.money && data.money.dash && data.money.dash.envs) || {}, act7 = sum(((envs.as || {}).growth || {}).active_7d) + sum(((envs.kod || {}).growth || {}).active_7d) + sum(((envs.tf || {}).growth || {}).active_7d);
     var cv = (data.legal && data.legal.consent_versions) || {};
     var races = num(data.ops && data.ops.races_pending);
     // the next expiry (certificates, profiles, the domain, keys): what "Behöver dig" and the timeline do not already say
@@ -909,11 +910,26 @@
     var a = el("div", "acts"); button(a, "Uppdatera nu", "soft", function () { load(); toast("Hämtar läget…"); }); button(a, "Logga ut", "soft", logout); mo.appendChild(a);
   }
 
+  // b41-kod-dash: Kod's counts (in a code's period, code ran out unpaid; paid after a code: paying now or stopped, both in App Store)
+  function kodKv(c, k) {
+    var o = k.outcome || {}, paid = num(o.paying) + num(o.left), done = paid + num(o.ended);
+    kv(c, [["I kodperiod nu", f0(k.in_code)], ["Koden slut, inget betalt efter", f0(o.ended)], ["Betalar efter koden (i App Store)", f0(o.paying)],
+      ["Gick vidare efter koden, betalar inte nu (i App Store)", f0(o.left)], ["Andel som gick vidare efter koden", done ? Math.round(paid / done * 100) + " %" : "–"]]);
+  }
+
   // ---- Användare (bara sammanräknat: inga namn, inga hälsovärden)
   function drawUsers(b) {
     var d = (data.money && data.money.dash) || {}, envs = d.envs || {}, g = el("div", "grid two"); b.appendChild(g);
-    [["as", "App Store"], ["tf", "TestFlight"]].forEach(function (e) {
-      var gr = (envs[e[0]] && envs[e[0]].growth) || {}, c = card(g, e[1], null);
+    // b41-kod-dash: Kod (accounts whose latest App Store transaction is still an offer code) has its own card; under 5 accounts only
+    // its counts, and those accounts are still in App Store's numbers
+    var kod = envs.kod;
+    if (kod && kod.small) {
+      var kc = card(g, "Kod", "Erbjudandekoder. Färre än 5 konton: bara antal, och de räknas i App Store.");
+      kodKv(kc, kod);
+    }
+    [["as", "App Store"]].concat(kod && !kod.small ? [["kod", "Kod"]] : [], [["tf", "TestFlight"]]).forEach(function (e) {
+      var gr = (envs[e[0]] && envs[e[0]].growth) || {}, c = card(g, e[1], e[0] === "kod" ? "Erbjudandekoder: konton vars senaste transaktion fortfarande är koden. Inte med i App Store." : null);
+      if (e[0] === "kod") kodKv(c, kod);
       tiles(c, [{ v: f0(sum(gr.active_1d)), l: "Aktiva i dag" }, { v: f0(sum(gr.active_7d)), l: "Aktiva 7 d" }, { v: f0(sum(gr.active_30d)), l: "Aktiva 30 d", d: f0(sum(gr.accounts)) + " konton" }]);
       var co = (gr.cohorts || []).slice(-6);
       if (co.length) kv(c, co.map(function (x) { return ["Vecka " + String(x.w).slice(-2) + " (" + f0(x.n) + " nya)", "dag 1: " + (has(x.d1) ? f0(x.d1) : "–") + " · dag 7: " + (has(x.d7) ? f0(x.d7) : "–") + " · dag 30: " + (has(x.d30) ? f0(x.d30) : "–")]; }));
@@ -1132,17 +1148,23 @@
   function drawMoney(b) {
     var m = data.money || {}, d = m.dash || {}, as = (d.envs && d.envs.as) || {}, tf = (d.envs && d.envs.tf) || {}, est = as.est || {}, mon = as.money || {}, g = el("div", "grid two"); b.appendChild(g);
     var c = card(g, "Prenumerationer i App Store", "Uppskattningar: listpris minus moms och Apples 15 %, inte Apples utbetalning.");
-    tiles(c, [{ v: f0(est.payers || 0), l: "Betalande", d: "månad " + f0((mon.by_plan || {})["as:monthly"] || 0) + " · år " + f0(((mon.by_plan || {})["as:yearly"] || 0) + ((mon.by_plan || {})["as:other"] || 0)) },
+    // b41-kod-dash: of them, those who came in through an offer code
+    tiles(c, [{ v: f0(est.payers || 0), l: "Betalande", d: "månad " + f0((mon.by_plan || {})["as:monthly"] || 0) + " · år " + f0(((mon.by_plan || {})["as:yearly"] || 0) + ((mon.by_plan || {})["as:other"] || 0)) + (num(as.via_code) > 0 ? " · varav via kod " + f0(as.via_code) : "") },
       { v: f0(sum(mon.trial)), l: "I provperiod" }, { v: est.mrr_sek ? kr(est.mrr_sek) : "0 kr", l: "≈ MRR netto", d: "159 kr/mån · 1 290 kr/år" }]);
     tiles(c, [{ v: mon.cohort_trials ? Math.round(num(mon.cohort_converted) / num(mon.cohort_trials) * 100) + " %" : "–", l: "Blev betalande", d: mon.cohort_trials ? f0(mon.cohort_converted) + " av " + f0(mon.cohort_trials) : "inga provperioder än" },
       { v: f0(mon.ended_30d), l: "Avslutade, 30 d" }, { v: f0(mon.refunded_30d), l: "Återbetalda, 30 d" }]);
     if (tf.money) c.appendChild(el("p", "sub", "TestFlight (sandlåda, inga pengar): " + f0(sum(tf.money.active)) + " aktiva köp."));
+    var kd = d.envs && d.envs.kod;
+    if (kd) c.appendChild(el("p", "sub", "Kod (erbjudandekoder" + (kd.small ? ", räknas ovan" : ", inte med ovan") + "): " + f0(kd.in_code) + " i kodperiod nu, " + f0((kd.outcome || {}).ended) + " där koden tog slut utan betalning."));
     var s = m.sales && m.sales.data;
     if (s) { kv(c, [["Apples försäljningsrapport, 7 d", s.units7 !== undefined ? f0(s.units7) + " enheter" : "–"], ["Senaste utbetalning", s.payout ? s.payout : "ingen än"]]); age(c, m.sales.at, "sales", 36 * 60); }
     else c.appendChild(el("p", "sub", "Apples försäljningsrapporter och utbetalningar: inte hämtade än."));
     var daily = aiDaily().slice(-30);
     var a = card(g, "AI-kostnad", "Per dag, alla konton. Spärren är $2 per konto och dag.");
     var cr = as.cost_runner && as.cost_runner.users ? as.cost_runner : tf.cost_runner;
+    // b41-kod-dash: from 5 accounts Kod has its own cost; the dearest account is the dearest of both
+    var kcr = d.envs && d.envs.kod && !d.envs.kod.small ? d.envs.kod.cost_runner : null;
+    if (kcr && kcr.users && (!cr || !cr.users || num(kcr.max) > num(cr.max))) cr = { users: num(cr && cr.users) + num(kcr.users), max: kcr.max, median: cr && cr.users ? cr.median : kcr.median };
     var last7 = daily.slice(-7).reduce(function (s2, x) { return s2 + num(x.usd); }, 0);
     tiles(a, [{ v: usd(daily.length ? daily[daily.length - 1].usd : null), l: "I dag hittills" }, { v: usd(last7), l: "Senaste 7 dagarna" },
       { v: cr ? usd(cr.max) : "–", l: "Dyraste konto, 24 h", d: cr ? "median " + usd(cr.median) + " · av $2" : null }]);

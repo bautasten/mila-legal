@@ -375,9 +375,9 @@
     var days = g.daily || [], xs = days.map(function (x) { return x.d; });
     var n = card("Nya konton per dag", xs.length + " dagar", 2), ns = envSeries(days, "new");
     n.appendChild(legend(ns)); n.appendChild(chart(xs, ns, { label: "Nya konton per dag" }));
-    var a = card("Aktiva löpare per dag", xs.length + " dagar", 2), as = envSeries(days, "dau");
-    a.appendChild(legend(as, true)); a.appendChild(chart(xs, as, { kind: "line", label: "Aktiva löpare per dag" }));
-    note(a, "Äldre dagar räknas lägre: liggaren sparas 9 dagar, därefter syns bara texter, avbockningar, samtycken och support.");
+    var a = card("Aktiva löpare per dag (förbi betalväggen)", xs.length + " dagar", 2), as = envSeries(days, "dau");
+    a.appendChild(legend(as, true)); a.appendChild(chart(xs, as, { kind: "line", label: "Aktiva löpare per dag, förbi betalväggen" }));
+    note(a, "Räknar bara konton som startat gratisvecka eller prenumeration den dagen eller tidigare, även om den sedan gått ut. Aktivitet före betalväggen (samtycke, notisregistrering) räknas inte, så staplarna kan vara lägre än Aktiva 1 d ovan. Äldre dagar räknas lägre: liggaren sparas 9 dagar, därefter syns bara texter, avbockningar, samtycken och support.");
     var co = card("Land", "App Store-land, minst 3 per land", 1);
     co.appendChild(hbars((g.countries || []).map(function (x) { return { label: nm(x.c), value: x.n }; }), { label: "Konton per land", lw: 80, color: tabColor(tab) }));
     note(co, "Landet från App Store-kontot vid senaste samtycket, för den här flikens konton. Länder med färre än 3 konton här ligger i Övriga, som bara visas när de är minst 3.");

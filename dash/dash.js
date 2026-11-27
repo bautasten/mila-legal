@@ -371,13 +371,13 @@
     tiles(c, [{ v: f0(sum(g.accounts)), l: "Konton totalt", d: split ? envSplit(g.accounts) : "" }, { v: f0(sum(g.new_1d)), l: "Nya, 24 h", d: "7 d: " + f0(sum(g.new_7d)) },
       { v: f0(dau), l: "Aktiva 1 d (DAU)", d: split ? envSplit(g.active_1d) : "" }, { v: f0(wau), l: "Aktiva 7 d (WAU)" },
       { v: f0(mau), l: "Aktiva 30 d (MAU)" }, { v: pct(ratio(dau, mau)), l: "DAU / MAU", d: "WAU/MAU " + pct(ratio(wau, mau)) }]);
-    note(c, "Aktiv = något på servern från kontot (coachtext, avbockat pass, samtycke, support, notisregistrering).");
+    note(c, "Aktiv = något på servern från kontot (coachtext, avbockat pass, samtycke, support, notisregistrering) från och med dagen kontot kom förbi betalväggen: gratisveckan eller köpet startade, även om det sedan gått ut. Konton som inte startat gratisvecka eller köp räknas inte. Konton totalt och Nya räknar alla konton.");
     var days = g.daily || [], xs = days.map(function (x) { return x.d; });
     var n = card("Nya konton per dag", xs.length + " dagar", 2), ns = envSeries(days, "new");
     n.appendChild(legend(ns)); n.appendChild(chart(xs, ns, { label: "Nya konton per dag" }));
     var a = card("Aktiva löpare per dag (förbi betalväggen)", xs.length + " dagar", 2), as = envSeries(days, "dau");
     a.appendChild(legend(as, true)); a.appendChild(chart(xs, as, { kind: "line", label: "Aktiva löpare per dag, förbi betalväggen" }));
-    note(a, "Räknar bara konton som startat gratisvecka eller prenumeration den dagen eller tidigare, även om den sedan gått ut. Aktivitet före betalväggen (samtycke, notisregistrering) räknas inte, så staplarna kan vara lägre än Aktiva 1 d ovan. Äldre dagar räknas lägre: liggaren sparas 9 dagar, därefter syns bara texter, avbockningar, samtycken och support.");
+    note(a, "Räknar bara konton som startat gratisvecka eller prenumeration den dagen eller tidigare, även om den sedan gått ut. Aktivitet före betalväggen (samtycke, notisregistrering) räknas inte; siffran är samma regel som Aktiva 1 d ovan. Äldre dagar räknas lägre: liggaren sparas 9 dagar, därefter syns bara texter, avbockningar, samtycken och support.");
     var co = card("Land", "App Store-land, minst 3 per land", 1);
     co.appendChild(hbars((g.countries || []).map(function (x) { return { label: nm(x.c), value: x.n }; }), { label: "Konton per land", lw: 80, color: tabColor(tab) }));
     note(co, "Landet från App Store-kontot vid senaste samtycket, för den här flikens konton. Länder med färre än 3 konton här ligger i Övriga, som bara visas när de är minst 3.");
@@ -397,7 +397,7 @@
       return [x.w, f0(x.n), cell(x.d1), cell(x.d7), cell(x.d30)];
     });
     if (rows.length) table(k, ["Vecka", "Startade", "Dag 1", "Dag 7", "Dag 30"], rows); else k.appendChild(el("p", "empty", "Inga kohorter än."));
-    note(k, "Kontots startvecka; andel med något på servern just den dagen. – = kohorten är inte gammal nog.");
+    note(k, "Kontots startvecka; andel med något på servern just den dagen (all aktivitet, även före betalväggen). – = kohorten är inte gammal nog.");
   }
 
   function moneyPanels(m, est) {
